@@ -25,7 +25,7 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate('_client').populate('_staff');
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
     res.status(200).json({
@@ -157,7 +157,7 @@ exports.createStaffUser = async (req, res, next) => {
           name,
           contact,
           address,
-          role: 'role',
+          role: role,
           _user: user._id
         })
 
@@ -178,37 +178,6 @@ exports.createStaffUser = async (req, res, next) => {
 
 }
 
-exports.showClientUserProfile = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    let user = await User.findById(id).populate('_client');
-
-    if(!user) throw new Error('ไม่พบผู้ใช้');
-    
-    return res.json({
-      data: user
-    })
-
-  } catch (error) {
-    next(error);
-  }
-}
-
-exports.showStaffUserProfile = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    let user = await User.findById(id).populate('_staff');
-
-    if(!user) throw new Error('ไม่พบผู้ใช้');
-    
-    return res.json({
-      data: user
-    })
-
-  } catch (error) {
-    next(error);
-  }
-}
 
 exports.update = async (req, res, next) => {
   try {
@@ -223,13 +192,7 @@ exports.update = async (req, res, next) => {
         error.validation = errors.array();
         throw error;
     } 
-    //check email ซ้ำ
-    const existEmail = await User.findOne({email: email});
-    if (existEmail){
-      const error = new Error('อีเมล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
-      error.statusCode = 400;
-      throw error;
-  }
+    
     // encrypt password
     const encryptPassword = await bcrypt.hash(password, 10);
     let user = await User.updateOne({_id:id},{
@@ -252,7 +215,7 @@ exports.update = async (req, res, next) => {
     // get new user profile
     user = await User.findById(id).populate('_client');
 
-    res.status(200).json({
+    res.status(201).json({
       message: 'แก้ไขข้อมูลผู้ใช้สำเร็จ',
       data: {
         newUser: user

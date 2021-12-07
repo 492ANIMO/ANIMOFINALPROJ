@@ -9,28 +9,26 @@ const User = require('../models/user');
 // middle ware
 const passportLocal = require('../middleware/checkAuth');
 
-/* GET home page. */
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/login-failure',
-  successRedirect: '/'
+  successRedirect: '/auth/login-success'
 }), async (req, res) => {
     const { email, password } = req.body;
-
     return res.redirect('/');
 });
 
 router.get('/login-failure', (req, res) => {
-  res.status(200).json({message: "failure login"})
+  res.status(200).json({message: "เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"})
 })
 router.get('/login-success', (req, res) => {
-  res.status(200).json({message: "success login"})
+  res.status(200).json({message: "เข้าสู่ระบบสำเร็จ"})
 })
 
 router.get('/logout', (req, res) => {
   req.logout()
   // res.redirect('/')
 
-  res.send('logout สำเร็จ');
+  res.send('ออกจากระบบสำเร็จ');
 })
 
 module.exports = router;
