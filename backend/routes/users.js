@@ -11,17 +11,7 @@ const checkRole = require('../middleware/checkRole');
 /* GET users listing. */
 router.get('/', [passportLocal.isLogin, checkRole.isAdmin], userController.index);
 router.get('/:id', userController.show);
-router.get('/client/profile/:id', userController.showClientUserProfile);
-router.get('/staff/profile/:id', userController.showStaffUserProfile);
 
-
-router.post('/',
-[ body('name').not().isEmpty().withMessage('กรุณากรอกข้อมูลชื่อสกุล'),
-  body('email').not().isEmpty().withMessage('กรุณากรอกอีเมลล์').isEmail().withMessage('รูปแบบอีเมลล์ไม่ถูกต้อง'),
-  body('password').not().isEmpty().withMessage('กรุณากรอกรหัสผ่าน').isLength({min: 6}).withMessage('รหัสผ่านต้อง 6 ตัวอักษรขึ้นไป'),
-  body('contact').not().isEmpty().withMessage('กรุณากรอกเบอร์โทรศัพท์'),
-]
-, userController.create);
 
 router.post('/register-client',
 [ body('name').not().isEmpty().withMessage('กรุณากรอกข้อมูลชื่อสกุล'),
@@ -29,7 +19,6 @@ router.post('/register-client',
   body('password').not().isEmpty().withMessage('กรุณากรอกรหัสผ่าน').isLength({min: 6}).withMessage('รหัสผ่านต้อง 6 ตัวอักษรขึ้นไป'),
   body('contact').not().isEmpty().withMessage('กรุณากรอกเบอร์โทรศัพท์'),
 ] , userController.createClientUser);
-
 router.post('/register-staff',
 [ body('name').not().isEmpty().withMessage('กรุณากรอกข้อมูลชื่อสกุล'),
   body('email').not().isEmpty().withMessage('กรุณากรอกอีเมลล์').isEmail().withMessage('รูปแบบอีเมลล์ไม่ถูกต้อง'),
@@ -37,8 +26,8 @@ router.post('/register-staff',
   body('contact').not().isEmpty().withMessage('กรุณากรอกเบอร์โทรศัพท์'),
 ] , userController.createStaffUser);
 
-router.put('/staffs/edit/:id', userController.updateStaffUser);
-router.put('/:id', userController.update);
+router.patch('/staff/edit/:id', userController.updateStaffUser); //*
+router.patch('/:id', userController.update);
 
 router.delete('/staff/delete/:id', userController.destroyStaff);
 router.delete('/:id', userController.destroy);
