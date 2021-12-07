@@ -36,7 +36,7 @@ exports.create = async (req, res, next) => {
 
     await pet.save();
 
-    res.status(200).json({
+    res.status(201).json({
       message: 'เพิ่มข้อมูลสัตว์เลี้ยงสำเร็จ', 
       data: pet
     });
@@ -141,7 +141,7 @@ exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
     const { name, type, breed, gender, bloodType, weight, dob, sterilization } = req.body;
-    const pet = await Pet.updateOne({_id:id} ,{
+    const pet = await Pet.findByIdAndUpdate({_id:id} ,{
       name, type, breed, gender, bloodType, weight, dob, sterilization
     })
 
@@ -151,7 +151,7 @@ exports.update = async (req, res, next) => {
       throw error;
     }
 
-    res.status(200).json({
+    res.status(201).json({
       message: 'แก้ไขข้อมูลสัตว์เลี้ยงสำเร็จ'
     });
 

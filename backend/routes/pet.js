@@ -10,7 +10,7 @@ router.get('/:id', petController.show);
 router.get('/client/:clientId', petController.showByClient);
 router.post('/', petController.create);
 router.delete('/:id', petController.destroy);
-router.put('/:id', petController.update);
+router.patch('/:id', petController.update);
 
 
 module.exports = router;
