@@ -8,9 +8,9 @@ const session = require('express-session');
 const passport = require('passport') , 
 LocalStrategy = require('passport-local').Strategy;
 
-// import config
+//config
 const config = require('./config/index');
-//import middleware
+//middleware
 const errorHandler = require('./middleware/errorHandler');
 
 main().catch(err => console.log(err));
@@ -23,7 +23,6 @@ const staffRouter = require('./routes/staff');
 const authRouter = require('./routes/auth');
 const petRouter = require('./routes/pet');
 const packageRouter = require('./routes/package');
-
 
 const app = express();
 
@@ -50,7 +49,7 @@ app.use(session({
 /**
  * -------------- PASSPORT AUTHENTICATION ----------------
  */
-// Need to require the entire Passport config module so app.js knows about it
+// require the entire Passport config module (so app.js knows about it)
 require('./config/passport')(passport);
 // init passport
 app.use(passport.initialize())
@@ -61,7 +60,6 @@ app.use((req, res, next) => {
   console.log(req.user);
   next();
 })
-
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
