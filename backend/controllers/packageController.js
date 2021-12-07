@@ -60,7 +60,7 @@ exports.create = async (req, res, next) => {
     await package.save();
 
     res.status(200).json({
-      message: 'บันทุกข้อมูลสำเร็จ',
+      message: 'บันทึกข้อมูลสำเร็จ',
       data: package
     });
 
