@@ -9,7 +9,7 @@ router.get('/:id', clientController.show);
 router.post('/', clientController.create);
 router.delete('/:id', clientController.destroy);
 router.delete('/', clientController.destroyAll);
-router.put('/:id', clientController.update);
+router.patch('/:id', clientController.update);
 
 
 

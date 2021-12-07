@@ -58,7 +58,7 @@ exports.create = async (req, res, next) => {
 
     await client.save();
 
-    res.status(200).json({
+    res.status(201).json({
       message: 'เพิ่มข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
       data: client
     });
@@ -91,7 +91,7 @@ exports.destroy = async (req, res, next) => {
       if(client.deletedCount === 0) throw new Error('ไม่สามารถลบข้อมูลเจ้าของสัตว์เลี้ยงได้')
 
       res.status(200).json({
-        message: 'มี user ลบข้อมูลเจ้าของสัตว์เลี้ยงและบัญชีผู้ใช้เรียบร้อย',
+        message: 'ลบข้อมูลเจ้าของสัตว์เลี้ยงและบัญชีผู้ใช้เรียบร้อย',
         user, 
         client
       });
@@ -125,12 +125,17 @@ exports.update = async (req, res, next) => {
     const {id} = req.params;
     const { name, email, contact, address, role } = req.body;
 
-    let client = await Client.updateOne({_id:id}, {
+    let client = await Client.findByIdAndUpdate({_id:id}, {
       name,
       email,
       contact,
       address
     })
+    if(!client){
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      throw error;
+    }
+    client = await Client.findById(id);
 
     res.status(200).json({
       message: 'แก้ไขข้อมูลสำเร็จ',
