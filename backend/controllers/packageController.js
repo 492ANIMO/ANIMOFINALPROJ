@@ -17,6 +17,7 @@ exports.index = async (req, res, next) => {
     next(error);
   }
 }
+
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
