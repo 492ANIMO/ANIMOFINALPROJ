@@ -23,6 +23,7 @@ const staffRouter = require('./routes/staff');
 const authRouter = require('./routes/auth');
 const petRouter = require('./routes/pet');
 const packageRouter = require('./routes/package');
+const vaccineRouter = require('./routes/vaccine');
 
 const app = express();
 
@@ -68,6 +69,7 @@ app.use('/api/clients', clientRouter);
 app.use('/api/staffs', staffRouter);
 app.use('/api/pets', petRouter);
 app.use('/api/packages', packageRouter);
+app.use('/api/vaccines', vaccineRouter);
 
 app.use(errorHandler);
 

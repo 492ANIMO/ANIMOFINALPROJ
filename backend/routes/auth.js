@@ -17,6 +17,7 @@ router.post('/login', passport.authenticate('local', {
     return res.redirect('/');
 });
 
+
 router.get('/login-failure', (req, res) => {
   res.status(200).json({message: "เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"})
 })
