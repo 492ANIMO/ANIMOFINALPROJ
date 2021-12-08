@@ -25,6 +25,7 @@ const petRouter = require('./routes/pet');
 const packageRouter = require('./routes/package');
 const vaccineRouter = require('./routes/vaccine');
 const treatmentRouter = require('./routes/treatment');
+const healthCheckRouter = require('./routes/healthCheck');
 
 const app = express();
 
@@ -72,6 +73,7 @@ app.use('/api/pets', petRouter);
 app.use('/api/packages', packageRouter);
 app.use('/api/vaccines', vaccineRouter);
 app.use('/api/treatments', treatmentRouter);
+app.use('/api/healthchecks', healthCheckRouter);
 
 app.use(errorHandler);
 
