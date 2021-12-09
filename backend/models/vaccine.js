@@ -8,7 +8,6 @@ const schema = new Schema({
   lot_number: { type: String, trim: true},
   detail: { type: String, trim: true}
 },{
-  timestamps: true, 
   collection: 'vaccines'
 });
 module.exports = mongoose.model('Vaccine', schema);

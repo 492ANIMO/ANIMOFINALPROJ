@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 
 // import models
 const Package = require('../models/package');
+const Vaccine = require('../models/vaccine');
 
 exports.index = async (req, res, next) => {
   try {
@@ -21,7 +22,7 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const package = await Package.findById(id);
+    const package = await Package.findById(id).populate('vaccineObj', '-createdAt -updatedAt');
     if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
 
     res.status(200).json({
@@ -36,7 +37,7 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, vaccine, treatment, healthCheck, detail, time, price } = req.body;
+    const { name, vaccineId, treatmentId, healthCheckId, detail, time, price } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -47,16 +48,17 @@ exports.create = async (req, res, next) => {
         throw error;
     }
 
+    const vaccineObj = await Vaccine.find().where('_id').in(vaccineId).exec();
+
     const package = new Package({
       name,
-      vaccine,
-      treatment,
-      healthCheck,
+      vaccineObj,
+      // treatmentObj,
+      // healthCheckObj,
       detail,
       time,
       price
     })
-
     await package.save();
 
     res.status(200).json({
