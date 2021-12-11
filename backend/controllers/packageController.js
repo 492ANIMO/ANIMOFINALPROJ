@@ -44,7 +44,7 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, vaccineId, treatmentId, healthCheckId, detail, time, price } = req.body;
+    const { name, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -83,7 +83,7 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, vaccineId, treatmentId, healthCheckId, detail, time, price } = req.body;
+    const { name, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
 
     const vaccineObj = await Vaccine.find().where('_id').in(vaccineId).exec();
     const treatmentObj = await Treatment.find().where('_id').in(treatmentId).exec();

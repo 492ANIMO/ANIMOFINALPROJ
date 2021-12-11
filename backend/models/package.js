@@ -11,16 +11,6 @@ const schema = new Schema({
   treatmentObj: [{ type: Schema.Types.ObjectId, ref: 'Treatment' }],
   healthCheckObj: [{ type: Schema.Types.ObjectId, ref: 'HealthCheck' }],
   detail: { type: String, trim: true},
-  time: {
-    begin: { 
-      hours: { type: Number, min: 0, max: 23 },
-      minutes: { type: Number, min: 0, max: 59 }
-     },
-    end: {  
-      hours: { type: Number, min: 0, max: 23 },
-      minutes: { type: Number, min: 0, max: 59 }
-     }
-  },
   price: { type: Number }
 
 },{
