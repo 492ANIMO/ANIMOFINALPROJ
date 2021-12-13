@@ -65,7 +65,6 @@ exports.create = async (req, res, next) => {
       treatmentObj,
       healthCheckObj,
       detail,
-      time,
       price
     })
     await package.save();
@@ -95,7 +94,6 @@ exports.update = async (req, res, next) => {
       treatmentObj, 
       healthCheckObj, 
       detail, 
-      time, 
       price
     })
 
