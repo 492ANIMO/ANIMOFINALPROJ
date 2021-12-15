@@ -63,7 +63,7 @@ exports.create = async (req, res, next) => {
 
     const petObj = await Pet.find().where('_id').in(petId).exec();
     const packageObj = await Pet.find().where('_id').in(packageId).exec();
-    
+
     // check if avaliable timeslot
     if(!timeslot.includes(time)){
       throw new Error('ไม่สามารถเพิ่มการนัดหมายในเวลาดังกล่าวได้');
@@ -144,6 +144,47 @@ exports.destroy = async (req, res, next) => {
     const appointment = await Appointment.deleteOne({_id:id});
 
     if(appointment.deletedCount===0){ throw new Error('ลบข้อมูลการนัดหมายไม่สำเร็จ'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      data: appointment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+// get appointment by petId
+exports.showByPet = async (req, res, next) => {
+  try {
+    const {petId} = req.params;
+
+    const appointment = await Appointment.find({'petObj': petId})
+    .populate('package')
+
+    if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      data: appointment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+// get appointment by clientId
+exports.showByOwner = async (req, res, next) => {
+  try {
+    const {ownerId} = req.params;
+
+    const appointment = await Appointment.find({'petObj[0]._owner': ownerId})
+    .populate('petObj')
+
+    if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     res.status(200).json({
       message: 'สำเร็จ',
