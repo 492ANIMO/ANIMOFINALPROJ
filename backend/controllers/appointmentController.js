@@ -5,6 +5,8 @@ const Appointment = require('../models/appointment');
 const Package = require('../models/package');
 const Pet = require('../models/pet');
 
+const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
+
 // get all appointment
 exports.index = async (req, res, next) => {
   try {
@@ -61,6 +63,11 @@ exports.create = async (req, res, next) => {
 
     const petObj = await Pet.find().where('_id').in(petId).exec();
     const packageObj = await Pet.find().where('_id').in(packageId).exec();
+    
+    // check if avaliable timeslot
+    if(!timeslot.includes(time)){
+      throw new Error('ไม่สามารถเพิ่มการนัดหมายในเวลาดังกล่าวได้');
+    }
 
     // check if avaliable time 
     const booked = await Appointment.find({
