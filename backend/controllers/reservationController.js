@@ -28,6 +28,26 @@ exports.index = async (req, res, next) => {
   }
 }
 
+// get reservation by id
+exports.show = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    let reservation = await Reservation.findById(id)
+    .populate('package', '-createdAt -updatedAt')
+    .populate('pet')
+
+    if(!reservation){ throw new Error('ไม่พบข้อมูลการจองแพ็คเกจ'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      data: reservation
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 // add new reservation
 exports.create = async (req, res, next) => {
   try {
