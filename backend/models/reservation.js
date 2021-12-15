@@ -8,6 +8,7 @@ const schema = new Schema({
   time:{type: String, trim: true, required: true},
   status: {type: String, trim: true, default: 'pending'},
   doctor: [{type: Schema.Types.ObjectId, ref: 'Staff'}],
+  appointment: [{type: Schema.Types.ObjectId, ref: 'Appointment'}],
 },{
   timestamps: true,
   collection: 'reservations'

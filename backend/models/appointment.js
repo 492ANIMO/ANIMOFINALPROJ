@@ -9,7 +9,6 @@ const schema = new Schema({
   time:{type: String, trim: true, required: true},
   type:{type: String, trim: true},
   detail: { type: String},
-  package: [{ type: Schema.Types.ObjectId, ref: 'Package' }],
 },{
   timestamps: true, 
   collection: 'appointments'
