@@ -4,6 +4,8 @@ const { validationResult } = require('express-validator');
 const Appointment = require('../models/appointment');
 const Package = require('../models/package');
 const Pet = require('../models/pet');
+const Client = require('../models/client');
+const appointment = require('../models/appointment');
 
 const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
 
@@ -155,7 +157,6 @@ exports.destroy = async (req, res, next) => {
   }
 }
 
-
 // get appointment by petId
 exports.showByPet = async (req, res, next) => {
   try {
@@ -177,15 +178,15 @@ exports.showByPet = async (req, res, next) => {
 }
 
 // get appointment by clientId
+
 exports.showByOwner = async (req, res, next) => {
   try {
-    const {ownerId} = req.params;
+    const {clientId} = req.params;
 
-    const appointment = await Appointment.find({'petObj[0]._owner': ownerId})
-    .populate('petObj')
+    const pet = await Pet.find().where('_owner').in(clientId).exec();
 
-    if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
-
+    const appointment = await Appointment.find().where('petObj').in(pet).populate('petObj').exec();
+    // get appointment by pet id
     res.status(200).json({
       message: 'สำเร็จ',
       data: appointment
