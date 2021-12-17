@@ -217,8 +217,8 @@ exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
     const {doctor} = req.body;
-    // const {petId, packageId, date, time, doctor} = req.body;
-    const reservation = await Reservation.findById(id);
+
+    let reservation = await Reservation.findById(id);
 
     let date = reservation.date
     let time = reservation.time
@@ -227,12 +227,9 @@ exports.confirm = async (req, res, next) => {
     const packageObj = await Pet.find().where('_id').in(reservation.package).exec();
     const status = 'ยืนยัน';
 
-    // change status
-    switch(status) {
-      case 'ยืนยัน':
 
         // change status 
-        let reservation = await Reservation.updateOne({_id:id},{
+        reservation = await Reservation.updateOne({_id:id},{
           status,
           doctor
         });
@@ -252,17 +249,9 @@ exports.confirm = async (req, res, next) => {
           message: 'เพิ่มข้อมูลการนัดสำเร็จ',
           data: appointment
         });
-        break;
-
-      case 'เลื่อนเวลานัด':
-        newStatus = 'เลื่อนเวลานัด'
-        break;
-
-      default:
-        // code block
-    }
 
   } catch (error) {
     next(error);
   }
 }
+
