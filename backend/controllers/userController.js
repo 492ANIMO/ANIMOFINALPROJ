@@ -25,7 +25,23 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const user = await User.findById(id).populate('_client').populate('_staff');
+    const user = await User.findById(id).select('email role').populate('_client', 'name contact address -_user ').populate('_staff', 'name contact address -_user ');
+    if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      data: user
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.me = async (req, res, next) => {
+  try {
+    const id = req.user._id;
+    const user = await User.findById(id).select('email role').populate('_client', 'name contact address -_user ').populate('_staff', 'name contact address -_user ');
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
     res.status(200).json({

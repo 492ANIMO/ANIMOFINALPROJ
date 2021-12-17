@@ -17,12 +17,17 @@ router.post('/login', passport.authenticate('local', {
     return res.redirect('/');
 });
 
-
 router.get('/login-failure', (req, res) => {
-  res.status(200).json({message: "เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"})
+  res.status(200).json({
+    message: "เข้าสู่ระบบไม่สำเร็จ กรุณาลองใหม่อีกครั้ง"
+  })
 })
+
 router.get('/login-success', (req, res) => {
-  res.status(200).json({message: "เข้าสู่ระบบสำเร็จ"})
+  res.status(200).json({
+    message: "เข้าสู่ระบบสำเร็จ",
+    user: req.user.email
+  })
 })
 
 router.get('/logout', (req, res) => {

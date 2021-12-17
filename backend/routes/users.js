@@ -10,6 +10,7 @@ const checkRole = require('../middleware/checkRole');
 
 /* GET users listing. */
 router.get('/', [passportLocal.isLogin, checkRole.isAdmin], userController.index);
+router.get('/me', userController.me);
 router.get('/:id', userController.show);
 
 
