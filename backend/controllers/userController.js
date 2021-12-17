@@ -9,7 +9,7 @@ const Staff = require('../models/staff');
 exports.index = async (req, res, next) => {
   try {
 
-    const user = await User.find();
+    const user = await User.find().select('email role');
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
     res.status(200).json({
