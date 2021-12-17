@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 // import models
 const Pet = require('../models/pet');
+const Package = require('../models/package');
 
 const schema = new Schema({
   petObj: [{ type: Schema.Types.ObjectId, ref: 'Pet' }],

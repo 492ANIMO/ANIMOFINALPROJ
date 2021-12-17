@@ -14,7 +14,6 @@ exports.index = async (req, res, next) => {
   try {
     const appointment = await Appointment.find()
     .populate('petObj')
-    .populate('package')
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
