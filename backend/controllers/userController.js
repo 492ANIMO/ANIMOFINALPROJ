@@ -38,7 +38,7 @@ exports.show = async (req, res, next) => {
   }
 }
 
-exports.me = async (req, res, next) => {
+exports.getCurrentProfile = async (req, res, next) => {
   try {
     const id = req.user._id;
     const user = await User.findById(id).select('email role').populate('_client', 'name contact address -_user ').populate('_staff', 'name contact address -_user ');

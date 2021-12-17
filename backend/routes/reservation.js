@@ -10,6 +10,7 @@ router.get('/:id', reservationController.show);
 router.post('/', reservationController.create);
 router.delete('/:id', reservationController.destroy);
 router.patch('/:id', reservationController.update);
+router.patch('/confirm/:id', reservationController.confirm);
 
 
 module.exports = router;

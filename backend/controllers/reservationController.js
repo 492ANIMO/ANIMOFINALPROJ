@@ -122,7 +122,7 @@ exports.destroy = async (req, res, next) => {
   }
 }
 
-// edit appointment by appointmentId
+// edit reservation by reservation Id
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
@@ -163,8 +163,6 @@ exports.update = async (req, res, next) => {
           packageObj
         })
         await appointment.save();
-
-        
 
         res.status(200).json({
           message: 'บันทึกข้อมูลสำเร็จ',
@@ -207,6 +205,61 @@ exports.update = async (req, res, next) => {
         message: 'เลื่อนเวลานัดสำเร็จ',
         data: reservation
       });
+    }
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+// confirm reservation by reservation id
+exports.confirm = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const {doctor} = req.body;
+    // const {petId, packageId, date, time, doctor} = req.body;
+    const reservation = await Reservation.findById(id);
+
+    let date = reservation.date
+    let time = reservation.time
+
+    const petObj = await Pet.find().where('_id').in(reservation.pet).exec();
+    const packageObj = await Pet.find().where('_id').in(reservation.package).exec();
+    const status = 'ยืนยัน';
+
+    // change status
+    switch(status) {
+      case 'ยืนยัน':
+
+        // change status 
+        let reservation = await Reservation.updateOne({_id:id},{
+          status,
+          doctor
+        });
+
+        if(reservation.modifiedCount===0){ throw new Error('ยืนยันการจองไม่สำเร็จ'); }
+
+        const appointment = new Appointment({
+          petObj,
+          date,
+          time,
+          type: 'package',
+          packageObj
+        })
+        await appointment.save();
+
+        res.status(200).json({
+          message: 'เพิ่มข้อมูลการนัดสำเร็จ',
+          data: appointment
+        });
+        break;
+
+      case 'เลื่อนเวลานัด':
+        newStatus = 'เลื่อนเวลานัด'
+        break;
+
+      default:
+        // code block
     }
 
   } catch (error) {

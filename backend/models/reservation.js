@@ -7,7 +7,7 @@ const schema = new Schema({
   date: {type: Date, required: true},
   time:{type: String, trim: true, required: true},
   status: {type: String, trim: true, default: 'pending'},
-  doctor: [{type: Schema.Types.ObjectId, ref: 'Staff'}],
+  doctor: {type: String, trim: true, required: true},
   appointment: [{type: Schema.Types.ObjectId, ref: 'Appointment'}],
 },{
   timestamps: true,

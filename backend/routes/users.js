@@ -10,7 +10,7 @@ const checkRole = require('../middleware/checkRole');
 
 /* GET users listing. */
 router.get('/', [passportLocal.isLogin, checkRole.isAdmin], userController.index);
-router.get('/me', userController.me);
+router.get('/me', [passportLocal.isLogin], userController.getCurrentProfile);
 router.get('/:id', userController.show);
 
 
@@ -20,6 +20,7 @@ router.post('/register-client',
   body('password').not().isEmpty().withMessage('กรุณากรอกรหัสผ่าน').isLength({min: 6}).withMessage('รหัสผ่านต้อง 6 ตัวอักษรขึ้นไป'),
   body('contact').not().isEmpty().withMessage('กรุณากรอกเบอร์โทรศัพท์'),
 ] , userController.createClientUser);
+
 router.post('/register-staff',
 [ body('name').not().isEmpty().withMessage('กรุณากรอกข้อมูลชื่อสกุล'),
   body('email').not().isEmpty().withMessage('กรุณากรอกอีเมลล์').isEmail().withMessage('รูปแบบอีเมลล์ไม่ถูกต้อง'),

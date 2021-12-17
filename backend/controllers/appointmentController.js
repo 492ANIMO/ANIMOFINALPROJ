@@ -34,7 +34,6 @@ exports.show = async (req, res, next) => {
 
     const appointment = await Appointment.findById(id)
     .populate('petObj')
-    .populate('package')
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
@@ -162,7 +161,7 @@ exports.showByPet = async (req, res, next) => {
     const {petId} = req.params;
 
     const appointment = await Appointment.find({'petObj': petId})
-    .populate('package')
+  
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
