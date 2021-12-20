@@ -12,6 +12,7 @@ router.post('/', appointmentController.create);
 router.delete('/:id', appointmentController.destroy);
 // router.delete('/', appointmentController.destroyAll);
 router.patch('/:id', appointmentController.update);
+router.patch('/:id/confirm', appointmentController.confirm);
 
 
 

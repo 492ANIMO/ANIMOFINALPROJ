@@ -179,7 +179,6 @@ exports.showByPet = async (req, res, next) => {
 }
 
 // get appointment by clientId
-
 exports.showByOwner = async (req, res, next) => {
   try {
     const {clientId} = req.params;
@@ -197,6 +196,42 @@ exports.showByOwner = async (req, res, next) => {
     next(error);
   }
 }
+
+// confirm appointment (by appointment id)
+exports.confirm = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    // find appointment by appontment id
+    let appointment = await Appointment.findById(id).populate('reservation');
+    // get package object from appointment
+    console.log(appointment.reservation.package)
+    const packageId = appointment.reservation.package;
+
+    const package = await Package.findById(packageId)
+      .populate('vaccineObj')
+      .populate('treatmentObj')
+      .populate('healthCheckObj')
+    console.log(package)
+    // get vaccine, treatment, healthcheck from package
+  
+    // add vaccine, treatment, healthcheck medical detail to appointment 
+
+    // appointment = await Appointment.updateOne({_id:id},{
+    //   status: 'รักษาเสร็จสิ้น'
+    // });
+
+    if(appointment.modifiedCount===0){ throw new Error('เพิ่มข้อมูลการรักษาไม่สำเร็จ'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      data: appointment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 
 
