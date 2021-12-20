@@ -102,7 +102,7 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { petId, date, time, packageId, detail, type } = req.body;
+    const { petId, date, time, packageId, detail, type, status } = req.body;
 
     const petObj = await Pet.find().where('_id').in(petId).exec();
     const packageObj = await Pet.find().where('_id').in(packageId).exec();
@@ -121,7 +121,8 @@ exports.update = async (req, res, next) => {
       time, 
       packageId,
       detail,
-      type
+      type,
+      status
     });
 
     if(appointment.modifiedCount===0){ throw new Error('แก้ไขข้อมูลการนัดหมายไม่สำเร็จ'); }

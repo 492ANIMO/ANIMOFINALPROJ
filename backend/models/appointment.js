@@ -10,6 +10,7 @@ const schema = new Schema({
   time:{type: String, trim: true, required: true},
   type:{type: String, trim: true},
   detail: { type: String},
+  status: { type: String, trim: true, required: true, default:'ไปตามเวลานัด'},
 },{
   timestamps: true, 
   collection: 'appointments'
