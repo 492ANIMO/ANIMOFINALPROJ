@@ -236,13 +236,17 @@ exports.confirm = async (req, res, next) => {
 
         if(reservation.modifiedCount===0){ throw new Error('ยืนยันการจองไม่สำเร็จ'); }
 
+        
+
         const appointment = new Appointment({
           petObj,
           date,
           time,
           type: 'package',
           packageObj,
-          status: 'ไปตามเวลานัด'
+          status: 'ไปตามเวลานัด',
+          doctor,
+          reservation: id
         })
         await appointment.save();
 

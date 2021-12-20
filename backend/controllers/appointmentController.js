@@ -14,6 +14,7 @@ exports.index = async (req, res, next) => {
   try {
     const appointment = await Appointment.find()
     .populate('petObj')
+    .populate('reservation')
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
@@ -34,6 +35,7 @@ exports.show = async (req, res, next) => {
 
     const appointment = await Appointment.findById(id)
     .populate('petObj')
+    .populate('reservation')
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
