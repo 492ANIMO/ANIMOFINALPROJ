@@ -241,7 +241,8 @@ exports.confirm = async (req, res, next) => {
           date,
           time,
           type: 'package',
-          packageObj
+          packageObj,
+          status: 'ไปตามเวลานัด'
         })
         await appointment.save();
 
