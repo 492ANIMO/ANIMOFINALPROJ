@@ -28,6 +28,7 @@ const treatmentRouter = require('./routes/treatment');
 const healthCheckRouter = require('./routes/healthCheck');
 const reservationRouter = require('./routes/reservation');
 const appointmentRouter = require('./routes/appointment');
+const historyRouter = require('./routes/history');
 
 const app = express();
 
@@ -80,6 +81,7 @@ app.use('/api/treatments', treatmentRouter);
 app.use('/api/healthchecks', healthCheckRouter);
 app.use('/api/appointments', appointmentRouter);
 app.use('/api/reservations', reservationRouter);
+app.use('/api/history', historyRouter);
 
 app.use(errorHandler);
 
