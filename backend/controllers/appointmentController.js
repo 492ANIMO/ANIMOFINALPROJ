@@ -5,8 +5,7 @@ const Appointment = require('../models/appointment');
 const Package = require('../models/package');
 const Pet = require('../models/pet');
 const Client = require('../models/client');
-const appointment = require('../models/appointment');
-const treatment = require('../models/treatment');
+const History = require('../models/history');
 
 const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
 
@@ -213,6 +212,25 @@ exports.confirm = async (req, res, next) => {
     },
       status: 'รักษาเสร็จสิ้น'
     });
+
+    const appointmentObj = await Appointment.findById(id)
+    .populate('petObj', 'name')
+    .populate('reservation', 'package')
+    console.log(appointmentObj)
+
+    const pet = appointmentObj.petObj[0]._id;
+    console.log(pet)
+
+    const packageName = await Package.findById(appointmentObj.reservation.package[0]).select('name')
+
+    // add to history
+    const history = new History({
+      package: appointmentObj.reservation.package[0],
+      appointment: id,
+      pet
+
+    })
+    await history.save();
 
     if(appointment.modifiedCount===0){ throw new Error('เพิ่มข้อมูลการรักษาไม่สำเร็จ'); }
 
