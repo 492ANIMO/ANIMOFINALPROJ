@@ -6,6 +6,7 @@ const Package = require('../models/package');
 const Pet = require('../models/pet');
 const Client = require('../models/client');
 const appointment = require('../models/appointment');
+const treatment = require('../models/treatment');
 
 const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
 
@@ -201,24 +202,17 @@ exports.showByOwner = async (req, res, next) => {
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
-    // find appointment by appontment id
-    let appointment = await Appointment.findById(id).populate('reservation');
-    // get package object from appointment
-    console.log(appointment.reservation.package)
-    const packageId = appointment.reservation.package;
+    const {vaccines, treatments, healthChecks} = req.body;
 
-    const package = await Package.findById(packageId)
-      .populate('vaccineObj')
-      .populate('treatmentObj')
-      .populate('healthCheckObj')
-    console.log(package)
-    // get vaccine, treatment, healthcheck from package
-  
-    // add vaccine, treatment, healthcheck medical detail to appointment 
+    const appointment = await Appointment.updateOne({_id:id},{
+      $addToSet: { 
+      'medical.vaccine': vaccines,
+      'medical.healthCheck': healthChecks,
+      'medical.treatment': treatments,
 
-    // appointment = await Appointment.updateOne({_id:id},{
-    //   status: 'รักษาเสร็จสิ้น'
-    // });
+    },
+      status: 'รักษาเสร็จสิ้น'
+    });
 
     if(appointment.modifiedCount===0){ throw new Error('เพิ่มข้อมูลการรักษาไม่สำเร็จ'); }
 
