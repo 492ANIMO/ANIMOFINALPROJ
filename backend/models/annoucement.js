@@ -4,7 +4,8 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
   title: { type: String, required: true, trim: true, minlength: 3 },
   body: { type: String, trim: true, require: true},
-  author: { type: String, require: true, trim: true}
+  author: { type: String, require: true, trim: true},
+  img: { type: String, require: false, trim: true}
 },{
   timestamps: true,
   collection: 'annoucements'
