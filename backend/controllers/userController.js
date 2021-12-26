@@ -98,7 +98,7 @@ exports.create = async (req, res, next) => {
 
 exports.createClientUser = async (req, res, next) => {
   try {
-    const { name, email, password, address, contact } = req.body
+    const { name, email, password, address, contact, avatar } = req.body
     //check email ซ้ำ
     const existEmail = await User.findOne({email: email});
     if (existEmail){
@@ -118,13 +118,16 @@ exports.createClientUser = async (req, res, next) => {
       (error) => {
         if(error) throw new Error(error);
 
-        const client = new Client({
+        let client = new Client({
           name,
           contact,
           address,
           role: 'client',
-          _user: user._id
+          _user: user._id,
         })
+        if(req.file){
+          client.avatar = req.file.path
+        }
         client.save((error) => {
           if(error) throw new Error(error);
         })
@@ -167,13 +170,17 @@ exports.createStaffUser = async (req, res, next) => {
       (error) => {
         if(error) throw new Error(error);
 
-        const staff = new Staff({
+        let staff = new Staff({
           name,
           contact,
           address,
           role: role,
           _user: user._id
         })
+
+        if(req.file){
+          staff.avatar = req.file.path
+        }
 
         staff.save((error) => {
           if(error) throw new Error(error);

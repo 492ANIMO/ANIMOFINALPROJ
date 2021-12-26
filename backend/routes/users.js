@@ -7,6 +7,7 @@ const userController = require('../controllers/userController');
 // middle ware
 const passportLocal = require('../middleware/checkAuth');
 const checkRole = require('../middleware/checkRole');
+const upload = require('../middleware/upload');
 
 /* GET users listing. */
 router.get('/', [passportLocal.isLogin, checkRole.isAdmin], userController.index);
@@ -19,6 +20,7 @@ router.post('/register-client',
   body('email').not().isEmpty().withMessage('กรุณากรอกอีเมลล์').isEmail().withMessage('รูปแบบอีเมลล์ไม่ถูกต้อง'),
   body('password').not().isEmpty().withMessage('กรุณากรอกรหัสผ่าน').isLength({min: 6}).withMessage('รหัสผ่านต้อง 6 ตัวอักษรขึ้นไป'),
   body('contact').not().isEmpty().withMessage('กรุณากรอกเบอร์โทรศัพท์'),
+  upload.single('avatar'),
 ] , userController.createClientUser);
 
 router.post('/register-staff',
@@ -26,6 +28,7 @@ router.post('/register-staff',
   body('email').not().isEmpty().withMessage('กรุณากรอกอีเมลล์').isEmail().withMessage('รูปแบบอีเมลล์ไม่ถูกต้อง'),
   body('password').not().isEmpty().withMessage('กรุณากรอกรหัสผ่าน').isLength({min: 6}).withMessage('รหัสผ่านต้อง 6 ตัวอักษรขึ้นไป'),
   body('contact').not().isEmpty().withMessage('กรุณากรอกเบอร์โทรศัพท์'),
+  upload.single('avatar'),
 ] , userController.createStaffUser);
 
 router.post('/', userController.create);
