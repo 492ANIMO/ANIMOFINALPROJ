@@ -34,6 +34,12 @@ exports.create = async (req, res, next) => {
       _owner: ownerId
     })
 
+
+    if(req.file){
+      pet.avatar = req.file.path
+    }
+
+
     await pet.save();
 
     res.status(201).json({

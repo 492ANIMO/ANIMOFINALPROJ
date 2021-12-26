@@ -11,7 +11,8 @@ const schema = new Schema({
   bloodType: { type: String, trim: true },
   weight: { type: String, trim: true },
   dob: { type: String, trim: true },
-  sterilization: { type: Boolean, required: false },
+  sterilization: { type: Boolean },
+  avatar: { type: String },
 
   // foreign key
   _owner: { type: Schema.Types.ObjectId, ref: 'Client' }

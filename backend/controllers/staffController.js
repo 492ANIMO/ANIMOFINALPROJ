@@ -36,10 +36,9 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-
     const {name, email, contact, address, role } = req.body;
 
-    const staff = new Staff({
+    let staff = new Staff({
       name, 
       email,
       contact,
@@ -47,11 +46,11 @@ exports.create = async (req, res, next) => {
       role
     })
 
+    if(req.file){
+      staff.avatar = req.file.path
+    }
+
     await staff.save();
-
-
-    // const staff = await Staff.find();
-    // if(!staff){ throw new Error('ไม่พบข้อมูลเจ้าหน้าที่'); }
 
     res.status(200).json({
       message: 'สำเร็จ',
@@ -66,7 +65,7 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, email, contact, address, role } = req.body;
+    const { name, email, contact, address } = req.body;
 
     let staff = await Staff.updateOne({_id:id}, {
       name,

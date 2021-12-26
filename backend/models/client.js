@@ -10,13 +10,14 @@ const schema = new Schema({
   contact: { type: String, required: true, trim: true },
   email: { type: String, trim: true },
   address: {
-    province: { type: String, required: true },
-    district: { type: String, required: true },
-    subdistrict: { type: String, required: true },
-    postalCode: { type: String, required: true },
+    province: { type: String },
+    district: { type: String },
+    subdistrict: { type: String },
+    postalCode: { type: String },
     detail: { type: String, trim: true }
   },
   role: { type: String, default: 'client' },
+  avatar: { type: String },
 
   // foreign key
   _user: { type: Schema.Types.ObjectId, ref: 'User' }
