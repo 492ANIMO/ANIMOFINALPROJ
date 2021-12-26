@@ -37,12 +37,15 @@ exports.show = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     const {title, body, author, img} = req.body;
-    const annoucement = new Annoucement({
+    let annoucement = new Annoucement({
       title,
       body,
       author,
       img
     })
+    if(req.file){
+      annoucement.img = req.file.path
+    }
 
     annoucement.save((error)=>{
       if(error) throw error;
