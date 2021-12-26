@@ -28,6 +28,8 @@ router.post('/register-staff',
   body('contact').not().isEmpty().withMessage('กรุณากรอกเบอร์โทรศัพท์'),
 ] , userController.createStaffUser);
 
+router.post('/', userController.create);
+
 router.patch('/staff/edit/:id', userController.updateStaffUser); //*
 router.patch('/:id', userController.update);
 

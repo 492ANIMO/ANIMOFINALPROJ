@@ -43,6 +43,7 @@ exports.getCurrentProfile = async (req, res, next) => {
     const id = req.user._id;
     const user = await User.findById(id).select('email role').populate('_client', 'name contact address -_user ').populate('_staff', 'name contact address -_user ');
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
+    
 
     res.status(200).json({
       message: 'สำเร็จ',
@@ -74,10 +75,12 @@ exports.create = async (req, res, next) => {
       error.statusCode = 400;
       throw error;
   }
+    // encrypt password
+    const encryptPassword = bcrypt.hashSync(password, 10);
 
     let user = new User({
       email: email,
-      password: password,
+      password: encryptPassword,
       role: role
     })
 
@@ -91,12 +94,11 @@ exports.create = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-
 }
 
 exports.createClientUser = async (req, res, next) => {
   try {
-    const { name, email, password, address, contact, role } = req.body
+    const { name, email, password, address, contact } = req.body
     //check email ซ้ำ
     const existEmail = await User.findOne({email: email});
     if (existEmail){
@@ -104,17 +106,14 @@ exports.createClientUser = async (req, res, next) => {
       error.statusCode = 400;
       throw error;
   }
-
     // encrypt password
-    const encryptPassword = await bcrypt.hashSync(password, 10);
+    const encryptPassword =  bcrypt.hashSync(password, 10);
 
     let user = new User({
       email: email,
       password: encryptPassword,
       role: 'client',
-
     })
-
     await user.save(
       (error) => {
         if(error) throw new Error(error);
@@ -126,7 +125,6 @@ exports.createClientUser = async (req, res, next) => {
           role: 'client',
           _user: user._id
         })
-
         client.save((error) => {
           if(error) throw new Error(error);
         })
@@ -198,7 +196,7 @@ exports.createStaffUser = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const {email, password, name, contact, address} = req.body;
+    const {email, password, name, contact, address, role} = req.body;
 
     //validation input
     const errors = validationResult(req);
@@ -213,7 +211,8 @@ exports.update = async (req, res, next) => {
     const encryptPassword = await bcrypt.hash(password, 10);
     let user = await User.updateOne({_id:id},{
         email, 
-        password: encryptPassword
+        password: encryptPassword,
+        role
     });
 
     user = await User.findById(id).populate('_client');

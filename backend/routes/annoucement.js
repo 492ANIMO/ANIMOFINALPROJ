@@ -10,6 +10,4 @@ router.post('/', annoucementController.create);
 router.delete('/:id', annoucementController.destroy);
 router.patch('/:id', annoucementController.update);
 
-
-
 module.exports = router;
