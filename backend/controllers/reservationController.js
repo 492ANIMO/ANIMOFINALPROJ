@@ -65,6 +65,15 @@ exports.create = async (req, res, next) => {
     const pet = await Pet.find().where('_id').in(petId).exec();
     const package = await Package.find().where('_id').in(packageId).exec();
 
+    // check if pet is in database
+    if(pet == ''){
+      throw new Error('ไม่พบสัตว์เลี้ยงในระบบ');
+    }
+    // check if package is in database
+    if(package == ''){
+      throw new Error('ไม่พบแพ็คเกจในระบบ');
+    }
+
     // check if avaliable timeslot
     if(!timeslot.includes(time)){
       throw new Error('ไม่สามารถเพิ่มการจองในช่วงเวลานี้ได้');
