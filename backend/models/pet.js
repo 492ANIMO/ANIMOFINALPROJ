@@ -15,7 +15,7 @@ const schema = new Schema({
   avatar: { type: String },
 
   // foreign key
-  _owner: { type: Schema.Types.ObjectId, ref: 'Client' }
+  owner: { type: Schema.Types.ObjectId, ref: 'Client' }
 
 },{
   collection: 'pets'

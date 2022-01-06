@@ -28,10 +28,10 @@ const schema = new Schema({
   collection: 'clients'
 });
 
-schema.virtual('_pet', {
+schema.virtual('pet', {
   ref: 'Pet',
   localField: '_id', 
-  foreignField: '_owner' 
+  foreignField: 'owner' 
 });
 
 module.exports = mongoose.model('Client', schema);
