@@ -7,7 +7,7 @@ LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
 
 // middle ware
-const passportLocal = require('../middleware/checkAuth');
+// const passportLocal = require('../middleware/checkAuth');
 
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/login-failure',
