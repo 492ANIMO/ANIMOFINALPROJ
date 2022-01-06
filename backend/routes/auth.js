@@ -32,7 +32,9 @@ router.get('/login-success', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout()
-  res.send('ออกจากระบบสำเร็จ');
+  res.status(200).json({
+    message: "ออกจากระบบสำเร็จ"
+  })
 })
 
 module.exports = router;
