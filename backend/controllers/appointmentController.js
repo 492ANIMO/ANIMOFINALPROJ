@@ -7,13 +7,16 @@ const Pet = require('../models/pet');
 const Client = require('../models/client');
 const History = require('../models/history');
 
-const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
+// const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
+
+const timeslot = require('../models/timeslot');
+
 
 // get all appointment
 exports.index = async (req, res, next) => {
   try {
     const appointment = await Appointment.find()
-    .populate('petObj')
+    .populate('pet')
     .populate('reservation')
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
@@ -34,7 +37,7 @@ exports.show = async (req, res, next) => {
     const {id} = req.params;
 
     const appointment = await Appointment.findById(id)
-    .populate('petObj')
+    .populate('pet')
     .populate('reservation')
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
@@ -63,8 +66,8 @@ exports.create = async (req, res, next) => {
         throw error;
     }
 
-    const petObj = await Pet.find().where('_id').in(petId).exec();
-    const packageObj = await Pet.find().where('_id').in(packageId).exec();
+    const pet = await Pet.find().where('_id').in(petId).exec();
+    const packageObj = await Package.find().where('_id').in(packageId).exec();
 
     // check if avaliable timeslot
     if(!timeslot.includes(time)){
@@ -81,7 +84,7 @@ exports.create = async (req, res, next) => {
     }
 
     const appointment = new Appointment({
-      petObj,
+      pet: petId,
       date,
       time,
       type,
@@ -106,7 +109,7 @@ exports.update = async (req, res, next) => {
     const {id} = req.params;
     const { petId, date, time, packageId, detail, type, status } = req.body;
 
-    const petObj = await Pet.find().where('_id').in(petId).exec();
+    const pet = await Pet.find().where('_id').in(petId).exec();
     const packageObj = await Pet.find().where('_id').in(packageId).exec();
     // check if avaliable time 
     const booked = await Appointment.find({
@@ -163,7 +166,7 @@ exports.showByPet = async (req, res, next) => {
   try {
     const {petId} = req.params;
 
-    const appointment = await Appointment.find({'petObj': petId})
+    const appointment = await Appointment.find({'pet': petId})
   
 
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
@@ -185,7 +188,7 @@ exports.showByOwner = async (req, res, next) => {
 
     const pet = await Pet.find().where('_owner').in(clientId).exec();
 
-    const appointment = await Appointment.find().where('petObj').in(pet).populate('petObj').exec();
+    const appointment = await Appointment.find().where('pet').in(pet).populate('pet').exec();
     // get appointment by pet id
     res.status(200).json({
       message: 'สำเร็จ',
@@ -214,11 +217,11 @@ exports.confirm = async (req, res, next) => {
     });
 
     const appointmentObj = await Appointment.findById(id)
-    .populate('petObj', 'name')
+    .populate('pet', 'name')
     .populate('reservation', 'package')
     console.log(appointmentObj)
 
-    const pet = appointmentObj.petObj[0]._id;
+    const pet = appointmentObj.pet[0]._id;
     console.log(pet)
 
     const packageName = await Package.findById(appointmentObj.reservation.package[0]).select('name')
