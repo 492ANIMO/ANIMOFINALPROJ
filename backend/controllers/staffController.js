@@ -20,9 +20,13 @@ exports.index = async (req, res, next) => {
 
 exports.show = async (req, res, next) => {
   try {
-    const {id} = req.params;
-    const staff = await Staff.findById(id).populate('_user');
-    if(!staff){ throw new Error('ไม่พบข้อมูลเจ้าหน้าที่'); }
+    const {
+      id
+    } = req.params;
+    const staff = await Staff.findById(id).populate('user');
+    if (!staff) {
+      throw new Error('ไม่พบข้อมูลเจ้าหน้าที่');
+    }
 
     res.status(200).json({
       message: 'สำเร็จ',
@@ -36,17 +40,23 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const {name, email, contact, address, role } = req.body;
-
-    let staff = new Staff({
-      name, 
+    const {
+      name,
       email,
       contact,
       address,
-      role
+      position
+    } = req.body;
+
+    let staff = new Staff({
+      name,
+      email,
+      contact,
+      address,
+      position
     })
 
-    if(req.file){
+    if (req.file) {
       staff.avatar = req.file.path
     }
 
@@ -64,16 +74,29 @@ exports.create = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
   try {
-    const {id} = req.params;
-    const { name, email, contact, address } = req.body;
-
-    let staff = await Staff.updateOne({_id:id}, {
+    const {
+      id
+    } = req.params;
+    const {
       name,
       email,
       contact,
-      address
+      address,
+      position
+    } = req.body;
+
+    let staff = await Staff.findOneAndUpdate({
+      _id: id
+    }, {
+      name,
+      email,
+      contact,
+      address,
+      position
+    }, {
+      returnDocument: 'after'
     })
-    if(staff.modifiedCount===0){
+    if (!staff) {
       const error = new Error('ไม่สามารถแก้ไขข้อมูลเจ้าหน้าที่ได้');
       error.statusCode = 400;
       throw error;
@@ -82,8 +105,7 @@ exports.update = async (req, res, next) => {
     res.status(200).json({
       message: 'แก้ไขข้อมูลสำเร็จ',
       staff
-  });
-
+    });
   } catch (error) {
     next(error);
   }
@@ -93,9 +115,9 @@ exports.destroy = async (req, res, next) => {
   try {
     const {id} = req.params;
     // check if client have user accout
-    let staff = await Staff.findById(id).populate('_user');
+    let staff = await Staff.findById(id).populate('user');
 
-    if(staff._user === undefined) { //doesnt have usr account -> delete client
+    if(staff.user === undefined) { //doesnt have usr account -> delete client
       let deleteStaff = await Staff.deleteOne({_id:id})
       if(deleteStaff.deletedCount === 0){ 
         throw new Error('ลบข้อมูลเจ้าหน้าที่ไม่สำเร็จ');
@@ -105,7 +127,7 @@ exports.destroy = async (req, res, next) => {
         staff
       })
     ;} else{ //client have user account -> delete user account
-      const user = await User.deleteOne({_id:staff._user});
+      const user = await User.deleteOne({_id:staff.user});
       if(user.deletedCount === 0) throw new Error('ไม่สามารถลบบัญชีผู้ใช้เจ้าหน้าที่ได้')
 
       staff = await Staff.deleteOne({_id:id});
@@ -117,6 +139,22 @@ exports.destroy = async (req, res, next) => {
         staff
       });
     }
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.showVet = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const vet = await Staff.find({position:'vet'});
+    if(!vet){ throw new Error('ไม่พบข้อมูลสัตวแพทย์'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      data: vet
+    });
 
   } catch (error) {
     next(error);

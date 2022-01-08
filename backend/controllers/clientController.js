@@ -56,11 +56,9 @@ exports.create = async (req, res, next) => {
       role: 'client'
     })
 
-
     if(req.file){
       client.avatar = req.file.path
     }
-
     await client.save();
 
     res.status(201).json({
@@ -77,19 +75,19 @@ exports.destroy = async (req, res, next) => {
   try {
     const {id} = req.params;
     // check if client have user accout
-    let client = await Client.findById(id).populate('_user');
+    let client = await Client.findById(id).populate('user');
 
-    if(client._user === undefined) { //doesnt have usr account -> delete client
-      let deleteClient = await Client.deleteOne({_id:id})
+    if(client.user === undefined) { //doesnt have usr account -> delete client
+      let deleteClient = await Client.deleteOne({_id:id});
       if(deleteClient.deletedCount === 0){ 
         throw new Error('ลบข้อมูลเจ้าของสัตว์เลี้ยงไม่สำเร็จ');
       }
       res.status(200).json({
         message: 'ไม่มีuser ลบข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
         client
-      })
-    ;} else{ //client have user account -> delete user account
-      const user = await User.deleteOne({_id:client._user});
+      });
+    } else{ //client have user account -> delete user account
+      const user = await User.deleteOne({_id:client.user});
       if(user.deletedCount === 0) throw new Error('ไม่สามารถลบบัญชีผู้ใช้ของสัตว์เลี้ยงได้')
 
       client = await Client.deleteOne({_id:id});
@@ -135,12 +133,11 @@ exports.update = async (req, res, next) => {
       email,
       contact,
       address
-    })
+    }, { returnDocument: 'after' });
     if(!client){
       const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
       throw error;
     }
-    client = await Client.findById(id);
 
     res.status(200).json({
       message: 'แก้ไขข้อมูลสำเร็จ',

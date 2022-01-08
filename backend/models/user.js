@@ -23,13 +23,13 @@ const userSchema = new Schema({
 userSchema.virtual('_client', {
   ref: 'Client',
   localField: '_id', //user._id
-  foreignField: '_user', //
+  foreignField: 'user', //
   justOne : true
 });
 userSchema.virtual('_staff', {
   ref: 'Staff',
   localField: '_id', //user._id
-  foreignField: '_user', //
+  foreignField: 'user', //
   justOne : true
 });
 

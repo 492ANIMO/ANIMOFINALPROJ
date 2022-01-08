@@ -7,8 +7,6 @@ const Pet = require('../models/pet');
 const Client = require('../models/client');
 const History = require('../models/history');
 
-// const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
-
 const timeslot = require('../models/timeslot');
 
 
@@ -16,9 +14,25 @@ const timeslot = require('../models/timeslot');
 exports.index = async (req, res, next) => {
   try {
     const appointment = await Appointment.find()
-    .populate('pet')
-    .populate('reservation')
-
+    .populate({ 
+      path: 'pet',
+      populate: {
+       path: 'owner',
+       model: 'Client',
+       select: '-createdAt -updatedAt -__v',
+     },
+     select: '-createdAt -updatedAt -__v', 
+    })
+    .populate({ 
+      path: 'reservation',
+      populate: {
+       path: 'package',
+       model: 'Package',
+       select: '-createdAt -updatedAt -__v',
+     },
+     select: '-createdAt -updatedAt -__v', 
+    })
+    
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     res.status(200).json({
@@ -37,9 +51,25 @@ exports.show = async (req, res, next) => {
     const {id} = req.params;
 
     const appointment = await Appointment.findById(id)
-    .populate('pet')
-    .populate('reservation')
-
+    .populate({ 
+      path: 'pet',
+      populate: {
+       path: 'owner',
+       model: 'Client',
+       select: '-createdAt -updatedAt -__v',
+     },
+     select: '-createdAt -updatedAt -__v', 
+    })
+    .populate({ 
+      path: 'reservation',
+      populate: {
+       path: 'package',
+       model: 'Package',
+       select: '-createdAt -updatedAt -__v',
+     },
+     select: '-createdAt -updatedAt -__v', 
+    })
+    
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     res.status(200).json({
@@ -66,24 +96,24 @@ exports.create = async (req, res, next) => {
         throw error;
     }
 
-    const pet = await Pet.find().where('_id').in(petId).exec();
     const packageObj = await Package.find().where('_id').in(packageId).exec();
 
-    // check if avaliable timeslot
+    // check if avaliable timeslot เช็คว่าเป็นเวลาที่ให้จองได้หรือไม่
     if(!timeslot.includes(time)){
       throw new Error('ไม่สามารถเพิ่มการนัดหมายในเวลาดังกล่าวได้');
     }
 
-    // check if avaliable time 
+    // check if avaliable time   เช็คว่าเวลานั้นถูกจองไปหรือยัง
     const booked = await Appointment.find({
       'date': date, 
       'time': time });
     console.log(booked)
+      //  if found booked time -> reject
     if(booked.length!==0){
       throw new Error('ไม่สามารถเพิ่มการนัดหมายได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว');
     }
-
-    const appointment = new Appointment({
+      //  if not found booked time -> add appointment
+    let appointment = new Appointment({
       pet: petId,
       date,
       time,
@@ -92,6 +122,10 @@ exports.create = async (req, res, next) => {
       packageObj
     })
     await appointment.save();
+
+    appointment = await Appointment.findById(appointment._id)
+    .populate('pet')
+    .populate('reservation');
 
     res.status(200).json({
       message: 'บันทึกข้อมูลสำเร็จ',
@@ -168,7 +202,6 @@ exports.showByPet = async (req, res, next) => {
 
     const appointment = await Appointment.find({'pet': petId})
   
-
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     res.status(200).json({
@@ -186,8 +219,8 @@ exports.showByOwner = async (req, res, next) => {
   try {
     const {clientId} = req.params;
 
-    const pet = await Pet.find().where('_owner').in(clientId).exec();
-
+    const pet = await Pet.find().where('owner').in(clientId).exec();
+    console.log(pet)
     const appointment = await Appointment.find().where('pet').in(pet).populate('pet').exec();
     // get appointment by pet id
     res.status(200).json({
@@ -200,7 +233,7 @@ exports.showByOwner = async (req, res, next) => {
   }
 }
 
-// confirm appointment (by appointment id)
+// confirm appointment (by appointment id) -> for reservation
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
@@ -221,7 +254,7 @@ exports.confirm = async (req, res, next) => {
     .populate('reservation', 'package')
     console.log(appointmentObj)
 
-    const pet = appointmentObj.pet[0]._id;
+    const pet = appointmentObj.pet._id;
     console.log(pet)
 
     const packageName = await Package.findById(appointmentObj.reservation.package[0]).select('name')

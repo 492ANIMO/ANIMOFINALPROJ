@@ -20,7 +20,7 @@ const schema = new Schema({
   avatar: { type: String },
 
   // foreign key
-  _user: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 
 },{
   toJSON: { virtuals: true },

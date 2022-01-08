@@ -24,6 +24,7 @@ exports.create = async (req, res, next) => {
   try {
     const { name, type, breed, gender, bloodType, weight, dob, sterilization, ownerId} = req.body;
 
+
     let pet = new Pet({
       name,
       type,

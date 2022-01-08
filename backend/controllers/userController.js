@@ -9,9 +9,9 @@ const Staff = require('../models/staff');
 exports.index = async (req, res, next) => {
   try {
 
-    const user = await User.find().select('-password').populate({ 
+    const user = await User.find().select('-password ').populate({ 
       path: 'profile',
-      select: '-email -role -createdAt -updatedAt -__v',
+      select: '-email -role -createdAt -updatedAt -__v ',
     });
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
@@ -28,9 +28,9 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const user = await User.findById(id).select('-password').populate({ 
+    const user = await User.findById(id).select('-password ').populate({ 
       path: 'profile',
-      select: '-email -role -createdAt -updatedAt -__v',
+      select: '-email -role -createdAt -updatedAt -__v ',
     })
 
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
@@ -66,7 +66,7 @@ exports.getCurrentProfile = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { email, password, role, name, contact, address } = req.body;
+    const { email, password, role, name, contact, address, position } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -117,7 +117,8 @@ exports.create = async (req, res, next) => {
         name,
         email,
         contact,
-        address
+        address,
+        position
       })
         if(req.file){
           staff.avatar = req.file.path
@@ -291,7 +292,7 @@ exports.update = async (req, res, next) => {
           email,
           contact,
           address,
-        })
+        }, )
 
         user = await User.findById(id).populate('profile');
         
