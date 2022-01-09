@@ -2,10 +2,16 @@ const { validationResult } = require('express-validator');
 
 // import models
 const Package = require('../models/package');
+const Vaccine = require('../models/vaccine');
+const Treatment = require('../models/treatment');
+const HealthCheck = require('../models/healthCheck');
 
 exports.index = async (req, res, next) => {
   try {
-    const package = await Package.find();
+    const package = await Package.find()
+    .populate('vaccineObj')
+    .populate('treatmentObj')
+    .populate('healthCheckObj');
     if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
 
     res.status(200).json({
@@ -21,7 +27,9 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const package = await Package.findById(id);
+    const package = await Package.findById(id).populate('vaccineObj')
+    .populate('treatmentObj')
+    .populate('healthCheckObj');
     if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
 
     res.status(200).json({
@@ -36,7 +44,7 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, vaccine, treatment, healthCheck, detail, time, price } = req.body;
+    const { name, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -47,16 +55,18 @@ exports.create = async (req, res, next) => {
         throw error;
     }
 
+    const vaccineObj = await Vaccine.find().where('_id').in(vaccineId).exec();
+    const treatmentObj = await Treatment.find().where('_id').in(treatmentId).exec();
+    const healthCheckObj = await HealthCheck.find().where('_id').in(healthCheckId).exec();
+
     const package = new Package({
       name,
-      vaccine,
-      treatment,
-      healthCheck,
+      vaccineObj,
+      treatmentObj,
+      healthCheckObj,
       detail,
-      time,
       price
     })
-
     await package.save();
 
     res.status(200).json({
@@ -72,14 +82,18 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, vaccine, treatment, healthCheck, detail, time, price } = req.body;
+    const { name, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
+
+    const vaccineObj = await Vaccine.find().where('_id').in(vaccineId).exec();
+    const treatmentObj = await Treatment.find().where('_id').in(treatmentId).exec();
+    const healthCheckObj = await HealthCheck.find().where('_id').in(healthCheckId).exec();
+
     const package = await Package.updateOne({_id:id}, {
       name, 
-      vaccine, 
-      treatment, 
-      healthCheck, 
+      vaccineObj, 
+      treatmentObj, 
+      healthCheckObj, 
       detail, 
-      time, 
       price
     })
 

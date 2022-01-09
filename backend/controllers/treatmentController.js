@@ -1,0 +1,111 @@
+const { validationResult } = require('express-validator');
+
+// import models
+// const Treatment = require('../models/treatment');
+const Treatment = require('../models/treatment');
+
+exports.index = async (req, res, next) => {
+  try {
+    const treatment = await Treatment.find();
+    if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
+
+    res.status(200).json({
+      message: 'ดึงข้อมูลสำเร็จ',
+      data: treatment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.show = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const treatment = await Treatment.findById(id);
+    if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      data: treatment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.create = async (req, res, next) => {
+  try {
+    const {name, type, manufacturer, lot_number, detail} = req.body;
+    
+    const treatment = new Treatment({
+      name,
+      type,
+      manufacturer,
+      lot_number,
+      detail
+    })
+
+    treatment.save((error)=>{
+      if(error) throw error;
+    })
+
+    res.status(200).json({
+      message: 'เพิ่มการรักษาสำเร็จ',
+      data: treatment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.update = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const {name, type, manufacturer, lot_number, detail} = req.body;
+    
+    const treatment = await Treatment.updateOne({_id:id },{
+      name,
+      type,
+      manufacturer,
+      lot_number,
+      detail
+    })
+    if(treatment.matchedCount===0){
+      throw new Error('แก้ไขข้อมูลการรักษาไม่สำเร็จ ไม่พบการรักษา');
+    }
+
+    res.status(200).json({
+      message: 'แก้ไขข้อมูลการรักษาสำเร็จ',
+      data: treatment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.destroy = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    
+    const treatment = await Treatment.deleteOne({_id:id})
+
+    if(treatment.deletedCount===0){
+      throw new Error('ลบข้อมูลการรักษาไม่สำเร็จ');
+    }
+
+    res.status(200).json({
+      message: 'ลบข้อมูลการรักษาสำเร็จ',
+      data: treatment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+

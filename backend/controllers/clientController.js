@@ -56,6 +56,11 @@ exports.create = async (req, res, next) => {
       role: 'client'
     })
 
+
+    if(req.file){
+      client.avatar = req.file.path
+    }
+
     await client.save();
 
     res.status(201).json({

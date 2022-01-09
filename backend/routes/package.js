@@ -10,7 +10,7 @@ router.get('/:id', packageController.show);
 
 router.post('/', packageController.create);
 router.delete('/:id', packageController.destroy);
-router.put('/:id', packageController.update);
+router.patch('/:id', packageController.update);
 
 
 module.exports = router;

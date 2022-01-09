@@ -23,6 +23,13 @@ const staffRouter = require('./routes/staff');
 const authRouter = require('./routes/auth');
 const petRouter = require('./routes/pet');
 const packageRouter = require('./routes/package');
+const vaccineRouter = require('./routes/vaccine');
+const treatmentRouter = require('./routes/treatment');
+const healthCheckRouter = require('./routes/healthCheck');
+const reservationRouter = require('./routes/reservation');
+const appointmentRouter = require('./routes/appointment');
+const historyRouter = require('./routes/history');
+const annoucementRouter = require('./routes/annoucement');
 
 const app = express();
 
@@ -38,16 +45,19 @@ app.use(express.json({
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api/uploads', express.static('uploads'));
 
 app.use(session({
   secret: 'secret',
-  // maxAge: 3600000,
+  cookie: {
+    maxAge: 60 * 60 * 1000
+  },
   resave: false,
   saveUninitialized: false
 }))
 
 /**
- * -------------- PASSPORT AUTHENTICATION ----------------
+ * ------ PASSPORT AUTHENTICATION -------
  */
 // require the entire Passport config module (so app.js knows about it)
 require('./config/passport')(passport);
@@ -68,6 +78,13 @@ app.use('/api/clients', clientRouter);
 app.use('/api/staffs', staffRouter);
 app.use('/api/pets', petRouter);
 app.use('/api/packages', packageRouter);
+app.use('/api/vaccines', vaccineRouter);
+app.use('/api/treatments', treatmentRouter);
+app.use('/api/healthchecks', healthCheckRouter);
+app.use('/api/appointments', appointmentRouter);
+app.use('/api/reservations', reservationRouter);
+app.use('/api/history', historyRouter);
+app.use('/api/annoucements', annoucementRouter);
 
 app.use(errorHandler);
 

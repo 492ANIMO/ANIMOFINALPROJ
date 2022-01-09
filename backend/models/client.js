@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const User = require('./user'); // import User models
+// import models
+const User = require('./user'); 
 const Pet = require('./pet');
 
 const schema = new Schema({
@@ -9,13 +10,14 @@ const schema = new Schema({
   contact: { type: String, required: true, trim: true },
   email: { type: String, trim: true },
   address: {
-    province: { type: String, required: true },
-    district: { type: String, required: true },
-    subdistrict: { type: String, required: true },
-    postalCode: { type: String, required: true },
+    province: { type: String },
+    district: { type: String },
+    subdistrict: { type: String },
+    postalCode: { type: String },
     detail: { type: String, trim: true }
   },
-  role: { type: String, enum : ['client', 'staff', 'admin'], default: 'client' },
+  role: { type: String, default: 'client' },
+  avatar: { type: String },
 
   // foreign key
   _user: { type: Schema.Types.ObjectId, ref: 'User' }
@@ -28,10 +30,8 @@ const schema = new Schema({
 
 schema.virtual('_pet', {
   ref: 'Pet',
-  localField: '_id', //user._id
-  foreignField: '_owner' //
+  localField: '_id', 
+  foreignField: '_owner' 
 });
-
-
 
 module.exports = mongoose.model('Client', schema);
