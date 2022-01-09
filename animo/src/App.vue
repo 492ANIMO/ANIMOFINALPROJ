@@ -12,24 +12,37 @@
  body {
    margin: 0px;
    font-family: kanit;
-   background: #F9FBFC;
+   background: #f4f7f8;
  }
  .icon {
    padding-right: 8px;
  }
  .Content1 {
-    margin-left: 20%;
-    padding: 0px 16px;
+    padding-top: 30px;
 }
 .Content2 {
     position: absolute;
-    left: 90%;
-    margin-top:30px;
-    transform: translateX(-90%);
-    width: 72%;
+    left: calc(20% + 30px);;
+    width: calc(80% - 100px);
     background: #FFFFFF;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
+}
+.iconBTr{
+  padding-right: 5px;
+  margin-left: 1px;
+}
+.iconBTl{
+  padding-left: 5px;
+  margin-right: 1px;
+  }
+.space{
+  height: 30px;
+  width: 63px;
+}
+::v-deep .vs-input {
+  font-family: kanit;
+  color: #696969;
 }
 </style>

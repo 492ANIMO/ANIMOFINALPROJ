@@ -10,8 +10,16 @@ export default {
   name: 'index',
   components: {
     Navbar,
+  },
+  methods: {
+  sendData(e) {
+    e.preventDefault();
+    console.log("sendData.......");
+    this.clearData();
+    }
   }
 }
+
 </script>
 <style scoped>
 ::v-deep ul {

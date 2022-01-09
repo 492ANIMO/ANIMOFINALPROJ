@@ -4,6 +4,11 @@
     <div style="padding-top:52px">
         <NavbarSide/>
     </div>
+    <div class="Content1">
+        <div class="Content2">
+         <h1>กราฟ</h1>
+        </div>
+    </div>
 </div>
 </template>
 <script>
