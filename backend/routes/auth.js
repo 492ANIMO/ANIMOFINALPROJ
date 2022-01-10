@@ -7,7 +7,7 @@ LocalStrategy = require('passport-local').Strategy;
 const User = require('../models/user');
 
 // middle ware
-const passportLocal = require('../middleware/checkAuth');
+// const passportLocal = require('../middleware/checkAuth');
 
 router.post('/login', passport.authenticate('local', {
   failureRedirect: '/auth/login-failure',
@@ -32,7 +32,9 @@ router.get('/login-success', (req, res) => {
 
 router.get('/logout', (req, res) => {
   req.logout()
-  res.send('ออกจากระบบสำเร็จ');
+  res.status(200).json({
+    message: "ออกจากระบบสำเร็จ"
+  })
 })
 
 module.exports = router;

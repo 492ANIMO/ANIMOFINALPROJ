@@ -14,11 +14,11 @@ const schema = new Schema({
     postalCode: { type: String },
     detail: { type: String, trim: true }
   },
-  role: { type: String, default: 'staff' },
+  position: { type: String, default: 'staff', enum: ['vet', 'staff'] },
   avatar: { type: String },
 
   // foreign key
-  _user: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' }
 
 },{
   timestamps: true,

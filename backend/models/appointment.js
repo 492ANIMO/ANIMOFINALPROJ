@@ -5,16 +5,16 @@ const Pet = require('../models/pet');
 const Package = require('../models/package');
 const Reservation = require('../models/reservation');
 
-
-
 const schema = new Schema({
-  petObj: [{ type: Schema.Types.ObjectId, ref: 'Pet' }],
+  pet: { type: Schema.Types.ObjectId, ref: 'Pet' },
   date: {type: Date, required: true},
   time:{type: String, trim: true, required: true},
-  type:{type: String, trim: true},
+  type:{type: String, trim: true, enum: ['ทั่วไป', 'วัคซีน', 'การรักษา', 'ตรวจสุขภาพ', 'แพ็คเกจ'], default: 'ทั่วไป'},
   detail: { type: String}, //
   status: { type: String, trim: true, required: true, default:'ไปตามเวลานัด'},
+  by: {type: String, trim: true, enum: ['นัดโดยสัตวแพทย์', 'การจอง'], default: 'นัดโดยสัตวแพทย์'},
   doctor: { type: String, trim: true, required: false},
+
   reservation: { type: Schema.Types.ObjectId, ref: 'Reservation' },
   medical:{
     vaccine: [{
@@ -31,6 +31,7 @@ const schema = new Schema({
       medDetail: { type: String }
     }]
   }
+  
 },{
   timestamps: true, 
   collection: 'appointments'

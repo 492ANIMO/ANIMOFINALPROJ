@@ -7,9 +7,9 @@ const HealthCheck = require('../models/healthCheck');
 
 const schema = new Schema({
   name: { type: String, required: true, trim: true},
-  vaccineObj: [{ type: Schema.Types.ObjectId, ref: 'Vaccine' }],
-  treatmentObj: [{ type: Schema.Types.ObjectId, ref: 'Treatment' }],
-  healthCheckObj: [{ type: Schema.Types.ObjectId, ref: 'HealthCheck' }],
+  vaccines: [{ type: Schema.Types.ObjectId, ref: 'Vaccine' }],
+  treatments: [{ type: Schema.Types.ObjectId, ref: 'Treatment' }],
+  healthChecks: [{ type: Schema.Types.ObjectId, ref: 'HealthCheck' }],
   detail: { type: String, trim: true},
   price: { type: Number }
 

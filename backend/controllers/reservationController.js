@@ -7,14 +7,44 @@ const Pet = require('../models/pet');
 const Client = require('../models/client');
 const Reservation = require('../models/reservation');
 
-const timeslot = ["10.00", "11.00", "12.00", "13.00", "14.00", "15.00", "16.00", "17.00"];
+const timeslot = require('../models/timeslot');
 
 // get all reservations
 exports.index = async (req, res, next) => {
   try {
-    const reservation = await Reservation.find()
-    .populate('package')
-    .populate('pet')
+    const reservation = await Reservation.find({ status: 'pending' })
+    .populate({ 
+      path: 'package',
+      populate: [
+        {
+          path: 'vaccines',
+          model: 'Vaccine',
+          select: '-createdAt -updatedAt -__v',
+        },
+        {
+          path: 'treatments',
+          model: 'Treatment',
+          select: '-createdAt -updatedAt -__v',
+        },
+        {
+          path: 'healthChecks',
+          model: 'HealthCheck',
+          select: '-createdAt -updatedAt -__v',
+        },
+
+      ],
+     select: '-createdAt -updatedAt -__v', 
+    })
+    .populate({ 
+      path: 'pet',
+      populate: {
+       path: 'owner',
+       model: 'Client',
+       select: '-createdAt -updatedAt -__v',
+     },
+     select: '-createdAt -updatedAt -__v', 
+    })
+
 
     if(!reservation){ throw new Error('ไม่พบข้อมูลการจองแพ็คเกจ'); }
 
@@ -32,10 +62,9 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    let reservation = await Reservation.findById(id)
-    .populate('package', '-createdAt -updatedAt')
-    .populate('pet')
-
+    let reservation = await Reservation.find({ _id: id}).populate('package', '-createdAt -updatedAt')
+    .populate('pet', '-createdAt -updatedAt')
+    .populate('owner', '-createdAt -updatedAt');
     if(!reservation){ throw new Error('ไม่พบข้อมูลการจองแพ็คเกจ'); }
 
     res.status(200).json({
@@ -62,13 +91,15 @@ exports.create = async (req, res, next) => {
          throw error;
      }
 
-    const pet = await Pet.find().where('_id').in(petId).exec();
+    const pet = await Pet.findById(petId);
     const package = await Package.find().where('_id').in(packageId).exec();
 
     // check if pet is in database
     if(pet == ''){
       throw new Error('ไม่พบสัตว์เลี้ยงในระบบ');
     }
+
+    console.log('pet :' + pet)
     // check if package is in database
     if(package == ''){
       throw new Error('ไม่พบแพ็คเกจในระบบ');
@@ -79,31 +110,37 @@ exports.create = async (req, res, next) => {
       throw new Error('ไม่สามารถเพิ่มการจองในช่วงเวลานี้ได้');
     }
 
+    // get owner by pet
+    const owner = await Client.findById(pet.owner);
+    console.log('owner : '+ owner);
+
     // check if avaliable time 
     const booked = await Appointment.find({
       'date': date, 
       'time': time });
     console.log('booked:'+booked)
+    const reserved = await Reservation.find({
+      'date': date, 
+      'time': time });
 
-    if(booked.length!==0){
+    if(booked.length!==0 || reserved.length!==0){
       throw new Error('ไม่สามารถจองเวลานี้ได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว');
     }
 
     const reservation = new Reservation({
-      pet,
+      pet: petId,
       package,
       date,
       time,
       doctor,
-      status
+      status,
+      owner
     });
-
     await reservation.save();
-
     if(!reservation){ throw new Error('การจองไม่สำเร็จ กรุณาลองใหม่'); }
 
     res.status(200).json({
-      message: 'สำเร็จ',
+      message: 'เพิ่มการจองสำเร็จ',
       data: reservation
     });
 
@@ -137,13 +174,14 @@ exports.update = async (req, res, next) => {
     const {id} = req.params;
     const { petId, packageId, date, time, doctor, status } = req.body;
 
-    const petObj = await Pet.find().where('_id').in(petId).exec();
+    const pet = await Pet.findById(petId);
+    if(!pet){throw new Error('ไม่พบข้อมูลสัตว์เลี้ยง');}
     const packageObj = await Pet.find().where('_id').in(packageId).exec();
+
     let newStatus;
     // change status
     switch(status) {
       case 'ไปตามเวลานัด':
-
         // check if avaliable timeslot
         if(!timeslot.includes(time)){
           throw new Error('ไม่สามารถเพิ่มการนัดหมายในเวลาดังกล่าวได้');
@@ -165,7 +203,7 @@ exports.update = async (req, res, next) => {
         if(reservation.modifiedCount===0){ throw new Error('เปลี่ยนสถานะการจองไม่สำเร็จ'); }
 
         const appointment = new Appointment({
-          petObj,
+          pet,
           date,
           time,
           type: 'package',
@@ -204,7 +242,7 @@ exports.update = async (req, res, next) => {
 
       if(reservation.modifiedCount===0){ throw new Error('แก้ไขข้อมูลการจองไม่สำเร็จ'); }
       // update appointment date, status
-      const appointment = await Appointment.findOneAndUpdate({'petObj': petId},{
+      const appointment = await Appointment.findOneAndUpdate({'pet': petId},{
         date,
         time,
       })
@@ -228,41 +266,60 @@ exports.confirm = async (req, res, next) => {
     const {doctor} = req.body;
 
     let reservation = await Reservation.findById(id);
-
+    if(!reservation){ throw new Error('ไม่พบข้อมูลการจอง'); }
+    
     let date = reservation.date
     let time = reservation.time
 
-    const petObj = await Pet.find().where('_id').in(reservation.pet).exec();
-    const packageObj = await Pet.find().where('_id').in(reservation.package).exec();
-    const status = 'ยืนยัน';
+    // check if avaliable time 
+    const booked = await Appointment.find({
+      'date': date, 
+      'time': time });
+    console.log(booked)
+    if(booked.length!==0){
+      throw new Error('ไม่สามารถยืนยันการนัดหมายได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว กรุณากดยกเลิกการจอง');
+    }
 
+    const pet = await Pet.findById(reservation.pet._id);
+    if(!pet){throw new Error('ไม่พบข้อมูลสัตว์เลี้ยง');}
+    const package = await Package.find().where('_id').in(reservation.package).exec();
+    if(!package){throw new Error('ไม่พบข้อมูลแพ็คเกจ');}
 
-        // change status 
-        reservation = await Reservation.updateOne({_id:id},{
-          status,
-          doctor
-        });
+    // change status 
+    reservation = await Reservation.updateOne({_id:id},{
+      status: 'ยืนยัน',
+      doctor
+    });
+    if(reservation.modifiedCount===0){ throw new Error('ยืนยันการจองไม่สำเร็จ'); }
+    reservation = await Reservation.findById(id);
 
-        if(reservation.modifiedCount===0){ throw new Error('ยืนยันการจองไม่สำเร็จ'); }
+    // add appointment
+    let appointment = new Appointment({
+      pet: pet._id,
+      date,
+      time,
+      type: 'แพ็คเกจ',
+      reservation: reservation._id,
+      by: 'การจอง',
+      status: 'ไปตามเวลานัด',
+      doctor,
+    })
+    await appointment.save();
 
-        
+    appointment = await Appointment.findById(appointment._id)
+    .populate({ 
+      path: 'pet',
+      select: '-createdAt -updatedAt -__v',
+    })
+    .populate({ 
+      path: 'reservation',
+      select: '-createdAt -updatedAt -__v',
+    })
 
-        const appointment = new Appointment({
-          petObj,
-          date,
-          time,
-          type: 'package',
-          packageObj,
-          status: 'ไปตามเวลานัด',
-          doctor,
-          reservation: id
-        })
-        await appointment.save();
-
-        res.status(200).json({
-          message: 'เพิ่มข้อมูลการนัดสำเร็จ',
-          data: appointment
-        });
+    res.status(200).json({
+      message: 'ยืนยันการจองและเพิ่มข้อมูลการนัดสำเร็จ',
+      data: appointment
+    });
 
   } catch (error) {
     next(error);

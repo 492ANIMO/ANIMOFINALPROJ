@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Client = require('../models/client.js');
+const Client = require('../models/client');
 
 const schema = new Schema({
   name: { type: String, required: true, trim: true, index: true },
@@ -13,9 +13,8 @@ const schema = new Schema({
   dob: { type: String, trim: true },
   sterilization: { type: Boolean },
   avatar: { type: String },
-
   // foreign key
-  _owner: { type: Schema.Types.ObjectId, ref: 'Client' }
+  owner: { type: Schema.Types.ObjectId, ref: 'Client' },
 
 },{
   collection: 'pets'
