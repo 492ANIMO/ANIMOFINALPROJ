@@ -15,11 +15,24 @@ exports.index = async (req, res, next) => {
     const reservation = await Reservation.find({ status: 'pending' })
     .populate({ 
       path: 'package',
-      populate: {
-       path: 'vaccine',
-       model: 'Vaccine',
-       select: '-createdAt -updatedAt -__v',
-     },
+      populate: [
+        {
+          path: 'vaccines',
+          model: 'Vaccine',
+          select: '-createdAt -updatedAt -__v',
+        },
+        {
+          path: 'treatments',
+          model: 'Treatment',
+          select: '-createdAt -updatedAt -__v',
+        },
+        {
+          path: 'healthChecks',
+          model: 'HealthCheck',
+          select: '-createdAt -updatedAt -__v',
+        },
+
+      ],
      select: '-createdAt -updatedAt -__v', 
     })
     .populate({ 
