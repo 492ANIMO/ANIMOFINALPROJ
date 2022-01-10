@@ -1,256 +1,398 @@
 <template>
-<div>
-    <Navbar/>
-    <div style="padding-top:52px">
-        <NavbarSide/>
+  <div>
+    <Navbar />
+    <div style="padding-top: 52px">
+      <NavbarSide />
     </div>
     <div class="Content1">
-        <div class="Content2">
-          <vs-button color="#6b9bce" @click="active=!active" class="BTadd">
-            <font-awesome-icon class="iconBTr" icon="plus"/>เพิ่มข้อมูล
-          </vs-button>
-            <h2><font-awesome-icon class="icon" icon="paw"/>Clients</h2>
-            <div class="line"><h3><font-awesome-icon class="icon" icon="search"/>ค้นหา</h3>
-              <vs-input v-model="value" placeholder="search..." />
+      <div class="Content2">
+        <vs-button color="#6b9bce" @click="active = !active" class="BTadd">
+          <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
+        </vs-button>
+        <h2><font-awesome-icon class="icon" icon="paw" />Clients</h2>
+        <div class="line">
+          <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
+          <vs-input v-model="value" placeholder="search..." />
+        </div>
+        <vs-table striped>
+          <template #thead>
+            <vs-tr>
+              <vs-th>ไอดี</vs-th>
+              <vs-th>ชื่อ - นามสกุล</vs-th>
+              <vs-th>เบอร์โทรศัพท์</vs-th>
+              <vs-th>จัดการข้อมูล</vs-th>
+            </vs-tr>
+          </template>
+          <template #tbody>
+            <vs-tr :key="i" v-for="(data, i) in users" :data="data">
+              <vs-td>{{ data.id }}</vs-td>
+              <vs-td>{{ data.name }}</vs-td>
+              <vs-td>{{ data.contact }}</vs-td>
+              <vs-td>
+                <vs-button
+                  color="#6b9bce"
+                  @click="active1 = !active1"
+                  class="BT"
+                >
+                  ดูข้อมูล<font-awesome-icon
+                    class="iconBTl"
+                    style="font-size: 10px"
+                    icon="info-circle"
+                  />
+                </vs-button>
+              </vs-td>
+            </vs-tr>
+          </template>
+        </vs-table>
+        <div class="center">
+          <vs-pagination infinite v-model="page" :length="10" />
+        </div>
+      </div>
+
+      <vs-dialog width="80%" scroll v-model="active">
+        <template #header>
+          <h2>เพิ่มข้อมูลเจ้าของสัตว์เลี้ยง</h2>
+        </template>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="client.name"
+                label="ชื่อเจ้าของสัตว์เลี้ยง"
+                placeholder="ชื่อเจ้าของสัตว์เลี้ยง"
+              ></vs-input>
             </div>
-                <vs-table striped>
-                  <template #thead>
-                    <vs-tr>
-                      <vs-th>ไอดี</vs-th>
-                      <vs-th>ชื่อ - นามสกุล</vs-th>
-                      <vs-th>เบอร์โทรศัพท์</vs-th>
-                      <vs-th>จัดการข้อมูล</vs-th>
-                    </vs-tr>
-                  </template>
-                  <template #tbody>
-                    <vs-tr
-                      :key="i"
-                      v-for="(data, i) in users"
-                      :data="data"
-                    >
-                      <vs-td>{{ data.id }}</vs-td>
-                      <vs-td>{{ data.name }}</vs-td>
-                      <vs-td>{{ data.contact }}</vs-td>
-                      <vs-td>
-                        <vs-button color="#6b9bce" @click="active1=!active1" class="BT">
-                               ดูข้อมูล<font-awesome-icon class="iconBTl" style="font-size: 10px;" icon="info-circle"/>
-                        </vs-button>
-                      </vs-td>
-                    </vs-tr>
-                  </template>
-                </vs-table>
-                <div class="center">
-                  <vs-pagination infinite v-model="page" :length="10" />
-                </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="client.email"
+                label="อีเมลล์"
+                placeholder="อีเมลล์"
+              ></vs-input>
             </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
 
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="client.contact"
+                label="เบอร์โทร"
+                placeholder="เบอร์โทร"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
 
-            <vs-dialog width="80%" scroll v-model="active">
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="client.address.detail"
+                label="ที่อยู่"
+                placeholder="บ้านเลขที่, หมู่ที่, ซอย, ถนน"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="client.address.province"
+                label="จังหวัด"
+                placeholder="จังหวัด"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
 
-              <template #header>
-                <h2>
-                  เพิ่มข้อมูลเจ้าของสัตว์เลี้ยง
-                </h2>
-              </template>
+        <vs-row>
+          <vs-col
+            vs-type="flex"
+            class="InputSM"
+            vs-justify="center"
+            vs-align="center"
+            w="2"
+          >
+            <div class="InputPop">
+              <vs-input
+                v-model="client.address.subdistrict"
+                label="ตำบล"
+                placeholder="ตำบล"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <div class="space"></div>
+          <vs-col
+            vs-type="flex"
+            class="InputSM"
+            vs-justify="center"
+            vs-align="center"
+            w="2"
+          >
+            <div class="InputPop">
+              <vs-input
+                v-model="client.address.district"
+                label="อำเภอ"
+                placeholder="อำเภอ"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <div class="space"></div>
+          <vs-col
+            vs-type="flex"
+            class="InputSM"
+            vs-justify="center"
+            vs-align="center"
+            w="2"
+          >
+            <div class="InputPop">
+              <vs-input
+                v-model="client.address.postalCode"
+                label="รหัสไปรษณีย์"
+                placeholder="รหัสไปรษณีย์"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
 
-                   <vs-row>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="ชื่อเจ้าของสัตว์เลี้ยง" placeholder="ชื่อเจ้าของสัตว์เลี้ยง"></vs-input>
-                      </div>
-                    </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="อีเมลล์" placeholder="อีเมลล์"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row><div class="space"></div>
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button
+              primary
+              @click="active = !active, createClient()"
+              class="BT1"
+              style="float: right; width: 80px"
+            >
+              ยืนยัน </vs-button
+            ><br /><br />
+          </div>
+        </template>
+      </vs-dialog>
 
-                  <vs-row>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="เบอร์โทร" placeholder="เบอร์โทร"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row><div class="space"></div>
+      <vs-dialog width="80%" scroll v-model="active1">
+        <template #header>
+          <h2>ข้อมูลเจ้าของสัตว์เลี้ยง</h2>
+        </template>
 
-                  <vs-row>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="ที่อยู่" placeholder="บ้านเลขที่, หมู่ที่, ซอย, ถนน"></vs-input>
-                      </div>
-                    </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="จังหวัด" placeholder="จังหวัด"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row><div class="space"></div>
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="ชื่อเจ้าของสัตว์เลี้ยง"
+                placeholder="สมศรี มณีแสง"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="อีเมลล์"
+                placeholder="Somsri@gmail.com"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
 
-                  <vs-row>
-                    <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="ตำบล" placeholder="ตำบล"></vs-input>
-                      </div>
-                    </vs-col><div class="space"></div>
-                    <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="อำเภอ" placeholder="อำเภอ"></vs-input>
-                      </div>
-                    </vs-col><div class="space"></div>
-                    <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
-                      <div class="InputPop">
-                        <vs-input v-model="value" label="รหัสไปรษณีย์" placeholder="รหัสไปรษณีย์"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row>
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="เบอร์โทร"
+                placeholder="09-99999999"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
 
-              <template #footer>
-                <div class="footer-dialog">
-                  <vs-button primary @click="active=!active" class="BT1" style="float: right; width: 80px;">
-                    ยืนยัน
-                  </vs-button><br><br>
-                </div>
-              </template>
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="ที่อยู่"
+                placeholder="3/3 หมู่2"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="จังหวัด"
+                placeholder="เชียงใหม่"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
 
-            </vs-dialog>
+        <vs-row>
+          <vs-col
+            vs-type="flex"
+            class="InputSM"
+            vs-justify="center"
+            vs-align="center"
+            w="2"
+          >
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="ตำบล"
+                placeholder="ช้างเผือก"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <div class="space"></div>
+          <vs-col
+            vs-type="flex"
+            class="InputSM"
+            vs-justify="center"
+            vs-align="center"
+            w="2"
+          >
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="อำเภอ"
+                placeholder="เมือง"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <div class="space"></div>
+          <vs-col
+            vs-type="flex"
+            class="InputSM"
+            vs-justify="center"
+            vs-align="center"
+            w="2"
+          >
+            <div class="InputPop">
+              <vs-input
+                state="success"
+                v-model="value"
+                label="รหัสไปรษณีย์"
+                placeholder="50200"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
 
-            <vs-dialog width="80%" scroll v-model="active1">
-
-              <template #header>
-                <h2>
-                  ข้อมูลเจ้าของสัตว์เลี้ยง
-                </h2>
-              </template>
-
-                   <vs-row>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="ชื่อเจ้าของสัตว์เลี้ยง" placeholder="สมศรี มณีแสง"></vs-input>
-                      </div>
-                    </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="อีเมลล์" placeholder="Somsri@gmail.com"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row><div class="space"></div>
-
-                  <vs-row>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="เบอร์โทร" placeholder="09-99999999"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row><div class="space"></div>
-
-                  <vs-row>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="ที่อยู่" placeholder="3/3 หมู่2"></vs-input>
-                      </div>
-                    </vs-col>
-                    <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="จังหวัด" placeholder="เชียงใหม่"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row><div class="space"></div>
-
-                  <vs-row>
-                    <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="ตำบล" placeholder="ช้างเผือก"></vs-input>
-                      </div>
-                    </vs-col><div class="space"></div>
-                    <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="อำเภอ" placeholder="เมือง"></vs-input>
-                      </div>
-                    </vs-col><div class="space"></div>
-                    <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
-                      <div class="InputPop">
-                        <vs-input state="success" v-model="value" label="รหัสไปรษณีย์" placeholder="50200"></vs-input>
-                      </div>
-                    </vs-col>
-                  </vs-row>
-
-              <template #footer>
-                <div class="footer-dialog">
-                  <vs-button primary @click="active1=!active1" class="BT1" style="float: right; width: 80px;">
-                    ยืนยัน
-                  </vs-button><br><br>
-                </div>
-              </template>
-
-            </vs-dialog>
-
-
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button
+              primary
+              @click="active1 = !active1"
+              class="BT1"
+              style="float: right; width: 80px"
+            >
+              ยืนยัน </vs-button
+            ><br /><br />
+          </div>
+        </template>
+      </vs-dialog>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
-import NavbarSide from '@/components/NavbarSide.vue'
-import axios from 'axios'
+import Navbar from "@/components/Navbar.vue";
+import NavbarSide from "@/components/NavbarSide.vue";
+import axios from "axios";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
     Navbar,
-    NavbarSide
+    NavbarSide,
   },
   data: () => ({
-    page : 1,
-    value : '',
+    page: 1,
+    value: "",
     active: false,
     active1: false,
     users: [
-            // {
-            //   "id": 1,
-            //   "name": "Leanne",
-            //   "lastname": "Bret",
-            //   "phone": "09-12345678",
-            // },
-            // {
-            //   "id": 2,
-            //   "name": "Ervin",
-            //   "lastname": "Antonette",
-            //   "phone": "09-12345678",
-            // },
-            // {
-            //   "id": 3,
-            //   "name": "Ervin",
-            //   "lastname": "Antonette",
-            //   "phone": "09-12345678",
-            // },
-            // {
-            //   "id": 4,
-            //   "name": "Ervin",
-            //   "lastname": "Antonette",
-            //   "phone": "09-12345678",
-            // }
-        ]
+      
+    ],
+    client: {
+      name: '',
+      contact: '',
+      email: '',
+      address: {
+        province: '',
+        district: '',
+        subdistrict: '',
+        postalCode: '',
+        detail: '',
+      },
+      role: 'client',
+      avatar: ''
+    }
   }),
-  mounted(){
-    let apiUrl = 'http://localhost:4000/api/clients';
-    axios.get(apiUrl).then(res=>{
-      this.users =  res.data.data
-      console.log(res.data)
-    }).catch(error=>{
-      console.log(error)
-    })
+  created() {
+    this.getClients();
   },
-}
+  methods: {
+    getClients() {
+      let baseURL = "http://localhost:4000/api/clients";
+      axios.get(baseURL).then((res) => {
+          this.users = res.data.data;
+          console.log(res.data);
+      }).catch((error) => {
+          console.log(error);
+      });
+    },
+    createClient() {
+      let baseURL = "http://localhost:4000/api/clients";
+      axios.post(baseURL, this.client).then(() => {
+          this.client = {
+            name: '',
+            contact: '',
+            email: '',
+            address: {
+              province: '',
+              district: '',
+              subdistrict: '',
+              postalCode: '',
+              detail: '',
+            },
+            role: 'client',
+            avatar: ''
+          }
+          this.getClients();
+          console.log(this.client)
+      }).catch((error) => {
+          console.log(error);
+      });
+    }
+
+  },
+};
 </script>
 <style scoped>
-h2{
+h2 {
   margin: 0px 0px 5px 0px;
   color: #696969;
   font-weight: 500;
 }
-h3{
+h3 {
   margin: 0px;
   color: #adadad;
   font-weight: 500;
@@ -260,9 +402,13 @@ h3{
   display: flex;
   padding-bottom: 20px;
 }
-.BT{
-  background: rgb(94,184,204);
-  background: linear-gradient(45deg, rgba(94,184,204,1) 0%, rgba(68,157,222,1) 100%);
+.BT {
+  background: rgb(94, 184, 204);
+  background: linear-gradient(
+    45deg,
+    rgba(94, 184, 204, 1) 0%,
+    rgba(68, 157, 222, 1) 100%
+  );
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
@@ -270,9 +416,13 @@ h3{
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
 }
-.BT1{
-  background: rgb(157,209,103);
-  background: linear-gradient(45deg, rgba(157,209,103,1) 0%, rgba(99,209,157,1) 100%);
+.BT1 {
+  background: rgb(157, 209, 103);
+  background: linear-gradient(
+    45deg,
+    rgba(157, 209, 103, 1) 0%,
+    rgba(99, 209, 157, 1) 100%
+  );
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
@@ -280,9 +430,13 @@ h3{
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
 }
-.BTadd{
-  background: rgb(142,157,211);
-  background: linear-gradient(45deg, rgba(142,157,211,1) 0%, rgba(86,164,215,1) 100%);
+.BTadd {
+  background: rgb(142, 157, 211);
+  background: linear-gradient(
+    45deg,
+    rgba(142, 157, 211, 1) 0%,
+    rgba(86, 164, 215, 1) 100%
+  );
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
@@ -304,7 +458,6 @@ h3{
 }
 ::v-deep .InputPop .vs-input {
   width: calc(100% - 20px);
-
 }
 ::v-deep .InputSM .vs-input {
   width: 41%;
@@ -327,18 +480,18 @@ h3{
   margin-top: 20px;
 }
 ::v-deep .vs-table__th__content {
-    color: #696969;
-    text-align: center;
-    justify-content: center;
-    font-size:15px;
-    padding: 5px;
+  color: #696969;
+  text-align: center;
+  justify-content: center;
+  font-size: 15px;
+  padding: 5px;
 }
 ::v-deep .vs-table__tr {
-    color: #696969;
-    text-align: center;
-    justify-content: center;
-    font-size: 13px;
-    padding: 5px;
+  color: #696969;
+  text-align: center;
+  justify-content: center;
+  font-size: 13px;
+  padding: 5px;
 }
 ::v-deep .vs-button__content {
   font-family: kanit;
