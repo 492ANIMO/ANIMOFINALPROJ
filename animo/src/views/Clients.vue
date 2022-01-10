@@ -31,7 +31,7 @@
               <vs-td>
                 <vs-button
                   color="#6b9bce"
-                  @click="active1 = !active1"
+                  @click="active1 = !active1, showClient(data.id)"
                   class="BT"
                 >
                   ดูข้อมูล<font-awesome-icon
@@ -185,9 +185,9 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model= "value"
                 label="ชื่อเจ้าของสัตว์เลี้ยง"
-                placeholder="สมศรี มณีแสง"
+                :placeholder="this.client.name"
               ></vs-input>
             </div>
           </vs-col>
@@ -197,7 +197,7 @@
                 state="success"
                 v-model="value"
                 label="อีเมลล์"
-                placeholder="Somsri@gmail.com"
+                :placeholder="this.client.email"
               ></vs-input>
             </div>
           </vs-col>
@@ -211,7 +211,7 @@
                 state="success"
                 v-model="value"
                 label="เบอร์โทร"
-                placeholder="09-99999999"
+                :placeholder="this.client.contact"
               ></vs-input>
             </div>
           </vs-col>
@@ -225,7 +225,7 @@
                 state="success"
                 v-model="value"
                 label="ที่อยู่"
-                placeholder="3/3 หมู่2"
+                :placeholder="this.client.address.detail"
               ></vs-input>
             </div>
           </vs-col>
@@ -235,7 +235,7 @@
                 state="success"
                 v-model="value"
                 label="จังหวัด"
-                placeholder="เชียงใหม่"
+                :placeholder="this.client.address.province"
               ></vs-input>
             </div>
           </vs-col>
@@ -255,7 +255,7 @@
                 state="success"
                 v-model="value"
                 label="ตำบล"
-                placeholder="ช้างเผือก"
+                :placeholder="this.client.address.subdistrict"
               ></vs-input>
             </div>
           </vs-col>
@@ -272,7 +272,7 @@
                 state="success"
                 v-model="value"
                 label="อำเภอ"
-                placeholder="เมือง"
+                :placeholder="this.client.address.district"
               ></vs-input>
             </div>
           </vs-col>
@@ -289,7 +289,7 @@
                 state="success"
                 v-model="value"
                 label="รหัสไปรษณีย์"
-                placeholder="50200"
+                :placeholder="this.client.address.postalCode"
               ></vs-input>
             </div>
           </vs-col>
@@ -351,10 +351,37 @@ export default {
   },
   methods: {
     getClients() {
-      let baseURL = "http://localhost:4000/api/clients";
+      let baseURL = "http://localhost:4000/api/clients/";
       axios.get(baseURL).then((res) => {
           this.users = res.data.data;
+
+          this.client = {
+            name: '',
+            contact: '',
+            email: '',
+            address: {
+              province: '',
+              district: '',
+              subdistrict: '',
+              postalCode: '',
+              detail: '',
+            },
+            role: 'client',
+            avatar: ''
+          }
           console.log(res.data);
+      }).catch((error) => {
+          console.log(error);
+      });
+    },
+
+    showClient(id) {
+      let baseURL = "http://localhost:4000/api/clients/";
+      axios.get(baseURL+id).then((res) => {
+          this.client = res.data.data;
+          console.log(res.data);
+         
+          
       }).catch((error) => {
           console.log(error);
       });
