@@ -8,9 +8,13 @@ exports.index = async (req, res, next) => {
     const annoucement = await Annoucement.find();
     if(!annoucement || annoucement==''){ throw new Error('ไม่พบข้อมูลข่าวสาร'); }
 
+    // docs count
+    const count = await Annoucement.countDocuments();
+
     res.status(200).json({
       message: 'ดึงข้อมูลข่าวสารสำเร็จ',
-      data: annoucement
+      data: annoucement,
+      count
     });
 
   } catch (error) {

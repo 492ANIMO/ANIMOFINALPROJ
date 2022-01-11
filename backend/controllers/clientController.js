@@ -7,9 +7,12 @@ exports.index = async (req, res, next) => {
     const client = await Client.find();
     if(!client){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
+    const count = await Client.countDocuments();
+
     res.status(200).json({
       message: 'สำเร็จ',
-      client
+      client,
+      count
     });
 
   } catch (error) {
@@ -26,10 +29,9 @@ exports.show = async (req, res, next) => {
       error.statusCode = '400';
       throw error; 
     }
-
     res.status(200).json({
       message: 'สำเร็จ',
-      client
+      client,
     });
 
   } catch (error) {

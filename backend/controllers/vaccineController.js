@@ -8,9 +8,12 @@ exports.index = async (req, res, next) => {
     const vaccine = await Vaccine.find();
     if(!vaccine){ throw new Error('ไม่พบข้อมูลวัคซีน'); }
 
+    const count = await Vaccine.countDocuments();
+
     res.status(200).json({
       message: 'ดึงข้อมูลสำเร็จ',
-      vaccine
+      vaccine,
+      count
     });
 
   } catch (error) {

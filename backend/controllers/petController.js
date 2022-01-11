@@ -12,7 +12,7 @@ exports.index = async (req, res, next) => {
     if(!pet){ throw new Error('ไม่พบข้อมูลสัตว์เลี้ยง'); }
 
     res.status(200).json({
-      data: pet
+      pet
     });
 
   } catch (error) {
@@ -43,9 +43,12 @@ exports.create = async (req, res, next) => {
     }
     await pet.save();
 
+    const count = await Pet.countDocuments();
+
     res.status(201).json({
       message: 'เพิ่มข้อมูลสัตว์เลี้ยงสำเร็จ', 
-      data: pet
+      pet,
+      countDocuments
     });
 
   } catch (error) {
@@ -69,7 +72,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ดึงข้อมูลสำเร็จ',
-      data: pet
+      pet
     });
 
   } catch (error) {
@@ -95,7 +98,7 @@ exports.showByClient = async (req, res, next) => {
     }
   
     res.status(200).json({
-      data: pet
+      pet
     });
 
   } catch (error) {

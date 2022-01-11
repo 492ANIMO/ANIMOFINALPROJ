@@ -35,9 +35,12 @@ exports.index = async (req, res, next) => {
     
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
+    const count = await Appointment.countDocuments();
+
     res.status(200).json({
       message: 'สำเร็จ',
-      data: appointment
+      data: appointment,
+      count
     });
 
   } catch (error) {

@@ -11,9 +11,12 @@ exports.index = async (req, res, next) => {
     .populate('appointment');
     if(!history){ throw new Error('ไม่พบประวัติการรักษา'); }
 
+    const count = await History.countDocuments();
+
     res.status(200).json({
       message: 'ดึงข้อมูลสำเร็จ',
-      data: history
+      history,
+      count
     });
 
   } catch (error) {
@@ -33,7 +36,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ดึงข้อมูลสำเร็จ',
-      data: history
+      history
     });
 
   } catch (error) {
