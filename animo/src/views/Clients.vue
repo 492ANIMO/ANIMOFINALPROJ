@@ -381,7 +381,7 @@ export default {
       axios.get(baseURL+id).then((res) => {
           this.client = res.data.client;
           console.log(this.client);
-          
+
       }).catch((error) => {
           console.log(error);
       });
@@ -389,22 +389,8 @@ export default {
     createClient() {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.post(baseURL, this.client).then(() => {
-          this.client = {
-            name: '',
-            contact: '',
-            email: '',
-            address: {
-              province: '',
-              district: '',
-              subdistrict: '',
-              postalCode: '',
-              detail: '',
-            },
-            role: 'client',
-            avatar: ''
-          }
-          
-          console.log(this.client)
+        this.getClients();
+        console.log(this.client)
       }).catch((error) => {
           console.log(error);
       });
