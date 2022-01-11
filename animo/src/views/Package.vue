@@ -217,6 +217,12 @@ export default {
     active: false,
     packages: [],
     package: {
+      name: '',
+      vaccines: [],
+      treatments: [],
+      healthChecks: [],
+      detail: '',
+      price: ''
     },
     vaccine_options: [],
     treatment_options: [],
