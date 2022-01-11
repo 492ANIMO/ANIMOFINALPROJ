@@ -15,10 +15,6 @@
           <vs-input v-model="value" placeholder="search..." />
         </div>
 
-
-        <h1>Number of Entries: {{ resultCount }}</h1>
-
-        
         <vs-table striped>
           <template #thead>
             <vs-tr>
@@ -331,6 +327,7 @@ export default {
       role: 'client',
       avatar: ''
     },
+    clientCount: ''
  
   }),
   created() {
@@ -355,7 +352,9 @@ export default {
             role: 'client',
             avatar: ''
           }
+          this.clientCount = res.data.count;
           console.log(res.data);
+          console.log('number of data: '+ this.clientCount);
       }).catch((error) => {
           console.log(error);
       });
