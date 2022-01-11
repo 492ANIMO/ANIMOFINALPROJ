@@ -14,6 +14,11 @@
           <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
           <vs-input v-model="value" placeholder="search..." />
         </div>
+
+
+        <h1>Number of Entries: {{ resultCount }}</h1>
+
+        
         <vs-table striped>
           <template #thead>
             <vs-tr>
@@ -330,7 +335,6 @@ export default {
     active: false,
     active1: false,
     users: [
-      
     ],
     client: {
       name: '',
@@ -375,6 +379,7 @@ export default {
           console.log(error);
       });
     },
+    
 
     showClient(id) {
       let baseURL = "http://localhost:4000/api/clients/";
@@ -428,6 +433,12 @@ export default {
     },
 
   },
+
+  computed: {
+    resultCount () {
+      return this.users && this.users.length
+    }
+}
 };
 </script>
 <style scoped>
