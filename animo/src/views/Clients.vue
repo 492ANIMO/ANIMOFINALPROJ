@@ -6,7 +6,7 @@
     </div>
     <div class="Content1">
       <div class="Content2">
-        <vs-button color="#6b9bce" @click="active = !active" class="BTadd">
+        <vs-button color="#6b9bce" @click="active = !active, getClients()" class="BTadd">
           <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
         </vs-button>
         <h2><font-awesome-icon class="icon" icon="paw" />Clients</h2>
@@ -381,11 +381,11 @@ export default {
       axios.get(baseURL+id).then((res) => {
           this.client = res.data.client;
           console.log(this.client);
-
       }).catch((error) => {
           console.log(error);
       });
     },
+
     createClient() {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.post(baseURL, this.client).then(() => {
