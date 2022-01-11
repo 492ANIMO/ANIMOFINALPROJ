@@ -9,7 +9,7 @@ exports.index = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: client
+      client
     });
 
   } catch (error) {
@@ -29,7 +29,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: client
+      client
     });
 
   } catch (error) {
@@ -63,7 +63,7 @@ exports.create = async (req, res, next) => {
 
     res.status(201).json({
       message: 'เพิ่มข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
-      data: client
+      client
     });
 
   } catch (error) {

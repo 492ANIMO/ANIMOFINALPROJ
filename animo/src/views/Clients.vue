@@ -48,7 +48,7 @@
           <vs-pagination infinite v-model="page" :length="10" />
         </div>
       </div>
-
+      <!-- add client -->
       <vs-dialog width="80%" scroll v-model="active">
         <template #header>
           <h2>เพิ่มข้อมูลเจ้าของสัตว์เลี้ยง</h2>
@@ -174,7 +174,7 @@
           </div>
         </template>
       </vs-dialog>
-
+      <!-- show client -->
       <vs-dialog width="80%" scroll v-model="active1">
         <template #header>
           <h2>ข้อมูลเจ้าของสัตว์เลี้ยง</h2>
@@ -185,17 +185,18 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model= "value"
+                v-model="client.name"
                 label="ชื่อเจ้าของสัตว์เลี้ยง"
                 :placeholder="this.client.name"
               ></vs-input>
+   
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model="client.email"
                 label="อีเมลล์"
                 :placeholder="this.client.email"
               ></vs-input>
@@ -209,7 +210,7 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model="client.contact"
                 label="เบอร์โทร"
                 :placeholder="this.client.contact"
               ></vs-input>
@@ -223,7 +224,7 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model="client.address.detail"
                 label="ที่อยู่"
                 :placeholder="this.client.address.detail"
               ></vs-input>
@@ -233,7 +234,7 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model="client.address.province"
                 label="จังหวัด"
                 :placeholder="this.client.address.province"
               ></vs-input>
@@ -253,7 +254,7 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model="client.address.subdistrict"
                 label="ตำบล"
                 :placeholder="this.client.address.subdistrict"
               ></vs-input>
@@ -270,7 +271,7 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model="client.address.district"
                 label="อำเภอ"
                 :placeholder="this.client.address.district"
               ></vs-input>
@@ -287,7 +288,7 @@
             <div class="InputPop">
               <vs-input
                 state="success"
-                v-model="value"
+                v-model="client.address.postalCode"
                 label="รหัสไปรษณีย์"
                 :placeholder="this.client.address.postalCode"
               ></vs-input>
@@ -299,7 +300,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active1 = !active1"
+              @click="active1 = !active1,  updateClient(client)"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -344,7 +345,8 @@ export default {
       },
       role: 'client',
       avatar: ''
-    }
+    },
+ 
   }),
   created() {
     this.getClients();
@@ -353,8 +355,7 @@ export default {
     getClients() {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.get(baseURL).then((res) => {
-          this.users = res.data.data;
-
+          this.users = res.data.client;
           this.client = {
             name: '',
             contact: '',
@@ -378,16 +379,15 @@ export default {
     showClient(id) {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.get(baseURL+id).then((res) => {
-          this.client = res.data.data;
-          console.log(res.data);
-         
+          this.client = res.data.client;
+          console.log(this.client);
           
       }).catch((error) => {
           console.log(error);
       });
     },
     createClient() {
-      let baseURL = "http://localhost:4000/api/clients";
+      let baseURL = "http://localhost:4000/api/clients/";
       axios.post(baseURL, this.client).then(() => {
           this.client = {
             name: '',
@@ -403,12 +403,43 @@ export default {
             role: 'client',
             avatar: ''
           }
-          this.getClients();
+          
           console.log(this.client)
       }).catch((error) => {
           console.log(error);
       });
-    }
+    },
+
+    updateClient(client) {
+      let baseURL = "http://localhost:4000/api/clients/";
+      console.log('client: '+client.id)
+      axios.patch(baseURL+client.id, {
+        name: client.name,
+        email: client.email,
+        contact: client.contact,
+        address: client.address,
+
+      }).then(() => {
+          this.client = {
+          name: '',
+          contact: '',
+          email: '',
+          address: {
+            province: '',
+            district: '',
+            subdistrict: '',
+            postalCode: '',
+            detail: '',
+          },
+          role: 'client',
+          avatar: ''
+        }
+        this.getClients();
+        console.log(client)
+      }).catch((error) => {
+          console.log(error);
+      });
+    },
 
   },
 };
