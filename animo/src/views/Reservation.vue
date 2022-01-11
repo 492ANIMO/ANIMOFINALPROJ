@@ -128,7 +128,7 @@ export default {
     this.load();
   },
   methods: {
-  load() {
+    load() {
       let baseURL = 'http://localhost:4000/api/reservations/';
 
       axios.get(baseURL).then((res)=>{

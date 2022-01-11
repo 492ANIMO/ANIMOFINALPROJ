@@ -39,7 +39,7 @@ exports.index = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: appointment,
+      appointment,
       count
     });
 
@@ -77,7 +77,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: appointment
+      appointment
     });
 
   } catch (error) {
