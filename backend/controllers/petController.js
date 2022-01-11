@@ -48,7 +48,7 @@ exports.create = async (req, res, next) => {
     res.status(201).json({
       message: 'เพิ่มข้อมูลสัตว์เลี้ยงสำเร็จ', 
       pet,
-      countDocuments
+      count
     });
 
   } catch (error) {
