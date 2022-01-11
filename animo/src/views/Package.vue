@@ -25,14 +25,14 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in users"
+                      v-for="(data, i) in packages"
                       :data="data"
                     >
-                      <vs-td>{{ data.id }}</vs-td>
+                      <vs-td>{{ data._id }}</vs-td>
                       <vs-td>{{ data.name }}</vs-td>
-                      <vs-td>{{ data.phone }}</vs-td>
+                      <vs-td>{{ data.detail }}</vs-td>
                       <vs-td>
-                        <vs-button color="#6b9bce" @click="active=!active" class="BT">
+                        <vs-button color="#6b9bce" @click="active=!active, showPackage(data._id)" class="BT">
                                ดูข้อมูล<font-awesome-icon class="iconBTl" style="font-size: 10px;" icon="info-circle"/>
                         </vs-button>
                       </vs-td>
@@ -100,10 +100,9 @@
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
                         <div class="InputSL">
                           <vs-select label="รายการวัคซีน" placeholder="รายการวัคซีน" v-model="value1">
-                            <vs-option value1="1">
-                              xxx
+                            <vs-option :key="i" v-for="(vaccine, i) in vaccine_options" :value1="vaccine._id" > {{ vaccine.name }}
                             </vs-option>
-                            <vs-option value1="2">
+                            <!-- <vs-option value1="2">
                               xxx
                             </vs-option>
                             <vs-option value1="3">
@@ -111,7 +110,7 @@
                             </vs-option>
                             <vs-option value1="4">
                               xxx
-                            </vs-option>
+                            </vs-option> -->
                           </vs-select> 
                           <div>
                             <vs-button color="#72d2cf" @click="active=!active" class="BTaddData">
@@ -126,10 +125,9 @@
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
                         <div class="InputSL">
                           <vs-select label="รายการรักษา" placeholder="รายการรักษา" v-model="value1">
-                            <vs-option value1="1">
-                              xxx
+                             <vs-option :key="i" v-for="(data, i) in treatment_options" :value1="data._id" > {{ data.name }}
                             </vs-option>
-                            <vs-option value1="2">
+                            <!-- <vs-option value1="2">
                               xxx
                             </vs-option>
                             <vs-option value1="3">
@@ -137,7 +135,7 @@
                             </vs-option>
                             <vs-option value1="4">
                               xxx
-                            </vs-option>
+                            </vs-option> -->
                           </vs-select> 
                           <div>
                             <vs-button color="#72d2cf" @click="active=!active" class="BTaddData">
@@ -152,7 +150,9 @@
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
                         <div class="InputSL">
                           <vs-select label="รายการตรวจสุขภาพ" placeholder="รายการตรวจสุขภาพ" v-model="value1">
-                            <vs-option value1="1">
+                            <vs-option :key="i" v-for="(data, i) in healthCheck_options" :value1="data._id" > {{ data.name }}
+                            </vs-option>
+                            <!-- <vs-option value1="1">
                               xxx
                             </vs-option>
                             <vs-option value1="2">
@@ -163,7 +163,7 @@
                             </vs-option>
                             <vs-option value1="4">
                               xxx
-                            </vs-option>
+                            </vs-option> -->
                           </vs-select> 
                           <div>
                             <vs-button color="#72d2cf" @click="active=!active" class="BTaddData">
@@ -200,6 +200,7 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import NavbarSide from '@/components/NavbarSide.vue'
+import axios from 'axios'
 
 export default {
   name: 'Package',
@@ -214,29 +215,76 @@ export default {
     time1: '',
     time2: '',
     active: false,
-    users: [
-            {
-              "id": "0001",
-              "name": "แพ็คเกจลูกสุนัข",
-              "phone": "สำหรับลูกสุนัขอายุน้อยกว่า 1 ปี",
-            },
-            {
-              "id": "0002",
-              "name": "แพ็คเกจสุนัขโต",
-              "phone": "วัคซีนพิษสุนัขบ้า",
-            },
-            {
-              "id": "0003",
-              "name": "แพ็คเกจลูกแมว",
-              "phone": "วัคซีนพิษสุนัขบ้า",
-            },
-            {
-              "id": "0004",
-              "name": "แพ็คเกจแมวโต",
-              "phone": "วัคซีนพิษสุนัขบ้า",
-            }
-        ]
-    })
+    packages: [],
+    package: {
+    },
+    vaccine_options: [],
+    treatment_options: [],
+    healthCheck_options: [],
+    }),
+  created(){
+    this.getPackage(),
+    this.getAllVacines();
+    this.getAllTreatments();
+    this.getAllHealthChecks();
+  },
+  methods: {
+    getPackage() {
+      let baseURL = 'http://localhost:4000/api/packages/';
+
+      axios.get(baseURL).then((res)=>{
+        this.packages = res.data.package;
+        console.log(res.data);
+      }).catch((error)=> {
+        console.log(error);
+      });
+    },
+
+    showPackage(id) {
+      let baseURL = "http://localhost:4000/api/packages/";
+
+      axios.get(baseURL+id).then((res) => {
+          this.package = res.data.package;
+          console.log(this.package);
+      }).catch((error) => {
+          console.log(error);
+      });
+    },
+
+    getAllVacines(){
+      let baseURL = 'http://localhost:4000/api/vaccines/';
+
+      axios.get(baseURL).then((res)=>{
+        this.vaccine_options = res.data.vaccine;
+        console.log(res.data);
+      }).catch((error)=> {
+        console.log(error);
+      });
+    },
+
+    getAllTreatments(){
+      let baseURL = 'http://localhost:4000/api/treatments/';
+
+      axios.get(baseURL).then((res)=>{
+        this.treatment_options = res.data.treatment;
+        console.log(res.data);
+      }).catch((error)=> {
+        console.log(error);
+      });
+    },
+
+    getAllHealthChecks(){
+      let baseURL = 'http://localhost:4000/api/healthChecks/';
+
+      axios.get(baseURL).then((res)=>{
+        this.healthCheck_options = res.data.healthcheck;
+        console.log(res.data);
+      }).catch((error)=> {
+        console.log(error);
+      });
+    },
+  }
+
 }
 </script>
 <style scoped>
