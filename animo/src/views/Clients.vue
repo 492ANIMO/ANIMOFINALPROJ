@@ -113,10 +113,6 @@
 
         <vs-row>
           <vs-col
-            vs-type="flex"
-            class="InputSM"
-            vs-justify="center"
-            vs-align="center"
             w="2"
           >
             <div class="InputPop">
@@ -129,10 +125,7 @@
           </vs-col>
           <div class="space"></div>
           <vs-col
-            vs-type="flex"
             class="InputSM"
-            vs-justify="center"
-            vs-align="center"
             w="2"
           >
             <div class="InputPop">
@@ -145,10 +138,7 @@
           </vs-col>
           <div class="space"></div>
           <vs-col
-            vs-type="flex"
             class="InputSM"
-            vs-justify="center"
-            vs-align="center"
             w="2"
           >
             <div class="InputPop">
@@ -245,10 +235,7 @@
 
         <vs-row>
           <vs-col
-            vs-type="flex"
             class="InputSM"
-            vs-justify="center"
-            vs-align="center"
             w="2"
           >
             <div class="InputPop">
@@ -262,10 +249,7 @@
           </vs-col>
           <div class="space"></div>
           <vs-col
-            vs-type="flex"
             class="InputSM"
-            vs-justify="center"
-            vs-align="center"
             w="2"
           >
             <div class="InputPop">
@@ -279,10 +263,7 @@
           </vs-col>
           <div class="space"></div>
           <vs-col
-            vs-type="flex"
             class="InputSM"
-            vs-justify="center"
-            vs-align="center"
             w="2"
           >
             <div class="InputPop">
@@ -509,6 +490,7 @@ h3 {
 ::v-deep .vs-input {
   width: 350px;
   height: 35px;
+  font-family: kanit;
 }
 ::v-deep .vs-input-content {
   width: 350px;
