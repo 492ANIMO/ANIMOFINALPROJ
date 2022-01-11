@@ -11,7 +11,7 @@ exports.index = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ดึงข้อมูลสำเร็จ',
-      data: healthcheck
+      healthcheck
     });
 
   } catch (error) {
@@ -27,7 +27,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: healthcheck
+      healthcheck
     });
 
   } catch (error) {
@@ -53,7 +53,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'เพิ่มการตรวจสุขภาพสำเร็จ',
-      data: healthcheck
+      healthcheck
     });
 
   } catch (error) {
@@ -79,7 +79,7 @@ exports.update = async (req, res, next) => {
 
     res.status(200).json({
       message: 'แก้ไขข้อมูลการตรวจสุขภาพสำเร็จ',
-      data: healthcheck
+      healthcheck
     });
 
   } catch (error) {
@@ -99,7 +99,7 @@ exports.destroy = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ลบข้อมูลการตรวจสุขภาพสำเร็จ',
-      data: healthcheck
+      healthcheck
     });
 
   } catch (error) {

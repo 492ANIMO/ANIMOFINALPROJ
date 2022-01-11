@@ -10,7 +10,7 @@ exports.index = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ดึงข้อมูลสำเร็จ',
-      data: vaccine
+      vaccine
     });
 
   } catch (error) {
@@ -26,7 +26,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: vaccine
+      vaccine
     });
 
   } catch (error) {
@@ -52,7 +52,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'เพิ่มวัคซีนสำเร็จ',
-      data: vaccine
+      vaccine
     });
 
   } catch (error) {
@@ -75,7 +75,7 @@ exports.update = async (req, res, next) => {
 
     res.status(200).json({
       message: 'แก้ไขข้อมูลวัคซีนสำเร็จ',
-      data: vaccine
+      vaccine
     });
 
   } catch (error) {
@@ -95,7 +95,7 @@ exports.destroy = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ลบข้อมูลวัคซีนสำเร็จ',
-      data: vaccine
+      vaccine
     });
 
   } catch (error) {

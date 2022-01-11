@@ -26,7 +26,7 @@ exports.index = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: package
+      package
     });
 
   } catch (error) {
@@ -54,7 +54,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: package
+      package
     });
 
   } catch (error) {
@@ -91,7 +91,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'บันทึกข้อมูลสำเร็จ',
-      data: package
+      package
     });
 
   } catch (error) {
@@ -134,7 +134,7 @@ exports.update = async (req, res, next) => {
 
     res.status(200).json({
       message: 'เปลี่ยนแปลงข้อมูลแพ็คเกจสำเร็จ',
-      data: package
+      package
     });
 
   } catch (error) {
@@ -150,7 +150,7 @@ exports.destroy = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: package
+      package
     });
 
   } catch (error) {
