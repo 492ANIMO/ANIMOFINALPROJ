@@ -13,7 +13,7 @@ exports.index = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ดึงข้อมูลข่าวสารสำเร็จ',
-      data: annoucement,
+      annoucement,
       count
     });
 
@@ -30,7 +30,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: annoucement
+      annoucement
     });
 
   } catch (error) {
@@ -57,7 +57,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'เพิ่มข่าวสารสำเร็จ',
-      data: annoucement
+      annoucement
     });
 
   } catch (error) {
@@ -79,7 +79,7 @@ exports.update = async (req, res, next) => {
 
     res.status(200).json({
       message: 'แก้ไขข้อมูลข่าวสารสำเร็จ',
-      data: annoucement
+      annoucement
     });
 
   } catch (error) {
@@ -99,7 +99,7 @@ exports.destroy = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ลบข่าวสารสำเร็จ',
-      data: annoucement
+      annoucement
     });
 
   } catch (error) {
