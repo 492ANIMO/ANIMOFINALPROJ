@@ -113,9 +113,7 @@
         <div class="space"></div>
 
         <vs-row>
-          <vs-col
-            w="2"
-          >
+          <vs-col class="InputSM" w="2" >
             <div class="InputPop">
               <vs-input
                 v-model="client.address.subdistrict"
