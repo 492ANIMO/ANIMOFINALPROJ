@@ -29,7 +29,7 @@
                     >
                       <vs-td>{{ data._id }}</vs-td>
                       <vs-td>{{ data.pet.owner.name }}</vs-td>
-                      <vs-td>{{ data.date }}</vs-td>
+                      <vs-td>{{ format_date(data.date) }}</vs-td>
                       <vs-td>{{ data.time }}</vs-td>
                       <vs-td>{{ data.pet.name }}</vs-td>
                       <vs-td>
@@ -77,9 +77,11 @@
 import Navbar from '@/components/Navbar.vue'
 import NavbarSide from '@/components/NavbarSide.vue'
 import axios from 'axios'
+import mixins from '../mixins.js'
 
 export default {
   name: 'Reservation',
+  mixins: [mixins],
   components: {
     Navbar,
     NavbarSide

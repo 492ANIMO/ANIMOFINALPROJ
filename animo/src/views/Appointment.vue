@@ -29,7 +29,7 @@
                     >
                       <vs-td>{{ data._id }}</vs-td>
                       <vs-td>{{ data.pet.owner.name }}</vs-td>
-                      <vs-td>{{ data.date }}</vs-td>
+                      <vs-td>{{ format_date(data.date) }}</vs-td>
                       <vs-td>{{ data.time }}</vs-td>
                       <vs-td>{{ data.pet.name }}</vs-td>
                       <vs-td>
@@ -122,6 +122,8 @@
 import Navbar from '@/components/Navbar.vue'
 import NavbarSide from '@/components/NavbarSide.vue'
 import axios from 'axios'
+import mixins from '../mixins'
+
 
 export default {
   name: 'Reservation',
@@ -129,6 +131,7 @@ export default {
     Navbar,
     NavbarSide
   },
+  mixins: [mixins],
   data:() => ({
     page : 1,
     value: '',
@@ -169,7 +172,8 @@ export default {
 
       axios.get(baseURL).then((res)=>{
         this.appointments = res.data.appointment;
-        console.log(res.data);
+        
+        console.log(this.appointments);
       }).catch((error)=> {
         console.log(error);
       });

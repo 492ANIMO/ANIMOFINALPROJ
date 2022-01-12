@@ -26,7 +26,7 @@
                       :data="data"
                     >
                       <vs-td>{{ data.title }}</vs-td>
-                      <vs-td>{{ data.createdAt }}</vs-td>
+                      <vs-td>{{ format_date(data.createdAt) }}</vs-td>
                       <vs-td>{{ data.author }}</vs-td>
                       <vs-td><div class="BT">ดูข้อมูล<font-awesome-icon class="iconBTl" icon="info-circle" style="font-size: 10px;"/></div></vs-td>
                     </vs-tr>
@@ -44,6 +44,7 @@
 import Navbar from '@/components/Navbar.vue'
 import NavbarSide from '@/components/NavbarSide.vue'
 import axios from 'axios'
+import mixins from '../mixins.js'
 
 export default {
   name: 'Annoucement',
@@ -51,6 +52,7 @@ export default {
     Navbar,
     NavbarSide
   },
+  mixins: [mixins],
   data:() => ({
     page : 1,
     users: [
