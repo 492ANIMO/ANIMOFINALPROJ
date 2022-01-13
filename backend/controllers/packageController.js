@@ -132,9 +132,12 @@ exports.update = async (req, res, next) => {
     })
     if(!package){ throw new Error('เปลี่ยนแปลงข้อมูลแพ็คเกจไม่สำเร็จ'); }
 
+    const count = await Package.countDocuments();
+
     res.status(200).json({
       message: 'เปลี่ยนแปลงข้อมูลแพ็คเกจสำเร็จ',
-      package
+      package,
+      count
     });
 
   } catch (error) {

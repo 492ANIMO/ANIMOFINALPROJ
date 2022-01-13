@@ -4,7 +4,7 @@
     <div style="padding-top:52px">
         <NavbarSide/>
     </div>
- <div class="Content1">
+    <div class="Content1">
         <div class="Content2"><div class="BTadd"><font-awesome-icon class="iconBTr" icon="plus"/>เพิ่มข้อมูล</div>
             <h2><font-awesome-icon class="icon" icon="newspaper"/>Annoucement</h2>
             <div class="line"><h3><font-awesome-icon class="icon" icon="search"/>ค้นหา</h3>
@@ -22,12 +22,12 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in users"
+                      v-for="(data, i) in annoucements"
                       :data="data"
                     >
-                      <vs-td>{{ data.id }}</vs-td>
-                      <vs-td>{{ data.name }}</vs-td>
-                      <vs-td>{{ data.phone }}</vs-td>
+                      <vs-td>{{ data.title }}</vs-td>
+                      <vs-td>{{ format_date(data.createdAt) }}</vs-td>
+                      <vs-td>{{ data.author }}</vs-td>
                       <vs-td><div class="BT">ดูข้อมูล<font-awesome-icon class="iconBTl" icon="info-circle" style="font-size: 10px;"/></div></vs-td>
                     </vs-tr>
                   </template>
@@ -43,6 +43,8 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import NavbarSide from '@/components/NavbarSide.vue'
+import axios from 'axios'
+import mixins from '../mixins.js'
 
 export default {
   name: 'Annoucement',
@@ -50,6 +52,7 @@ export default {
     Navbar,
     NavbarSide
   },
+  mixins: [mixins],
   data:() => ({
     page : 1,
     users: [
@@ -73,8 +76,24 @@ export default {
               "name": "1/1/2022",
               "phone": "Staff",
             }
-        ]
-    })
+        ],
+    annoucements: [],
+    }),
+  created(){
+    this.load();
+  },
+  methods: {
+    load() {
+      let baseURL = 'http://localhost:4000/api/annoucements/';
+
+      axios.get(baseURL).then((res)=>{
+        this.annoucements = res.data.annoucement;
+        console.log(res.data);
+      }).catch((error)=> {
+        console.log(error);
+      });
+    },
+  }
 }
 </script>
 <style scoped>

@@ -17,6 +17,7 @@
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "highcharts": "^9.3.2",
+    "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-router": "^3.5.3",
     "vuesax": "^4.0.1-alpha.25",

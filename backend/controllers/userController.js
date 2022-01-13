@@ -15,9 +15,12 @@ exports.index = async (req, res, next) => {
     });
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
+    const count = await User.countDocuments();
+
     res.status(200).json({
       message: 'สำเร็จ',
-      data: user
+      user,
+      count
     });
 
   } catch (error) {
@@ -37,7 +40,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: user
+      user
     });
 
   } catch (error) {
@@ -54,9 +57,12 @@ exports.getCurrentProfile = async (req, res, next) => {
     })
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
+    const count = await Client.countDocuments();
+
     res.status(200).json({
       message: 'สำเร็จ',
-      data: user
+      user,
+      count
     });
 
   } catch (error) {
@@ -147,7 +153,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'เพิ่มผู้ใช้สำเร็จ',
-      data: user
+      user
     });
 
   } catch (error) {
@@ -195,7 +201,7 @@ exports.createClientUser = async (req, res, next) => {
 
     res.status(200).json({
       message: 'เพิ่มผู้ใช้สำเร็จ',
-      data: user
+      user
     });
 
   } catch (error) {
@@ -463,10 +469,9 @@ exports.destroy = async (req, res, next) => {
 
         res.status(200).json({
           message: 'ลบผู้ใช้สำเร็จ',
-          data: {
-            user,
-            client
-          }
+          user,
+          client
+          
         });
 
         break;
@@ -483,9 +488,8 @@ exports.destroy = async (req, res, next) => {
 
         res.status(200).json({
           message: 'ลบผู้ใช้สำเร็จ',
-          data: {
-            staff
-          }
+          staff
+          
         });
         
         break;

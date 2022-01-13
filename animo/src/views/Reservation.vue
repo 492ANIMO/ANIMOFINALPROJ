@@ -24,14 +24,14 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in users"
+                      v-for="(data, i) in reservations"
                       :data="data"
                     >
-                      <vs-td>{{ data.id }}</vs-td>
-                      <vs-td>{{ data.name + ' ' + data.lastname }}</vs-td>
-                      <vs-td>{{ data.phone }}</vs-td>
+                      <vs-td>{{ data._id }}</vs-td>
+                      <vs-td>{{ data.pet.owner.name }}</vs-td>
+                      <vs-td>{{ format_date(data.date) }}</vs-td>
                       <vs-td>{{ data.time }}</vs-td>
-                      <vs-td>{{ data.pet }}</vs-td>
+                      <vs-td>{{ data.pet.name }}</vs-td>
                       <vs-td>
                         <vs-button color="#9ece6c" @click="active=!active" class="BT">
                                ยืนยัน
@@ -76,9 +76,12 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import NavbarSide from '@/components/NavbarSide.vue'
+import axios from 'axios'
+import mixins from '../mixins.js'
 
 export default {
   name: 'Reservation',
+  mixins: [mixins],
   components: {
     Navbar,
     NavbarSide
@@ -120,8 +123,24 @@ export default {
               "time": "12:30",
               "pet": "Kitty",
             }
-        ]
-    })
+        ],
+    reservations: [],
+    }),
+  created(){
+    this.load();
+  },
+  methods: {
+    load() {
+      let baseURL = 'http://localhost:4000/api/reservations/';
+
+      axios.get(baseURL).then((res)=>{
+        this.reservations = res.data.reservation;
+        console.log(res.data);
+      }).catch((error)=> {
+        console.log(error);
+      });
+    },
+  }
 }
 </script>
 <style scoped>

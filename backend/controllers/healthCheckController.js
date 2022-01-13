@@ -9,9 +9,12 @@ exports.index = async (req, res, next) => {
     const healthcheck = await HealthCheck.find();
     if(!healthcheck){ throw new Error('ไม่พบข้อมูลการตรวจสุขภาพ'); }
 
+    const count = await HealthCheck.countDocuments();
+
     res.status(200).json({
       message: 'ดึงข้อมูลสำเร็จ',
-      healthcheck
+      healthcheck,
+      count
     });
 
   } catch (error) {

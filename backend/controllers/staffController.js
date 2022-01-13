@@ -8,9 +8,12 @@ exports.index = async (req, res, next) => {
     const staff = await Staff.find();
     if(!staff){ throw new Error('ไม่พบข้อมูลเจ้าหน้าที่'); }
 
+    const count = await Staff.countDocuments();
+
     res.status(200).json({
       message: 'สำเร็จ',
-      data: staff
+      staff,
+      count
     });
 
   } catch (error) {
@@ -30,7 +33,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: staff
+      staff
     });
 
   } catch (error) {
@@ -64,7 +67,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: staff
+      staff
     });
 
   } catch (error) {
@@ -153,7 +156,7 @@ exports.showVet = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: vet
+      vet
     });
 
   } catch (error) {

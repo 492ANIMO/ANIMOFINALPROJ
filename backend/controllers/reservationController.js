@@ -44,13 +44,14 @@ exports.index = async (req, res, next) => {
      },
      select: '-createdAt -updatedAt -__v', 
     })
-
-
     if(!reservation){ throw new Error('ไม่พบข้อมูลการจองแพ็คเกจ'); }
+
+    const count = await Reservation.countDocuments();
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: reservation
+      reservation,
+      count
     });
 
   } catch (error) {
@@ -69,7 +70,7 @@ exports.show = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: reservation
+      reservation
     });
 
   } catch (error) {
@@ -141,7 +142,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'เพิ่มการจองสำเร็จ',
-      data: reservation
+      reservation
     });
 
   } catch (error) {
@@ -160,7 +161,7 @@ exports.destroy = async (req, res, next) => {
 
     res.status(200).json({
       message: 'สำเร็จ',
-      data: reservation
+      reservation
     });
 
   } catch (error) {
@@ -213,7 +214,7 @@ exports.update = async (req, res, next) => {
 
         res.status(200).json({
           message: 'บันทึกข้อมูลสำเร็จ',
-          data: appointment
+          appointment
         });
         break;
 
@@ -250,7 +251,7 @@ exports.update = async (req, res, next) => {
 
       res.status(200).json({
         message: 'เลื่อนเวลานัดสำเร็จ',
-        data: reservation
+        reservation
       });
     }
 
@@ -318,7 +319,7 @@ exports.confirm = async (req, res, next) => {
 
     res.status(200).json({
       message: 'ยืนยันการจองและเพิ่มข้อมูลการนัดสำเร็จ',
-      data: appointment
+      appointment
     });
 
   } catch (error) {

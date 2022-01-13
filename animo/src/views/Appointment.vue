@@ -24,14 +24,14 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in users"
+                      v-for="(data, i) in appointments"
                       :data="data"
                     >
-                      <vs-td>{{ data.id }}</vs-td>
-                      <vs-td>{{ data.name + data.lastname }}</vs-td>
-                      <vs-td>{{ data.phone }}</vs-td>
-                      <vs-td>{{ data.phone }}</vs-td>
-                      <vs-td>{{ data.phone }}</vs-td>
+                      <vs-td>{{ data._id }}</vs-td>
+                      <vs-td>{{ data.pet.owner.name }}</vs-td>
+                      <vs-td>{{ format_date(data.date) }}</vs-td>
+                      <vs-td>{{ data.time }}</vs-td>
+                      <vs-td>{{ data.pet.name }}</vs-td>
                       <vs-td>
                         <vs-button color="#6b9bce" @click="active=!active" class="BT">
                                ดูข้อมูล<font-awesome-icon class="iconBTl" style="font-size: 10px;" icon="info-circle"/>
@@ -121,6 +121,9 @@
 <script>
 import Navbar from '@/components/Navbar.vue'
 import NavbarSide from '@/components/NavbarSide.vue'
+import axios from 'axios'
+import mixins from '../mixins'
+
 
 export default {
   name: 'Reservation',
@@ -128,8 +131,10 @@ export default {
     Navbar,
     NavbarSide
   },
+  mixins: [mixins],
   data:() => ({
     page : 1,
+    value: '',
     users: [
             {
               "id": 1,
@@ -155,8 +160,25 @@ export default {
               "lastname": "Antonette",
               "phone": "09-12345678",
             }
-        ]
-    })
+        ],
+    appointments: [],
+    }),
+  created(){
+    this.load();
+  },
+  methods: {
+    load() {
+      let baseURL = 'http://localhost:4000/api/appointments/';
+
+      axios.get(baseURL).then((res)=>{
+        this.appointments = res.data.appointment;
+        
+        console.log(this.appointments);
+      }).catch((error)=> {
+        console.log(error);
+      });
+    },
+  }
 }
 </script>
 <style scoped>

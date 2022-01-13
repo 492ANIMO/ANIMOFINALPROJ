@@ -114,9 +114,7 @@
         <div class="space"></div>
 
         <vs-row>
-          <vs-col
-            w="2"
-          >
+          <vs-col class="InputSM" w="2" >
             <div class="InputPop">
               <vs-input
                 v-model="client.address.subdistrict"
@@ -329,6 +327,7 @@ export default {
       role: 'client',
       avatar: ''
     },
+    clientCount: ''
  
   }),
   created() {
@@ -353,7 +352,9 @@ export default {
             role: 'client',
             avatar: ''
           }
+          this.clientCount = res.data.count;
           console.log(res.data);
+          console.log('number of data: '+ this.clientCount);
       }).catch((error) => {
           console.log(error);
       });
