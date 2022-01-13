@@ -29,6 +29,7 @@
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
+    min-height: calc(100% - 152px);
 }
 .iconBTr{
   padding-right: 5px;

@@ -69,94 +69,29 @@
                     {{ tr.id }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.id }}
+                    {{ tr.website }}
                   </vs-td>
                   <vs-td>
                     <vs-button
-                      color="#6b9bce"
+                      color="#d78461"
                       @click="(active1 = !active1), showClient(data.id)"
                       class="BT"
                     >
                       แก้ไข<font-awesome-icon
                         class="iconBTl"
                         style="font-size: 10px"
-                        icon="info-circle"
+                        icon="edit"
                       />
                     </vs-button>
                     <vs-button
-                      color="#6b9bce"
+                      color="#ca7676"
                       @click="(active1 = !active1), showClient(data.id)"
-                      class="BT"
+                      class="BT1"
                     >
                       ลบ<font-awesome-icon
                         class="iconBTl"
                         style="font-size: 10px"
-                        icon="info-circle"
-                      />
-                    </vs-button>
-                  </vs-td>
-                </vs-tr>
-              </template>
-            </vs-table>
-          </template>
-        </div> <br>
-        <div>
-          <div>
-            <vs-button
-              color="#6b9bce"
-              @click="(active = !active), getClients()"
-              class="BTadd1"
-            >
-              <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
-            </vs-button>
-          </div>
-          <h3 class="TextHead">สัตว์เลี้ยง</h3>
-          <template>
-            <vs-table striped>
-              <template #thead>
-                <vs-tr>
-                  <vs-th> ชื่อสัตว์เลี้ยง </vs-th>
-                  <vs-th> ชนิด </vs-th>
-                  <vs-th> เพศ </vs-th>
-                  <vs-th> น้ำหนัก </vs-th>
-                  <vs-th>แก้ไข/ลบ</vs-th>
-                </vs-tr>
-              </template>
-              <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in users" :data="tr">
-                  <vs-td>
-                    {{ tr.name }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.email }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.id }}
-                  </vs-td>
-                  <vs-td>
-                    {{ tr.id }}
-                  </vs-td>
-                  <vs-td>
-                    <vs-button
-                      color="#6b9bce"
-                      @click="(active1 = !active1), showClient(data.id)"
-                      class="BT"
-                    >
-                      แก้ไข<font-awesome-icon
-                        class="iconBTl"
-                        style="font-size: 10px"
-                        icon="info-circle"
-                      />
-                    </vs-button>
-                    <vs-button
-                      color="#6b9bce"
-                      @click="(active1 = !active1), showClient(data.id)"
-                      class="BT"
-                    >
-                      ลบ<font-awesome-icon
-                        class="iconBTl"
-                        style="font-size: 10px"
-                        icon="info-circle"
+                        icon="trash-alt"
                       />
                     </vs-button>
                   </vs-td>
@@ -166,8 +101,8 @@
           </template>
         </div>
       </div>
-      </div>
     </div>
+  </div>
 </template>
 <script>
 import Navbar from "@/components/Navbar.vue";
@@ -182,18 +117,18 @@ export default {
   data: () => ({
     users: [
       {
-        id: 1,
-        name: "Leanne Graham",
+        id: "ชาย",
+        name: "Bobby",
         username: "Bret",
-        email: "Sincere@april.biz",
-        website: "hildegard.org",
+        email: "สุนัข",
+        website: "2 กิโลกรัม",
       },
       {
-        id: 2,
-        name: "Ervin Howell",
+        id: "หญิง",
+        name: "Muji",
         username: "Antonette",
-        email: "Shanna@melissa.tv",
-        website: "anastasia.net",
+        email: "แมว",
+        website: "2 กิโลกรัม",
       },
     ],
   }),
@@ -202,11 +137,11 @@ export default {
 
 <style scoped>
 .TextHead {
-    font-size: 20px;
-    color: #797979;
-    transform: translateY(30%);
-    margin: 0px;
-    font-weight: 500;
+  font-size: 20px;
+  color: #797979;
+  transform: translateY(30%);
+  margin: 0px;
+  font-weight: 500;
 }
 .profile {
   display: flex;
@@ -251,12 +186,8 @@ font {
   font-family: kanit;
 }
 .BTadd1 {
-  background: rgb(142, 157, 211);
-  background: linear-gradient(
-    45deg,
-    rgba(142, 157, 211, 1) 0%,
-    rgba(86, 164, 215, 1) 100%
-  );
+background: rgb(79,161,199);
+background: linear-gradient(45deg, rgba(79,161,199,1) 0%, rgba(97,199,215,1) 100%);
   color: #ffffff;
   border-radius: 20px;
   font-size: 11px;
@@ -267,16 +198,23 @@ font {
   margin-bottom: 10px;
 }
 .BT {
-  background: rgb(94, 184, 204);
-  background: linear-gradient(
-    45deg,
-    rgba(94, 184, 204, 1) 0%,
-    rgba(68, 157, 222, 1) 100%
-  );
+background: rgb(215,132,97);
+background: linear-gradient(45deg, rgba(215,132,97,1) 0%, rgba(215,169,106,1) 100%);
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 11px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+  font-family: kanit;
+}
+.BT1{
+background: rgb(197,94,94);
+background: linear-gradient(45deg, rgba(197,94,94,1) 0%, rgba(248,139,109,1) 100%);
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 11px;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
   font-family: kanit;
@@ -297,5 +235,8 @@ font {
   justify-content: center;
   font-size: 13px;
   padding: 5px;
+}
+.vs-table__td {
+  padding: 5px 5px;
 }
 </style>
