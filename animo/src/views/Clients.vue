@@ -15,10 +15,7 @@
           <vs-input v-model="value" placeholder="search..." />
         </div>
 
-
-        <h1>Number of Entries: {{ resultCount }}</h1>
-
-        
+        <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
         <vs-table striped>
           <template #thead>
             <vs-tr>
@@ -29,7 +26,7 @@
             </vs-tr>
           </template>
           <template #tbody>
-            <vs-tr :key="i" v-for="(data, i) in users" :data="data">
+            <vs-tr :key="i" v-for="(data, i) in $vs.getPage(users, page, max)" :data="data">
               <vs-td>{{ data.id }}</vs-td>
               <vs-td>{{ data.name }}</vs-td>
               <vs-td>{{ data.contact }}</vs-td>
@@ -50,7 +47,7 @@
           </template>
         </vs-table>
         <div class="center">
-          <vs-pagination infinite v-model="page" :length="10" />
+          <vs-pagination infinite v-model="page" :length="$vs.getLength(users, max)" />
         </div>
       </div>
       <!-- add client -->
@@ -312,6 +309,7 @@ export default {
   },
   data: () => ({
     page: 1,
+    max: 5,
     value: "",
     active: false,
     active1: false,
@@ -436,7 +434,6 @@ h3 {
 }
 .line {
   display: flex;
-  padding-bottom: 20px;
 }
 .BT {
   background: rgb(94, 184, 204);
@@ -480,6 +477,13 @@ h3 {
   float: right;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
+}
+.list{
+  color: #adadad;
+  margin: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  float: right;
 }
 ::v-deep .vs-input__label--label {
   font-size: 14px;
@@ -535,8 +539,5 @@ h3 {
 }
 ::v-deep .vs-dialog__content {
   padding: 25px 30px;
-}
-::v-deep .vs-table__td {
-  padding: 5px 12px;
 }
 </style>

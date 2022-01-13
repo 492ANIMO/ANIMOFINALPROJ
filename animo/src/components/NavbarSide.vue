@@ -28,6 +28,12 @@
     }
 </script>
 <style scoped>
+h3 {
+    font-size: 1.4vw;
+}
+h6 {
+    font-size: 1.25vw;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -47,6 +53,7 @@ li a {
     padding: 8px 30px;
     margin: 10px 0px;
     text-decoration: none;
+    font-size: 1.25vw;
 }
 li a:hover:not(.active) {
     background: rgb(204,233,216);

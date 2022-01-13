@@ -3,7 +3,7 @@
         <ul>
             <li><img src="../assets/ANIMO1.png" alt="Animo" class="Logo1"></li>
             <li><h1 class="LogoText">ANIMO</h1></li>
-            <li><router-link to="/intro">Introduction</router-link></li>
+            <li><router-link to="/">Introduction</router-link></li>
             <li><router-link to="/contact">Contact</router-link></li>
             <li class=login>
                 <vs-button

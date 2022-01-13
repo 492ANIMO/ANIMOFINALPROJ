@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div>
     <div id="nav">
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
@@ -13,6 +13,7 @@
    margin: 0px;
    font-family: kanit;
    background: #f4f7f8;
+   font-size: 100%;
  }
  .icon {
    padding-right: 8px;
@@ -45,4 +46,5 @@
   font-family: kanit;
   color: #696969;
 }
+
 </style>

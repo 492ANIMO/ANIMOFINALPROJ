@@ -4,7 +4,11 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
-
+  {
+    path: '/',
+    name: 'Introduction',
+    component: () => import('../views/Intro.vue')
+  },
   {
     path: '/index',
     name: 'index',
@@ -46,15 +50,15 @@ const routes = [
     component: () => import('../views/Annoucement.vue')
   },
   {
-    path: '/intro',
-    name: 'Introduction',
-    component: () => import('../views/Intro.vue')
-  },
-  {
     path: '/contact',
     name: 'Contact',
     component: () => import('../views/Contact.vue')
-  }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue')
+  },
 ]
 
 const router = new VueRouter({
