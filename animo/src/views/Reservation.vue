@@ -33,7 +33,7 @@
                       <vs-td>{{ data.time }}</vs-td>
                       <vs-td>{{ data.pet.name }}</vs-td>
                       <vs-td>
-                        <vs-button color="#9ece6c" @click="active=!active" class="BT">
+                        <vs-button color="#9ece6c" @click="active=!active, test(data._id)" class="BT">
                                ยืนยัน
                         </vs-button>
                       </vs-td>
@@ -62,7 +62,7 @@
             <vs-button dark class="BT2" @click="active=!active">
               ยกเลิก
             </vs-button>
-            <vs-button color="#71cf9d" class="BT1" @click="active=!active">
+            <vs-button color="#71cf9d" class="BT1" @click="active=!active, confirmReservation()">
               ยืนยัน
             </vs-button>
           </div>
@@ -125,6 +125,7 @@ export default {
             }
         ],
     reservations: [],
+    reserved: ''
     }),
   created(){
     this.load();
@@ -140,6 +141,25 @@ export default {
         console.log(error);
       });
     },
+
+    confirmReservation() {
+      let baseURL = 'http://localhost:4000/api/reservations/confirm/';
+
+      axios.patch(baseURL+this.reserved, {
+        doctor: 'staff'
+      }).then(() => {
+        console.log(this.reserved)
+        this.reserved = '';
+        this.load();
+      }).catch((error) => {
+          console.log(error);
+      });
+      
+    },
+    test(id){
+      this.reserved = id;
+      console.log(this.reserved)
+    }
   }
 }
 </script>
