@@ -55,12 +55,12 @@
                    <vs-row>
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
                       <div class="InputPop">
-                        <vs-input v-model="value" label="ชื่อแพ็คเกจ" placeholder="ชื่อแพ็คเกจ"></vs-input>
+                        <vs-input v-model="newPackage.name" label="ชื่อแพ็คเกจ" placeholder="ชื่อแพ็คเกจ"></vs-input>
                       </div>
                     </vs-col>
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
                         <div class="InputSL">
-                          <vs-select label="ประเภทสัตว์" placeholder="ประเภทสัตว์" v-model="value1">
+                          <vs-select label="ประเภทสัตว์" placeholder="ประเภทสัตว์" v-model="newPackage.type">
                             <vs-option value1="1">
                               สนัข
                             </vs-option>
@@ -81,7 +81,7 @@
                   <vs-row>
                     <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
                       <div class="InputPop">
-                        <vs-input type="time" v-model="time1" label="เวลา"></vs-input>
+                        <vs-input type="time" v-model="value" label="เวลา"></vs-input>
                       </div>
                     </vs-col><div class="space"></div>
                     <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
@@ -91,7 +91,7 @@
                     </vs-col><div class="space"></div>
                     <vs-col vs-type="flex" class="InputSM" vs-justify="center" vs-align="center" w="2">
                       <div class="InputPop">
-                        <vs-input v-model="value" label="ราคารวม" placeholder="ราคารวม(บาท)"></vs-input>
+                        <vs-input v-model="newPackage.price" label="ราคารวม" placeholder="ราคารวม(บาท)"></vs-input>
                       </div>
                     </vs-col>
                   </vs-row><div class="space"></div>
@@ -177,7 +177,7 @@
                    <vs-row>
                     <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
                       <div class="InputPop">
-                        <vs-input v-model="value" label="รายละเอียด" placeholder="รายละเอียด"></vs-input>
+                        <vs-input v-model="newPackage.detail" label="รายละเอียด" placeholder="รายละเอียด"></vs-input>
                       </div>
                     </vs-col>
                   </vs-row><div class="space"></div>
@@ -186,7 +186,7 @@
 
               <template #footer>
                 <div class="footer-dialog">
-                  <vs-button primary @click="active1=!active1" class="BT1" style="float: right; width: 80px;">
+                  <vs-button primary @click="active1=!active1, createPackage()" class="BT1" style="float: right; width: 80px;">
                     ยืนยัน
                   </vs-button><br><br>
                 </div>
@@ -216,8 +216,9 @@ export default {
     time2: '',
     active: false,
     packages: [],
-    package: {
+    newPackage: {
       name: '',
+      type: '',
       vaccines: [],
       treatments: [],
       healthChecks: [],
@@ -289,6 +290,28 @@ export default {
         console.log(error);
       });
     },
+
+    createPackage(){
+      let baseURL = 'http://localhost:4000/api/packages/';
+
+      axios.post(baseURL, this.newPackage).then(() => {
+        console.log(this.client)
+
+        this.newPackage = {
+        name: '',
+        type: '',
+        vaccines: [],
+        treatments: [],
+        healthChecks: [],
+        detail: '',
+        price: ''
+        }
+        this.getPackage();
+
+      }).catch((error) => {
+          console.log(error);
+      });
+    }
   }
 
 }

@@ -64,7 +64,7 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
+    const { name, type, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -81,6 +81,7 @@ exports.create = async (req, res, next) => {
 
     const package = new Package({
       name,
+      type,
       vaccines,
       treatments,
       healthChecks,

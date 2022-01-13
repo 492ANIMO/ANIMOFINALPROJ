@@ -11,7 +11,8 @@ const schema = new Schema({
   treatments: [{ type: Schema.Types.ObjectId, ref: 'Treatment' }],
   healthChecks: [{ type: Schema.Types.ObjectId, ref: 'HealthCheck' }],
   detail: { type: String, trim: true},
-  price: { type: Number }
+  price: { type: Number },
+  type: { type: String, trim: true}
 
 },{
   timestamps: true, 
