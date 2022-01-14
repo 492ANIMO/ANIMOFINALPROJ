@@ -11,7 +11,7 @@
           </vs-button>
             <h2><font-awesome-icon class="icon" icon="syringe"/>Package</h2>
             <div class="line"><h3><font-awesome-icon class="icon" icon="search"/>ค้นหา</h3>
-              <vs-input v-model="value" placeholder="search..." />
+              <vs-input v-model="search" placeholder="search..." />
             </div>
                 <vs-table striped>
                   <template #thead>
@@ -25,7 +25,7 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in packages"
+                      v-for="(data, i) in $vs.getPage($vs.getSearch(packages, search), page, max)"
                       :data="data"
                     >
                       <vs-td>{{ data._id }}</vs-td>
@@ -40,7 +40,7 @@
                   </template>
                 </vs-table>
                 <div class="center">
-                  <vs-pagination infinite v-model="page" :length="10" />
+                  <vs-pagination infinite v-model="page" :length="$vs.getLength(packages, max)" />
                 </div>
             </div>
 
@@ -198,6 +198,8 @@ export default {
   },
   data:() => ({
     page : 1,
+    max: 5,
+    search: '',
     value: '',
     value1: '',
     time1: '',
@@ -367,6 +369,12 @@ h3{
   margin-top: -3px;
   margin-left: 10px;
   display: block;
+}
+::v-deep .vs-input {
+  width: 350px;
+  height: 35px;
+  font-family: kanit;
+  color: #696969;
 }
 ::v-deep .vs-select__input {
   min-height: 36px;
