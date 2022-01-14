@@ -47,9 +47,9 @@
 
                       <vs-dialog width="550px" v-model="active">
         <template #header>
-          <h4>
+          <font class="font">
             ยืนยัน<b>การจอง</b>
-          </h4>
+          </font>
         </template>
 
 
@@ -174,6 +174,9 @@ h3{
   color: #adadad;
   font-weight: 500;
   margin-left: 30px;
+}
+.font {
+  font-size: 20px;
 }
 .line {
   display: flex;
