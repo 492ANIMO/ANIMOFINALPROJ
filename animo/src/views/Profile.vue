@@ -15,7 +15,7 @@
         </vs-button>
         <div class="profile">
           <vs-avatar class="ProfileDT" circle size="120">
-            <img src="../assets/jay.jpg" alt="" />
+            <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
             <h2>Warayut Promnin</h2>
@@ -128,7 +128,7 @@ export default {
         name: "Muji",
         username: "Antonette",
         email: "แมว",
-        website: "2 กิโลกรัม",
+        website: "2ใถ กิโลกรัม",
       },
     ],
   }),
@@ -186,8 +186,12 @@ font {
   font-family: kanit;
 }
 .BTadd1 {
-background: rgb(79,161,199);
-background: linear-gradient(45deg, rgba(79,161,199,1) 0%, rgba(97,199,215,1) 100%);
+  background: rgb(79, 161, 199);
+  background: linear-gradient(
+    45deg,
+    rgba(79, 161, 199, 1) 0%,
+    rgba(97, 199, 215, 1) 100%
+  );
   color: #ffffff;
   border-radius: 20px;
   font-size: 11px;
@@ -198,8 +202,12 @@ background: linear-gradient(45deg, rgba(79,161,199,1) 0%, rgba(97,199,215,1) 100
   margin-bottom: 10px;
 }
 .BT {
-background: rgb(215,132,97);
-background: linear-gradient(45deg, rgba(215,132,97,1) 0%, rgba(215,169,106,1) 100%);
+  background: rgb(215, 132, 97);
+  background: linear-gradient(
+    45deg,
+    rgba(215, 132, 97, 1) 0%,
+    rgba(215, 169, 106, 1) 100%
+  );
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
@@ -208,9 +216,13 @@ background: linear-gradient(45deg, rgba(215,132,97,1) 0%, rgba(215,169,106,1) 10
   --vs-button-padding: 5px 10px;
   font-family: kanit;
 }
-.BT1{
-background: rgb(197,94,94);
-background: linear-gradient(45deg, rgba(197,94,94,1) 0%, rgba(248,139,109,1) 100%);
+.BT1 {
+  background: rgb(197, 94, 94);
+  background: linear-gradient(
+    45deg,
+    rgba(197, 94, 94, 1) 0%,
+    rgba(248, 139, 109, 1) 100%
+  );
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;

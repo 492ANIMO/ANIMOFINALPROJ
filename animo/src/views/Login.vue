@@ -7,6 +7,9 @@ export default {
   name: 'Login',
   components: {
     HelloWorld
-  }
+  },
+  data:() => ({
+    value: ''
+})
 }
 </script>

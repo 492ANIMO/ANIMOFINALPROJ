@@ -12,7 +12,7 @@
         <h2><font-awesome-icon class="icon" icon="paw" />Clients</h2>
         <div class="line">
           <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
-          <vs-input v-model="value" placeholder="search..." />
+          <vs-input v-model="search" placeholder="search..." />
         </div>
 
         <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
@@ -26,22 +26,23 @@
             </vs-tr>
           </template>
           <template #tbody>
-            <vs-tr :key="i" v-for="(data, i) in $vs.getPage(users, page, max)" :data="data">
+            <vs-tr :key="i" v-for="(data, i) in $vs.getPage($vs.getSearch(users, search), page, max)" :data="data">
               <vs-td>{{ data.id }}</vs-td>
               <vs-td>{{ data.name }}</vs-td>
               <vs-td>{{ data.contact }}</vs-td>
-              <vs-td>
+              <vs-td><router-link to="/profile">
                 <vs-button
                   color="#6b9bce"
                   @click="active1 = !active1, showClient(data.id)"
                   class="BT"
                 >
-                  ดูข้อมูล<font-awesome-icon
+                ดูข้อมูล
+                 <font-awesome-icon
                     class="iconBTl"
                     style="font-size: 10px"
                     icon="info-circle"
                   />
-                </vs-button>
+                </vs-button></router-link>
               </vs-td>
             </vs-tr>
           </template>
@@ -311,6 +312,7 @@ export default {
     value: "",
     active: false,
     active1: false,
+    search: '',
     users: [
     ],
     client: {
@@ -422,6 +424,10 @@ export default {
 };
 </script>
 <style scoped>
+a {
+color: rgb(255, 255, 255);
+text-decoration: none;
+}
 h2 {
   margin: 0px 0px 5px 0px;
   color: #696969;

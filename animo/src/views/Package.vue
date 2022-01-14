@@ -152,18 +152,6 @@
                           <vs-select label="รายการตรวจสุขภาพ" placeholder="รายการตรวจสุขภาพ" v-model="value1">
                             <vs-option :key="i" v-for="(data, i) in healthCheck_options" :value1="data._id" > {{ data.name }}
                             </vs-option>
-                            <!-- <vs-option value1="1">
-                              xxx
-                            </vs-option>
-                            <vs-option value1="2">
-                              xxx
-                            </vs-option>
-                            <vs-option value1="3">
-                              xxx
-                            </vs-option>
-                            <vs-option value1="4">
-                              xxx
-                            </vs-option> -->
                           </vs-select> 
                           <div>
                             <vs-button color="#72d2cf" @click="active=!active" class="BTaddData">

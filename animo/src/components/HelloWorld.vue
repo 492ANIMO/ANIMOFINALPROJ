@@ -28,7 +28,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+    data:() => ({
+    value1: '',
+    value2: ''
+})
 }
 </script>
 
