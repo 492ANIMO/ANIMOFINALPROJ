@@ -265,6 +265,7 @@ exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
     const {doctor} = req.body;
+  
 
     let reservation = await Reservation.findById(id);
     if(!reservation){ throw new Error('ไม่พบข้อมูลการจอง'); }
