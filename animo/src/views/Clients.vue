@@ -423,6 +423,7 @@ export default {
 }
 };
 </script>
+
 <style scoped>
 a {
 color: rgb(255, 255, 255);
@@ -495,7 +496,6 @@ h3 {
 ::v-deep .vs-input__label--label {
   font-size: 14px;
   color: #696969;
-  margin-left: -20px;
   margin-top: -5px;
 }
 ::v-deep .vs-dialog__header {
@@ -513,6 +513,7 @@ h3 {
   width: 350px;
   height: 35px;
   font-family: kanit;
+  color: #696969;
 }
 ::v-deep .vs-input-content {
   width: 350px;

@@ -206,6 +206,14 @@ background: linear-gradient(45deg, rgba(157,209,103,1) 0%, rgba(99,209,157,1) 10
   padding-left: 5px;
   margin-right: -3px;
   }
+::v-deep .vs-dialog__header {
+  float: left;
+  color: #696969;
+  padding: 20px 0px 0px 20px;
+}
+::v-deep .vs-dialog__content {
+  padding: 25px 30px;
+}
 ::v-deep .vs-input {
   width: 120px;
   height: 35px;
@@ -239,12 +247,6 @@ background: linear-gradient(45deg, rgba(157,209,103,1) 0%, rgba(99,209,157,1) 10
 }
 ::v-deep .vs-button__content {
   font-family: kanit;
-}
-::v-deep .vs-dialog__header {
-float: left;
-color: #696969;
-margin-top: -20px;
-font-size: 19px;
 }
 ::v-deep .footer .vs-button {
 float: right;

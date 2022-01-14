@@ -263,4 +263,12 @@ h3{
 ::v-deep .vs-table__td {
   padding: 5px 12px;
 }
+::v-deep .vs-dialog__header {
+  float: left;
+  color: #696969;
+  padding: 20px 0px 0px 20px;
+}
+::v-deep .vs-dialog__content {
+  padding: 25px 30px;
+}
 </style>

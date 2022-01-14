@@ -18,9 +18,9 @@
 
           <vs-dialog width="550px" v-model="active1">
         <template #header>
-          <h3>
+          <font class="font">
             ยืนยัน <b>ออกจากระบบ</b>
-          </h3>
+          </font>
         </template>
 
 
@@ -55,6 +55,9 @@ export default {
 
 </script>
 <style scoped>
+.font {
+  font-size: 20px;
+}
 .container {
 position: absolute;
 top: 50%;
