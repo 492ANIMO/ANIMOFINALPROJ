@@ -8,7 +8,7 @@
       <div class="Content2">
         <vs-button
           color="#6b9bce"
-          @click="(active = !active), getClients()"
+          @click="(active = !active)"
           class="BTadd"
         >
           <font-awesome-icon class="iconBTr" icon="plus" />แก้ไขข้อมูล
@@ -39,7 +39,7 @@
           <div>
             <vs-button
               color="#6b9bce"
-              @click="(active = !active), getClients()"
+              @click="(active = !active)"
               class="BTadd1"
             >
               <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
@@ -177,6 +177,25 @@ export default {
           console.log(error);
       });
     },
+    updatePetById(pet){
+      let baseURL = "http://localhost:4000/api/pets/";
+      console.log('pet: '+ pet._id)
+      axios.patch(baseURL+pet._id, {
+        name: pet.name,
+        type: pet.type,
+        breed: pet.breed,
+        gender: pet.gender,
+        bloodType: pet.bloodType,
+        dob: pet.dob,
+        sterilization: pet.sterilization,
+        avatar: pet.avatar
+
+      }).then(() => {
+        console.log(pet)
+      }).catch((error) => {
+          console.log(error);
+      });
+    }
 
 
   },
