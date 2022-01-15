@@ -18,19 +18,19 @@
             <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
-            <h2>Warayut Promnin</h2>
+            <h2>{{ this.client.name }}</h2>
             <div class="ProfileContent">
               <div>
                 <font class="t1">อีเมลล์ : </font>
-                <font>warayut_p@gmail.com</font>
+                <font>{{ this.client.email }}</font>
               </div>
               <div>
                 <font class="t1">เบอร์โทร : </font>
-                <font>099-2403334</font>
+                <font>{{ this.client.contact }}</font>
               </div>
               <div>
                 <font class="t1">ที่อยู่ : </font>
-                <font>เชียงใหม่ 50200</font>
+                <font>{{ this.client.address }}</font>
               </div>
             </div>
           </div>
@@ -58,23 +58,23 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in users" :data="tr">
+                <vs-tr :key="i" v-for="(data, i) in pets" :data="data">
                   <vs-td>
-                    {{ tr.name }}
+                    {{ data.name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.email }}
+                    {{ data.type }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.id }}
+                    {{ data.gender }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.website }}
+                    {{ data.weight+ ' กิโลกรัม' }} 
                   </vs-td>
                   <vs-td>
                     <vs-button
                       color="#d78461"
-                      @click="(active1 = !active1), showClient(data.id)"
+                      @click="(active1 = !active1)"
                       class="BT"
                     >
                       แก้ไข<font-awesome-icon
@@ -85,7 +85,7 @@
                     </vs-button>
                     <vs-button
                       color="#ca7676"
-                      @click="(active1 = !active1), showClient(data.id)"
+                      @click="(active1 = !active1)"
                       class="BT1"
                     >
                       ลบ<font-awesome-icon
@@ -138,6 +138,22 @@ export default {
         website: "2ใถ กิโลกรัม",
       },
     ],
+    client: {
+      name: '',
+      email: '',
+      contact: '',
+      role: '',
+      address: {
+        province: '',
+        district: '',
+        subdistrict: '',
+        postalCode: '',
+        detail: ''
+      },
+      
+    },
+    pets: []
+
   }),
   created(){
     this.getClientById()
@@ -147,11 +163,21 @@ export default {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.get(baseURL+this.client_id).then((res) => {
           this.client = res.data.client;
-          console.log(this.client);
+
+          // concatnate address
+          this.client.address = res.data.client.address.detail+' '+res.data.client.address.subdistrict+' '+res.data.client.address.district+' '+res.data.client.address.province+' '+res.data.client.address.postalCode;
+          console.log('this.client: '+this.client);
+
+          axios.get("http://localhost:4000/api/pets/client/" + this.client_id).then((res)=> {
+            this.pets = res.data.pet;
+            console.log('pets: '+ this.pets)
+          })
+          
       }).catch((error) => {
           console.log(error);
       });
     },
+
 
   },
 };
