@@ -488,7 +488,7 @@ h3 {
 }
 .list{
   color: #adadad;
-  margin: 10px;
+  margin: 5px;
   font-size: 14px;
   font-weight: 500;
   float: right;

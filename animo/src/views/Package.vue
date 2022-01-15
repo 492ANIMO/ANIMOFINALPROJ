@@ -13,6 +13,7 @@
             <div class="line"><h3><font-awesome-icon class="icon" icon="search"/>ค้นหา</h3>
               <vs-input v-model="search" placeholder="search..." />
             </div>
+            <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
                 <vs-table striped>
                   <template #thead>
                     <vs-tr>
@@ -284,8 +285,12 @@ export default {
           console.log(error);
       });
     }
-  }
-
+  },
+  computed: {
+    resultCount () {
+      return this.packages && this.packages.length
+    }
+}
 }
 </script>
 <style scoped>
@@ -302,7 +307,6 @@ h3{
 }
 .line {
   display: flex;
-  padding-bottom: 20px;
 }
 .BT{
   background: rgb(94,184,204);
@@ -351,6 +355,13 @@ h3{
   margin-top: -3px;
   margin-left: 10px;
   display: block;
+}
+.list{
+  color: #adadad;
+  margin: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  float: right;
 }
 ::v-deep .vs-input {
   width: 350px;
