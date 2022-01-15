@@ -30,10 +30,10 @@
               <vs-td>{{ data.id }}</vs-td>
               <vs-td>{{ data.name }}</vs-td>
               <vs-td>{{ data.contact }}</vs-td>
-              <vs-td><router-link to="/profile">
+              <vs-td>
                 <vs-button
                   color="#6b9bce"
-                  @click="active1 = !active1, showClient(data.id)"
+                  @click="active1 = !active1, clientDetail(data.id)"
                   class="BT"
                 >
                 ดูข้อมูล
@@ -42,7 +42,7 @@
                     style="font-size: 10px"
                     icon="info-circle"
                   />
-                </vs-button></router-link>
+                </vs-button>
               </vs-td>
             </vs-tr>
           </template>
@@ -245,7 +245,6 @@ export default {
       });
     },
     
-
     showClient(id) {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.get(baseURL+id).then((res) => {
@@ -296,6 +295,19 @@ export default {
           console.log(error);
       });
     },
+
+    clientDetail(id){
+      if(id){
+        this.$router.push({
+          name: 'Profile',
+          params: {
+            client_id: id
+          }
+        })
+
+        console.log('profile: '+ id)
+      }
+    }
 
   },
 

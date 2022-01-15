@@ -9,7 +9,7 @@ const schema = new Schema({
   breed: { type: String, trim: true },
   gender: { type: String, trim: true },
   bloodType: { type: String, trim: true },
-  weight: { type: String, trim: true },
+  weight: { type: Number, trim: true },
   dob: { type: String, trim: true },
   sterilization: { type: Boolean },
   avatar: { type: String },

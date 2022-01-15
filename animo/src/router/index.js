@@ -55,9 +55,10 @@ const routes = [
     component: () => import('../views/Contact.vue')
   },
   {
-    path: '/profile',
+    path: '/profile/:client_id',
     name: 'Profile',
-    component: () => import('../views/Profile.vue')
+    component: () => import('../views/Profile.vue'),
+    props: true
   },
 ]
 
