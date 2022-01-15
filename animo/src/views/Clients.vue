@@ -551,4 +551,7 @@ h3 {
 ::v-deep .vs-table__td {
   padding: 5px 12px;
 }
+::v-deep .vs-table_not-found td {
+  color: #696969;
+}
 </style>

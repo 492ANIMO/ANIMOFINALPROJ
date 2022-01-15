@@ -102,15 +102,6 @@
                           <vs-select label="รายการวัคซีน" placeholder="รายการวัคซีน" v-model="value1">
                             <vs-option :key="i" v-for="(vaccine, i) in vaccine_options" :value1="vaccine._id" > {{ vaccine.name }}
                             </vs-option>
-                            <!-- <vs-option value1="2">
-                              xxx
-                            </vs-option>
-                            <vs-option value1="3">
-                              xxx
-                            </vs-option>
-                            <vs-option value1="4">
-                              xxx
-                            </vs-option> -->
                           </vs-select> 
                           <div>
                             <vs-button color="#72d2cf" @click="active=!active" class="BTaddData">
@@ -127,15 +118,6 @@
                           <vs-select label="รายการรักษา" placeholder="รายการรักษา" v-model="value1">
                              <vs-option :key="i" v-for="(data, i) in treatment_options" :value1="data._id" > {{ data.name }}
                             </vs-option>
-                            <!-- <vs-option value1="2">
-                              xxx
-                            </vs-option>
-                            <vs-option value1="3">
-                              xxx
-                            </vs-option>
-                            <vs-option value1="4">
-                              xxx
-                            </vs-option> -->
                           </vs-select> 
                           <div>
                             <vs-button color="#72d2cf" @click="active=!active" class="BTaddData">
@@ -362,7 +344,7 @@ h3{
   font-size: 13px;
   float: left;
   margin-top: -34px;
-  margin-left: 230px;
+  margin-left: 265px;
   --vs-button-padding: 5px 10px;
 }
 .InputSL {
@@ -443,8 +425,25 @@ h3{
 }
 button.vs-select__option {
   font-family: kanit;
+  margin: 10px;
+  padding: 0px;
+  width: 90%;
+}
+::v-deep .vs-select__options__content {
+  font-family: kanit;
+  width: 500px;
 }
 ::v-deep .vs-table__td {
   padding: 5px 12px;
+}
+::v-deep .vs-table_not-found td {
+  color: #696969;
+}
+::v-deep .vs-select {
+  width: 250px;
+}
+.vs-select__option:hover:not(:disabled){
+  margin-left: 5px;
+  padding: 0px;
 }
 </style>
