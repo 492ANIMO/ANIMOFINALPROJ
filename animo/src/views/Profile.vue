@@ -107,12 +107,19 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
+import axios from "axios";
 
 export default {
   name: "Profile",
   components: {
     Navbar,
     NavbarSide,
+  },
+  props: {
+    client_id: {
+      type: String,
+      required: true
+    }
   },
   data: () => ({
     users: [
@@ -132,6 +139,21 @@ export default {
       },
     ],
   }),
+  created(){
+    this.getClientById()
+  },
+  methods: {
+    getClientById() {
+      let baseURL = "http://localhost:4000/api/clients/";
+      axios.get(baseURL+this.client_id).then((res) => {
+          this.client = res.data.client;
+          console.log(this.client);
+      }).catch((error) => {
+          console.log(error);
+      });
+    },
+
+  },
 };
 </script>
 
