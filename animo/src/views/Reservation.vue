@@ -7,9 +7,11 @@
 <div class="Content1">
         <div class="Content2">
             <h2><font-awesome-icon class="icon" icon="file-medical"/>Reservation</h2>
-            <div class="line"><h3>จำนวนการจองต่อวัน</h3>
-              <vs-input type="number" v-model="value" placeholder="ระบุจำนวน..." />
+            <div class="line">
+              <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
+              <vs-input v-model="search" placeholder="search..." />
             </div>
+            <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
                 <vs-table striped>
                   <template #thead>
                     <vs-tr>
@@ -24,7 +26,7 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in reservations"
+                      v-for="(data, i) in $vs.getPage($vs.getSearch(reservations, search), page, max)"
                       :data="data"
                     >
                       <vs-td>{{ data._id }}</vs-td>
@@ -41,7 +43,7 @@
                   </template>
                 </vs-table>
                 <div class="center">
-                  <vs-pagination infinite v-model="page" :length="10" />
+                  <vs-pagination infinite v-model="page" :length="$vs.getLength(reservations, max)" />
                 </div>
             </div>
 
@@ -87,43 +89,12 @@ export default {
     NavbarSide
   },
   data:() => ({
-    page : 1,
+    page: 1,
+    max: 5,
     value : '',
+    search: '',
     active: false,
-    users: [
-            {
-              "id": 1,
-              "name": "Leanne",
-              "lastname": "Graham",
-              "phone": "1/1/2022",
-              "time": "12:30",
-              "pet": "Bobby",
-            },
-            {
-              "id": 2,
-              "name": "Ervin",
-              "lastname": "Antonette",
-              "phone": "1/1/2022",
-              "time": "12:30",
-              "pet": "Oreo",
-            },
-            {
-              "id": 3,
-              "name": "Somsri",
-              "lastname": "Howell",
-              "phone": "1/1/2022",
-              "time": "12:30",
-              "pet": "Mu Mu",
-            },
-            {
-              "id": 4,
-              "name": "Somchai",
-              "lastname": "Antonette",
-              "phone": "1/1/2022",
-              "time": "12:30",
-              "pet": "Kitty",
-            }
-        ],
+    users: [],
     reservations: [],
     reserved: ''
     }),
@@ -160,8 +131,14 @@ export default {
       this.reserved = id;
       console.log(this.reserved)
     }
-  }
+  },
+    computed: {
+    resultCount () {
+      return this.reservations && this.reservations.length
+    }
 }
+}
+
 </script>
 <style scoped>
 h2{
@@ -174,6 +151,13 @@ h3{
   color: #adadad;
   font-weight: 500;
   margin-left: 30px;
+}
+.list{
+  color: #adadad;
+  margin: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  float: right;
 }
 .font {
   font-size: 20px;
@@ -218,7 +202,7 @@ background: linear-gradient(45deg, rgba(157,209,103,1) 0%, rgba(99,209,157,1) 10
   padding: 25px 30px;
 }
 ::v-deep .vs-input {
-  width: 120px;
+  width: 350px;
   height: 35px;
 }
 ::v-deep .vs-input-content {

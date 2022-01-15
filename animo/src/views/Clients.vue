@@ -62,8 +62,8 @@
             <div class="InputPop">
               <vs-input
                 v-model="client.name"
-                label="ชื่อเจ้าของสัตว์เลี้ยง"
-                placeholder="ชื่อเจ้าของสัตว์เลี้ยง"
+                label="ชื่อ"
+                placeholder="ชื่อ"
               ></vs-input>
             </div>
           </vs-col>
@@ -71,8 +71,8 @@
             <div class="InputPop">
               <vs-input
                 v-model="client.email"
-                label="อีเมลล์"
-                placeholder="อีเมลล์"
+                label="นามสกุล"
+                placeholder="นามสกุล"
               ></vs-input>
             </div>
           </vs-col>
@@ -83,9 +83,18 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-                v-model="client.contact"
+                v-model="client.name"
                 label="เบอร์โทร"
                 placeholder="เบอร์โทร"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="client.email"
+                label="อีเมลล์"
+                placeholder="อีเมลล์"
               ></vs-input>
             </div>
           </vs-col>
@@ -157,132 +166,6 @@
             <vs-button
               primary
               @click="active = !active, createClient()"
-              class="BT1"
-              style="float: right; width: 80px"
-            >
-              ยืนยัน </vs-button
-            ><br /><br />
-          </div>
-        </template>
-      </vs-dialog>
-      <!-- show client -->
-      <vs-dialog width="80%" scroll v-model="active1">
-        <template #header>
-          <h2>ข้อมูลเจ้าของสัตว์เลี้ยง</h2>
-        </template>
-
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.name"
-                label="ชื่อเจ้าของสัตว์เลี้ยง"
-                :placeholder="this.client.name"
-              ></vs-input>
-   
-            </div>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.email"
-                label="อีเมลล์"
-                :placeholder="this.client.email"
-              ></vs-input>
-            </div>
-          </vs-col>
-        </vs-row>
-        <div class="space"></div>
-
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.contact"
-                label="เบอร์โทร"
-                :placeholder="this.client.contact"
-              ></vs-input>
-            </div>
-          </vs-col>
-        </vs-row>
-        <div class="space"></div>
-
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.address.detail"
-                label="ที่อยู่"
-                :placeholder="this.client.address.detail"
-              ></vs-input>
-            </div>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.address.province"
-                label="จังหวัด"
-                :placeholder="this.client.address.province"
-              ></vs-input>
-            </div>
-          </vs-col>
-        </vs-row>
-        <div class="space"></div>
-
-        <vs-row>
-          <vs-col
-            class="InputSM"
-            w="2"
-          >
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.address.subdistrict"
-                label="ตำบล"
-                :placeholder="this.client.address.subdistrict"
-              ></vs-input>
-            </div>
-          </vs-col>
-          <div class="space"></div>
-          <vs-col
-            class="InputSM"
-            w="2"
-          >
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.address.district"
-                label="อำเภอ"
-                :placeholder="this.client.address.district"
-              ></vs-input>
-            </div>
-          </vs-col>
-          <div class="space"></div>
-          <vs-col
-            class="InputSM"
-            w="2"
-          >
-            <div class="InputPop">
-              <vs-input
-                state="success"
-                v-model="client.address.postalCode"
-                label="รหัสไปรษณีย์"
-                :placeholder="this.client.address.postalCode"
-              ></vs-input>
-            </div>
-          </vs-col>
-        </vs-row>
-
-        <template #footer>
-          <div class="footer-dialog">
-            <vs-button
-              primary
-              @click="active1 = !active1,  updateClient(client)"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -496,6 +379,7 @@ h3 {
 ::v-deep .vs-input__label--label {
   font-size: 14px;
   color: #696969;
+  margin-left: -20px;
   margin-top: -5px;
 }
 ::v-deep .vs-dialog__header {

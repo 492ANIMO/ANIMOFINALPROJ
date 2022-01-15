@@ -50,7 +50,7 @@ ul {
 li a {
     display: block;
     color: #ffffff;
-    padding: 8px 30px;
+    padding: 8px 2vw;
     margin: 10px 0px;
     text-decoration: none;
     font-size: 1.25vw;

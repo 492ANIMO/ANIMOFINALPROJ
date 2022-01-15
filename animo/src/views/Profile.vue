@@ -8,17 +8,17 @@
       <div class="Content2">
         <vs-button
           color="#6b9bce"
-          @click="(active = !active), getClients()"
+          @click="(active1 = !active1), getClients()"
           class="BTadd"
         >
-          <font-awesome-icon class="iconBTr" icon="plus" />แก้ไขข้อมูล
+          <font-awesome-icon class="iconBTr" icon="edit" />แก้ไขข้อมูล
         </vs-button>
         <div class="profile">
           <vs-avatar class="ProfileDT" circle size="120">
             <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
-            <h2>Warayut Promnin</h2>
+            <h2 class="text">Warayut Promnin</h2>
             <div class="ProfileContent">
               <div>
                 <font class="t1">อีเมลล์ : </font>
@@ -58,7 +58,7 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in users" :data="tr">
+                <vs-tr :key="i" v-for="(tr, i) in user" :data="tr">
                   <vs-td>
                     {{ tr.name }}
                   </vs-td>
@@ -99,6 +99,162 @@
               </template>
             </vs-table>
           </template>
+
+          <vs-dialog width="80%" scroll v-model="active1">
+            <template #header>
+              <h2>ข้อมูลเจ้าของสัตว์เลี้ยง</h2>
+            </template>
+
+            <vs-row>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.name"
+                    label="ชื่อ"
+                    :placeholder="this.client.name"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.email"
+                    label="นามสกุล"
+                    :placeholder="this.client.email"
+                  ></vs-input>
+                </div>
+              </vs-col>
+            </vs-row>
+            <div class="space"></div>
+
+            <vs-row>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.name"
+                    label="เบอร์โทร"
+                    :placeholder="this.client.name"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.email"
+                    label="อีเมลล์"
+                    :placeholder="this.client.email"
+                  ></vs-input>
+                </div>
+              </vs-col>
+            </vs-row>
+            <div class="space"></div>
+
+            <vs-row>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.address.detail"
+                    label="ที่อยู่"
+                    :placeholder="this.client.address.detail"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.address.province"
+                    label="จังหวัด"
+                    :placeholder="this.client.address.province"
+                  ></vs-input>
+                </div>
+              </vs-col>
+            </vs-row>
+            <div class="space"></div>
+
+            <vs-row>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.address.subdistrict"
+                    label="ตำบล"
+                    :placeholder="this.client.address.subdistrict"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.address.district"
+                    label="อำเภอ"
+                    :placeholder="this.client.address.district"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    state="success"
+                    v-model="client.address.postalCode"
+                    label="รหัสไปรษณีย์"
+                    :placeholder="this.client.address.postalCode"
+                  ></vs-input>
+                </div>
+              </vs-col>
+            </vs-row>
+
+            <template #footer>
+              <div class="footer-dialog">
+                <vs-button
+                  primary
+                  @click="(active1 = !active1), updateClient(client)"
+                  class="BT2"
+                  style="float: right; width: 80px"
+                >
+                  ยืนยัน </vs-button
+                ><br /><br />
+              </div>
+            </template>
+          </vs-dialog>
         </div>
       </div>
     </div>
@@ -107,6 +263,7 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
+import axios from "axios";
 
 export default {
   name: "Profile",
@@ -115,7 +272,8 @@ export default {
     NavbarSide,
   },
   data: () => ({
-    users: [
+    active1: false,
+    user: [
       {
         id: "ชาย",
         name: "Bobby",
@@ -131,11 +289,129 @@ export default {
         website: "2ใถ กิโลกรัม",
       },
     ],
+    client: {
+      name: "",
+      contact: "",
+      email: "",
+      address: {
+        province: "",
+        district: "",
+        subdistrict: "",
+        postalCode: "",
+        detail: "",
+      },
+      role: "client",
+      avatar: "",
+    },
+    clientCount: "",
   }),
+  created() {
+    this.getClients();
+  },
+  methods: {
+    getClients() {
+      let baseURL = "http://localhost:4000/api/clients/";
+      axios
+        .get(baseURL)
+        .then((res) => {
+          this.users = res.data.client;
+          this.client = {
+            name: "",
+            contact: "",
+            email: "",
+            address: {
+              province: "",
+              district: "",
+              subdistrict: "",
+              postalCode: "",
+              detail: "",
+            },
+            role: "client",
+            avatar: "",
+          };
+          this.clientCount = res.data.count;
+          console.log(res.data);
+          console.log("number of data: " + this.clientCount);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    showClient(id) {
+      let baseURL = "http://localhost:4000/api/clients/";
+      axios
+        .get(baseURL + id)
+        .then((res) => {
+          this.client = res.data.client;
+          console.log(this.client);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    createClient() {
+      let baseURL = "http://localhost:4000/api/clients/";
+      axios
+        .post(baseURL, this.client)
+        .then(() => {
+          this.getClients();
+          console.log(this.client);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    updateClient(client) {
+      let baseURL = "http://localhost:4000/api/clients/";
+      console.log("client: " + client.id);
+      axios
+        .patch(baseURL + client.id, {
+          name: client.name,
+          email: client.email,
+          contact: client.contact,
+          address: client.address,
+        })
+        .then(() => {
+          this.client = {
+            name: "",
+            contact: "",
+            email: "",
+            address: {
+              province: "",
+              district: "",
+              subdistrict: "",
+              postalCode: "",
+              detail: "",
+            },
+            role: "client",
+            avatar: "",
+          };
+          this.getClients();
+          console.log(client);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+
+  computed: {
+    resultCount() {
+      return this.users && this.users.length;
+    },
+  },
 };
 </script>
 
 <style scoped>
+h2 {
+  margin: 0px 0px 5px 0px;
+  color: #696969;
+  font-weight: 500;
+}
 .TextHead {
   font-size: 20px;
   color: #797979;
@@ -150,7 +426,7 @@ export default {
   width: 50px;
   height: 50px;
 }
-h2 {
+.text {
   margin: 0px 0px 5px 0px;
   color: #696969;
   font-weight: 500;
@@ -171,11 +447,11 @@ font {
   margin-left: 10px;
 }
 .BTadd {
-  background: rgb(142, 157, 211);
+  background: rgb(215, 132, 97);
   background: linear-gradient(
     45deg,
-    rgba(142, 157, 211, 1) 0%,
-    rgba(86, 164, 215, 1) 100%
+    rgba(215, 132, 97, 1) 0%,
+    rgba(215, 169, 106, 1) 100%
   );
   color: #ffffff;
   border-radius: 20px;
@@ -231,8 +507,58 @@ font {
   --vs-button-padding: 5px 10px;
   font-family: kanit;
 }
+.BT2 {
+  background: rgb(157, 209, 103);
+  background: linear-gradient(
+    45deg,
+    rgba(157, 209, 103, 1) 0%,
+    rgba(99, 209, 157, 1) 100%
+  );
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 11px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+  font-family: kanit;
+}
 ::v-deep .vs-avatar {
   filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.1));
+}
+
+::v-deep .vs-input__label--label {
+  font-size: 14px;
+  margin-left: -20px;
+  margin-top: -5px;
+}
+::v-deep .vs-dialog__header {
+  float: left;
+  color: #696969;
+  padding: 20px 0px 0px 20px;
+}
+::v-deep .InputPop .vs-input {
+  width: calc(100% - 20px);
+}
+::v-deep .InputSM .vs-input {
+  width: 41%;
+}
+::v-deep .vs-input {
+  width: 350px;
+  height: 35px;
+  font-family: kanit;
+}
+::v-deep .vs-input-content {
+  width: 350px;
+  margin-left: 10px;
+  margin-top: -2px;
+}
+::v-deep .vs-pagination-content {
+  padding-top: 20px;
+}
+::v-deep .vs-pagination__active {
+  background: #3acad2;
+  box-shadow: none;
+  margin-top: 20px;
 }
 ::v-deep .vs-table__th__content {
   color: #696969;
@@ -248,7 +574,16 @@ font {
   font-size: 13px;
   padding: 5px;
 }
-.vs-table__td {
-  padding: 5px 5px;
+::v-deep .vs-button__content {
+  font-family: kanit;
+}
+::v-deep .vs-dialog__content {
+  padding: 25px 30px;
+}
+::v-deep .vs-table__td {
+  padding: 5px 12px;
+}
+::v-deep .vs-table_not-found td {
+  color: #696969;
 }
 </style>

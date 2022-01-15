@@ -10,6 +10,7 @@
             <div class="line"><h3>วันที่นัดหมาย</h3>
               <vs-input type="date" v-model="value" />
             </div>
+            <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
                 <vs-table striped>
                   <template #thead>
                     <vs-tr>
@@ -24,7 +25,7 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in appointments"
+                      v-for="(data, i) in $vs.getPage(appointments, page, max)"
                       :data="data"
                     >
                       <vs-td>{{ data._id }}</vs-td>
@@ -41,7 +42,7 @@
                   </template>
                 </vs-table>
                 <div class="center">
-                  <vs-pagination infinite v-model="page" :length="10" />
+                  <vs-pagination infinite v-model="page" :length="$vs.getLength(appointments, max)" />
                 </div>
             </div>
 
@@ -134,33 +135,9 @@ export default {
   mixins: [mixins],
   data:() => ({
     page : 1,
+    max: 5,
     value: '',
-    users: [
-            {
-              "id": 1,
-              "name": "Leanne",
-              "lastname": "Bret",
-              "phone": "09-12345678",
-            },
-            {
-              "id": 2,
-              "name": "Ervin",
-              "lastname": "Antonette",
-              "phone": "09-12345678",
-            },
-            {
-              "id": 3,
-              "name": "Ervin",
-              "lastname": "Antonette",
-              "phone": "09-12345678",
-            },
-            {
-              "id": 4,
-              "name": "Ervin",
-              "lastname": "Antonette",
-              "phone": "09-12345678",
-            }
-        ],
+    users: [],
     appointments: [],
     }),
   created(){
@@ -178,7 +155,12 @@ export default {
         console.log(error);
       });
     },
-  }
+  },
+   computed: {
+    resultCount () {
+      return this.appointments && this.appointments.length
+    }
+}
 }
 </script>
 <style scoped>
@@ -192,6 +174,13 @@ h3{
   color: #adadad;
   font-weight: 500;
   margin-left: 30px;
+}
+.list{
+  color: #adadad;
+  margin: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  float: right;
 }
 .line {
   display: flex;
