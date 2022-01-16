@@ -99,7 +99,8 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
             <div class="InputSL">
-              <vs-select
+              <!-- <vs-select
+                multiple
                 label="รายการวัคซีน"
                 placeholder="รายการวัคซีน"
                 v-model="value1"
@@ -111,7 +112,21 @@
                 >
                   {{ vaccine.name }}
                 </vs-option>
-              </vs-select>
+              </vs-select> -->
+
+                <vs-select
+                  multiple
+                  label="รายการวัคซีน"
+                  placeholder="รายการวัคซีน"
+                  v-model="value"
+                >
+                  <vs-option :key="i"
+                  v-for="(vaccine, i) in vaccine_options"
+                  :value="vaccine" :label='vaccine.name' >
+                    {{ vaccine.name }}
+                  </vs-option>
+                  
+                </vs-select>
               <div>
                 <vs-button
                   color="#72d2cf"
@@ -158,7 +173,7 @@
 
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
-            <div class="InputSL">
+            <div class="">
               <vs-select
                 label="รายการตรวจสุขภาพ"
                 placeholder="รายการตรวจสุขภาพ"
@@ -217,6 +232,9 @@
             <div class="InputSL">
               <div class="TextArea">
                 <h5 class="AddPG">รายการทั้งหมด</h5>
+                <p :key="i"
+                  v-for="(vaccine, i) in value">
+                    {{ vaccine.name }}></p>
               </div>
             </div>
           </vs-col>
@@ -343,10 +361,8 @@ export default {
     page: 1,
     max: 5,
     search: "",
-    value: "",
+    value: [],
     value1: "",
-    time1: "",
-    time2: "",
     active: false,
     Detail1: false,
     packages: [],
