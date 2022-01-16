@@ -79,7 +79,7 @@ exports.getCurrentProfile = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { email, password, role, name, contact, address, position } = req.body;
+    const { email, password, role, firstName, lastName, contact, address, position } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -105,7 +105,8 @@ exports.create = async (req, res, next) => {
     // check role
     if(role === 'client'){
       let client = await Client.create({
-        name,
+        firstName, 
+        lastName,
         email,
         contact,
         address,
@@ -127,7 +128,8 @@ exports.create = async (req, res, next) => {
 
     }else if(role === 'staff'){
       const staff = await Staff.create({
-        name,
+        firstName, 
+        lastName,
         email,
         contact,
         address,
@@ -275,7 +277,7 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const {email, password, name, contact, address} = req.body;
+    const {email, password, firstName, lastName, contact, address} = req.body;
 
     //check email ซ้ำ
     const existEmail = await User.findOne({email: email});
@@ -301,7 +303,8 @@ exports.update = async (req, res, next) => {
     switch (user.role) {
       case 'client':
         let client = await Client.findByIdAndUpdate({ _id: profileId },{
-          name,
+          firstName,
+          lastName,
           email,
           contact,
           address,
@@ -313,7 +316,8 @@ exports.update = async (req, res, next) => {
 
       case 'staff':
         let staff = await Staff.findByIdAndUpdate({ _id: profileId },{
-          name,
+          firstName,
+          lastName,
           email,
           contact,
           address,

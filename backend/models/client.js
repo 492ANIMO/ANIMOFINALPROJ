@@ -7,14 +7,15 @@ const User = require('./user');
 const Pet = require('./pet');
 
 const schema = new Schema({
-  name: { type: String, required: true, trim: true, index: true },
+  firstName: { type: String, required: true, trim: true, index: true },
+  lastName: { type: String, required: true, trim: true },
   contact: { type: String, required: true, trim: true },
   email: { type: String, trim: true },
   address: {
-    province: { type: String },
-    district: { type: String },
-    subdistrict: { type: String },
-    postalCode: { type: String },
+    province: { type: String, trim: true },
+    district: { type: String, trim: true },
+    subdistrict: { type: String, trim: true },
+    postalCode: { type: String, trim: true },
     detail: { type: String, trim: true }
   },
   role: { type: String, default: 'client' },
