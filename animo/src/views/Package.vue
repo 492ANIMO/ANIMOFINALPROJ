@@ -86,10 +86,14 @@
                 placeholder="ประเภทสัตว์"
                 v-model="newPackage.type"
               >
-                <vs-option :key="i"
+                <vs-option
+                  :key="i"
                   v-for="(type, i) in petType"
-                  :value="type" :label="type"> {{ type }} </vs-option>
-                
+                  :value="type"
+                  :label="type"
+                >
+                  {{ type }}
+                </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -114,19 +118,23 @@
                 </vs-option>
               </vs-select> -->
 
-                <vs-select
-                  multiple
-                  label="รายการวัคซีน"
-                  placeholder="รายการวัคซีน"
-                  v-model="newPackage.vaccines"
-                >
-                  <vs-option :key="i"
+              <vs-select
+                multiple
+                collapse-chips
+                filter
+                label="รายการวัคซีน"
+                placeholder="รายการวัคซีน"
+                v-model="newPackage.vaccines"
+              >
+                <vs-option
+                  :key="i"
                   v-for="(vaccine, i) in vaccine_options"
-                  :value="vaccine" :label='vaccine.name' >
-                    {{ vaccine.name }}
-                  </vs-option>
-                  
-                </vs-select>
+                  :value="vaccine"
+                  :label="vaccine.name"
+                >
+                  {{ vaccine.name }}
+                </vs-option>
+              </vs-select>
               <div>
                 <vs-button
                   color="#72d2cf"
@@ -141,53 +149,60 @@
         </vs-row>
         <div class="space"></div>
 
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
-            <div class="InputSL">
-               <vs-select
-                  multiple
-                  label="รายการรักษา"
-                  placeholder="รายการรักษา"
-                  v-model="newPackage.treatments"
-                >
-                  <vs-option :key="i"
-                  v-for="(treatment, i) in treatment_options"
-                  :value="treatment" :label='treatment.name' >
-                    {{ treatment.name }}
-                  </vs-option>
-                  
-                </vs-select>
-              <div>
-                <vs-button
-                  color="#72d2cf"
-                  @click="active = !active"
-                  class="BTaddData"
-                >
-                  <font-awesome-icon class="iconBTr" icon="plus" />เพิ่ม
-                </vs-button>
-              </div>
-            </div>
-          </vs-col>
-        </vs-row>
-        <div class="space"></div>
-
-        
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
             <div class="InputSL">
               <vs-select
-                  multiple
-                  label="รายการตรวจสุขภาพ"
-                  placeholder="รายการตรวจสุขภาพ"
-                  v-model="newPackage.healthChecks"
+                multiple
+                collapse-chips
+                filter
+                label="รายการรักษา"
+                placeholder="รายการรักษา"
+                v-model="newPackage.treatments"
+              >
+                <vs-option
+                  :key="i"
+                  v-for="(treatment, i) in treatment_options"
+                  :value="treatment"
+                  :label="treatment.name"
                 >
-                  <vs-option :key="i"
+                  {{ treatment.name }}
+                </vs-option>
+              </vs-select>
+              <div>
+                <vs-button
+                  color="#72d2cf"
+                  @click="active = !active"
+                  class="BTaddData"
+                >
+                  <font-awesome-icon class="iconBTr" icon="plus" />เพิ่ม
+                </vs-button>
+              </div>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
+            <div class="InputSL">
+              <vs-select
+                multiple
+                collapse-chips
+                filter
+                label="รายการตรวจสุขภาพ"
+                placeholder="รายการตรวจสุขภาพ"
+                v-model="newPackage.healthChecks"
+              >
+                <vs-option
+                  :key="i"
                   v-for="(healtCheck, i) in healthCheck_options"
-                  :value="healtCheck" :label='healtCheck.name' >
-                    {{ healtCheck.name }}
-                  </vs-option>
-                  
-                </vs-select>
+                  :value="healtCheck"
+                  :label="healtCheck.name"
+                >
+                  {{ healtCheck.name }}
+                </vs-option>
+              </vs-select>
               <div>
                 <vs-button
                   color="#72d2cf"
@@ -231,17 +246,33 @@
         <vs-row>
           <vs-col w="6">
             <div class="InputSL">
-              <div class="TextArea">
-                <h5 class="AddPG">รายการทั้งหมด</h5>
-                <p :key="i" v-for="(vaccine, i) in newPackage.vaccines">
-                    {{ vaccine.name }}
-                </p>
-                <p :key="i" v-for="(treatment, i) in newPackage.treatments">
-                    {{ treatment.name }}
-                </p>
-                <p :key="i" v-for="(healthCheck, i) in newPackage.healthChecks">
-                    {{ healthCheck.name }}
-                </p>
+              <div class="TextArea1">
+                <div class="TextArea2">
+                  <h4 class="AddPG">รายการทั้งหมด</h4>
+                  <div class="TextArea3">
+                    <h5
+                     class="AddPG"
+                      :key="i"
+                      v-for="(vaccine, i) in newPackage.vaccines"
+                    >
+                      -{{ vaccine.name }}
+                    </h5>
+                    <h5
+                      class="AddPG"
+                      :key="i"
+                      v-for="(treatment, i) in newPackage.treatments"
+                    >
+                      -{{ treatment.name }}
+                    </h5>
+                    <h5
+                      class="AddPG"
+                      :key="i"
+                      v-for="(healthCheck, i) in newPackage.healthChecks"
+                    >
+                      -{{ healthCheck.name }}
+                    </h5>
+                  </div>
+                </div>
               </div>
             </div>
           </vs-col>
@@ -270,7 +301,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-              state="success"
+                state="success"
                 v-model="newPackage.name"
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
@@ -280,7 +311,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputSL">
               <vs-select
-              state="success"
+                state="success"
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
                 v-model="newPackage.type"
@@ -299,9 +330,7 @@
             <div class="InputPop">
               <h4 class="HeadInput">รายการทั้งหมด</h4>
               <div class="DetailPK">
-                <h4 class="DetailText">
-                  รายการทั้งหมด
-                </h4>
+                <h4 class="DetailText">รายการทั้งหมด</h4>
               </div>
             </div>
           </vs-col>
@@ -312,7 +341,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-              state="success"
+                state="success"
                 v-model="newPackage.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
@@ -326,7 +355,7 @@
           <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
             <div class="InputPop">
               <vs-input
-              state="success"
+                state="success"
                 v-model="newPackage.detail"
                 label="รายละเอียด"
                 placeholder="รายละเอียด"
@@ -372,12 +401,7 @@ export default {
     value1: [],
     active: false,
     Detail1: false,
-    petType:[
-      'สุนัข',
-      'แมว',
-      'นก',
-      'อื่นๆ',
-    ],
+    petType: ["สุนัข", "แมว", "นก", "อื่นๆ"],
     packages: [],
 
     vaccine_options: [],
@@ -393,8 +417,6 @@ export default {
       detail: "",
       price: "",
     },
-
-    
   }),
   created() {
     this.getPackage(), this.getAllVacines();
@@ -478,7 +500,6 @@ export default {
       axios
         .post(baseURL, this.newPackage)
         .then(() => {
-         
           this.newPackage = {
             name: "",
             type: "",
@@ -592,6 +613,7 @@ h3 {
 ::v-deep .vs-select__input {
   min-height: 36px;
   max-height: 30px;
+  font-family: kanit;
 }
 ::v-deep .vs-input__label--label {
   font-size: 14px;
@@ -665,17 +687,20 @@ button.vs-select__option {
   margin: 0px;
   padding: 5px 5px;
 }
-::v-deep .vs-checkbox-con{
- width: 18px;
- height: 18px;
+::v-deep .vs-checkbox-con {
+  width: 18px;
+  height: 18px;
 }
-::v-deep .vs-checkbox-mask{
- width: 18px;
- height: 18px;
+::v-deep .vs-checkbox-mask {
+  width: 18px;
+  height: 18px;
 }
 ::v-deep .vs-select__chips__chip {
- font-family: kanit;
+  font-family: kanit;
   font-size: 10px;
+}
+::v-deep .vs-select__chips__input {
+  font-family: kanit;
 }
 ::v-deep .vs-select__options__content {
   font-family: kanit;
@@ -700,18 +725,26 @@ button.vs-select__option {
   margin-left: 5px;
   padding: 0px;
 }
-.TextArea {
+.TextArea1 {
   background: #f4f7f8;
   height: 165px;
   border-radius: 10px;
   width: 330px;
   margin-left: 363px;
-  margin-top: -346px;
+  margin-top: -326px;
+  overflow: auto;
+}
+.TextArea2 {
+  padding: 10px 0px 0px 10px;
+}
+.TextArea3 {
+  padding: 0px 0px 0px 5px;
 }
 .AddPG {
+  padding-left: 5px;
   font-weight: 400;
   color: #73a3c0;
-  padding: 10px;
+  margin: 0px;
 }
 .DetailPK {
   background: #dbe6e7;
@@ -722,8 +755,8 @@ button.vs-select__option {
 }
 .DetailText {
   margin: 0px;
-    font-size: 13px;
-    font-weight: 400;
+  font-size: 13px;
+  font-weight: 400;
   color: #668d91;
   padding: 10px 0px 0px 10px;
 }
