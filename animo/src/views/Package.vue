@@ -86,10 +86,10 @@
                 placeholder="ประเภทสัตว์"
                 v-model="newPackage.type"
               >
-                <vs-option value1="1"> สนัข </vs-option>
-                <vs-option value1="2"> แมว </vs-option>
-                <vs-option value1="3"> นก </vs-option>
-                <vs-option value1="4"> อื่นๆ </vs-option>
+                <vs-option :key="i"
+                  v-for="(type, i) in petType"
+                  :value="type" :label="type"> {{ type }} </vs-option>
+                
               </vs-select>
             </div>
           </vs-col>
@@ -118,7 +118,7 @@
                   multiple
                   label="รายการวัคซีน"
                   placeholder="รายการวัคซีน"
-                  v-model="value"
+                  v-model="newPackage.vaccines"
                 >
                   <vs-option :key="i"
                   v-for="(vaccine, i) in vaccine_options"
@@ -144,19 +144,19 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
             <div class="InputSL">
-              <vs-select
-                label="รายการรักษา"
-                placeholder="รายการรักษา"
-                v-model="value1"
-              >
-                <vs-option
-                  :key="i"
-                  v-for="(data, i) in treatment_options"
-                  :value1="data._id"
+               <vs-select
+                  multiple
+                  label="รายการรักษา"
+                  placeholder="รายการรักษา"
+                  v-model="newPackage.treatments"
                 >
-                  {{ data.name }}
-                </vs-option>
-              </vs-select>
+                  <vs-option :key="i"
+                  v-for="(treatment, i) in treatment_options"
+                  :value="treatment" :label='treatment.name' >
+                    {{ treatment.name }}
+                  </vs-option>
+                  
+                </vs-select>
               <div>
                 <vs-button
                   color="#72d2cf"
@@ -175,18 +175,18 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
             <div class="">
               <vs-select
-                label="รายการตรวจสุขภาพ"
-                placeholder="รายการตรวจสุขภาพ"
-                v-model="value1"
-              >
-                <vs-option
-                  :key="i"
-                  v-for="(data, i) in healthCheck_options"
-                  :value1="data._id"
+                  multiple
+                  label="รายการตรวจสุขภาพ"
+                  placeholder="รายการตรวจสุขภาพ"
+                  v-model="newPackage.healthChecks"
                 >
-                  {{ data.name }}
-                </vs-option>
-              </vs-select>
+                  <vs-option :key="i"
+                  v-for="(healtCheck, i) in healthCheck_options"
+                  :value="healtCheck" :label='healtCheck.name' >
+                    {{ healtCheck.name }}
+                  </vs-option>
+                  
+                </vs-select>
               <div>
                 <vs-button
                   color="#72d2cf"
@@ -205,7 +205,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-                v-model="newPackage.name"
+                v-model="newPackage.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
               ></vs-input>
@@ -232,9 +232,15 @@
             <div class="InputSL">
               <div class="TextArea">
                 <h5 class="AddPG">รายการทั้งหมด</h5>
-                <p :key="i"
-                  v-for="(vaccine, i) in value">
-                    {{ vaccine.name }}></p>
+                <p :key="i" v-for="(vaccine, i) in newPackage.vaccines">
+                    {{ vaccine.name }}
+                </p>
+                <p :key="i" v-for="(treatment, i) in newPackage.treatments">
+                    {{ treatment.name }}
+                </p>
+                <p :key="i" v-for="(healthCheck, i) in newPackage.healthChecks">
+                    {{ healthCheck.name }}
+                </p>
               </div>
             </div>
           </vs-col>
@@ -306,7 +312,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="newPackage.name"
+                v-model="newPackage.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
               ></vs-input>
@@ -362,10 +368,21 @@ export default {
     max: 5,
     search: "",
     value: [],
-    value1: "",
+    value1: [],
     active: false,
     Detail1: false,
+    petType:[
+      'สุนัข',
+      'แมว',
+      'นก',
+      'อื่นๆ',
+    ],
     packages: [],
+
+    vaccine_options: [],
+    treatment_options: [],
+    healthCheck_options: [],
+
     newPackage: {
       name: "",
       type: "",
@@ -375,9 +392,8 @@ export default {
       detail: "",
       price: "",
     },
-    vaccine_options: [],
-    treatment_options: [],
-    healthCheck_options: [],
+
+    
   }),
   created() {
     this.getPackage(), this.getAllVacines();
@@ -461,8 +477,7 @@ export default {
       axios
         .post(baseURL, this.newPackage)
         .then(() => {
-          console.log(this.client);
-
+         
           this.newPackage = {
             name: "",
             type: "",
