@@ -18,19 +18,19 @@
             <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
-            <h2 class="text">Warayut Promnin</h2>
+            <h2>{{ this.client.name }}</h2>
             <div class="ProfileContent">
               <div>
                 <font class="t1">อีเมลล์ : </font>
-                <font>warayut_p@gmail.com</font>
+                <font>{{ this.client.email }}</font>
               </div>
               <div>
                 <font class="t1">เบอร์โทร : </font>
-                <font>099-2403334</font>
+                <font>{{ this.client.contact }}</font>
               </div>
               <div>
                 <font class="t1">ที่อยู่ : </font>
-                <font>เชียงใหม่ 50200</font>
+                <font>{{ this.client.address }}</font>
               </div>
             </div>
           </div>
@@ -58,18 +58,18 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in user" :data="tr">
+                <vs-tr :key="i" v-for="(data, i) in pets" :data="data">
                   <vs-td>
-                    {{ tr.name }}
+                    {{ data.name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.email }}
+                    {{ data.type }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.id }}
+                    {{ data.gender }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.website }}
+                    {{ data.weight+ ' กิโลกรัม' }} 
                   </vs-td>
                   <vs-td>
                     <vs-button
@@ -271,6 +271,12 @@ export default {
     Navbar,
     NavbarSide,
   },
+  props: {
+    client_id: {
+      type: String,
+      required: true
+    }
+  },
   data: () => ({
     active1: false,
     user: [
@@ -290,132 +296,44 @@ export default {
       },
     ],
     client: {
-      name: "",
-      contact: "",
-      email: "",
+      name: '',
+      email: '',
+      contact: '',
+      role: '',
       address: {
-        province: "",
-        district: "",
-        subdistrict: "",
-        postalCode: "",
-        detail: "",
+        province: '',
+        district: '',
+        subdistrict: '',
+        postalCode: '',
+        detail: ''
       },
-      role: "client",
-      avatar: "",
+      
     },
+    pets: [],
     clientCount: "",
   }),
   created() {
-    this.getClients();
+    this.getClientById();
   },
   methods: {
-    getClients() {
+    getClientById() {
       let baseURL = "http://localhost:4000/api/clients/";
-      axios
-        .get(baseURL)
-        .then((res) => {
-          this.users = res.data.client;
-          this.client = {
-            name: "",
-            contact: "",
-            email: "",
-            address: {
-              province: "",
-              district: "",
-              subdistrict: "",
-              postalCode: "",
-              detail: "",
-            },
-            role: "client",
-            avatar: "",
-          };
-          this.clientCount = res.data.count;
-          console.log(res.data);
-          console.log("number of data: " + this.clientCount);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    showClient(id) {
-      let baseURL = "http://localhost:4000/api/clients/";
-      axios
-        .get(baseURL + id)
-        .then((res) => {
+      axios.get(baseURL+this.client_id).then((res) => {
           this.client = res.data.client;
-          console.log(this.client);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    createClient() {
-      let baseURL = "http://localhost:4000/api/clients/";
-      axios
-        .post(baseURL, this.client)
-        .then(() => {
-          this.getClients();
-          console.log(this.client);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    updatePetById(pet){
-      let baseURL = "http://localhost:4000/api/pets/";
-      console.log('pet: '+ pet._id)
-      axios.patch(baseURL+pet._id, {
-        name: pet.name,
-        type: pet.type,
-        breed: pet.breed,
-        gender: pet.gender,
-        bloodType: pet.bloodType,
-        dob: pet.dob,
-        sterilization: pet.sterilization,
-        avatar: pet.avatar
-
-      }).then(() => {
-        console.log(pet)
+          // concatnate address
+          
+          this.client.address = res.data.client.address.detail+' '+res.data.client.address.subdistrict+' '+res.data.client.address.district+' '+res.data.client.address.province+' '+res.data.client.address.postalCode;
+          console.log('this.client: '+this.client);
+          axios.get("http://localhost:4000/api/pets/client/" + this.client_id).then((res)=> {
+            this.pets = res.data.pet;
+            console.log('pets: '+ this.pets)
+          })
+          
       }).catch((error) => {
           console.log(error);
       });
     },
-
-    updateClient(client) {
-      let baseURL = "http://localhost:4000/api/clients/";
-      console.log("client: " + client.id);
-      axios
-        .patch(baseURL + client.id, {
-          name: client.name,
-          email: client.email,
-          contact: client.contact,
-          address: client.address,
-        })
-        .then(() => {
-          this.client = {
-            name: "",
-            contact: "",
-            email: "",
-            address: {
-              province: "",
-              district: "",
-              subdistrict: "",
-              postalCode: "",
-              detail: "",
-            },
-            role: "client",
-            avatar: "",
-          };
-          this.getClients();
-          console.log(client);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     },
-  },
 
   computed: {
     resultCount() {
