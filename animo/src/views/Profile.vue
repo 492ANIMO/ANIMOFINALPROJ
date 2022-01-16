@@ -8,7 +8,7 @@
       <div class="Content2">
         <vs-button
           color="#d78461"
-          @click="(active1 = !active1)"
+          @click="(active1 = !active1), getClients()"
           class="BTadd"
         >
           <font-awesome-icon class="iconBTr" icon="edit" />แก้ไขข้อมูล
@@ -381,7 +381,7 @@ export default {
       }).catch((error) => {
           console.log(error);
       });
-    }
+    },
 
     updateClient(client) {
       let baseURL = "http://localhost:4000/api/clients/";

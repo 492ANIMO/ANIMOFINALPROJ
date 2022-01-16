@@ -14,7 +14,9 @@
           <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
           <vs-input v-model="search" placeholder="search..." />
         </div>
-        <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(packages, search).length  }} รายการ</h4>
+        <h4 class="list">
+          รายการทั้งหมด {{ $vs.getSearch(packages, search).length }} รายการ
+        </h4>
         <vs-table striped>
           <template #thead>
             <vs-tr>
@@ -40,7 +42,7 @@
               <vs-td>
                 <vs-button
                   color="#6b9bce"
-                  @click="(active = !active), showPackage(data._id)"
+                  @click="(Detail1 = !Detail1), showPackage(data._id)"
                   class="BT"
                 >
                   ดูข้อมูล<font-awesome-icon
@@ -198,7 +200,7 @@
         <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center"  class="DtPg" w="12">
+          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
             <div class="InputPop">
               <vs-input
                 v-model="newPackage.detail"
@@ -211,7 +213,7 @@
         <div class="space"></div>
 
         <vs-row>
-          <vs-col  w="6">
+          <vs-col w="6">
             <div class="InputSL">
               <div class="TextArea">
                 <h5 class="AddPG">รายการทั้งหมด</h5>
@@ -219,6 +221,95 @@
             </div>
           </vs-col>
         </vs-row>
+
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button
+              primary
+              @click="(active1 = !active1), createPackage()"
+              class="BT1"
+              style="float: right; width: 80px"
+            >
+              ยืนยัน </vs-button
+            ><br /><br />
+          </div>
+        </template>
+      </vs-dialog>
+
+      <vs-dialog width="80%" scroll v-model="Detail1">
+        <template #header>
+          <h2>ข้อมูลแพ็คเกจสัตว์เลี้ยง</h2>
+        </template>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+              state="success"
+                v-model="newPackage.name"
+                label="ชื่อแพ็คเกจ"
+                placeholder="ชื่อแพ็คเกจ"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputSL">
+              <vs-select
+              state="success"
+                label="ประเภทสัตว์"
+                placeholder="ประเภทสัตว์"
+                v-model="newPackage.type"
+              >
+                <vs-option value1="1"> สนัข </vs-option>
+                <vs-option value1="2"> แมว </vs-option>
+                <vs-option value1="3"> นก </vs-option>
+                <vs-option value1="4"> อื่นๆ </vs-option>
+              </vs-select>
+            </div>
+          </vs-col>
+        </vs-row>
+
+        <vs-row>
+          <vs-col w="12">
+            <div class="InputPop">
+              <h4 class="HeadInput">รายการทั้งหมด</h4>
+              <div class="DetailPK">
+                <h4 class="DetailText">
+                  รายการทั้งหมด
+                </h4>
+              </div>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+              state="success"
+                v-model="newPackage.name"
+                label="ราคาสุทธิ"
+                placeholder="ราคาสุทธิ(บาท)"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
+            <div class="InputPop">
+              <vs-input
+              state="success"
+                v-model="newPackage.detail"
+                label="รายละเอียด"
+                placeholder="รายละเอียด"
+              ></vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
 
         <template #footer>
           <div class="footer-dialog">
@@ -257,6 +348,7 @@ export default {
     time1: "",
     time2: "",
     active: false,
+    Detail1: false,
     packages: [],
     newPackage: {
       name: "",
@@ -371,7 +463,6 @@ export default {
         });
     },
   },
-
 };
 </script>
 <style scoped>
@@ -567,6 +658,26 @@ button.vs-select__option {
   font-weight: 400;
   color: #73a3c0;
   padding: 10px;
+}
+.DetailPK {
+  background: #dbe6e7;
+  height: 165px;
+  border-radius: 10px;
+  width: 695px;
+  margin-left: 10px;
+}
+.DetailText {
+  margin: 0px;
+    font-size: 13px;
+    font-weight: 400;
+  color: #668d91;
+  padding: 10px 0px 0px 10px;
+}
+.HeadInput {
+  font-size: 14.5px;
+  color: #696969;
+  font-weight: 400;
+  margin: 0px;
 }
 ::v-deep .DtPg .vs-input {
   min-width: 695px;
