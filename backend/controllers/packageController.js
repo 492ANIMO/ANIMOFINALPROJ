@@ -38,18 +38,18 @@ exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
     const package = await Package.findById(id)
-    .populate({ 
-      path: 'vaccines',
-     select: '-createdAt -updatedAt -__v', 
-    })
-    .populate({ 
-      path: 'treatments',
-     select: '-createdAt -updatedAt -__v', 
-    })
-    .populate({ 
-      path: 'healthChecks',
-     select: '-createdAt -updatedAt -__v', 
-    })
+    // .populate({ 
+    //   path: 'vaccines',
+    //  select: '-createdAt -updatedAt -__v', 
+    // })
+    // .populate({ 
+    //   path: 'treatments',
+    //  select: '-createdAt -updatedAt -__v', 
+    // })
+    // .populate({ 
+    //   path: 'healthChecks',
+    //  select: '-createdAt -updatedAt -__v', 
+    // })
     if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
 
     res.status(200).json({
@@ -64,7 +64,7 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, type, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
+    const { name, type, vaccines, treatments, healthChecks, detail, price } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -75,9 +75,9 @@ exports.create = async (req, res, next) => {
         throw error;
     }
 
-    const vaccines = await Vaccine.find().where('_id').in(vaccineId).exec();
-    const treatments = await Treatment.find().where('_id').in(treatmentId).exec();
-    const healthChecks = await HealthCheck.find().where('_id').in(healthCheckId).exec();
+    // const vaccines = await Vaccine.find().where('_id').in(vaccineId).exec();
+    // const treatments = await Treatment.find().where('_id').in(treatmentId).exec();
+    // const healthChecks = await HealthCheck.find().where('_id').in(healthCheckId).exec();
 
     const package = new Package({
       name,
@@ -103,11 +103,9 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, vaccineId, treatmentId, healthCheckId, detail, price } = req.body;
+    const { name, vaccines, treatments, healthChecks, detail, price } = req.body;
 
-    const vaccines = await Vaccine.find().where('_id').in(vaccineId).exec();
-    const treatments = await Treatment.find().where('_id').in(treatmentId).exec();
-    const healthChecks = await HealthCheck.find().where('_id').in(healthCheckId).exec();
+  
     const package = await Package.findOneAndUpdate({
       _id: id
     }, {
@@ -119,17 +117,6 @@ exports.update = async (req, res, next) => {
       price
     }, {
       returnDocument: 'after'
-    }).populate({ 
-      path: 'vaccines',
-     select: '-createdAt -updatedAt -__v', 
-    })
-    .populate({ 
-      path: 'treatments',
-     select: '-createdAt -updatedAt -__v', 
-    })
-    .populate({ 
-      path: 'healthChecks',
-     select: '-createdAt -updatedAt -__v', 
     })
     if(!package){ throw new Error('เปลี่ยนแปลงข้อมูลแพ็คเกจไม่สำเร็จ'); }
 
