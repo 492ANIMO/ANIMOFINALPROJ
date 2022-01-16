@@ -44,7 +44,8 @@ exports.show = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     const {
-      name,
+      firstName,
+      lastName,
       email,
       contact,
       address,
@@ -52,7 +53,8 @@ exports.create = async (req, res, next) => {
     } = req.body;
 
     let staff = new Staff({
-      name,
+      firstName,
+      lastName,
       email,
       contact,
       address,
@@ -81,7 +83,8 @@ exports.update = async (req, res, next) => {
       id
     } = req.params;
     const {
-      name,
+      firstName,
+      lastName,
       email,
       contact,
       address,
@@ -91,7 +94,8 @@ exports.update = async (req, res, next) => {
     let staff = await Staff.findOneAndUpdate({
       _id: id
     }, {
-      name,
+      firstName,
+      lastName,
       email,
       contact,
       address,

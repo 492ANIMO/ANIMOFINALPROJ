@@ -42,9 +42,9 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, email, contact, address, role } = req.body;
+    const { firstName, lastName, email, contact, address, role } = req.body;
     //check email ซ้ำ
-    const existClient = await Client.findOne({name: name});
+    const existClient = await Client.findOne({email: email});
     if (existClient){
       const error = new Error('มีข้อมูลเจ้าของสัตว์เลี้ยงในระบบแล้ว');
       error.statusCode = 400;
@@ -52,7 +52,8 @@ exports.create = async (req, res, next) => {
   }
 
     let client = new Client({
-      name,
+      firstName,
+      lastName,
       email,
       contact,
       address,
@@ -129,10 +130,11 @@ exports.destroyAll = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, email, contact, address, role } = req.body;
+    const { firstName, lastName, email, contact, address, role } = req.body;
 
     let client = await Client.findByIdAndUpdate({_id:id}, {
-      name,
+      firstName,
+      lastName,
       email,
       contact,
       address

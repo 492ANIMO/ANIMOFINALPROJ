@@ -8,7 +8,7 @@
       <div class="Content2">
         <vs-button
           color="#d78461"
-          @click="(active1 = !active1), getClients()"
+          @click="(active1 = !active1)"
           class="BTadd"
         >
           <font-awesome-icon class="iconBTr" icon="edit" />แก้ไขข้อมูล
@@ -18,19 +18,26 @@
             <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
-            <h2 class="text">Warayut Promnin</h2>
+            <h2>{{ this.client.firstName + " "+ this.client.lastName }}</h2>
             <div class="ProfileContent">
               <div>
                 <font class="t1">อีเมลล์ : </font>
-                <font>warayut_p@gmail.com</font>
+                <font>{{ this.client.email }}</font>
               </div>
               <div>
                 <font class="t1">เบอร์โทร : </font>
-                <font>099-2403334</font>
+                <font>{{ this.client.contact }}</font>
               </div>
               <div>
                 <font class="t1">ที่อยู่ : </font>
-                <font>เชียงใหม่ 50200</font>
+                <font>{{ 
+                  this.client.address.detail + " " 
+                  + this.client.address.subdistrict + " " 
+                  + this.client.address.district + " " 
+                  + this.client.address.province + " "  
+                  + this.client.address.postalCode + " "  
+                  }}
+                </font>
               </div>
             </div>
           </div>
@@ -58,18 +65,18 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(tr, i) in user" :data="tr">
+                <vs-tr :key="i" v-for="(data, i) in pets" :data="data">
                   <vs-td>
-                    {{ tr.name }}
+                    {{ data.name }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.email }}
+                    {{ data.type }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.id }}
+                    {{ data.gender }}
                   </vs-td>
                   <vs-td>
-                    {{ tr.website }}
+                    {{ data.weight+ ' กิโลกรัม' }} 
                   </vs-td>
                   <vs-td>
                     <vs-button
@@ -85,7 +92,7 @@
                     </vs-button>
                     <vs-button
                       color="#ca7676"
-                      @click="(active1 = !active1), showClient(data.id)"
+                      @click="deletePetById(data)"
                       class="BT1"
                     >
                       ลบ<font-awesome-icon
@@ -115,9 +122,9 @@
                 <div class="InputPop">
                   <vs-input
                     state="success"
-                    v-model="client.name"
+                    v-model="client.firstName"
                     label="ชื่อ"
-                    :placeholder="this.client.name"
+                    :placeholder="this.client.firstName"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -130,9 +137,9 @@
                 <div class="InputPop">
                   <vs-input
                     state="success"
-                    v-model="client.email"
+                    v-model="client.lastName"
                     label="นามสกุล"
-                    :placeholder="this.client.email"
+                    :placeholder="this.client.lastName"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -149,9 +156,9 @@
                 <div class="InputPop">
                   <vs-input
                     state="success"
-                    v-model="client.name"
+                    v-model="client.contact"
                     label="เบอร์โทร"
-                    :placeholder="this.client.name"
+                    :placeholder="this.client.contact"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -246,7 +253,7 @@
               <div class="footer-dialog">
                 <vs-button
                   primary
-                  @click="(active1 = !active1), updateClient(client)"
+                  @click="(active1 = !active1), updateClientById(client)"
                   class="BT2"
                   style="float: right; width: 80px"
                 >
@@ -271,6 +278,12 @@ export default {
     Navbar,
     NavbarSide,
   },
+  props: {
+    client_id: {
+      type: String,
+      required: true
+    }
+  },
   data: () => ({
     active1: false,
     user: [
@@ -290,79 +303,65 @@ export default {
       },
     ],
     client: {
-      name: "",
-      contact: "",
-      email: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      contact: '',
+      role: '',
       address: {
-        province: "",
-        district: "",
-        subdistrict: "",
-        postalCode: "",
-        detail: "",
+        province: '',
+        district: '',
+        subdistrict: '',
+        postalCode: '',
+        detail: ''
       },
-      role: "client",
-      avatar: "",
     },
+    pets: [],
     clientCount: "",
   }),
   created() {
-    this.getClients();
+    this.getClientById();
   },
   methods: {
-    getClients() {
-      let baseURL = "http://localhost:4000/api/clients/";
-      axios
-        .get(baseURL)
-        .then((res) => {
-          this.users = res.data.client;
-          this.client = {
-            name: "",
-            contact: "",
-            email: "",
-            address: {
-              province: "",
-              district: "",
-              subdistrict: "",
-              postalCode: "",
-              detail: "",
-            },
-            role: "client",
-            avatar: "",
-          };
-          this.clientCount = res.data.count;
-          console.log(res.data);
-          console.log("number of data: " + this.clientCount);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
 
-    showClient(id) {
+    getClientById() {
       let baseURL = "http://localhost:4000/api/clients/";
-      axios
-        .get(baseURL + id)
-        .then((res) => {
+      axios.get(baseURL+this.client_id).then((res) => {
           this.client = res.data.client;
-          console.log(this.client);
-        })
-        .catch((error) => {
+          
+          axios.get("http://localhost:4000/api/pets/client/" + this.client_id).then((res)=> {
+            this.pets = res.data.pet;
+            console.log('pets: '+ this.pets)
+          })
+          
+      }).catch((error) => {
           console.log(error);
-        });
+      });
     },
 
-    createClient() {
+    updateClientById(client){
       let baseURL = "http://localhost:4000/api/clients/";
-      axios
-        .post(baseURL, this.client)
-        .then(() => {
-          this.getClients();
-          console.log(this.client);
-        })
-        .catch((error) => {
+      console.log('client: '+ client._id)
+      axios.patch(baseURL+client._id, {
+        firstName: client.firstName,
+        lastName: client.lastName,
+        contact: client.contact,
+        email: client.email,
+        address: {
+          province: client.address.province,
+          district: client.address.district,
+          subdistrict: client.address.subdistrict,
+          postalCode: client.address.postalCode,
+          detail: client.address.detail
+        }
+        
+      }).then(() => {
+        console.log(client)
+      }).catch((error) => {
           console.log(error);
-        });
+      });
     },
+
     updatePetById(pet){
       let baseURL = "http://localhost:4000/api/pets/";
       console.log('pet: '+ pet._id)
@@ -375,7 +374,6 @@ export default {
         dob: pet.dob,
         sterilization: pet.sterilization,
         avatar: pet.avatar
-
       }).then(() => {
         console.log(pet)
       }).catch((error) => {
@@ -383,38 +381,19 @@ export default {
       });
     },
 
-    updateClient(client) {
-      let baseURL = "http://localhost:4000/api/clients/";
-      console.log("client: " + client.id);
-      axios
-        .patch(baseURL + client.id, {
-          name: client.name,
-          email: client.email,
-          contact: client.contact,
-          address: client.address,
-        })
-        .then(() => {
-          this.client = {
-            name: "",
-            contact: "",
-            email: "",
-            address: {
-              province: "",
-              district: "",
-              subdistrict: "",
-              postalCode: "",
-              detail: "",
-            },
-            role: "client",
-            avatar: "",
-          };
-          this.getClients();
-          console.log(client);
-        })
-        .catch((error) => {
+    deletePetById(pet){
+      let baseURL = "http://localhost:4000/api/pets/";
+      console.log('pet: '+ pet._id)
+      axios.delete(baseURL+pet._id).then((res) => {
+        console.log(res.data.message)
+        this.getClientById();
+      }).catch((error) => {
           console.log(error);
-        });
+      });
     },
+
+    
+
   },
 
   computed: {

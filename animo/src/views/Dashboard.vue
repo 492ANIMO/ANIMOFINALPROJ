@@ -22,6 +22,7 @@ import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import Chart from "@/components/Chart";
 
+
 export default {
   name: "Dashboard",
   components: {
@@ -32,6 +33,7 @@ export default {
   data: () => ({
   }),
 };
+
 </script>
 <style scoped>
 h2 {

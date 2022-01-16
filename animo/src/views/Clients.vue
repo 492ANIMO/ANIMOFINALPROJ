@@ -28,7 +28,7 @@
           <template #tbody>
             <vs-tr :key="i" v-for="(data, i) in $vs.getPage($vs.getSearch(users, search), page, max)" :data="data">
               <vs-td>{{ data.id }}</vs-td>
-              <vs-td>{{ data.name }}</vs-td>
+              <vs-td>{{ data.firstName + " " + data.lastName }}</vs-td>
               <vs-td>{{ data.contact }}</vs-td>
               <vs-td>
                 <vs-button
@@ -61,7 +61,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-                v-model="client.name"
+                v-model="client.firstName"
                 label="ชื่อ"
                 placeholder="ชื่อ"
               ></vs-input>
@@ -70,7 +70,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-                v-model="client.email"
+                v-model="client.lastName"
                 label="นามสกุล"
                 placeholder="นามสกุล"
               ></vs-input>
@@ -83,7 +83,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-                v-model="client.name"
+                v-model="client.contact"
                 label="เบอร์โทร"
                 placeholder="เบอร์โทร"
               ></vs-input>
@@ -199,7 +199,8 @@ export default {
     users: [
     ],
     client: {
-      name: '',
+      firstName: '',
+      lastName: '',
       contact: '',
       email: '',
       address: {
@@ -224,7 +225,8 @@ export default {
       axios.get(baseURL).then((res) => {
           this.users = res.data.client;
           this.client = {
-            name: '',
+            firstName: '',
+            lastName: '',
             contact: '',
             email: '',
             address: {
@@ -244,16 +246,6 @@ export default {
           console.log(error);
       });
     },
-    
-    showClient(id) {
-      let baseURL = "http://localhost:4000/api/clients/";
-      axios.get(baseURL+id).then((res) => {
-          this.client = res.data.client;
-          console.log(this.client);
-      }).catch((error) => {
-          console.log(error);
-      });
-    },
 
     createClient() {
       let baseURL = "http://localhost:4000/api/clients/";
@@ -269,14 +261,16 @@ export default {
       let baseURL = "http://localhost:4000/api/clients/";
       console.log('client: '+client.id)
       axios.patch(baseURL+client.id, {
-        name: client.name,
+        firstName: client.firstName,
+        lastName: client.lastName,
         email: client.email,
         contact: client.contact,
         address: client.address,
 
       }).then(() => {
-          this.client = {
-          name: '',
+        this.client = {
+          firstName: '',
+          lastName: '',
           contact: '',
           email: '',
           address: {

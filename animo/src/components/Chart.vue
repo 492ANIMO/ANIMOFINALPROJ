@@ -25,6 +25,10 @@ export default {
           layout: "vertical",
           align: "right",
           verticalAlign: "middle",
+          itemStyle: {
+            color: '#696969',
+            fontWeight: 'thin'
+            },
         },
         plotOptions: {
           series: {
