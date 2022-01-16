@@ -677,8 +677,8 @@ button.vs-select__option {
 ::v-deep .SLPet {
   width: 300px;
 }
-::v-deep button .vs-select__option .isMultiple :hover {
-  padding: 0px;
+.vs-select__option.isMultiple:hover {
+  padding: 0px !important;
 }
 .vs-select__option:hover {
   margin-left: 5px;
