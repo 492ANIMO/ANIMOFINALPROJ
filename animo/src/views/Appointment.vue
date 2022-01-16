@@ -25,7 +25,7 @@
                   <template #tbody>
                     <vs-tr
                       :key="i"
-                      v-for="(data, i) in $vs.getPage(appointments, page, max)"
+                      v-for="(data, i) in appointments"
                       :data="data"
                     >
                       <vs-td>{{ data._id }}</vs-td>
@@ -127,7 +127,7 @@ import mixins from '../mixins'
 
 
 export default {
-  name: 'Reservation',
+  name: 'Appointment',
   components: {
     Navbar,
     NavbarSide
@@ -259,5 +259,8 @@ h3{
 }
 ::v-deep .vs-dialog__content {
   padding: 25px 30px;
+}
+::v-deep .vs-table_not-found td {
+  color: #696969;
 }
 </style>

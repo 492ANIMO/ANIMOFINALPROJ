@@ -15,7 +15,7 @@
           <vs-input v-model="search" placeholder="search..." />
         </div>
 
-        <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(users, search).length }} รายการ</h4>
         <vs-table striped>
           <template #thead>
             <vs-tr>
@@ -48,7 +48,7 @@
           </template>
         </vs-table>
         <div class="center">
-          <vs-pagination infinite v-model="page" :length="$vs.getLength(users, max)" />
+          <vs-pagination infinite v-model="page" :length="$vs.getLength($vs.getSearch(users, search), max)" />
         </div>
       </div>
       <!-- add client -->
@@ -310,12 +310,6 @@ export default {
     }
 
   },
-
-  computed: {
-    resultCount () {
-      return this.users && this.users.length
-    }
-}
 };
 </script>
 

@@ -11,7 +11,7 @@
               <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
               <vs-input v-model="search" placeholder="search..." />
             </div>
-            <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
+            <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(reservations, search).length }} รายการ</h4>
                 <vs-table striped>
                   <template #thead>
                     <vs-tr>
@@ -24,11 +24,7 @@
                     </vs-tr>
                   </template>
                   <template #tbody>
-                    <vs-tr
-                      :key="i"
-                      v-for="(data, i) in $vs.getPage($vs.getSearch(reservations, search), page, max)"
-                      :data="data"
-                    >
+                    <vs-tr :key="i" v-for="(data, i) in $vs.getPage($vs.getSearch(reservations, search), page, max)" :data="data">
                       <vs-td>{{ data._id }}</vs-td>
                       <vs-td>{{ data.pet.owner.name }}</vs-td>
                       <vs-td>{{ format_date(data.date) }}</vs-td>
@@ -43,7 +39,7 @@
                   </template>
                 </vs-table>
                 <div class="center">
-                  <vs-pagination infinite v-model="page" :length="$vs.getLength(reservations, max)" />
+                  <vs-pagination infinite v-model="page" :length="$vs.getLength($vs.getSearch(reservations, search), max)" />
                 </div>
             </div>
 
@@ -132,12 +128,7 @@ export default {
       console.log(this.reserved)
     }
   },
-    computed: {
-    resultCount () {
-      return this.reservations && this.reservations.length
-    }
-}
-}
+};
 
 </script>
 <style scoped>
@@ -263,5 +254,8 @@ margin-bottom: 15px;
 }
 ::v-deep .vs-table__td {
   padding: 5px 12px;
+}
+::v-deep .vs-table_not-found td {
+  color: #696969;
 }
 </style>

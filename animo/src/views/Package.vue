@@ -14,7 +14,7 @@
           <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
           <vs-input v-model="search" placeholder="search..." />
         </div>
-        <h4 class="list">รายการทั้งหมด {{ resultCount }} รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(packages, search).length  }} รายการ</h4>
         <vs-table striped>
           <template #thead>
             <vs-tr>
@@ -57,7 +57,7 @@
           <vs-pagination
             infinite
             v-model="page"
-            :length="$vs.getLength(packages, max)"
+            :length="$vs.getLength($vs.getSearch(packages, search), max)"
           />
         </div>
       </div>
@@ -371,11 +371,7 @@ export default {
         });
     },
   },
-  computed: {
-    resultCount() {
-      return this.packages && this.packages.length;
-    },
-  },
+
 };
 </script>
 <style scoped>

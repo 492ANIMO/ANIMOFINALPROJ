@@ -7,7 +7,7 @@
     <div class="Content1">
       <div class="Content2">
         <vs-button
-          color="#6b9bce"
+          color="#d78461"
           @click="(active1 = !active1), getClients()"
           class="BTadd"
         >
