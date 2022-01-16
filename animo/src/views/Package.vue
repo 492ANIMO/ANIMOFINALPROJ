@@ -99,21 +99,6 @@
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
             <div class="InputSL">
-              <!-- <vs-select
-                multiple
-                label="รายการวัคซีน"
-                placeholder="รายการวัคซีน"
-                v-model="value1"
-              >
-                <vs-option
-                  :key="i"
-                  v-for="(vaccine, i) in vaccine_options"
-                  :value1="vaccine._id"
-                >
-                  {{ vaccine.name }}
-                </vs-option>
-              </vs-select> -->
-
                 <vs-select
                   multiple
                   label="รายการวัคซีน"
