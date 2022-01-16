@@ -63,8 +63,8 @@ app.use(session({
 require('./config/passport')(passport);
 // init passport
 app.use(passport.initialize())
-app.use(passport.session())
 
+app.use(passport.session())
 app.use((req, res, next) => {
   console.log(req.session);
   console.log(req.user);
