@@ -20,18 +20,18 @@ const userSchema = new Schema({
   collection: 'users'
 });
 
-userSchema.virtual('_client', {
-  ref: 'Client',
-  localField: '_id', //user._id
-  foreignField: 'user', //
-  justOne : true
-});
-userSchema.virtual('_staff', {
-  ref: 'Staff',
-  localField: '_id', //user._id
-  foreignField: 'user', //
-  justOne : true
-});
+// userSchema.virtual('_client', {
+//   ref: 'Client',
+//   localField: '_id', //user._id
+//   foreignField: 'user', //
+//   justOne : true
+// });
+// userSchema.virtual('_staff', {
+//   ref: 'Staff',
+//   localField: '_id', //user._id
+//   foreignField: 'user', //
+//   justOne : true
+// });
 
 
 const user = mongoose.model('User', userSchema);
