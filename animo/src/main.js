@@ -3,6 +3,7 @@ import './plugins/axios'
 import App from './App.vue'
 import Vuesax from './plugins/vuesax'
 import router from './router'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartPie } from '@fortawesome/free-solid-svg-icons'
@@ -38,12 +39,20 @@ library.add(faChartPie)
 library.add(faTrashAlt)
 library.add(faEdit)
 
+import Highchart from "highcharts/highcharts";
+import HighchartsVue from "highcharts-vue";
+import stockInit from "highcharts/modules/stock";
+
+stockInit(Highchart);
+Vue.use(HighchartsVue);
+
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false
+
 
 new Vue({
   router,
   Vuesax,
   render: h => h(App)
-}).$mount('#app')
+}).$mount("#app");
