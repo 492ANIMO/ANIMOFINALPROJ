@@ -13,6 +13,7 @@ const timeslot = require('../models/timeslot');
 exports.index = async (req, res, next) => {
   try {
     const reservation = await Reservation.find({ status: 'pending' })
+    .sort({date: 'asc'})
     .populate({ 
       path: 'package',
       populate: [

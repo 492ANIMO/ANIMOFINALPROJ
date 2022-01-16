@@ -14,6 +14,7 @@ const timeslot = require('../models/timeslot');
 exports.index = async (req, res, next) => {
   try {
     const appointment = await Appointment.find()
+    .sort({date: 1})
     .populate({ 
       path: 'pet',
       populate: {

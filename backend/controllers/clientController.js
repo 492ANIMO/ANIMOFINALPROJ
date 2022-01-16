@@ -5,7 +5,8 @@ const Client = require('../models/client');
 
 exports.index = async (req, res, next) => {
   try {
-    const client = await Client.find();
+    const client = await Client.find().sort({updatedAt: -1});
+    
     if(!client){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
     const count = await Client.countDocuments();
