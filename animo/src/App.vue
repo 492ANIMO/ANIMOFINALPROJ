@@ -14,11 +14,11 @@ body {
   font-family: kanit;
   background: #f4f7f8;
   font-size: 100%;
-  -webkit-user-select: none;
+  /* -webkit-user-select: none;
   -webkit-touch-callout: none;
   -moz-user-select: none;
   -ms-user-select: none;
-  user-select: none;
+  user-select: none; */
 }
 .icon {
   padding-right: 8px;
