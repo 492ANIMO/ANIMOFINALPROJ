@@ -221,10 +221,10 @@
                 <p :key="i" v-for="(vaccine, i) in newPackage.vaccines">
                     {{ vaccine.name }}
                 </p>
-                <p :key="i" v-for="(treatment, i) in newPackage.treatments">
+                <p :key="'A'+i" v-for="(treatment, i) in newPackage.treatments">
                     {{ treatment.name }}
                 </p>
-                <p :key="i" v-for="(healthCheck, i) in newPackage.healthChecks">
+                <p :key="'B'+i" v-for="(healthCheck, i) in newPackage.healthChecks">
                     {{ healthCheck.name }}
                 </p>
               </div>
@@ -256,7 +256,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="newPackage.name"
+                v-model="this.package.name"
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
               ></vs-input>
@@ -265,15 +265,13 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputSL">
               <vs-select
-              state="success"
                 label="ประเภทสัตว์"
-                placeholder="ประเภทสัตว์"
-                v-model="newPackage.type"
+                :placeholder="this.package.type"
+                v-model="this.package.type"
               >
-                <vs-option value1="1"> สนัข </vs-option>
-                <vs-option value1="2"> แมว </vs-option>
-                <vs-option value1="3"> นก </vs-option>
-                <vs-option value1="4"> อื่นๆ </vs-option>
+                <vs-option :key="i"
+                  v-for="(type, i) in petType"
+                  :value="type" :label="type"> {{ type }} </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -287,6 +285,15 @@
                 <h4 class="DetailText">
                   รายการทั้งหมด
                 </h4>
+                <p :key="i" v-for="(vaccine, i) in this.package.vaccines">
+                    {{ vaccine.name }}
+                </p>
+                <p :key="'A'+i" v-for="(treatment, i) in this.package.treatments">
+                    {{ treatment.name }}
+                </p>
+                <p :key="'A'+i" v-for="(healthCheck, i) in this.package.healthChecks">
+                    {{ healthCheck.name }}
+                </p>
               </div>
             </div>
           </vs-col>
@@ -298,7 +305,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="newPackage.price"
+                v-model="this.package.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
               ></vs-input>
@@ -312,7 +319,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="newPackage.detail"
+                v-model="this.package.detail"
                 label="รายละเอียด"
                 placeholder="รายละเอียด"
               ></vs-input>
@@ -325,7 +332,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="(active1 = !active1), createPackage()"
+              @click="(active1 = !active1)"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -365,6 +372,16 @@ export default {
     ],
     packages: [],
 
+    package:{
+      name:'',
+      type: '',
+      detail: '',
+      price: '',
+      vaccines: [],
+      treatments: [],
+      healthChecks: [],
+    },
+
     vaccine_options: [],
     treatment_options: [],
     healthCheck_options: [],
@@ -395,10 +412,13 @@ export default {
         .then((res) => {
           this.packages = res.data.package;
           console.log(res.data);
+          
         })
         .catch((error) => {
           console.log(error);
         });
+
+        
     },
 
     showPackage(id) {
@@ -409,6 +429,7 @@ export default {
         .then((res) => {
           this.package = res.data.package;
           console.log(this.package);
+          this.getPackage();
         })
         .catch((error) => {
           console.log(error);
