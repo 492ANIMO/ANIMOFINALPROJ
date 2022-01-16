@@ -171,9 +171,10 @@
         </vs-row>
         <div class="space"></div>
 
+        
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
-            <div class="">
+            <div class="InputSL">
               <vs-select
                   multiple
                   label="รายการตรวจสุขภาพ"
@@ -656,10 +657,29 @@ button.vs-select__option {
   font-family: kanit;
   margin: 10px;
   padding: 0px;
-  width: 90%;
+  margin: 8px;
+  width: 95%;
+}
+::v-deep .vs-checkbox-label {
+  font-size: 12px;
+  margin: 0px;
+  padding: 5px 5px;
+}
+::v-deep .vs-checkbox-con{
+ width: 18px;
+ height: 18px;
+}
+::v-deep .vs-checkbox-mask{
+ width: 18px;
+ height: 18px;
+}
+::v-deep .vs-select__chips__chip {
+ font-family: kanit;
+  font-size: 10px;
 }
 ::v-deep .vs-select__options__content {
   font-family: kanit;
+  padding: 0px;
 }
 ::v-deep .vs-table__td {
   padding: 5px 12px;
@@ -673,7 +693,10 @@ button.vs-select__option {
 ::v-deep .SLPet {
   width: 300px;
 }
-.vs-select__option:hover:not(:disabled) {
+.vs-select__option.isMultiple:hover {
+  padding: 0px !important;
+}
+.vs-select__option:hover {
   margin-left: 5px;
   padding: 0px;
 }
