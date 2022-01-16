@@ -29,7 +29,7 @@
                       :data="data"
                     >
                       <vs-td>{{ data._id }}</vs-td>
-                      <vs-td>{{ data.pet.owner.name }}</vs-td>
+                      <vs-td>{{ data.pet.owner.firstName+" "+data.pet.owner.lastName }}</vs-td>
                       <vs-td>{{ format_date(data.date) }}</vs-td>
                       <vs-td>{{ data.time }}</vs-td>
                       <vs-td>{{ data.pet.name }}</vs-td>
