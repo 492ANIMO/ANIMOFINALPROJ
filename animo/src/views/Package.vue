@@ -259,14 +259,14 @@
                     </h5>
                     <h5
                       class="AddPG"
-                      :key="i"
+                      :key="'a'+i"
                       v-for="(treatment, i) in newPackage.treatments"
                     >
                       -{{ treatment.name }}
                     </h5>
                     <h5
                       class="AddPG"
-                      :key="i"
+                      :key="'b'+i"
                       v-for="(healthCheck, i) in newPackage.healthChecks"
                     >
                       -{{ healthCheck.name }}
