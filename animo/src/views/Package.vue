@@ -145,6 +145,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
             <div class="InputSL">
               <vs-select
+                multiple
                 label="รายการรักษา"
                 placeholder="รายการรักษา"
                 v-model="value1"
@@ -171,10 +172,12 @@
         </vs-row>
         <div class="space"></div>
 
+        
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="4">
-            <div class="">
+            <div class="InputSL">
               <vs-select
+                multiple
                 label="รายการตรวจสุขภาพ"
                 placeholder="รายการตรวจสุขภาพ"
                 v-model="value1"
@@ -232,9 +235,9 @@
             <div class="InputSL">
               <div class="TextArea">
                 <h5 class="AddPG">รายการทั้งหมด</h5>
-                <p :key="i"
+                <h5  class="AddPG" :key="i"
                   v-for="(vaccine, i) in value">
-                    {{ vaccine.name }}></p>
+                    {{ vaccine.name }}></h5>
               </div>
             </div>
           </vs-col>
