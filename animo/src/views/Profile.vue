@@ -381,7 +381,7 @@ export default {
       }).catch((error) => {
           console.log(error);
       });
-    }
+    },
 
     updateClient(client) {
       let baseURL = "http://localhost:4000/api/clients/";
