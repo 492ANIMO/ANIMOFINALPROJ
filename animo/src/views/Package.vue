@@ -63,7 +63,7 @@
           />
         </div>
       </div>
-
+      <!-- เพิ่มแพ็คเกจสัตว์เลี้ยง -->
       <vs-dialog width="80%" scroll v-model="active">
         <template #header>
           <h2>เพิ่มแพ็คเกจสัตว์เลี้ยง</h2>
@@ -291,7 +291,7 @@
           </div>
         </template>
       </vs-dialog>
-
+    <!-- ข้อมูลแพ็คเกจสัตว์เลี้ยง -->
       <vs-dialog width="80%" scroll v-model="Detail1">
         <template #header>
           <h2>ข้อมูลแพ็คเกจสัตว์เลี้ยง</h2>
@@ -332,15 +332,17 @@
                 <h4 class="DetailText">
                   รายการทั้งหมด
                 </h4>
-                <p :key="i" v-for="(vaccine, i) in this.package.vaccines">
-                    {{ vaccine.name }}
-                </p>
-                <p :key="'A'+i" v-for="(treatment, i) in this.package.treatments">
-                    {{ treatment.name }}
-                </p>
-                <p :key="'A'+i" v-for="(healthCheck, i) in this.package.healthChecks">
-                    {{ healthCheck.name }}
-                </p>
+                <div class="TextArea3">
+                  <h5 class="AddPG" :key="i" v-for="(vaccine, i) in this.package.vaccines">
+                    -{{ vaccine.name }}
+                  </h5>
+                  <h5 class="AddPG"  :key="'A'+i" v-for="(treatment, i) in this.package.treatments">
+                      -{{ treatment.name }}
+                  </h5>
+                  <h5 class="AddPG" :key="'A'+i" v-for="(healthCheck, i) in this.package.healthChecks">
+                      -{{ healthCheck.name }}
+                  </h5>
+                </div>
               </div>
             </div>
           </vs-col>
