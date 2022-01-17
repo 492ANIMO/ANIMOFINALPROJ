@@ -7,7 +7,7 @@ export default {
     if (value) {
       let date = value.split("T")[0]
       // let time = value.split("T")[1]
-      return moment(String(date)).format('LL')
+      return moment(String(date)).format("DD/MM/YYYY")
     }
   }
  }
