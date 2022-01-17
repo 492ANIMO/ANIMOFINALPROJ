@@ -632,7 +632,8 @@ export default {
         month: '',
       },
       sterilization: '',
-      ownerId: ''
+      ownerId: '',
+      detail: ''
     },
     
   }),
@@ -648,8 +649,6 @@ export default {
         .then((res) => {
 
           this.client = res.data.client;
-          // this.clientId = this.client_id;
-          // this.newPet.ownerId = this.clientId;
 
           axios
             .get("http://localhost:4000/api/pets/client/" + this.client_id)
@@ -730,7 +729,23 @@ export default {
       let baseURL = "http://localhost:4000/api/pets/";
       axios.post(baseURL, this.newPet).then((res) => {
         this.getClientById();
-        console.log(res)
+        console.log(res.data.message)
+        this.newPet = {
+          name: '',
+          type: '',
+          breed: '',
+          gender: '',
+          bloodType: '',
+          weight: '',
+          dob: '',
+          age: {
+            year: '',
+            month: '',
+          },
+          sterilization: '',
+          ownerId: '',
+          detail: ''
+        }
 
       }).catch((error) => {
           console.log(error.response.data);
