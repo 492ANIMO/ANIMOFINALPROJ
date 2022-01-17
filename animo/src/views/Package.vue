@@ -63,7 +63,7 @@
           />
         </div>
       </div>
-
+      <!-- เพิ่มแพ็คเกจสัตว์เลี้ยง -->
       <vs-dialog width="80%" scroll v-model="active">
         <template #header>
           <h2>เพิ่มแพ็คเกจสัตว์เลี้ยง</h2>
@@ -259,14 +259,14 @@
                     </h5>
                     <h5
                       class="AddPG"
-                      :key="i"
+                      :key="'a'+i"
                       v-for="(treatment, i) in newPackage.treatments"
                     >
                       -{{ treatment.name }}
                     </h5>
                     <h5
                       class="AddPG"
-                      :key="i"
+                      :key="'b'+i"
                       v-for="(healthCheck, i) in newPackage.healthChecks"
                     >
                       -{{ healthCheck.name }}
@@ -291,7 +291,7 @@
           </div>
         </template>
       </vs-dialog>
-
+    <!-- ข้อมูลแพ็คเกจสัตว์เลี้ยง -->
       <vs-dialog width="80%" scroll v-model="Detail1">
         <template #header>
           <h2>ข้อมูลแพ็คเกจสัตว์เลี้ยง</h2>
@@ -301,8 +301,8 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-                state="success"
-                v-model="newPackage.name"
+              state="success"
+                v-model="this.package.name"
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
               ></vs-input>
@@ -313,13 +313,12 @@
               <vs-select
                 state="success"
                 label="ประเภทสัตว์"
-                placeholder="ประเภทสัตว์"
-                v-model="newPackage.type"
+                :placeholder="this.package.type"
+                v-model="this.package.type"
               >
-                <vs-option value1="1"> สนัข </vs-option>
-                <vs-option value1="2"> แมว </vs-option>
-                <vs-option value1="3"> นก </vs-option>
-                <vs-option value1="4"> อื่นๆ </vs-option>
+                <vs-option :key="i"
+                  v-for="(type, i) in petType"
+                  :value="type" :label="type"> {{ type }} </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -330,7 +329,20 @@
             <div class="InputPop">
               <h4 class="HeadInput">รายการทั้งหมด</h4>
               <div class="DetailPK">
-                <h4 class="DetailText">รายการทั้งหมด</h4>
+                <h4 class="DetailText">
+                  รายการทั้งหมด
+                </h4>
+                <div class="TextArea3">
+                  <h5 class="AddPG" :key="i" v-for="(vaccine, i) in this.package.vaccines">
+                    -{{ vaccine.name }}
+                  </h5>
+                  <h5 class="AddPG"  :key="'A'+i" v-for="(treatment, i) in this.package.treatments">
+                      -{{ treatment.name }}
+                  </h5>
+                  <h5 class="AddPG" :key="'A'+i" v-for="(healthCheck, i) in this.package.healthChecks">
+                      -{{ healthCheck.name }}
+                  </h5>
+                </div>
               </div>
             </div>
           </vs-col>
@@ -341,8 +353,8 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-                state="success"
-                v-model="newPackage.price"
+              state="success"
+                v-model="this.package.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
               ></vs-input>
@@ -355,8 +367,8 @@
           <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
             <div class="InputPop">
               <vs-input
-                state="success"
-                v-model="newPackage.detail"
+              state="success"
+                v-model="this.package.detail"
                 label="รายละเอียด"
                 placeholder="รายละเอียด"
               ></vs-input>
@@ -369,7 +381,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="(active1 = !active1), createPackage()"
+              @click="(active1 = !active1)"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -404,6 +416,16 @@ export default {
     petType: ["สุนัข", "แมว", "นก", "อื่นๆ"],
     packages: [],
 
+    package:{
+      name:'',
+      type: '',
+      detail: '',
+      price: '',
+      vaccines: [],
+      treatments: [],
+      healthChecks: [],
+    },
+
     vaccine_options: [],
     treatment_options: [],
     healthCheck_options: [],
@@ -432,10 +454,13 @@ export default {
         .then((res) => {
           this.packages = res.data.package;
           console.log(res.data);
+          
         })
         .catch((error) => {
           console.log(error);
         });
+
+        
     },
 
     showPackage(id) {
@@ -446,6 +471,7 @@ export default {
         .then((res) => {
           this.package = res.data.package;
           console.log(this.package);
+          this.getPackage();
         })
         .catch((error) => {
           console.log(error);

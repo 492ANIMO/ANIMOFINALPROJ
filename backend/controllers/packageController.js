@@ -10,6 +10,7 @@ exports.index = async (req, res, next) => {
   try {
    
     const package = await Package.find()
+    .sort({updatedAt: -1})
     .populate({ 
       path: 'vaccines',
      select: '-createdAt -updatedAt -__v', 
