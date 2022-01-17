@@ -11,7 +11,11 @@ const schema = new Schema({
   bloodType: { type: String, trim: true },
   weight: { type: Number, trim: true },
   dob: { type: String, trim: true },
-  sterilization: { type: Boolean,  trim: true },
+  age: {
+    year: { type: Number, trim: true },
+    month: { type: Number, trim: true }
+  },
+  sterilization: { type: String,  trim: true },
   avatar: { type: String,  trim: true },
   detail: { type: String,  trim: true },
   // foreign key

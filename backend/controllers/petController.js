@@ -22,7 +22,9 @@ exports.index = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, type, breed, gender, bloodType, weight, dob, sterilization, detail, ownerId} = req.body;
+    const { name, type, breed, gender, bloodType, weight, dob, age,sterilization, detail, ownerId} = req.body;
+
+    console.log(req.body)
 
 
     let pet = new Pet({
@@ -33,8 +35,10 @@ exports.create = async (req, res, next) => {
       bloodType,
       weight,
       dob,
+      age,
       sterilization,
       detail,
+      
 
       owner: ownerId
     })
@@ -161,9 +165,9 @@ exports.destroy = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, type, breed, gender, bloodType, weight, dob, sterilization, detail } = req.body;
+    const { name, type, breed, gender, bloodType, weight, dob, age,sterilization, detail } = req.body;
     const pet = await Pet.findByIdAndUpdate({_id:id} ,{
-      name, type, breed, gender, bloodType, weight, dob, sterilization, detail
+      name, type, breed, gender, bloodType, weight, dob, age, sterilization, detail
     })
 
     if(!pet){
