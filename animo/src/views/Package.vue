@@ -76,6 +76,7 @@
                 v-model="newPackage.name"
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
+                class="textcolor"
               ></vs-input>
             </div>
           </vs-col>
@@ -224,6 +225,7 @@
                 v-model="newPackage.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
+                class="textcolor"
               ></vs-input>
             </div>
           </vs-col>
@@ -237,6 +239,7 @@
                 v-model="newPackage.detail"
                 label="รายละเอียด"
                 placeholder="รายละเอียด"
+                class="textcolor"
               ></vs-input>
             </div>
           </vs-col>
@@ -282,7 +285,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="(active1 = !active1), createPackage()"
+              @click="(active = !active), createPackage()"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -332,6 +335,7 @@
                 <h4 class="DetailText">
                   รายการทั้งหมด
                 </h4>
+                <div class="TextArea2">
                 <div class="TextArea3">
                   <h5 class="AddPG" :key="i" v-for="(vaccine, i) in this.package.vaccines">
                     -{{ vaccine.name }}
@@ -342,6 +346,7 @@
                   <h5 class="AddPG" :key="'A'+i" v-for="(healthCheck, i) in this.package.healthChecks">
                       -{{ healthCheck.name }}
                   </h5>
+                </div>
                 </div>
               </div>
             </div>
@@ -630,11 +635,16 @@ h3 {
   font-weight: 500;
   float: right;
 }
-::v-deep .vs-input {
+::v-deep .textcolor .vs-input {
   width: 350px;
   height: 35px;
   font-family: kanit;
   color: #696969;
+}
+::v-deep .vs-input {
+  width: 350px;
+  height: 35px;
+  font-family: kanit;
 }
 ::v-deep .vs-select__input {
   min-height: 36px;
@@ -769,21 +779,22 @@ button.vs-select__option {
 .AddPG {
   padding-left: 5px;
   font-weight: 400;
-  color: #73a3c0;
+  color: #2c99a3;
   margin: 0px;
 }
 .DetailPK {
-  background: #dbe6e7;
+  background: #e3eaea;
   height: 165px;
   border-radius: 10px;
   width: 695px;
   margin-left: 10px;
+  overflow: auto;
 }
 .DetailText {
   margin: 0px;
   font-size: 13px;
   font-weight: 400;
-  color: #668d91;
+  color: #2c99a3;
   padding: 10px 0px 0px 10px;
 }
 .HeadInput {
