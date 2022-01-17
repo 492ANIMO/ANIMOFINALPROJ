@@ -6,11 +6,7 @@
     </div>
     <div class="Content1">
       <div class="Content2">
-        <vs-button
-          color="#d78461"
-          @click="(active1 = !active1)"
-          class="BTadd"
-        >
+        <vs-button color="#d78461" @click="active1 = !active1" class="BTadd">
           <font-awesome-icon class="iconBTr" icon="edit" />แก้ไขข้อมูล
         </vs-button>
         <div class="profile">
@@ -18,7 +14,7 @@
             <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
-            <h2>{{ this.client.firstName + " "+ this.client.lastName }}</h2>
+            <h2>{{ this.client.firstName + " " + this.client.lastName }}</h2>
             <div class="ProfileContent">
               <div>
                 <font class="t1">อีเมลล์ : </font>
@@ -30,12 +26,18 @@
               </div>
               <div>
                 <font class="t1">ที่อยู่ : </font>
-                <font>{{ 
-                  this.client.address.detail + " " 
-                  + this.client.address.subdistrict + " " 
-                  + this.client.address.district + " " 
-                  + this.client.address.province + " "  
-                  + this.client.address.postalCode + " "  
+                <font
+                  >{{
+                    this.client.address.detail +
+                    " " +
+                    this.client.address.subdistrict +
+                    " " +
+                    this.client.address.district +
+                    " " +
+                    this.client.address.province +
+                    " " +
+                    this.client.address.postalCode +
+                    " "
                   }}
                 </font>
               </div>
@@ -45,8 +47,8 @@
         <div>
           <div>
             <vs-button
-              color="#6b9bce"
-              @click="(active = !active)"
+              color="#6accb5"
+              @click="active2 = !active2"
               class="BTadd1"
             >
               <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
@@ -61,7 +63,7 @@
                   <vs-th> ชนิด </vs-th>
                   <vs-th> เพศ </vs-th>
                   <vs-th> น้ำหนัก </vs-th>
-                  <vs-th>แก้ไข/ลบ</vs-th>
+                  <vs-th> รายละเอียด </vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
@@ -76,29 +78,18 @@
                     {{ data.gender }}
                   </vs-td>
                   <vs-td>
-                    {{ data.weight+ ' กิโลกรัม' }} 
+                    {{ data.weight + " กิโลกรัม" }}
                   </vs-td>
                   <vs-td>
                     <vs-button
-                      color="#d78461"
-                      @click="(active1 = !active1), showClient(data.id)"
-                      class="BT"
+                      color="#6ab8cc"
+                      @click="(active3 = !active3), showClient(data.id)"
+                      class="BT2"
                     >
-                      แก้ไข<font-awesome-icon
+                      ดูข้อมูล<font-awesome-icon
                         class="iconBTl"
                         style="font-size: 10px"
-                        icon="edit"
-                      />
-                    </vs-button>
-                    <vs-button
-                      color="#ca7676"
-                      @click="deletePetById(data)"
-                      class="BT1"
-                    >
-                      ลบ<font-awesome-icon
-                        class="iconBTl"
-                        style="font-size: 10px"
-                        icon="trash-alt"
+                        icon="info-circle"
                       />
                     </vs-button>
                   </vs-td>
@@ -254,11 +245,336 @@
                 <vs-button
                   primary
                   @click="(active1 = !active1), updateClientById(client)"
-                  class="BT2"
+                  class="BT3"
                   style="float: right; width: 80px"
                 >
                   ยืนยัน </vs-button
                 ><br /><br />
+              </div>
+            </template>
+          </vs-dialog>
+
+          <vs-dialog width="80%" scroll v-model="active2">
+            <template #header>
+              <h2>เพิ่มข้อมูลสัตว์เลี้ยง</h2>
+            </template>
+
+            <vs-row>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="ชื่อสัตว์เลี้ยง"
+                    placeholder="ชื่อสัตว์เลี้ยง"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputSL">
+                  <vs-select
+                    label="ประเภทสัตว์"
+                    placeholder="ประเภทสัตว์"
+                    v-model="value"
+                    class="type"
+                  >
+                    <vs-option label="Vuesax" value="1"> Vuesax </vs-option>
+                    <vs-option label="Vue" value="2"> Vue </vs-option>
+                    <vs-option label="Javascript" value="3">
+                      Javascript
+                    </vs-option>
+                  </vs-select>
+                </div>
+              </vs-col>
+            </vs-row>
+            <div class="space"></div>
+
+            <vs-row>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="น้ำหนัก"
+                    placeholder="กิโลกรัม"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="กรุ๊ปเลือด"
+                    placeholder="กรุ๊ปเลือด"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="สายพันธุ์"
+                    placeholder="สายพันธุ์"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <div class="InputSL" w="2">
+                <div class="InputPop">
+                  <vs-select
+                    label="เพศ"
+                    placeholder="เพศ"
+                    v-model="value"
+                    class="small"
+                  >
+                    <vs-option label="ชาย" value="1"> ชาย </vs-option>
+                    <vs-option label="หญิง" value="2"> หญิง </vs-option>
+                    <vs-option label="ไม่ระบุ" value="3"> ไม่ระบุ </vs-option>
+                  </vs-select>
+                </div>
+              </div>
+            </vs-row>
+            <div class="space"></div>
+
+            <vs-row>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="อายุ"
+                    placeholder="ปี"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label=""
+                    placeholder="เดือน"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <div class="InputSL" w="2">
+                <div class="InputPop">
+                  <vs-select
+                    label="ทำหมัน"
+                    placeholder="ทำหมัน"
+                    v-model="value"
+                    class="small"
+                  >
+                    <vs-option label="ทำแล้ว" value="1"> ทำแล้ว </vs-option>
+                    <vs-option label="ไม่ได้ทำ" value="2"> ไม่ได้ทำ </vs-option>
+                  </vs-select>
+                </div>
+              </div>
+            </vs-row>
+            <div class="space"></div>
+            <vs-row>
+              <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="รายละเอียด"
+                    placeholder="รายละเอียด"
+                  ></vs-input>
+                </div>
+              </vs-col>
+            </vs-row>
+
+            <template #footer>
+              <div class="footer-dialog">
+                <vs-button
+                  primary
+                  @click="active2 = !active2"
+                  class="BT3"
+                  style="float: right; width: 80px"
+                >
+                  ยืนยัน </vs-button
+                ><br /><br />
+              </div>
+            </template>
+          </vs-dialog>
+
+          <vs-dialog width="80%" scroll v-model="active3">
+            <template #header>
+              <h2>ข้อมูลสัตว์เลี้ยง</h2>
+            </template>
+
+            <vs-row>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="ชื่อสัตว์เลี้ยง"
+                    placeholder="ชื่อสัตว์เลี้ยง"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <vs-col
+                vs-type="flex"
+                vs-justify="center"
+                vs-align="center"
+                w="6"
+              >
+                <div class="InputSL">
+                  <vs-select
+                    label="ประเภทสัตว์"
+                    placeholder="ประเภทสัตว์"
+                    v-model="value"
+                    class="type"
+                  >
+                    <vs-option label="Vuesax" value="1"> Vuesax </vs-option>
+                    <vs-option label="Vue" value="2"> Vue </vs-option>
+                    <vs-option label="Javascript" value="3">
+                      Javascript
+                    </vs-option>
+                  </vs-select>
+                </div>
+              </vs-col>
+            </vs-row>
+            <div class="space"></div>
+
+            <vs-row>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="น้ำหนัก"
+                    placeholder="กิโลกรัม"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="กรุ๊ปเลือด"
+                    placeholder="กรุ๊ปเลือด"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="สายพันธุ์"
+                    placeholder="สายพันธุ์"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <div class="InputSL" w="2">
+                <div class="InputPop">
+                  <vs-select
+                    label="เพศ"
+                    placeholder="เพศ"
+                    v-model="value"
+                    class="small"
+                  >
+                    <vs-option label="ชาย" value="1"> ชาย </vs-option>
+                    <vs-option label="หญิง" value="2"> หญิง </vs-option>
+                    <vs-option label="ไม่ระบุ" value="3"> ไม่ระบุ </vs-option>
+                  </vs-select>
+                </div>
+              </div>
+            </vs-row>
+            <div class="space"></div>
+
+            <vs-row>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="อายุ"
+                    placeholder="ปี"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label=""
+                    placeholder="เดือน"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+              <div class="InputSL" w="2">
+                <div class="InputPop">
+                  <vs-select
+                    label="ทำหมัน"
+                    placeholder="ทำหมัน"
+                    v-model="value"
+                    class="small"
+                  >
+                    <vs-option label="ทำแล้ว" value="1"> ทำแล้ว </vs-option>
+                    <vs-option label="ไม่ได้ทำ" value="2"> ไม่ได้ทำ </vs-option>
+                  </vs-select>
+                </div>
+              </div>
+            </vs-row>
+            <div class="space"></div>
+            <vs-row>
+              <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="รายละเอียด"
+                    placeholder="รายละเอียด"
+                  ></vs-input>
+                </div>
+              </vs-col>
+            </vs-row>
+
+            <template #footer>
+              <div class="footer-dialog">
+                <vs-button
+                  color="#ca7676"
+                  @click="deletePetById(data)"
+                  class="BT1"
+                  style="float: right; width: 80px"
+                >
+                  ลบ<font-awesome-icon
+                    class="iconBTl"
+                    style="font-size: 10px"
+                    icon="trash-alt"
+                  />
+                </vs-button>
+                <vs-button
+                  color="#d78461"
+                  @click="(active3 = !active3)"
+                  class="BT"
+                  style="float: right; width: 80px"
+                >
+                  แก้ไข<font-awesome-icon
+                    class="iconBTl"
+                    style="font-size: 10px"
+                    icon="edit"
+                  />
+                </vs-button>
+                <br /><br />
               </div>
             </template>
           </vs-dialog>
@@ -281,11 +597,14 @@ export default {
   props: {
     client_id: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     active1: false,
+    active2: false,
+    active3: false,
+    value: "",
     user: [
       {
         id: "ชาย",
@@ -303,17 +622,17 @@ export default {
       },
     ],
     client: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      contact: '',
-      role: '',
+      firstName: "",
+      lastName: "",
+      email: "",
+      contact: "",
+      role: "",
       address: {
-        province: '',
-        district: '',
-        subdistrict: '',
-        postalCode: '',
-        detail: ''
+        province: "",
+        district: "",
+        subdistrict: "",
+        postalCode: "",
+        detail: "",
       },
     },
     pets: [],
@@ -323,77 +642,85 @@ export default {
     this.getClientById();
   },
   methods: {
-
     getClientById() {
       let baseURL = "http://localhost:4000/api/clients/";
-      axios.get(baseURL+this.client_id).then((res) => {
+      axios
+        .get(baseURL + this.client_id)
+        .then((res) => {
           this.client = res.data.client;
-          
-          axios.get("http://localhost:4000/api/pets/client/" + this.client_id).then((res)=> {
-            this.pets = res.data.pet;
-            console.log('pets: '+ this.pets)
-          })
-          
-      }).catch((error) => {
+
+          axios
+            .get("http://localhost:4000/api/pets/client/" + this.client_id)
+            .then((res) => {
+              this.pets = res.data.pet;
+              console.log("pets: " + this.pets);
+            });
+        })
+        .catch((error) => {
           console.log(error);
-      });
+        });
     },
 
-    updateClientById(client){
+    updateClientById(client) {
       let baseURL = "http://localhost:4000/api/clients/";
-      console.log('client: '+ client._id)
-      axios.patch(baseURL+client._id, {
-        firstName: client.firstName,
-        lastName: client.lastName,
-        contact: client.contact,
-        email: client.email,
-        address: {
-          province: client.address.province,
-          district: client.address.district,
-          subdistrict: client.address.subdistrict,
-          postalCode: client.address.postalCode,
-          detail: client.address.detail
-        }
-        
-      }).then(() => {
-        console.log(client)
-      }).catch((error) => {
+      console.log("client: " + client._id);
+      axios
+        .patch(baseURL + client._id, {
+          firstName: client.firstName,
+          lastName: client.lastName,
+          contact: client.contact,
+          email: client.email,
+          address: {
+            province: client.address.province,
+            district: client.address.district,
+            subdistrict: client.address.subdistrict,
+            postalCode: client.address.postalCode,
+            detail: client.address.detail,
+          },
+        })
+        .then(() => {
+          console.log(client);
+        })
+        .catch((error) => {
           console.log(error);
-      });
+        });
     },
 
-    updatePetById(pet){
+    updatePetById(pet) {
       let baseURL = "http://localhost:4000/api/pets/";
-      console.log('pet: '+ pet._id)
-      axios.patch(baseURL+pet._id, {
-        name: pet.name,
-        type: pet.type,
-        breed: pet.breed,
-        gender: pet.gender,
-        bloodType: pet.bloodType,
-        dob: pet.dob,
-        sterilization: pet.sterilization,
-        avatar: pet.avatar
-      }).then(() => {
-        console.log(pet)
-      }).catch((error) => {
+      console.log("pet: " + pet._id);
+      axios
+        .patch(baseURL + pet._id, {
+          name: pet.name,
+          type: pet.type,
+          breed: pet.breed,
+          gender: pet.gender,
+          bloodType: pet.bloodType,
+          dob: pet.dob,
+          sterilization: pet.sterilization,
+          avatar: pet.avatar,
+        })
+        .then(() => {
+          console.log(pet);
+        })
+        .catch((error) => {
           console.log(error);
-      });
+        });
     },
 
-    deletePetById(pet){
+    deletePetById(pet) {
       let baseURL = "http://localhost:4000/api/pets/";
-      console.log('pet: '+ pet._id)
-      axios.delete(baseURL+pet._id).then((res) => {
-        console.log(res.data.message)
-        this.getClientById();
-      }).catch((error) => {
+      console.log("pet: " + pet._id);
+      axios
+        .delete(baseURL + pet._id)
+        .then((res) => {
+          console.log(res.data.message);
+          this.getClientById();
+        })
+        .catch((error) => {
           console.log(error);
-      });
+        });
     },
-
-    
-
   },
 
   computed: {
@@ -460,15 +787,11 @@ font {
   font-family: kanit;
 }
 .BTadd1 {
-  background: rgb(79, 161, 199);
-  background: linear-gradient(
-    45deg,
-    rgba(79, 161, 199, 1) 0%,
-    rgba(97, 199, 215, 1) 100%
-  );
+background: rgb(106,204,181);
+background: linear-gradient(45deg, rgba(106,204,181,1) 0%, rgba(84,193,211,1) 100%);
   color: #ffffff;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   float: right;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
@@ -485,7 +808,7 @@ font {
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
   font-family: kanit;
@@ -500,33 +823,55 @@ font {
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
   font-family: kanit;
 }
 .BT2 {
-  background: rgb(157, 209, 103);
+  background: rgb(94, 184, 204);
   background: linear-gradient(
     45deg,
-    rgba(157, 209, 103, 1) 0%,
-    rgba(99, 209, 157, 1) 100%
+    rgba(94, 184, 204, 1) 0%,
+    rgba(68, 157, 222, 1) 100%
   );
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
   font-family: kanit;
 }
+.BT3 {
+background: rgb(157,209,103);
+background: linear-gradient(45deg, rgba(157,209,103,1) 0%, rgba(99,209,157,1) 100%);
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 12px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+  font-family: kanit;
+}
+.InputSL {
+  margin-top: -3px;
+  margin-left: 10px;
+  display: block;
+}
 ::v-deep .vs-avatar {
   filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.1));
 }
-
 ::v-deep .vs-input__label--label {
   font-size: 14px;
+  color: #696969;
   margin-left: -20px;
+  margin-top: -5px;
+}
+::v-deep .vs-select__label--label {
+  font-size: 14px;
+  color: #696969;
+  margin-left: -15px;
   margin-top: -5px;
 }
 ::v-deep .vs-dialog__header {
@@ -583,5 +928,48 @@ font {
 }
 ::v-deep .vs-table_not-found td {
   color: #696969;
+}
+::v-deep .vs-select__label--label {
+  font-size: 14px;
+  color: #696969;
+  margin-left: -15px;
+  margin-top: -5px;
+}
+button.vs-select__option {
+  font-family: kanit;
+  margin: 10px;
+  padding: 0px;
+  margin: 8px;
+  width: 95%;
+}
+::v-deep .vs-select__input {
+  min-height: 36px;
+  max-height: 30px;
+  font-family: kanit;
+  min-width: 100%;
+}
+::v-deep .type .vs-select {
+  width: 335px;
+}
+::v-deep .small .vs-select {
+  width: 145px;
+}
+button.vs-select__option {
+  font-family: kanit;
+  margin: 10px;
+  padding: 0px;
+  margin: 8px;
+  width: 80% !important;
+  color: #696969;
+}
+.vs-select__option.isMultiple:hover {
+  padding: 0px !important;
+}
+.vs-select__option:hover {
+  margin-left: 5px;
+  padding: 0px;
+}
+::v-deep .DtPg .vs-input {
+  min-width: 700px;
 }
 </style>
