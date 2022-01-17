@@ -419,9 +419,9 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    v-model="this.pet.name"
+                    v-model="pet.name"
                     label="ชื่อสัตว์เลี้ยง"
-                    placeholder="ชื่อสัตว์เลี้ยง"
+                    :placeholder="this.pet.name"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -435,7 +435,7 @@
                   <vs-select
                     label="ประเภทสัตว์"
                     :placeholder="this.pet.type"
-                    v-model="this.pet.type"
+                    v-model="pet.type"
                     class="type"
                   >
                     <vs-option :key="i"
@@ -453,9 +453,9 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="this.pet.weight"
+                    v-model="pet.weight"
                     label="น้ำหนัก"
-                    placeholder="กิโลกรัม"
+                    :placeholder="this.pet.weight"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -463,9 +463,9 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="this.pet.bloodType"
+                    v-model="pet.bloodType"
                     label="กรุ๊ปเลือด"
-                    placeholder="กรุ๊ปเลือด"
+                    :placeholder="this.pet.bloodType"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -473,9 +473,9 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="this.pet.breed"
+                    v-model="pet.breed"
                     label="สายพันธุ์"
-                    placeholder="สายพันธุ์"
+                    :placeholder="this.pet.breed"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -484,8 +484,8 @@
                 <div class="InputPop">
                    <vs-select
                     label="เพศ"
-                    placeholder="เพศ"
-                    v-model="this.pet.gender"
+                    :placeholder="this.pet.gender"
+                    v-model="pet.gender"
                     class="small"
                   >
                     <vs-option label="เพศผู้" value="เพศผู้"> เพศผู้ </vs-option>
@@ -501,9 +501,9 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="this.pet.name"
-                    label="อายุ"
-                    placeholder="ปี"
+                    v-model="pet.age.year"
+                    label="อายุ (ปี)"
+                    :placeholder="this.pet.age.year"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -511,9 +511,9 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="this.pet.name"
-                    label=""
-                    placeholder="เดือน"
+                    v-model="pet.age.month"
+                    label="อายุ (เดือน)"
+                    :placeholder="this.pet.age.month"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -522,8 +522,8 @@
                 <div class="InputPop">
                    <vs-select
                     label="ทำหมัน"
-                    placeholder="ทำหมัน"
-                    v-model="this.pet.sterilization"
+                    :placeholder="this.pet.sterilization"
+                    v-model="pet.sterilization"
                     class="small"
                   >
                     <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว" > ทำหมันแล้ว </vs-option>
@@ -537,9 +537,9 @@
               <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
                 <div class="InputPop">
                   <vs-input
-                    v-model="this.pet.detail"
+                    v-model="pet.detail"
                     label="รายละเอียด"
-                    placeholder="รายละเอียด"
+                    :placeholder="this.pet.detail"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -549,7 +549,7 @@
               <div class="footer-dialog">
                 <vs-button
                   color="#ca7676"
-                  @click="deletePetById(data)"
+                  @click="deletePetById(pet)"
                   class="BT1"
                   style="float: right; width: 80px"
                 >
@@ -561,7 +561,7 @@
                 </vs-button>
                 <vs-button
                   color="#d78461"
-                  @click="(active3 = !active3)"
+                  @click="(active3 = !active3), updatePetById(pet)"
                   class="BT"
                   style="float: right; width: 80px"
                 >
@@ -649,8 +649,9 @@ export default {
         month: '',
       },
       sterilization: '',
-      owner: '',
-      detail: ''
+      ownerId: '',
+      detail: '',
+      avatar: ''
     }
     
   }),
@@ -705,20 +706,36 @@ export default {
 
     updatePetById(pet) {
       let baseURL = "http://localhost:4000/api/pets/";
-      console.log("pet: " + pet._id);
+      console.log("pet: " + pet);
       axios
         .patch(baseURL + pet._id, {
           name: pet.name,
           type: pet.type,
           breed: pet.breed,
           gender: pet.gender,
+          weight: pet.weight,
           bloodType: pet.bloodType,
-          dob: pet.dob,
+          age: {
+            year: pet.age.year,
+            month: pet.age.month
+          },
           sterilization: pet.sterilization,
-          avatar: pet.avatar,
+          detail: pet.detail,
         })
-        .then(() => {
-          console.log(pet);
+        .then((res) => {
+          console.log(res.data.message);
+
+           axios
+          .get(baseURL + 'client/' + this.client_id)
+          .then((res) => {
+            this.pets = res.data.pet;
+            console.log(res.data.message);
+            console.log(this.pet)
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+          
         })
         .catch((error) => {
           console.log(error);
@@ -775,13 +792,12 @@ export default {
         .then((res) => {
           this.pet = res.data.pet;
           console.log(res.data.message);
-          // console.log(this.pet)
+          console.log(this.pet)
         })
         .catch((error) => {
           console.log(error);
         });
       console.log(pet._id)
-
     }
   },
 

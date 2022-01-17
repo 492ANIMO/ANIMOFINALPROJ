@@ -165,9 +165,9 @@ exports.destroy = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, type, breed, gender, bloodType, weight, dob, age,sterilization, detail } = req.body;
+    const { name, type, breed, gender, bloodType, weight, age,sterilization, detail } = req.body;
     const pet = await Pet.findByIdAndUpdate({_id:id} ,{
-      name, type, breed, gender, bloodType, weight, dob, age, sterilization, detail
+      name, type, breed, gender, bloodType, weight, age, sterilization, detail
     })
 
     if(!pet){
