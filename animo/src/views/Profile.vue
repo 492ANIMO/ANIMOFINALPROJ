@@ -83,7 +83,7 @@
                   <vs-td>
                     <vs-button
                       color="#6ab8cc"
-                      @click="(active3 = !active3), showClient(data.id)"
+                      @click="(active3 = !active3), getPetById(data)"
                       class="BT2"
                     >
                       ดูข้อมูล<font-awesome-icon
@@ -419,7 +419,7 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    v-model="value"
+                    v-model="this.pet.name"
                     label="ชื่อสัตว์เลี้ยง"
                     placeholder="ชื่อสัตว์เลี้ยง"
                   ></vs-input>
@@ -434,15 +434,15 @@
                 <div class="InputSL">
                   <vs-select
                     label="ประเภทสัตว์"
-                    placeholder="ประเภทสัตว์"
-                    v-model="value"
+                    :placeholder="this.pet.type"
+                    v-model="this.pet.type"
                     class="type"
                   >
-                    <vs-option label="Vuesax" value="1"> Vuesax </vs-option>
-                    <vs-option label="Vue" value="2"> Vue </vs-option>
-                    <vs-option label="Javascript" value="3">
-                      Javascript
+                    <vs-option :key="i"
+                      v-for="(type, i) in petType"
+                      :value="type" :label="type"> {{ type }} 
                     </vs-option>
+                        
                   </vs-select>
                 </div>
               </vs-col>
@@ -453,7 +453,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="value"
+                    v-model="this.pet.weight"
                     label="น้ำหนัก"
                     placeholder="กิโลกรัม"
                   ></vs-input>
@@ -463,7 +463,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="value"
+                    v-model="this.pet.bloodType"
                     label="กรุ๊ปเลือด"
                     placeholder="กรุ๊ปเลือด"
                   ></vs-input>
@@ -473,7 +473,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="value"
+                    v-model="this.pet.breed"
                     label="สายพันธุ์"
                     placeholder="สายพันธุ์"
                   ></vs-input>
@@ -482,15 +482,15 @@
               <div class="space"></div>
               <div class="InputSL" w="2">
                 <div class="InputPop">
-                  <vs-select
+                   <vs-select
                     label="เพศ"
                     placeholder="เพศ"
-                    v-model="value"
+                    v-model="this.pet.gender"
                     class="small"
                   >
-                    <vs-option label="ชาย" value="1"> ชาย </vs-option>
-                    <vs-option label="หญิง" value="2"> หญิง </vs-option>
-                    <vs-option label="ไม่ระบุ" value="3"> ไม่ระบุ </vs-option>
+                    <vs-option label="เพศผู้" value="เพศผู้"> เพศผู้ </vs-option>
+                    <vs-option label="เพศเมีย" value="เพศเมีย"> เพศเมีย </vs-option>
+                    <vs-option label="ไม่ระบุ" value="ไม่ระบุ"> ไม่ระบุ </vs-option>
                   </vs-select>
                 </div>
               </div>
@@ -501,7 +501,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="value"
+                    v-model="this.pet.name"
                     label="อายุ"
                     placeholder="ปี"
                   ></vs-input>
@@ -511,7 +511,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    v-model="value"
+                    v-model="this.pet.name"
                     label=""
                     placeholder="เดือน"
                   ></vs-input>
@@ -520,14 +520,14 @@
               <div class="space"></div>
               <div class="InputSL" w="2">
                 <div class="InputPop">
-                  <vs-select
+                   <vs-select
                     label="ทำหมัน"
                     placeholder="ทำหมัน"
-                    v-model="value"
+                    v-model="this.pet.sterilization"
                     class="small"
                   >
-                    <vs-option label="ทำแล้ว" value="1"> ทำแล้ว </vs-option>
-                    <vs-option label="ไม่ได้ทำ" value="2"> ไม่ได้ทำ </vs-option>
+                    <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว" > ทำหมันแล้ว </vs-option>
+                    <vs-option label="ยังไม่เคยทำหมัน" value="ยังไม่เคยทำหมัน" > ยังไม่เคยทำหมัน </vs-option>
                   </vs-select>
                 </div>
               </div>
@@ -537,7 +537,7 @@
               <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
                 <div class="InputPop">
                   <vs-input
-                    v-model="newPet.detail"
+                    v-model="this.pet.detail"
                     label="รายละเอียด"
                     placeholder="รายละเอียด"
                   ></vs-input>
@@ -618,6 +618,7 @@ export default {
         detail: "",
       },
     },
+    petType:['สุนัข', 'แมว', 'นก', 'อื่นๆ'],
     pets: [],
     newPet: {
       name: '',
@@ -635,6 +636,22 @@ export default {
       ownerId: '',
       detail: ''
     },
+    pet: {
+      name: '',
+      type: '',
+      breed: '',
+      gender: '',
+      bloodType: '',
+      weight: '',
+      dob: '',
+      age: {
+        year: '',
+        month: '',
+      },
+      sterilization: '',
+      owner: '',
+      detail: ''
+    }
     
   }),
   created() {
@@ -664,7 +681,6 @@ export default {
 
     updateClientById(client) {
       let baseURL = "http://localhost:4000/api/clients/";
-      console.log("client: " + client._id);
       axios
         .patch(baseURL + client._id, {
           firstName: client.firstName,
@@ -679,8 +695,8 @@ export default {
             detail: client.address.detail,
           },
         })
-        .then(() => {
-          console.log(client);
+        .then((res) => {
+          console.log(res.data.message);
         })
         .catch((error) => {
           console.log(error);
@@ -750,6 +766,22 @@ export default {
       }).catch((error) => {
           console.log(error.response.data);
       });
+    },
+
+    getPetById(pet){
+      let baseURL = "http://localhost:4000/api/pets/";
+      axios
+        .get(baseURL + pet._id)
+        .then((res) => {
+          this.pet = res.data.pet;
+          console.log(res.data.message);
+          // console.log(this.pet)
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log(pet._id)
+
     }
   },
 
