@@ -34,7 +34,10 @@ const routes = [
   {
     path: '/clients',
     name: 'Clients',
-    component: () => import('../views/Clients.vue')
+    component: () => import('../views/Clients.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/package',
