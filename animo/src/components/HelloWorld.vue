@@ -4,10 +4,10 @@
             <h1>Hello</h1>
             <h3>Sign in to your account </h3>
             <h4>Email</h4>
-                <vs-input v-model="value1" placeholder="Enter your email...">
+                <vs-input v-model="email" placeholder="Enter your email...">
                 </vs-input>
             <h4>Password</h4>
-                <vs-input type="password" v-model="value2" placeholder="Enter your password...">
+                <vs-input type="password" v-model="password" placeholder="Enter your password...">
                 </vs-input>
                 
         </div>
@@ -16,7 +16,7 @@
                     block
                     color="#46AE9C"
                     :active="active == 0"
-                    @click="active = 0"
+                    @click="active = 0, login()"
                 >
                     Login
                 </vs-button>
@@ -24,15 +24,38 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
+    name: 'HelloWorld',
+    props: {
+        msg: String
+    },
     data:() => ({
-    value1: '',
-    value2: ''
-})
+        value1: '',
+        value2: '',
+        email: '',
+        password: '',
+        active: 0
+    }),
+    methods:{
+        login(){
+            let baseURL = "http://localhost:4000/api/users/login/";
+
+            axios
+                .post(baseURL, { email: this.email, password: this.password })
+                .then((res) => {
+                    let token = res.data.access_token;
+                    localStorage.setItem("jwt", token);
+                    this.email= ''
+                    this.password= ''
+                    console.log(res.data)
+                    this.$router.push({name:'Clients'})
+                })
+                .catch((error) => {
+                   console.log(error)
+                });
+        }
+    }
 }
 </script>
 
