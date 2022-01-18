@@ -20,7 +20,7 @@
         <vs-table striped>
           <template #thead>
             <vs-tr>
-              <vs-th>ไอดีแพ็คเกจ</vs-th>
+              <vs-th>แพ็คเกจไอดี</vs-th>
               <vs-th>ชื่อแพ็คเกจ</vs-th>
               <vs-th>รายละเอียด</vs-th>
               <vs-th>จัดการแพ็คเกจ</vs-th>
@@ -36,7 +36,7 @@
               )"
               :data="data"
             >
-              <vs-td>{{ data._id }}</vs-td>
+              <vs-td>{{ data.pid }}</vs-td>
               <vs-td>{{ data.name }}</vs-td>
               <vs-td>{{ data.detail }}</vs-td>
               <vs-td>
