@@ -420,6 +420,7 @@
               >
                 <div class="InputPop">
                   <vs-input
+                  state="success"
                     v-model="pet.name"
                     label="ชื่อสัตว์เลี้ยง"
                     :placeholder="this.pet.name"
@@ -434,6 +435,7 @@
               >
                 <div class="InputSL">
                   <vs-select
+                  state="success"
                     label="ประเภทสัตว์"
                     :placeholder="this.pet.type"
                     v-model="pet.type"
@@ -454,6 +456,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
+                  state="success"
                     v-model="pet.weight"
                     label="น้ำหนัก"
                     :placeholder="this.pet.weight"
@@ -464,6 +467,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
+                  state="success"
                     v-model="pet.bloodType"
                     label="กรุ๊ปเลือด"
                     :placeholder="this.pet.bloodType"
@@ -474,6 +478,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
+                  state="success"
                     v-model="pet.breed"
                     label="สายพันธุ์"
                     :placeholder="this.pet.breed"
@@ -484,6 +489,7 @@
               <div class="InputSL" w="2">
                 <div class="InputPop">
                    <vs-select
+                   state="success"
                     label="เพศ"
                     :placeholder="this.pet.gender"
                     v-model="pet.gender"
@@ -502,6 +508,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
+                  state="success"
                     v-model="pet.age.year"
                     label="อายุ (ปี)"
                     :placeholder="this.pet.age.year"
@@ -512,6 +519,7 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
+                  state="success"
                     v-model="pet.age.month"
                     label="อายุ (เดือน)"
                     :placeholder="this.pet.age.month"
@@ -522,6 +530,7 @@
               <div class="InputSL" w="2">
                 <div class="InputPop">
                    <vs-select
+                   state="success"
                     label="ทำหมัน"
                     :placeholder="this.pet.sterilization"
                     v-model="pet.sterilization"
@@ -538,6 +547,7 @@
               <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
                 <div class="InputPop">
                   <vs-input
+                  state="success"
                     v-model="pet.detail"
                     label="รายละเอียด"
                     :placeholder="this.pet.detail"
@@ -550,7 +560,7 @@
               <div class="footer-dialog">
                 <vs-button
                   color="#ca7676"
-                  @click="deletePetById(pet)"
+                  @click="deleteCF=!deleteCF"
                   class="BT1"
                   style="float: right; width: 80px"
                 >
@@ -576,6 +586,30 @@
               </div>
             </template>
           </vs-dialog>
+
+          <vs-dialog width="550px" v-model="deleteCF">
+        <template #header>
+          <font class="font">
+            ยืนยัน <b>การลบบัญชี</b>
+          </font>
+        </template>
+
+        <div class="con-content">
+            <br><br><br><br>
+        </div>
+
+        <template #footer>
+          <div class="footer">
+            <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
+              ยกเลิก
+            </vs-button>
+            <vs-button color="#ca7676" class="CF1" @click="deleteCF=!deleteCF,deletePetById(pet)">
+              ยืนยัน
+            </vs-button>
+          </div>
+        </template>
+
+      </vs-dialog>
         </div>
       </div>
     </div>
@@ -602,6 +636,7 @@ export default {
     active1: false,
     active2: false,
     active3: false,
+    deleteCF: false,
     value: "",
     baseurl: 'http://localhost:4000/api/',
     user: [
@@ -816,6 +851,9 @@ h2 {
   color: #696969;
   font-weight: 500;
 }
+.font {
+  font-size: 20px;
+}
 .TextHead {
   font-size: 20px;
   color: #797979;
@@ -887,7 +925,7 @@ background: linear-gradient(45deg, rgba(106,204,181,1) 0%, rgba(84,193,211,1) 10
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
   font-family: kanit;
@@ -902,7 +940,7 @@ background: linear-gradient(45deg, rgba(106,204,181,1) 0%, rgba(84,193,211,1) 10
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
   font-family: kanit;
@@ -928,10 +966,32 @@ background: linear-gradient(45deg, rgba(157,209,103,1) 0%, rgba(99,209,157,1) 10
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 12px;
+  font-size: 13px;
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
   font-family: kanit;
+}
+.CF1{
+background: rgb(197,94,94);
+background: linear-gradient(45deg, rgba(197,94,94,1) 0%, rgba(248,139,109,1) 100%);
+display: inline-block;
+color: #ffffff;
+border-radius: 20px;
+font-size: 13px;
+font-weight: 500;
+margin-bottom: 15px;
+--vs-button-padding: 5px 20px;
+}
+.CF2{
+background: rgb(130,140,146);
+background: linear-gradient(45deg, rgba(130,140,146,1) 0%, rgba(106,106,106,1) 100%);
+display: inline-block;
+color: #ffffff;
+border-radius: 20px;
+font-size: 13px;
+font-weight: 500;
+margin-bottom: 15px;
+--vs-button-padding: 5px 20px;
 }
 .InputSL {
   margin-top: -3px;
@@ -1020,6 +1080,7 @@ button.vs-select__option {
   padding: 0px;
   margin: 8px;
   width: 95%;
+  background: #ffffff;
 }
 ::v-deep .vs-select__input {
   min-height: 36px;
