@@ -303,6 +303,7 @@
                     v-model="newPet.weight"
                     label="น้ำหนัก"
                     placeholder="กิโลกรัม"
+                    type="number"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -351,6 +352,7 @@
                     v-model="newPet.age.year"
                     label="อายุ"
                     placeholder="ปี"
+                    type="number"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -361,6 +363,7 @@
                     v-model="newPet.age.month"
                     label=""
                     placeholder="เดือน"
+                    type="number"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -460,6 +463,7 @@
                     v-model="pet.weight"
                     label="น้ำหนัก"
                     :placeholder="this.pet.weight"
+                    type="number"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -512,6 +516,7 @@
                     v-model="pet.age.year"
                     label="อายุ (ปี)"
                     :placeholder="this.pet.age.year"
+                    type="number"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -523,6 +528,7 @@
                     v-model="pet.age.month"
                     label="อายุ (เดือน)"
                     :placeholder="this.pet.age.month"
+                    type="number"
                   ></vs-input>
                 </div>
               </vs-col>
