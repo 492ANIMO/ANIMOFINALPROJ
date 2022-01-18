@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const AutoIncrement = require('mongoose-sequence')(mongoose);
+
 // import models
 const Vaccine = require('../models/vaccine');
 const Treatment = require('../models/treatment');
@@ -24,11 +26,15 @@ const schema = new Schema({
     
   detail: { type: String, trim: true},
   price: { type: Number },
-  type: { type: String, trim: true}
+  type: { type: String, trim: true},
+  
+  pid: {  type: Number }
 
 },{
   timestamps: true, 
   collection: 'packages'
 });
+
+schema.plugin(AutoIncrement, {id:'pid_req',inc_field: 'pid'});
 
 module.exports = mongoose.model('Package', schema);
