@@ -11,7 +11,8 @@
         </vs-button>
         <div class="profile">
           <vs-avatar class="ProfileDT" circle size="120">
-            <img src="../assets/pet1.jpeg" alt="" />
+            <!-- <img src="../assets/pet1.jpeg" alt="" /> -->
+            <img :src="this.baseurl+this.client.avatar" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
             <h2>{{ this.client.firstName + " " + this.client.lastName }}</h2>
@@ -602,6 +603,7 @@ export default {
     active2: false,
     active3: false,
     value: "",
+    baseurl: 'http://localhost:4000/api/',
     user: [
     ],
     client: {
@@ -617,6 +619,7 @@ export default {
         postalCode: "",
         detail: "",
       },
+      avatar: ''
     },
     petType:['สุนัข', 'แมว', 'นก', 'อื่นๆ'],
     pets: [],
@@ -646,7 +649,7 @@ export default {
       dob: '',
       age: {
         year: '',
-        month: '',
+        month: ''
       },
       sterilization: '',
       ownerId: '',

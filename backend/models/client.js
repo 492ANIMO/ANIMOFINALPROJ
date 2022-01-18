@@ -19,7 +19,7 @@ const schema = new Schema({
     detail: { type: String, trim: true }
   },
   role: { type: String, default: 'client' },
-  avatar: { type: String },
+  avatar: { type: String, default: 'uploads/nopic.jpeg' },
 
   // foreign key
   user: { type: Schema.Types.ObjectId, ref: 'User' }
