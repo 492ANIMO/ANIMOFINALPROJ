@@ -184,4 +184,5 @@ h3{
 ::v-deep .vs-table__tr:first-of-type .vs-table__td:first-child {
   width: 25%;
 }
+
 </style>
