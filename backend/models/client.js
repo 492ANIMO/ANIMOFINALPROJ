@@ -20,6 +20,7 @@ const schema = new Schema({
   },
   role: { type: String, default: 'client' },
   avatar: { type: String, default: 'uploads/nopic.jpeg' },
+  uid: { type: String, default: '0000000000', unique: true },
 
   // foreign key
   user: { type: Schema.Types.ObjectId, ref: 'User' }

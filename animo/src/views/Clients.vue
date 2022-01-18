@@ -27,7 +27,7 @@
           </template>
           <template #tbody>
             <vs-tr :key="i" v-for="(data, i) in $vs.getPage($vs.getSearch(users, search), page, max)" :data="data">
-              <vs-td>{{ data.id }}</vs-td>
+              <vs-td>{{ data.uid }}</vs-td>
               <vs-td>{{ data.firstName + " " + data.lastName }}</vs-td>
               <vs-td>{{ data.contact }}</vs-td>
               <vs-td>
@@ -211,7 +211,8 @@ export default {
         detail: '',
       },
       role: 'client',
-      avatar: ''
+      avatar: '',
+      uid: ''
     },
     clientCount: ''
  

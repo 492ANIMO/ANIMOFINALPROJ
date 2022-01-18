@@ -51,6 +51,8 @@ exports.create = async (req, res, next) => {
       error.statusCode = 400;
       throw error;
   }
+    // let uid = new Date().getTime().toString();
+    // uid = uid.slice(3, -1);
 
     let client = new Client({
       firstName,
@@ -58,7 +60,9 @@ exports.create = async (req, res, next) => {
       email,
       contact,
       address,
-      role: 'client'
+      role: 'client',
+      uid: new Date().getTime().toString()
+      // uid: new Date().getTime().toString().slice(3, -1)
     })
 
     if(req.file){
