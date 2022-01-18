@@ -14,9 +14,7 @@ const annoucementSeeder = async () => {
             img: 'uploads/1640511982292.jpg'
           });
       }
-
       console.log("Annoucement data Import Success");
-
       process.exit();
   } catch (error) {
       console.error("Annoucement data import Error!!");
