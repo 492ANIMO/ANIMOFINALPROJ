@@ -3,6 +3,7 @@
 const User = require('../models/user');
 const Client = require('../models/client');
 
+
 exports.index = async (req, res, next) => {
   try {
     const client = await Client.find().sort({updatedAt: -1});

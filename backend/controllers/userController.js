@@ -556,3 +556,19 @@ exports.login = async (req, res, next) => {
     next(error)
   }
 }
+
+exports.logout = (req,res) => {
+  try {
+  
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+    res.clearCookie('jwt')
+    .status(200)
+    .json({ message: "Successfully logged out 😏 🍀" });
+
+
+    
+  } catch (error) {
+    next(error)
+  }
+  
+};

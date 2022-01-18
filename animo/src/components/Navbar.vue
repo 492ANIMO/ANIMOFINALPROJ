@@ -33,7 +33,7 @@
             <vs-button dark class="BT2" @click="active1=!active1">
               ยกเลิก
             </vs-button>
-            <vs-button color="#ca7676" class="BT1" @click="active1=!active1">
+            <vs-button color="#ca7676" class="BT1" @click="active1=!active1, logout()">
               ยืนยัน
             </vs-button>
           </div>
@@ -44,13 +44,20 @@
     </div>
 </template>
 <script>
+// import axios from 'axios';
 export default {
   name: 'Navbar',
   props: {
   },
   data:() => ({
         active1: false,
-    })
+    }),
+  methods:{
+    logout(){
+      localStorage.removeItem("jwt");
+      this.$router.replace('/login')
+    }
+  }
 }
 
 </script>
