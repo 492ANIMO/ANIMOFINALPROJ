@@ -603,7 +603,7 @@
             <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
               ยกเลิก
             </vs-button>
-            <vs-button color="#ca7676" class="CF1" @click="deleteCF=!deleteCF,deletePetById(pet)">
+            <vs-button color="#ca7676" class="CF1" @click="(active3 = !active3),(deleteCF=!deleteCF),deletePetById(pet)">
               ยืนยัน
             </vs-button>
           </div>

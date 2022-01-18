@@ -806,4 +806,7 @@ button.vs-select__option {
 ::v-deep .DtPg .vs-input {
   min-width: 695px;
 }
+::v-deep .vs-table__tr:first-of-type .vs-table__td:first-child {
+  width: 25%;
+}
 </style>
