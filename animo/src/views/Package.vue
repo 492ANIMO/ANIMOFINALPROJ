@@ -390,7 +390,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="(active1 = !active1), updatePackage(currentPackage._id)"
+              @click="(Detail1 = !Detail1), updatePackage(currentPackage._id)"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -558,6 +558,8 @@ export default {
        
         console.log(res.data);
         console.log('update เรียบร้อย');
+
+        this.getPackage();
         
       }) .catch((error) => {
           console.log(error);
