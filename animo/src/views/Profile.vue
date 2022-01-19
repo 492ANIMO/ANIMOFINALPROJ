@@ -245,7 +245,7 @@
               <div class="footer-dialog">
                 <vs-button
                   color="#d78461"
-                  @click="(active1 = !active1), updateClientById(client),EditNoti('bottom-right',1500,'#d2a370')"
+                  @click="(active1 = !active1), updateClientById(client),EditNoti('bottom-right',1500,'#da9952')"
                   class="BT"
                   style="float: right; width: 80px"
                 ><font-awesome-icon class="iconBTr" icon="edit" />
@@ -583,7 +583,7 @@
                 </vs-button>
                 <vs-button
                   color="#d78461"
-                  @click="(active3 = !active3), updatePetById(pet),EditNoti('bottom-right',1500,'#d2a370')"
+                  @click="(active3 = !active3), updatePetById(pet),EditNoti('bottom-right',1500,'#da9952')"
                   class="BT"
                   style="float: right; width: 80px"
                 >
