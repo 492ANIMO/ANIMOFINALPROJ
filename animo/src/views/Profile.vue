@@ -244,12 +244,12 @@
             <template #footer>
               <div class="footer-dialog">
                 <vs-button
-                  primary
-                  @click="(active1 = !active1), updateClientById(client)"
-                  class="BT3"
+                  color="#d78461"
+                  @click="(active1 = !active1), updateClientById(client),EditNoti('bottom-right',1500,'#d2a370')"
+                  class="BT"
                   style="float: right; width: 80px"
-                >
-                  ยืนยัน </vs-button
+                ><font-awesome-icon class="iconBTr" icon="edit" />
+                  แก้ไข </vs-button
                 ><br /><br />
               </div>
             </template>
@@ -399,7 +399,7 @@
               <div class="footer-dialog">
                 <vs-button
                   primary
-                  @click="active2 = !active2, handleAddPetForm()"
+                  @click="active2 = !active2, handleAddPetForm(),AddNoti('bottom-right',1500,'#6fcab6')"
                   class="BT3"
                   style="float: right; width: 80px"
                 >
@@ -578,7 +578,7 @@
                 </vs-button>
                 <vs-button
                   color="#d78461"
-                  @click="(active3 = !active3), updatePetById(pet)"
+                  @click="(active3 = !active3), updatePetById(pet),EditNoti('bottom-right',1500,'#d2a370')"
                   class="BT"
                   style="float: right; width: 80px"
                 >
@@ -609,7 +609,7 @@
             <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
               ยกเลิก
             </vs-button>
-            <vs-button color="#ca7676" class="CF1" @click="(active3 = !active3),(deleteCF=!deleteCF),deletePetById(pet)">
+            <vs-button color="#ca7676" class="CF1" @click="(active3 = !active3),(deleteCF=!deleteCF),deletePetById(pet),DeleteNoti('bottom-right',1500,'#ca6f6f')">
               ยืนยัน
             </vs-button>
           </div>
@@ -704,6 +704,33 @@ export default {
 
   },
   methods: {
+    AddNoti(position = null ,duration ,color) {
+          const noti = this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'เพิ่มข้อมูลสำเร็จ',
+            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    EditNoti(position = null ,duration ,color) {
+          const noti = this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'แก้ไขข้อมูลสำเร็จ',
+            text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    DeleteNoti(position = null ,duration ,color) {
+          const noti = this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'ลบข้อมูลสำเร็จ',
+            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
     getClientById() {
       let baseURL = "http://localhost:4000/api/clients/";
       axios
