@@ -391,7 +391,7 @@
           <div class="footer-dialog">
             <vs-button
                   color="#ca7676"
-                  @click="deleteCF=!deleteCF, deletePackage(currentPackage._id)"
+                  @click="deleteCF=!deleteCF"
                   class="BT3"
                   style="float: right; width: 80px"
                 >
@@ -429,7 +429,7 @@
             <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
               ยกเลิก
             </vs-button>
-            <vs-button color="#ca7676" class="CF1" @click="(Detail1 = !Detail1),(deleteCF=!deleteCF)">
+            <vs-button color="#ca7676" class="CF1" @click="(Detail1 = !Detail1),(deleteCF=!deleteCF), deletePackage(currentPackage._id)">
               ยืนยัน
             </vs-button>
           </div>
