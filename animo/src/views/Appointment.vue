@@ -572,7 +572,7 @@ export default {
                 type: '',
                 getder: ''
               },
-              type: 'นัดโดยสัตวแพทย์',
+              by: 'นัดโดยสัตวแพทย์',
               date: '',
               time: '',
               detail: ''
