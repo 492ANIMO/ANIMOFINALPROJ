@@ -9,10 +9,10 @@
         <vs-button color="#6b9bce" @click="active = !active, getClients()" class="BTadd">
           <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
         </vs-button>
-        <h2><font-awesome-icon class="icon" icon="paw" />Clients</h2>
+        <h2><font-awesome-icon class="icon" icon="paw" />ข้อมูลผู้ใช้</h2>
         <div class="line">
           <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
-          <vs-input v-model="search" placeholder="search..." />
+          <vs-input v-model="search" placeholder="ค้นหา..." />
         </div>
 
         <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(users, search).length }} รายการ</h4>

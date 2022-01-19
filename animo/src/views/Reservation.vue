@@ -6,10 +6,10 @@
     </div>
 <div class="Content1">
         <div class="Content2">
-            <h2><font-awesome-icon class="icon" icon="file-medical"/>Reservation</h2>
+            <h2><font-awesome-icon class="icon" icon="file-medical"/>การจอง</h2>
             <div class="line">
               <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
-              <vs-input v-model="search" placeholder="search..." />
+              <vs-input v-model="search" placeholder="ค้นหา..." />
             </div>
             <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(reservations, search).length }} รายการ</h4>
                 <vs-table striped>

@@ -14,13 +14,15 @@
           <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
         </vs-button>
         <h2>
-          <font-awesome-icon class="icon" icon="clipboard-list" />Appointment
+          <font-awesome-icon class="icon" icon="clipboard-list" />การนัดหมาย
         </h2>
         <div class="line">
           <h3>วันที่นัดหมาย</h3>
           <vs-input type="date" v-model="date" class="DateFilter" />
         </div>
-        <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(appointments, date).length }} รายการ</h4>
+        <h4 class="list">
+          รายการทั้งหมด {{ $vs.getSearch(appointments, date).length }} รายการ
+        </h4>
         <vs-table striped>
           <template #thead>
             <vs-tr>
@@ -35,7 +37,11 @@
           <template #tbody>
             <vs-tr
               :key="i"
-              v-for="(data, i) in $vs.getPage($vs.getSearch(appointments, date),page,max)"
+              v-for="(data, i) in $vs.getPage(
+                $vs.getSearch(appointments, date),
+                page,
+                max
+              )"
               :data="data"
             >
               <vs-td>{{ data._id }}</vs-td>
@@ -76,7 +82,7 @@
         </template>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+          <vs-col w="6">
             <div class="InputSL">
               <vs-select
                 filter
@@ -97,18 +103,8 @@
               </vs-select>
             </div>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+          <vs-col w="6">
             <div class="InputSL">
-              <!-- <vs-select
-                label="ชื่อสัตว์เลี้ยง"
-                placeholder="ชื่อสัตว์เลี้ยง"
-                v-model="value"
-                class="type"
-              >
-                <vs-option label="Bento" value="Bento"> Bento </vs-option>
-                <vs-option label="Oreo" value="Oreo"> Oreo </vs-option>
-              </vs-select> -->
-
               <vs-select
                 filter
                 label="ชื่อสัตว์เลี้ยง"
@@ -131,7 +127,7 @@
         </vs-row>
         <div class="space"></div>
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+          <vs-col w="6">
             <div class="InputPop">
               <vs-input
                 disabled
@@ -167,25 +163,13 @@
         <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputSL">
-              <!-- <vs-select
-                filter
-                label="ประเภทการนัดหมาย"
-                placeholder="ประเภทการนัดหมาย"
-                v-model="appointment.type"
-                class="type"
-                disabled
-              >
-                <vs-option label="นัดจากการจอง" value="นัดจากการจอง"> นัดจากการจอง </vs-option>
-                <vs-option label="นัดโดยแพทย์" value="นัดโดยแพทย์"> นัดโดยแพทย์ </vs-option>
-              </vs-select> -->
+          <vs-col w="6">
+            <div class="InputPop">
               <vs-input
                 disabled
                 v-model="appointment.by"
                 label="ประเภทการนัดหมาย"
                 placeholder="ประเภทการนัดหมาย"
-                class="InputLast"
               ></vs-input>
             </div>
           </vs-col>
@@ -320,50 +304,39 @@
         <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputSL">
-              <vs-select
-                filter
-                state="success"
-                label="ประเภทการนัดหมาย"
-                :placeholder="currentAppointment.by"
-                v-model="value"
-                class="type"
+          <vs-col w="6">
+            <div class="InputPop">
+              <vs-input
                 disabled
-              >
-                <vs-option label="นัดจากการจอง" value="นัดจากการจอง">
-                  นัดจากการจอง
-                </vs-option>
-                <vs-option label="นัดโดยแพทย์" value="นัดโดยแพทย์">
-                  นัดโดยแพทย์
-                </vs-option>
-              </vs-select>
+                state="success"
+                v-model="currentAppointment.by"
+                label="ประเภทการนัดหมาย"
+                placeholder="ประเภทการนัดหมาย"
+              ></vs-input>
             </div>
           </vs-col>
           <vs-col class="InputSM" w="2">
             <div class="InputPop">
               <vs-input
+                disabled
                 state="success"
                 type="text"
                 v-model="currentAppointment.date"
                 label="วันที่นัดหมาย"
-                disabled
               ></vs-input>
             </div>
           </vs-col>
           <div class="space"></div>
-          <vs-col class="InputSL" w="2">
-            <div class="small">
-              <vs-select
+          <vs-col w="2">
+            <div class="InputPop">
+              <vs-input
                 disabled
-                filter
+                state="success"
+                v-model="currentAppointment.time"
                 label="เวลานัดหมาย"
                 placeholder="เวลานัดหมาย"
-                v-model="currentAppointment.time"
-              >
-                <!-- <vs-option label="11.00" value="11.00"> 11.00 </vs-option>
-                  <vs-option label="12.00" value="12.00"> 12.00 </vs-option> -->
-              </vs-select>
+                class="InputLast"
+              ></vs-input>
             </div>
           </vs-col>
         </vs-row>
@@ -421,8 +394,8 @@ export default {
     active: false,
     active1: false,
     active2: false,
-    value: '',
-    date:'',
+    value: "",
+    date: "",
     users: [],
     appointments: [],
     currentAppointment: {
@@ -651,7 +624,7 @@ export default {
         });
     },
   },
-}
+};
 </script>
 <style scoped>
 h2 {

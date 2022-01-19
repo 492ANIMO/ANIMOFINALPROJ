@@ -9,12 +9,12 @@
                 Role : Doctor
             </h6>
             </div></li>
-        <li><router-link to="/dashboard"><font-awesome-icon class="icon" icon="chart-pie"/>Dashboard</router-link></li>
-        <li><router-link to="/clients"><font-awesome-icon class="icon" icon="paw"/>Clients</router-link></li>
-        <li><router-link to="/package"><font-awesome-icon class="icon" icon="syringe"/>Package</router-link></li>
-        <li><router-link to="/reservation"><font-awesome-icon class="icon" icon="file-medical"/>Reservation</router-link></li>
-        <li><router-link to="/appointment"><font-awesome-icon class="icon" icon="clipboard-list"/>Appointment</router-link></li>
-        <li><router-link to="/annoucement"><font-awesome-icon class="icon" icon="newspaper"/>Annoucement</router-link></li>
+        <li><router-link to="/dashboard"><font-awesome-icon class="icon" icon="chart-pie"/>แดชบอร์ด</router-link></li>
+        <li><router-link to="/clients"><font-awesome-icon class="icon" icon="paw"/>ข้อมูลผู้ใช้</router-link></li>
+        <li><router-link to="/package"><font-awesome-icon class="icon" icon="syringe"/>แพ็คเกจ</router-link></li>
+        <li><router-link to="/reservation"><font-awesome-icon class="icon" icon="file-medical"/>การจอง</router-link></li>
+        <li><router-link to="/appointment"><font-awesome-icon class="icon" icon="clipboard-list"/>การนัดหมาย</router-link></li>
+        <li><router-link to="/annoucement"><font-awesome-icon class="icon" icon="newspaper"/>บทความ</router-link></li>
     </ul>
 </div>
 
