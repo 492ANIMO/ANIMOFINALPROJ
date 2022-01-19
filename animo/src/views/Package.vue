@@ -36,7 +36,7 @@
               )"
               :data="data"
             >
-              <vs-td>{{ data.pid }}</vs-td>
+              <vs-td>{{ '00000'+data.pid }}</vs-td>
               <vs-td>{{ data.name }}</vs-td>
               <vs-td>{{ data.detail }}</vs-td>
               <vs-td>
