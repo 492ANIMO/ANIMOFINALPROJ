@@ -55,20 +55,23 @@ exports.show = async (req, res, next) => {
 exports.getCurrentProfile = async (req, res, next) => {
   try {
     // const id = req.user._id;
-    // const user = await User.findById(id).select('-password').populate({ 
-    //   path: 'profile',
-    //   select: '-email -role -createdAt -updatedAt -__v',
-    // })
-    // if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
-
+    
     const {_id, email, role} = req.user
+
+    const user = await User.findById(_id).select('-password').populate({ 
+      path: 'profile'
+    })
+    if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
     res.status(200).json({
       message: 'สำเร็จ',
       user: {
         id: _id,
         email,
-        role
+        role,
+        // firstName: user.profile.firstName,
+        // lastName: user.profile.lastName,
+        // position: user.profile.position,
       }
     });
 
@@ -126,7 +129,7 @@ exports.create = async (req, res, next) => {
         onModel: 'Client'
       })
 
-    }else if(role === 'staff'){
+    }else if(role === 'staff' || role === 'admin'){
       const staff = await Staff.create({
         firstName, 
         lastName,
@@ -540,7 +543,7 @@ exports.login = async (req, res, next) => {
     const token = await jwt.sign({
       id: user._id,
       role: user.role
-    }, config.SECRET, {expiresIn: '5 days'})
+    }, config.SECRET, {expiresIn: '1 days'})
 
      //decode วันหมดอายุ
      const expires_in = jwt.decode(token);
