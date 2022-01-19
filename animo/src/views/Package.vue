@@ -314,6 +314,7 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputSL">
               <vs-select
+              state="success"
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
                 v-model="currentPackage.type"
@@ -829,5 +830,8 @@ button.vs-select__option {
 }
 ::v-deep .vs-table__tr:first-of-type .vs-table__td:first-child {
   width: 25%;
+}
+::v-deep .vs-select--state-success .vs-select__input {
+  background: rgba(var(--vs-success), 0.1) !important;
 }
 </style>

@@ -1118,4 +1118,7 @@ button.vs-select__option {
 ::v-deep .DtPg .vs-input {
   min-width: 700px;
 }
+::v-deep .vs-select--state-success .vs-select__input {
+  background: rgba(var(--vs-success), 0.1) !important;
+}
 </style>

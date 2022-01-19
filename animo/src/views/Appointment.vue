@@ -814,4 +814,5 @@ button.vs-select__option {
 ::v-deep .DtPg .vs-input {
   min-width: 700px;
 }
+
 </style>
