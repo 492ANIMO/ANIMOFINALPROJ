@@ -3,8 +3,8 @@
         <ul>
             <li><img src="../assets/ANIMO1.png" alt="Animo" class="Logo1"></li>
             <li><h1 class="LogoText">ANIMO</h1></li>
-            <li><router-link to="/">Introduction</router-link></li>
-            <li><router-link to="/contact">Contact</router-link></li>
+            <li><router-link to="/">เกี่ยวกับเรา</router-link></li>
+            <li><router-link to="/contact">สมาชิกในทีม</router-link></li>
             <li class=login>
                 <vs-button
                     class="Logtx"
@@ -12,7 +12,7 @@
                     color="#d4e9e7"
                     @click="active1=!active1"
                 ><font-awesome-icon class="icon" icon="power-off"/>
-                Log out
+                ออกจากระบบ
               </vs-button></li>
           </ul>
 
