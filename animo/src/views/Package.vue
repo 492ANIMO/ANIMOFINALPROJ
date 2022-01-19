@@ -391,7 +391,7 @@
           <div class="footer-dialog">
             <vs-button
                   color="#ca7676"
-                  @click="deleteCF=!deleteCF"
+                  @click="deleteCF=!deleteCF, deletePackage(currentPackage._id)"
                   class="BT3"
                   style="float: right; width: 80px"
                 >
@@ -603,6 +603,21 @@ export default {
           console.log(error);
       });
       
+    },
+    deletePackage(id){
+      let baseURL = "http://localhost:4000/api/packages/";
+       console.log('id: '+id);
+
+      axios.delete(baseURL+id, id).then((res)=>{
+       
+        console.log(res.data);
+        console.log('ลบแพ็คเกจเรียบร้อย');
+
+        this.getPackage();
+        
+      }) .catch((error) => {
+          console.log(error);
+      });
       
     }
   },
