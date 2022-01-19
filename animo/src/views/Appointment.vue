@@ -180,6 +180,7 @@
                 v-model="appointment.date"
                 label="วันที่นัดหมาย"
                 class="Date"
+                 @change="getBookableTimes()"
               ></vs-input>
             </div>
           </vs-col>
@@ -192,8 +193,16 @@
                 placeholder="เวลานัดหมาย"
                 v-model="appointment.time"
               >
-                <vs-option label="11.00" value="11.00"> 11.00 </vs-option>
-                <vs-option label="12.00" value="12.00"> 12.00 </vs-option>
+                 <vs-option
+                  :key ="i"
+                  v-for="(data, i) in bookableTimes"
+                  :value="data"
+                  :label="data"
+                >
+                  {{ data }}
+                </vs-option>
+                <!-- <vs-option label="11.00" value="11.00"> 11.00 </vs-option> -->
+               
               </vs-select>
             </div>
           </vs-col>
@@ -448,6 +457,7 @@ export default {
       detail: "",
     },
     pets: [],
+    bookableTimes: []
   }),
   created() {
     this.load();
@@ -621,6 +631,27 @@ export default {
         })
         .catch((error) => {
           console.log(error.response.data);
+        });
+    },
+
+    getBookableTimes() {
+      let baseURL = "http://localhost:4000/api/timeslots/";
+
+      axios
+        .post(baseURL,{
+          "date": this.appointment.date
+        })
+        .then((res) => {
+          this.bookableTimes = res.data.bookableTimes;
+          // this.currentAppointment.date = this.format_date(
+          //   res.data.appointment.date
+          // );
+          console.log("this.bookableTime");
+          console.log(this.bookableTimes);
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     },
   },

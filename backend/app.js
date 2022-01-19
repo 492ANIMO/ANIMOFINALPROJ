@@ -30,6 +30,7 @@ const reservationRouter = require('./routes/reservation');
 const appointmentRouter = require('./routes/appointment');
 const historyRouter = require('./routes/history');
 const annoucementRouter = require('./routes/annoucement');
+const timeslotRouter = require('./routes/timeslot');
 
 const app = express();
 
@@ -86,6 +87,7 @@ app.use('/api/appointments', appointmentRouter);
 app.use('/api/reservations', reservationRouter);
 app.use('/api/history', historyRouter);
 app.use('/api/annoucements', annoucementRouter);
+app.use('/api/timeslots', timeslotRouter);
 
 app.use(errorHandler);
 
