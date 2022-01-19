@@ -404,7 +404,7 @@
               <div class="footer-dialog">
                 <vs-button
                   primary
-                  @click="active2 = !active2, handleAddPetForm(),AddNoti('bottom-right',1500,'#6fcab6')"
+                  @click="active2 = !active2, handleAddPetForm(),AddNoti('bottom-right',1500,'#57c496')"
                   class="BT3"
                   style="float: right; width: 80px"
                 >
@@ -614,7 +614,7 @@
             <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
               ยกเลิก
             </vs-button>
-            <vs-button color="#ca7676" class="CF1" @click="(active3 = !active3),(deleteCF=!deleteCF),deletePetById(pet),DeleteNoti('bottom-right',1500,'#ca6f6f')">
+            <vs-button color="#ca7676" class="CF1" @click="(active3 = !active3),(deleteCF=!deleteCF),deletePetById(pet),DeleteNoti('bottom-right',1500,'#c65151')">
               ยืนยัน
             </vs-button>
           </div>

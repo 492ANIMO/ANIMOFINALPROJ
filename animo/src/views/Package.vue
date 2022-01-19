@@ -416,7 +416,7 @@
       <vs-dialog width="550px" v-model="deleteCF">
         <template #header>
           <font class="font">
-            ยืนยัน <b>การลบบัญชี</b>
+            ยืนยัน <b>การลบแพ็คเกจ</b>
           </font>
         </template>
 
@@ -624,6 +624,9 @@ export default {
 };
 </script>
 <style scoped>
+.font {
+  font-size: 20px;
+}
 h2 {
   margin: 0px 0px 5px 0px;
   color: #696969;
