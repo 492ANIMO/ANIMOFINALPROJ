@@ -305,7 +305,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="this.package.name"
+                v-model="currentPackage.name"
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
               ></vs-input>
@@ -314,14 +314,18 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputSL">
               <vs-select
-                state="success"
                 label="ประเภทสัตว์"
-                :placeholder="this.package.type"
-                v-model="this.package.type"
+                placeholder="ประเภทสัตว์"
+                v-model="currentPackage.type"
               >
-                <vs-option :key="i"
+                <vs-option
+                  :key="i"
                   v-for="(type, i) in petType"
-                  :value="type" :label="type"> {{ type }} </vs-option>
+                  :value="type"
+                  :label="type"
+                >
+                  {{ type }}
+                </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -337,13 +341,13 @@
                 </h4>
                 <div class="TextArea2">
                 <div class="TextArea3">
-                  <h5 class="AddPG" :key="i" v-for="(vaccine, i) in this.package.vaccines">
+                  <h5 class="AddPG" :key="i" v-for="(vaccine, i) in currentPackage.vaccines">
                     -{{ vaccine.name }}
                   </h5>
-                  <h5 class="AddPG"  :key="'A'+i" v-for="(treatment, i) in this.package.treatments">
+                  <h5 class="AddPG"  :key="'A'+i" v-for="(treatment, i) in currentPackage.treatments">
                       -{{ treatment.name }}
                   </h5>
-                  <h5 class="AddPG" :key="'A'+i" v-for="(healthCheck, i) in this.package.healthChecks">
+                  <h5 class="AddPG" :key="'B'+i" v-for="(healthCheck, i) in currentPackage.healthChecks">
                       -{{ healthCheck.name }}
                   </h5>
                 </div>
@@ -359,7 +363,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="this.package.price"
+                v-model="currentPackage.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
               ></vs-input>
@@ -373,7 +377,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="this.package.detail"
+                v-model="currentPackage.detail"
                 label="รายละเอียด"
                 placeholder="รายละเอียด"
               ></vs-input>
@@ -386,7 +390,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="(active1 = !active1)"
+              @click="(Detail1 = !Detail1), updatePackage(currentPackage._id)"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -421,11 +425,11 @@ export default {
     petType: ["สุนัข", "แมว", "นก", "อื่นๆ"],
     packages: [],
 
-    package:{
+    currentPackage:{
       name:'',
       type: '',
       detail: '',
-      price: '',
+      price: 0,
       vaccines: [],
       treatments: [],
       healthChecks: [],
@@ -436,13 +440,13 @@ export default {
     healthCheck_options: [],
 
     newPackage: {
-      name: "",
-      type: "",
+      name: '',
+      type: '',
       vaccines: [],
       treatments: [],
       healthChecks: [],
-      detail: "",
-      price: "",
+      detail: '',
+      price: ''
     },
   }),
   created() {
@@ -464,8 +468,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-
-        
     },
 
     showPackage(id) {
@@ -474,8 +476,9 @@ export default {
       axios
         .get(baseURL + id)
         .then((res) => {
-          this.package = res.data.package;
-          console.log(this.package);
+          this.currentPackage = res.data.package;
+          console.log('this.currentPackage');
+          console.log(this.currentPackage);
           this.getPackage();
         })
         .catch((error) => {
@@ -532,13 +535,13 @@ export default {
         .post(baseURL, this.newPackage)
         .then(() => {
           this.newPackage = {
-            name: "",
-            type: "",
+            name: '',
+            type: '',
             vaccines: [],
             treatments: [],
             healthChecks: [],
-            detail: "",
-            price: "",
+            detail: '',
+            price: '',
           };
           this.getPackage();
         })
@@ -546,6 +549,24 @@ export default {
           console.log(error);
         });
     },
+
+    updatePackage(id){
+      let baseURL = "http://localhost:4000/api/packages/";
+       console.log('id: '+id);
+
+      axios.patch(baseURL+id, this.currentPackage).then((res)=>{
+       
+        console.log(res.data);
+        console.log('update เรียบร้อย');
+
+        this.getPackage();
+        
+      }) .catch((error) => {
+          console.log(error);
+      });
+      
+      
+    }
   },
 };
 </script>

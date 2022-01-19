@@ -38,6 +38,7 @@
               <vs-td>{{ data.time }}</vs-td>
               <vs-td>{{ data.pet.name }}</vs-td>
               <vs-td>
+
                 <vs-button color="#6b9bce" @click="active2 = !active2" class="BT">
                   ดูข้อมูล<font-awesome-icon
                     class="iconBTl"
@@ -366,10 +367,36 @@ export default {
     value: "",
     users: [],
     appointments: [],
+    currentAppointment: {
+      pet:{
+        name: '',
+        type: '',
+        age: '',
+        owner: {
+          firstName: '',
+          lastName: '',
+          email: '',
+          contact: '',
+        },
+        date: '',
+        time: '',
+        reservation: {
+          package:[{
+            name: '',
+            vaccines: '',
+            treatments: '',
+            healthChecks: ''
+          }
+          ]
+        }
+      }
+    }
   }),
   created() {
     this.load();
+
   },
+
   methods: {
     load() {
       let baseURL = "http://localhost:4000/api/appointments/";
@@ -378,13 +405,32 @@ export default {
         .get(baseURL)
         .then((res) => {
           this.appointments = res.data.appointment;
-
+          
           console.log(this.appointments);
         })
         .catch((error) => {
           console.log(error);
         });
     },
+ 
+
+    getAppointment(id) {
+
+      let baseURL = "http://localhost:4000/api/appointments/";
+
+      axios
+        .get(baseURL+id)
+        .then((res) => {
+          this.currentAppointment = res.data.appointment;
+          console.log("this: ");
+          console.log(this.currentAppointment);
+          console.log(res.data.message);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+    }
   },
   computed: {
     resultCount() {

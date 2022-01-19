@@ -104,19 +104,25 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, vaccines, treatments, healthChecks, detail, price } = req.body;
-
-  
+    const { name, vaccines, treatments, healthChecks, detail, price, type } = req.body;
+    console.log(req.body);
+    
+    // const package = await Package.findOneAndUpdate({
+    //   _id: id
+    // }, {
+    //   name,
+    //   vaccines,
+    //   treatments,
+    //   healthChecks,
+    //   detail,
+    //   price,
+    //   type
+    // }, {
+    //   returnDocument: 'after'
+    // })
     const package = await Package.findOneAndUpdate({
       _id: id
-    }, {
-      name,
-      vaccines,
-      treatments,
-      healthChecks,
-      detail,
-      price
-    }, {
+    }, req.body, {
       returnDocument: 'after'
     })
     if(!package){ throw new Error('เปลี่ยนแปลงข้อมูลแพ็คเกจไม่สำเร็จ'); }
