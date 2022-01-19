@@ -390,16 +390,52 @@
         <template #footer>
           <div class="footer-dialog">
             <vs-button
+                  color="#ca7676"
+                  @click="deleteCF=!deleteCF"
+                  class="BT3"
+                  style="float: right; width: 80px"
+                >
+                  ลบ<font-awesome-icon
+                    class="iconBTl"
+                    style="font-size: 10px"
+                    icon="trash-alt"
+                  />
+                </vs-button>
+            <vs-button
               primary
               @click="(Detail1 = !Detail1), updatePackage(currentPackage._id)"
-              class="BT1"
+              class="BT2"
               style="float: right; width: 80px"
             >
-              ยืนยัน </vs-button
+              แก้ไข </vs-button
             ><br /><br />
           </div>
         </template>
       </vs-dialog>
+
+      <vs-dialog width="550px" v-model="deleteCF">
+        <template #header>
+          <font class="font">
+            ยืนยัน <b>การลบบัญชี</b>
+          </font>
+        </template>
+
+        <div class="con-content">
+            <br><br><br><br>
+        </div>
+
+        <template #footer>
+          <div class="footer">
+            <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
+              ยกเลิก
+            </vs-button>
+            <vs-button color="#ca7676" class="CF1" @click="(Detail1 = !Detail1),(deleteCF=!deleteCF)">
+              ยืนยัน
+            </vs-button>
+          </div>
+        </template>
+      </vs-dialog>
+
     </div>
   </div>
 </template>
@@ -422,6 +458,7 @@ export default {
     value: [],
     value1: [],
     active: false,
+    deleteCF: false,
     Detail1: false,
     petType: ["สุนัข", "แมว", "นก", "อื่นๆ"],
     packages: [],
@@ -614,6 +651,34 @@ h3 {
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
 }
+.BT2 {
+ background: rgb(215, 132, 97);
+  background: linear-gradient(
+    45deg,
+    rgba(215, 132, 97, 1) 0%,
+    rgba(215, 169, 106, 1) 100%
+  );
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+}
+.BT3 {
+  background: rgb(197, 94, 94);
+  background: linear-gradient(
+    45deg,
+    rgba(197, 94, 94, 1) 0%,
+    rgba(248, 139, 109, 1) 100%
+  );
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+}
 .BTadd {
   background: rgb(142, 157, 211);
   background: linear-gradient(
@@ -644,6 +709,28 @@ h3 {
   margin-top: -34px;
   margin-left: 270px;
   --vs-button-padding: 5px 10px;
+}
+.CF1{
+background: rgb(197,94,94);
+background: linear-gradient(45deg, rgba(197,94,94,1) 0%, rgba(248,139,109,1) 100%);
+display: inline-block;
+color: #ffffff;
+border-radius: 20px;
+font-size: 13px;
+font-weight: 500;
+margin-bottom: 15px;
+--vs-button-padding: 5px 20px;
+}
+.CF2{
+background: rgb(130,140,146);
+background: linear-gradient(45deg, rgba(130,140,146,1) 0%, rgba(106,106,106,1) 100%);
+display: inline-block;
+color: #ffffff;
+border-radius: 20px;
+font-size: 13px;
+font-weight: 500;
+margin-bottom: 15px;
+--vs-button-padding: 5px 20px;
 }
 .InputSL {
   margin-top: -3px;
