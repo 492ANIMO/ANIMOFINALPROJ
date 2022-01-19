@@ -27,6 +27,7 @@
                     >
                       <vs-td>{{ data.title }}</vs-td>
                       <vs-td>{{ format_date(data.createdAt) }}</vs-td>
+                      <!-- <vs-td>{{ data.createdAt }}</vs-td> -->
                       <vs-td>{{ data.author }}</vs-td>
                       <vs-td><div class="BT">ดูข้อมูล<font-awesome-icon class="iconBTl" icon="info-circle" style="font-size: 10px;"/></div></vs-td>
                     </vs-tr>
@@ -55,28 +56,6 @@ export default {
   mixins: [mixins],
   data:() => ({
     page : 1,
-    users: [
-            {
-              "id": 1,
-              "name": "1/1/2022",
-              "phone": "Staff",
-            },
-            {
-              "id": 2,
-              "name": "1/1/2022",
-              "phone": "Staff",
-            },
-            {
-              "id": 3,
-              "name": "1/1/2022",
-              "phone": "Staff",
-            },
-            {
-              "id": 4,
-              "name": "1/1/2022",
-              "phone": "Staff",
-            }
-        ],
     annoucements: [],
     }),
   created(){
