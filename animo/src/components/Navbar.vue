@@ -30,7 +30,7 @@
 
         <template #footer>
           <div class="footer">
-            <vs-button dark class="BT2" @click="active1=!active1">
+            <vs-button  dark class="BT2" @click="active1=!active1">
               ยกเลิก
             </vs-button>
             <vs-button color="#ca7676" class="BT1" @click="active1=!active1, logout()">

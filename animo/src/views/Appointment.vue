@@ -6,6 +6,9 @@
     </div>
     <div class="Content1">
       <div class="Content2">
+        <vs-button color="#6b9bce" @click="active1 = !active1, getClients()" class="BTadd">
+          <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
+        </vs-button>
         <h2>
           <font-awesome-icon class="icon" icon="clipboard-list" />Appointment
         </h2>
@@ -35,7 +38,7 @@
               <vs-td>{{ data.time }}</vs-td>
               <vs-td>{{ data.pet.name }}</vs-td>
               <vs-td>
-                <vs-button color="#6b9bce" @click="active = !active" class="BT">
+                <vs-button color="#6b9bce" @click="active2 = !active2" class="BT">
                   ดูข้อมูล<font-awesome-icon
                     class="iconBTl"
                     style="font-size: 10px"
@@ -55,9 +58,9 @@
         </div>
       </div>
 
-      <vs-dialog width="80%" scroll v-model="active">
+      <vs-dialog width="80%" scroll v-model="active1">
         <template #header>
-          <h2>การตรวจรักษา</h2>
+          <h2>เพิ่มการนัดหมาย</h2>
         </template>
 
         <vs-row>
@@ -92,123 +95,247 @@
         <div class="space"></div>
         <vs-row>
          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputSL">
-              <vs-select
+            <div class="InputPop">
+              <vs-input
+               disabled
+                v-model="value"
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                 disabled
+                    v-model="value"
+                    label="เพศ"
+                    placeholder="เพศ"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+               <vs-col w="2">
+                <div class="InputPop">
+                  <vs-input
+                 disabled
+                    v-model="value"
+                    label="น้ำหนัก"
+                    placeholder="กิโลกรัม"
+                    class="InputLast"
+                  ></vs-input>
+                </div>
+              </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputSL">
+              <vs-select
+                filter
+                label="ประเภทการนัดหมาย"
+                placeholder="ประเภทการนัดหมาย"
                 v-model="value"
                 class="type"
               >
-                <vs-option label="สุนัข" value="สุนัข"> สุนัข </vs-option>
-                <vs-option label="แมว" value="แมว"> แมว </vs-option>
+                <vs-option label="นัดจากการจอง" value="นัดจากการจอง"> นัดจากการจอง </vs-option>
+                <vs-option label="นัดโดยแพทย์" value="นัดโดยแพทย์"> นัดโดยแพทย์ </vs-option>
               </vs-select>
             </div>
           </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                v-model="value"
-                label="อีเมลล์"
-                placeholder="อีเมลล์"
-              ></vs-input>
-            </div>
-          </vs-col>
+         <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                 type="date"
+                    v-model="value"
+                    label="วันที่นัดหมาย"
+                    class="Date"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+               <vs-col w="2">
+                <div class="InputPop">
+                  <vs-input
+               type="time"
+                    v-model="value"
+                    label="เวลานัดหมาย"
+                    class="InputLast"
+                  ></vs-input>
+                </div>
+              </vs-col>
         </vs-row>
         <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                v-model="value"
-                label="เบอร์โทร"
-                placeholder="เบอร์โทร"
-              ></vs-input>
-            </div>
-          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
+                <div class="InputPop">
+                  <vs-input
+                    v-model="value"
+                    label="รายละเอียด"
+                    placeholder="รายละเอียด"
+                  ></vs-input>
+                </div>
+              </vs-col>
         </vs-row>
         <div class="space"></div>
-
-        <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                v-model="value"
-                label="ที่อยู่"
-                placeholder="บ้านเลขที่, หมู่ที่, ซอย, ถนน"
-              ></vs-input>
-            </div>
-          </vs-col>
-          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
-              <vs-input
-                v-model="value"
-                label="จังหวัด"
-                placeholder="จังหวัด"
-              ></vs-input>
-            </div>
-          </vs-col>
-        </vs-row>
-        <div class="space"></div>
-
-        <vs-row>
-          <vs-col
-            vs-type="flex"
-            class="InputSM"
-            vs-justify="center"
-            vs-align="center"
-            w="2"
-          >
-            <div class="InputPop">
-              <vs-input
-                v-model="value"
-                label="ตำบล"
-                placeholder="ตำบล"
-              ></vs-input>
-            </div>
-          </vs-col>
-          <div class="space"></div>
-          <vs-col
-            vs-type="flex"
-            class="InputSM"
-            vs-justify="center"
-            vs-align="center"
-            w="2"
-          >
-            <div class="InputPop">
-              <vs-input
-                v-model="value"
-                label="อำเภอ"
-                placeholder="อำเภอ"
-              ></vs-input>
-            </div>
-          </vs-col>
-          <div class="space"></div>
-          <vs-col
-            vs-type="flex"
-            class="InputSM"
-            vs-justify="center"
-            vs-align="center"
-            w="2"
-          >
-            <div class="InputPop">
-              <vs-input
-                v-model="value"
-                label="รหัสไปรษณีย์"
-                placeholder="รหัสไปรษณีย์"
-              ></vs-input>
-            </div>
-          </vs-col>
-        </vs-row>
 
         <template #footer>
           <div class="footer-dialog">
             <vs-button
+            class="BT1"
               color="#71cf9d"
-              @click="active = !active"
+              @click="active1 = !active1"
               style="float: right; width: 80px"
             >
-              ยืนยัน </vs-button
+              บันทึก </vs-button
+            ><br /><br />
+          </div>
+        </template>
+      </vs-dialog>
+
+      <vs-dialog width="80%" scroll v-model="active2">
+        <template #header>
+          <h2>การตรวจรักษา</h2>
+        </template>
+
+        <vs-row>
+           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputSL">
+              <vs-select
+                filter
+                state="success"
+                label="ชื่อเจ้าของสัตว์เลี้ยง"
+                placeholder="ชื่อเจ้าของสัตว์เลี้ยง"
+                v-model="value"
+                class="type"
+              >
+                <vs-option label="สมศรี" value="สมศรี"> สมศรี มณีแสง </vs-option>
+                <vs-option label="เมธี" value="เมธี"> เมธี หีบหงส์ </vs-option>
+              </vs-select>
+            </div>
+          </vs-col>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputSL">
+              <vs-select
+              state="success"
+                label="ชื่อสัตว์เลี้ยง"
+                placeholder="ชื่อสัตว์เลี้ยง"
+                v-model="value"
+                class="type"
+              >
+                <vs-option label="Bento" value="Bento"> Bento </vs-option>
+                <vs-option label="Oreo" value="Oreo"> Oreo </vs-option>
+              </vs-select>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
+        <vs-row>
+         <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputPop">
+              <vs-input
+               disabled
+               state="success"
+                v-model="value"
+                label="ประเภทสัตว์"
+                placeholder="ประเภทสัตว์"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                 disabled
+                 state="success"
+                    v-model="value"
+                    label="เพศ"
+                    placeholder="เพศ"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+               <vs-col w="2">
+                <div class="InputPop">
+                  <vs-input
+                 disabled
+                 state="success"
+                    v-model="value"
+                    label="น้ำหนัก"
+                    placeholder="กิโลกรัม"
+                    class="InputLast"
+                  ></vs-input>
+                </div>
+              </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
+            <div class="InputSL">
+              <vs-select
+                filter
+                state="success"
+                label="ประเภทการนัดหมาย"
+                placeholder="ประเภทการนัดหมาย"
+                v-model="value"
+                class="type"
+              >
+                <vs-option label="นัดจากการจอง" value="นัดจากการจอง"> นัดจากการจอง </vs-option>
+                <vs-option label="นัดโดยแพทย์" value="นัดโดยแพทย์"> นัดโดยแพทย์ </vs-option>
+              </vs-select>
+            </div>
+          </vs-col>
+         <vs-col class="InputSM" w="2">
+                <div class="InputPop">
+                  <vs-input
+                  state="success"
+                 type="date"
+                    v-model="value"
+                    label="วันที่นัดหมาย"
+                    class="Date"
+                  ></vs-input>
+                </div>
+              </vs-col>
+              <div class="space"></div>
+               <vs-col w="2">
+                <div class="InputPop">
+                  <vs-input
+                  state="success"
+               type="time"
+                    v-model="value"
+                    label="เวลานัดหมาย"
+                    class="InputLast"
+                  ></vs-input>
+                </div>
+              </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <vs-row>
+          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
+                <div class="InputPop">
+                  <vs-input
+                  state="success"
+                    v-model="value"
+                    label="รายละเอียด"
+                    placeholder="รายละเอียด"
+                  ></vs-input>
+                </div>
+              </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button
+            class="BT1"
+              color="#71cf9d"
+              @click="active2 = !active2"
+              style="float: right; width: 80px"
+            >
+              บันทึก </vs-button
             ><br /><br />
           </div>
         </template>
@@ -234,6 +361,8 @@ export default {
     page: 1,
     max: 5,
     active: false,
+    active1: false,
+    active2: false,
     value: "",
     users: [],
     appointments: [],
@@ -301,27 +430,42 @@ h3 {
   margin-top: 5px;
   --vs-button-padding: 5px 10px;
 }
-.BTadd {
+.BT1 {
+  background: rgb(157, 209, 103);
+  background: linear-gradient(
+    45deg,
+    rgba(157, 209, 103, 1) 0%,
+    rgba(99, 209, 157, 1) 100%
+  );
   display: inline-block;
-  padding: 4px 13px;
   color: #ffffff;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 13px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+}
+.BTadd {
+  background: rgb(142, 157, 211);
+  background: linear-gradient(
+    45deg,
+    rgba(142, 157, 211, 1) 0%,
+    rgba(86, 164, 215, 1) 100%
+  );
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 13px;
   float: right;
   margin-top: 5px;
-}
-.iconBTr {
-  padding-right: 5px;
-  margin-left: -3px;
-}
-.iconBTl {
-  padding-left: 5px;
-  margin-right: -3px;
+  --vs-button-padding: 5px 10px;
 }
 .InputSL {
   margin-top: -3px;
   margin-left: 10px;
   display: block;
+}
+::v-deep .InputLast .vs-input-content  {
+  max-width: 170px;
 }
 ::v-deep .vs-input__label--label {
   font-size: 14px;
@@ -344,7 +488,9 @@ h3 {
   width: 350px;
   height: 35px;
   font-family: kanit;
-  color: #696969;
+}
+::v-deep .Date .vs-input {
+  font-size: 11.5px;
 }
 ::v-deep .vs-input-content {
   width: 350px;
@@ -425,5 +571,11 @@ button.vs-select__option {
 .vs-select__option:hover {
   margin-left: 5px;
   padding: 0px;
+}
+::v-deep .small .vs-select {
+  width: 145px;
+}
+::v-deep .DtPg .vs-input {
+  min-width: 700px;
 }
 </style>
