@@ -290,6 +290,8 @@
                   >
                     <vs-option label="สุนัข" value="สุนัข"> สุนัข </vs-option>
                     <vs-option label="แมว" value="แมว"> แมว </vs-option>
+                    <vs-option label="นก" value="นก"> นก </vs-option>
+                    <vs-option label="อื่นๆ" value="อื่นๆ"> อื่นๆ </vs-option>
                   </vs-select>
                 </div>
               </vs-col>
@@ -301,9 +303,10 @@
                 <div class="InputPop">
                   <vs-input
                     v-model="newPet.weight"
-                    label="น้ำหนัก"
+                    label="น้ำหนัก(กิโลกรัม)"
                     placeholder="กิโลกรัม"
                     type="number"
+                    min=1 max=99
                   ></vs-input>
                 </div>
               </vs-col>
@@ -350,9 +353,10 @@
                 <div class="InputPop">
                   <vs-input
                     v-model="newPet.age.year"
-                    label="อายุ"
+                    label="อายุ(ปี)"
                     placeholder="ปี"
                     type="number"
+                    min=1 max=99
                   ></vs-input>
                 </div>
               </vs-col>
@@ -361,9 +365,10 @@
                 <div class="InputPop">
                   <vs-input
                     v-model="newPet.age.month"
-                    label=""
+                    label="(เดือน)"
                     placeholder="เดือน"
                     type="number"
+                    min=1 max=12
                   ></vs-input>
                 </div>
               </vs-col>
