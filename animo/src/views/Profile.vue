@@ -710,7 +710,7 @@ export default {
   },
   methods: {
     AddNoti(position = null ,duration ,color) {
-          const noti = this.$vs.notification({
+          this.$vs.notification({
             color,
             duration,
             position,
@@ -719,7 +719,7 @@ export default {
           })
         },
     EditNoti(position = null ,duration ,color) {
-          const noti = this.$vs.notification({
+         this.$vs.notification({
             color,
             duration,
             position,
@@ -728,7 +728,7 @@ export default {
           })
         },
     DeleteNoti(position = null ,duration ,color) {
-          const noti = this.$vs.notification({
+         this.$vs.notification({
             color,
             duration,
             position,
