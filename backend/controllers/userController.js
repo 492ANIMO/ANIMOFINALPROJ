@@ -69,9 +69,9 @@ exports.getCurrentProfile = async (req, res, next) => {
         id: _id,
         email,
         role,
-        firstName: user.profile.firstName,
-        lastName: user.profile.lastName,
-        position: user.profile.position,
+        // firstName: user.profile.firstName,
+        // lastName: user.profile.lastName,
+        // position: user.profile.position,
       }
     });
 
