@@ -241,38 +241,39 @@ exports.showByOwner = async (req, res, next) => {
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const {vaccines, treatments, healthChecks} = req.body;
+    const { detail } = req.body;
 
     const appointment = await Appointment.updateOne({_id:id},{
-      $addToSet: { 
-      'medical.vaccine': vaccines,
-      'medical.healthCheck': healthChecks,
-      'medical.treatment': treatments,
+    //   $addToSet: { 
+    //   'medical.vaccine': vaccines,
+    //   'medical.healthCheck': healthChecks,
+    //   'medical.treatment': treatments,
 
-    },
+    // },
+      detail,
       status: 'รักษาเสร็จสิ้น'
     });
 
-    const appointmentObj = await Appointment.findById(id)
-    .populate('pet', 'name')
-    .populate('reservation', 'package')
-    console.log(appointmentObj)
+    // const appointmentObj = await Appointment.findById(id)
+    // .populate('pet', 'name')
+    // .populate('reservation', 'package')
+    // console.log(appointmentObj)
 
-    const pet = appointmentObj.pet._id;
-    console.log(pet)
+    // const pet = appointmentObj.pet._id;
+    // console.log(pet)
 
-    const packageName = await Package.findById(appointmentObj.reservation.package[0]).select('name')
+    // const packageName = await Package.findById(appointmentObj.reservation.package[0]).select('name')
 
-    // add to history
-    const history = new History({
-      package: appointmentObj.reservation.package[0],
-      appointment: id,
-      pet
+    // // add to history
+    // const history = new History({
+    //   package: appointmentObj.reservation.package[0],
+    //   appointment: id,
+    //   pet
 
-    })
-    await history.save();
+    // })
+    // await history.save();
 
-    if(appointment.modifiedCount===0){ throw new Error('เพิ่มข้อมูลการรักษาไม่สำเร็จ'); }
+    // if(appointment.modifiedCount===0){ throw new Error('เพิ่มข้อมูลการรักษาไม่สำเร็จ'); }
 
     res.status(200).json({
       message: 'สำเร็จ',

@@ -39,7 +39,7 @@
               <vs-td>{{ data.pet.name }}</vs-td>
               <vs-td>
 
-                <vs-button color="#6b9bce" @click="active2 = !active2" class="BT">
+                <vs-button color="#6b9bce" @click="active2 = !active2, getAppointment(data._id)" class="BT">
                   ดูข้อมูล<font-awesome-icon
                     class="iconBTl"
                     style="font-size: 10px"
@@ -245,12 +245,11 @@
                 filter
                 state="success"
                 label="ชื่อเจ้าของสัตว์เลี้ยง"
-                placeholder="ชื่อเจ้าของสัตว์เลี้ยง"
+                :placeholder="currentAppointment.pet.owner.firstName"
                 v-model="value"
                 class="type"
+                disabled
               >
-                <vs-option label="สมศรี" value="สมศรี"> สมศรี มณีแสง </vs-option>
-                <vs-option label="เมธี" value="เมธี"> เมธี หีบหงส์ </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -259,9 +258,10 @@
               <vs-select
               state="success"
                 label="ชื่อสัตว์เลี้ยง"
-                placeholder="ชื่อสัตว์เลี้ยง"
+                :placeholder="currentAppointment.pet.name"
                 v-model="value"
                 class="type"
+                disabled
               >
                 <vs-option label="Bento" value="Bento"> Bento </vs-option>
                 <vs-option label="Oreo" value="Oreo"> Oreo </vs-option>
@@ -276,7 +276,7 @@
               <vs-input
                disabled
                state="success"
-                v-model="value"
+                v-model="currentAppointment.pet.type"
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
               ></vs-input>
@@ -287,7 +287,7 @@
                   <vs-input
                  disabled
                  state="success"
-                    v-model="value"
+                    v-model="currentAppointment.pet.gender"
                     label="เพศ"
                     placeholder="เพศ"
                   ></vs-input>
@@ -299,7 +299,7 @@
                   <vs-input
                  disabled
                  state="success"
-                    v-model="value"
+                    v-model="currentAppointment.pet.weight"
                     label="น้ำหนัก"
                     placeholder="กิโลกรัม"
                     class="InputLast"
@@ -316,9 +316,10 @@
                 filter
                 state="success"
                 label="ประเภทการนัดหมาย"
-                placeholder="ประเภทการนัดหมาย"
+                :placeholder="currentAppointment.by"
                 v-model="value"
                 class="type"
+                disabled
               >
                 <vs-option label="นัดจากการจอง" value="นัดจากการจอง"> นัดจากการจอง </vs-option>
                 <vs-option label="นัดโดยแพทย์" value="นัดโดยแพทย์"> นัดโดยแพทย์ </vs-option>
@@ -329,24 +330,31 @@
                 <div class="InputPop">
                   <vs-input
                   state="success"
-                 type="date"
-                    v-model="value"
+                 type="text"
+                    v-model="currentAppointment.date"
                     label="วันที่นัดหมาย"
                     class="Date"
+                    disabled
                   ></vs-input>
                 </div>
               </vs-col>
               <div class="space"></div>
-               <vs-col w="2">
+              <vs-col class="InputSM" w="2">
                 <div class="InputPop">
-                  <vs-input
-                  state="success"
-               type="time"
-                    v-model="value"
-                    label="เวลานัดหมาย"
-                    class="InputLast"
-                  ></vs-input>
+
+                  <vs-select
+                  disabled
+                  filter
+                  label="เวลานัดหมาย"
+                  placeholder="เวลานัดหมาย"
+                  v-model="currentAppointment.time"
+                  >
+                  <!-- <vs-option label="11.00" value="11.00"> 11.00 </vs-option>
+                  <vs-option label="12.00" value="12.00"> 12.00 </vs-option> -->
+                </vs-select> 
+                  
                 </div>
+        
               </vs-col>
         </vs-row>
         <div class="space"></div>
@@ -356,7 +364,7 @@
                 <div class="InputPop">
                   <vs-input
                   state="success"
-                    v-model="value"
+                    v-model="currentAppointment.detail"
                     label="รายละเอียด"
                     placeholder="รายละเอียด"
                   ></vs-input>
@@ -370,7 +378,7 @@
             <vs-button
             class="BT1"
               color="#71cf9d"
-              @click="active2 = !active2"
+              @click="active2 = !active2, confirmAppointment(currentAppointment._id)"
               style="float: right; width: 80px"
             >
               บันทึก </vs-button
@@ -415,7 +423,9 @@ export default {
           email: '',
           contact: '',
         },
-        date: '',
+        weight: '',
+      },
+       date: '',
         time: '',
         reservation: {
           package:[{
@@ -425,8 +435,8 @@ export default {
             healthChecks: ''
           }
           ]
-        }
-      }
+        },
+        by: ''
     },
     clients: [],
     client:{},
@@ -482,6 +492,7 @@ export default {
         .get(baseURL+id)
         .then((res) => {
           this.currentAppointment = res.data.appointment;
+          this.currentAppointment.date = this.format_date(res.data.appointment.date);
           console.log("this: ");
           console.log(this.currentAppointment);
           console.log(res.data.message);
@@ -576,6 +587,50 @@ export default {
               date: '',
               time: '',
               detail: ''
+            };
+
+            console.log(res.data.message);
+            
+            this.load();
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+            
+          });
+    },
+    confirmAppointment(id){
+      let baseURL = "http://localhost:4000/api/appointments/confirm/"+id;
+        console.log(this.appointment);
+        axios
+          .patch(baseURL,{
+            detail: this.currentAppointment.detail})
+          .then((res) => {
+            
+            this.currentAppointment = {
+              pet:{
+              name: '',
+              type: '',
+              age: '',
+              owner: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                contact: '',
+              },
+              weight: '',
+            },
+            date: '',
+              time: '',
+              reservation: {
+                package:[{
+                  name: '',
+                  vaccines: '',
+                  treatments: '',
+                  healthChecks: ''
+                }
+                ]
+              },
+              by: ''
             };
 
             console.log(res.data.message);
