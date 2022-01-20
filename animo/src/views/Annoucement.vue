@@ -472,6 +472,7 @@ button.vs-select__option {
 }
 .TArea {
   margin-left: 10px;
+  width: 680px;
   background: #f4f7f8;
   padding: 12px;
   border-radius: 10px;

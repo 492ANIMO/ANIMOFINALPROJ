@@ -33,6 +33,9 @@ export default {
 
 </script>
 <style scoped>
+.font {
+  font-size: 20px;
+}
 .intro {
   width: 100%;
   height: auto;
@@ -55,5 +58,13 @@ export default {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   flex: 0 0 100%;
+}
+::v-deep .vs-dialog__content {
+  padding: 25px 30px;
+}
+::v-deep .vs-dialog__header {
+  float: left;
+  color: #696969;
+  padding: 20px 0px 0px 20px;
 }
 </style>
