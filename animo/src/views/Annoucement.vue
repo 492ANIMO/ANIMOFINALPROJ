@@ -43,7 +43,7 @@
               <vs-td
                 ><vs-button
                   color="#6b9bce"
-                  @click="active1 = !active1"
+                  @click="active1 = !active1, showAnnoucementDetail(data._id)"
                   class="BT"
                 >
                   ดูข้อมูล
@@ -131,7 +131,7 @@
             <div class="InputPop">
               <vs-input
               state="success"
-                v-model="value"
+                v-model="showAnnoucementForm.title"
                 label="ชื่อหัวข้อ"
                 placeholder="ชื่อหัวข้อ"
               ></vs-input>
@@ -142,12 +142,12 @@
               <vs-select
               state="success"
                 label="ประเภทบทความ"
-                placeholder="ประเภทบทความ"
-                v-model="value"
+                placeholder="-"
+                v-model="showAnnoucementForm.type"
                 class="type"
               >
-                <vs-option label="Bento" value="Bento"> Bento </vs-option>
-                <vs-option label="Oreo" value="Oreo"> Oreo </vs-option>
+                <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
+                <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -157,7 +157,7 @@
           <vs-col w="6">
             <div class="InputPop">
               <h4 class="HeadInput">เนื้อความ</h4>
-              <textarea  class="TArea" placeholder="เนื้อความ..." cols="90" rows="5">
+              <textarea  class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="showAnnoucementForm.body">
 
               </textarea>
             </div>
@@ -202,12 +202,27 @@ export default {
     active1: false,
     value: '',
     search: "",
+    type: ['ข่าวสาร', 'ประกาศ'],
     annoucements: [],
+    showAnnoucementForm: {
+      title: '',
+      body: '',
+      type: '',
+    }
+
   }),
   created() {
     this.load();
   },
   methods: {
+    clearForm(){
+       // clear data
+      this.showAnnoucementForm = {
+        title: '',
+        body: '',
+        type: '',
+      }
+    },
     AddNoti(position = null ,duration ,color) {
           this.$vs.notification({
             color,
@@ -248,6 +263,22 @@ export default {
           console.log(error);
         });
     },
+
+    showAnnoucementDetail(id) {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+
+      axios
+        .get(baseURL+id)
+        .then((res) => {
+          this.showAnnoucementForm = res.data.annoucement;
+          console.log(res.data);
+          this.load();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    
+    }
   },
 };
 </script>

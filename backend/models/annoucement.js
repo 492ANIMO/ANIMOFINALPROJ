@@ -8,6 +8,7 @@ const schema = new Schema({
   body: { type: String, trim: true, require: true},
   author: { type: String, require: true, trim: true},
   img: { type: String, require: false, trim: true},
+  type: { type: String, require: false, trim: true, default: 'ข่าวสาร'},
   anncoumentId: { type: Number },
 
 },{

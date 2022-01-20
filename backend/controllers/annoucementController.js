@@ -40,12 +40,13 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const {title, body, author, img} = req.body;
+    const {title, body, author, img, type} = req.body;
     let annoucement = new Annoucement({
       title,
       body,
       author,
-      img
+      img,
+      type,
     })
     if(req.file){
       annoucement.img = req.file.path
@@ -74,7 +75,8 @@ exports.update = async (req, res, next) => {
       title,
       body, 
       author, 
-      img
+      img,
+      type,
     })
 
     res.status(200).json({
