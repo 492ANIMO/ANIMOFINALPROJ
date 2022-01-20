@@ -601,7 +601,7 @@
           <vs-dialog width="550px" v-model="deleteCF">
         <template #header>
           <font class="font">
-            ยืนยัน <b>การลบบัญชี</b>
+            ยืนยัน <b>การลบข้อมูลสัตว์เลี้ยง</b>
           </font>
         </template>
 

@@ -97,6 +97,13 @@ h2 {
     position: absolute;
     width:100%;
     height:100%;
-
+}
+::v-deep .vs-dialog__content {
+  padding: 25px 30px;
+}
+::v-deep .vs-dialog__header {
+  float: left;
+  color: #696969;
+  padding: 20px 0px 0px 20px;
 }
 </style>
