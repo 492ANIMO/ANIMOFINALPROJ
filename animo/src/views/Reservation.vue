@@ -60,7 +60,7 @@
             <vs-button dark class="BT2" @click="active=!active">
               ยกเลิก
             </vs-button>
-            <vs-button color="#71cf9d" class="BT1" @click="active=!active, confirmReservation()">
+            <vs-button color="#71cf9d" class="BT1" @click="active=!active, confirmReservation(),AddNoti('bottom-right',1500,'#57c496')">
               ยืนยัน
             </vs-button>
           </div>
@@ -98,6 +98,33 @@ export default {
     this.load();
   },
   methods: {
+    AddNoti(position = null ,duration ,color) {
+          this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'ยืนยันข้อมูลสำเร็จ',
+            text: `ยืนยันรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    EditNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'แก้ไขข้อมูลสำเร็จ',
+            text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    DeleteNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'ลบข้อมูลสำเร็จ',
+            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
     load() {
       let baseURL = 'http://localhost:4000/api/reservations/';
 

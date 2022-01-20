@@ -165,7 +165,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active = !active, createClient()"
+              @click="active = !active, createClient(),AddNoti('bottom-right',1500,'#57c496')"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -221,6 +221,15 @@ export default {
     this.getClients();
   },
   methods: {
+    AddNoti(position = null ,duration ,color) {
+          this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'เพิ่มข้อมูลสำเร็จ',
+            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
     getClients() {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.get(baseURL).then((res) => {

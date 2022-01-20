@@ -227,7 +227,7 @@
             <vs-button
               class="BT1"
               color="#71cf9d"
-              @click="(active1 = !active1), createAppointment()"
+              @click="(active1 = !active1), createAppointment(),AddNoti('bottom-right',1500,'#57c496')"
               style="float: right; width: 80px"
             >
               บันทึก </vs-button
@@ -371,7 +371,7 @@
               class="BT1"
               color="#71cf9d"
               @click="
-                (active2 = !active2), confirmAppointment(currentAppointment._id)
+                (active2 = !active2), confirmAppointment(currentAppointment._id),EditNoti('bottom-right',1500,'#8fc66a')
               "
               style="float: right; width: 80px"
             >
@@ -474,6 +474,33 @@ export default {
   },
 
   methods: {
+    AddNoti(position = null ,duration ,color) {
+          this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'เพิ่มข้อมูลสำเร็จ',
+            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    EditNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'บันทึกข้อมูลสำเร็จ',
+            text: `บันทึกรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    DeleteNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'ลบข้อมูลสำเร็จ',
+            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
     load() {
       let baseURL = "http://localhost:4000/api/appointments/";
 

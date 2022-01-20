@@ -285,7 +285,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="(active = !active), createPackage()"
+              @click="(active = !active), createPackage(),AddNoti('bottom-right',1500,'#57c496')"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -402,8 +402,8 @@
                   />
                 </vs-button>
             <vs-button
-              primary
-              @click="(Detail1 = !Detail1), updatePackage(currentPackage._id)"
+              color="#d78461"
+              @click="(Detail1 = !Detail1), updatePackage(currentPackage._id),EditNoti('bottom-right',1500,'#da9952')"
               class="BT2"
               style="float: right; width: 80px"
             >
@@ -429,7 +429,7 @@
             <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
               ยกเลิก
             </vs-button>
-            <vs-button color="#ca7676" class="CF1" @click="(Detail1 = !Detail1),(deleteCF=!deleteCF), deletePackage(currentPackage._id)">
+            <vs-button color="#ca7676" class="CF1" @click="(Detail1 = !Detail1),(deleteCF=!deleteCF), deletePackage(currentPackage._id),DeleteNoti('bottom-right',1500,'#c65151')">
               ยืนยัน
             </vs-button>
           </div>
@@ -493,6 +493,33 @@ export default {
     this.getAllHealthChecks();
   },
   methods: {
+    AddNoti(position = null ,duration ,color) {
+          this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'เพิ่มข้อมูลสำเร็จ',
+            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    EditNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'แก้ไขข้อมูลสำเร็จ',
+            text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    DeleteNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'ลบข้อมูลสำเร็จ',
+            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
     getPackage() {
       let baseURL = "http://localhost:4000/api/packages/";
 

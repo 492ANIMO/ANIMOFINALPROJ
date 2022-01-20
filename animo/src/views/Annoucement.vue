@@ -111,7 +111,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active = !active"
+              @click="active = !active,AddNoti('bottom-right',1500,'#57c496')"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -168,11 +168,11 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active = !active"
+              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952')"
               class="BT1"
               style="float: right; width: 80px"
             >
-              ยืนยัน </vs-button
+              แก้ไข </vs-button
             ><br /><br />
           </div>
         </template>
@@ -208,6 +208,33 @@ export default {
     this.load();
   },
   methods: {
+    AddNoti(position = null ,duration ,color) {
+          this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'เพิ่มข้อมูลสำเร็จ',
+            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    EditNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'แก้ไขข้อมูลสำเร็จ',
+            text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
+    DeleteNoti(position = null ,duration ,color) {
+         this.$vs.notification({
+            color,
+            duration,
+            position,
+            title: 'ลบข้อมูลสำเร็จ',
+            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
+          })
+        },
     load() {
       let baseURL = "http://localhost:4000/api/annoucements/";
 
