@@ -167,9 +167,9 @@
         <template #footer>
           <div class="footer-dialog">
             <vs-button
-              primary
+              color="#d78461"
               @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(this.showAnnoucementForm._id)"
-              class="BT1"
+              class="BT2"
               style="float: right; width: 80px"
             >
               แก้ไข </vs-button
@@ -331,6 +331,20 @@ h3 {
     45deg,
     rgba(157, 209, 103, 1) 0%,
     rgba(99, 209, 157, 1) 100%
+  );
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+}
+.BT2 {
+  background: rgb(215, 132, 97);
+  background: linear-gradient(
+    45deg,
+    rgba(215, 132, 97, 1) 0%,
+    rgba(215, 169, 106, 1) 100%
   );
   display: inline-block;
   color: #ffffff;
