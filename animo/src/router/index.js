@@ -28,7 +28,7 @@ const routes = [
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {
@@ -36,7 +36,7 @@ const routes = [
     name: 'Clients',
     component: () => import('../views/Clients.vue'),
     meta: {
-      requiresAuth: true
+      requiresAuth: false
     }
   },
   {

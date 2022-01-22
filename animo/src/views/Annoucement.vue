@@ -168,7 +168,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952')"
+              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(this.showAnnoucementForm._id)"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -205,6 +205,7 @@ export default {
     type: ['ข่าวสาร', 'ประกาศ'],
     annoucements: [],
     showAnnoucementForm: {
+      id: '',
       title: '',
       body: '',
       type: '',
@@ -266,7 +267,8 @@ export default {
 
     showAnnoucementDetail(id) {
       let baseURL = "http://localhost:4000/api/annoucements/";
-
+      this.showAnnoucementForm._id = id;
+      console.log(this.showAnnoucementForm._id);
       axios
         .get(baseURL+id)
         .then((res) => {
@@ -278,6 +280,10 @@ export default {
           console.log(error);
         });
     
+    },
+
+    updateAnnoucement(id) {
+      console.log('id : '+ id);
     }
   },
 };
