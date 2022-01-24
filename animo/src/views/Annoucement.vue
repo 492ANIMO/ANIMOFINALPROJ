@@ -294,6 +294,16 @@ export default {
       });
 
     },
+    deleteAnnoucement(id) {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      axios.post(baseURL+id).then((res) => {
+        console.log(res.data.message);
+        this.load();
+      }).catch((error) => {
+          console.log(error);
+      });
+
+    },
 
     AddNoti(position = null ,duration ,color) {
           this.$vs.notification({
