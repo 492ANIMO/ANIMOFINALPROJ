@@ -168,7 +168,7 @@
           <div class="footer-dialog">
             <vs-button
               color="#d78461"
-              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(this.showAnnoucementForm._id)"
+              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(showAnnoucementForm._id)"
               class="BT2"
               style="float: right; width: 80px"
             >
@@ -219,11 +219,55 @@ export default {
     clearForm(){
        // clear data
       this.showAnnoucementForm = {
+        id: '',
         title: '',
         body: '',
         type: '',
+        img: ''
       }
     },
+
+    load() {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+
+      axios
+        .get(baseURL)
+        .then((res) => {
+          this.annoucements = res.data.annoucement;
+          // console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    showAnnoucementDetail(id) {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      this.showAnnoucementForm._id = id;
+      console.log(this.showAnnoucementForm._id);
+      axios
+        .get(baseURL+id)
+        .then((res) => {
+          this.showAnnoucementForm = res.data.annoucement;
+          console.log(res.data);
+          // this.load();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    
+    },
+
+    updateAnnoucement(id) {
+      console.log('id : '+ id);
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      axios.patch(baseURL+id, this.showAnnoucementForm).then((res) => {
+        console.log(res.data);
+         this.load();
+      })
+
+    },
+
     AddNoti(position = null ,duration ,color) {
           this.$vs.notification({
             color,
@@ -251,40 +295,7 @@ export default {
             text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
           })
         },
-    load() {
-      let baseURL = "http://localhost:4000/api/annoucements/";
-
-      axios
-        .get(baseURL)
-        .then((res) => {
-          this.annoucements = res.data.annoucement;
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    showAnnoucementDetail(id) {
-      let baseURL = "http://localhost:4000/api/annoucements/";
-      this.showAnnoucementForm._id = id;
-      console.log(this.showAnnoucementForm._id);
-      axios
-        .get(baseURL+id)
-        .then((res) => {
-          this.showAnnoucementForm = res.data.annoucement;
-          console.log(res.data);
-          this.load();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     
-    },
-
-    updateAnnoucement(id) {
-      console.log('id : '+ id);
-    }
   },
 };
 </script>

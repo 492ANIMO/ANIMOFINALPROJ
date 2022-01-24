@@ -69,19 +69,36 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const {title, body, author, img} = req.body;
-    
-    const annoucement = await Annoucement.updateOne({_id:id },{
-      title,
-      body, 
-      author, 
-      img,
-      type,
-    })
+    const {title, body, author, img, type} = req.body;
+
+    // const annoucement = await Annoucement.findByIdAndUpdate({_id:id },{
+    //   title,
+    //   body, 
+    //   author, 
+    //   img,
+    //   type,
+    // },
+    // { 
+    //   new: true 
+    // })
+
+    const annoucement = await Annoucement.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      req.body,
+      {
+        new: true,
+      },
+    );
+    if(!annoucement){
+      const error = new Error('แก้ไขข้อมูลข่าวสารไม่สำเร็จ')
+      throw error;
+    }
 
     res.status(200).json({
       message: 'แก้ไขข้อมูลข่าวสารสำเร็จ',
-      annoucement
+      annoucement, body: req.body
     });
 
   } catch (error) {
