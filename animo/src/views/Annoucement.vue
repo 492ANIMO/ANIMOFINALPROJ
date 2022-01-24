@@ -75,7 +75,7 @@
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="value"
+                v-model="addAnnoucementForm.title"
                 label="ชื่อหัวข้อ"
                 placeholder="ชื่อหัวข้อ"
               ></vs-input>
@@ -86,11 +86,12 @@
               <vs-select
                 label="ประเภทบทความ"
                 placeholder="ประเภทบทความ"
-                v-model="value"
+                v-model="addAnnoucementForm.type"
                 class="type"
               >
-                <vs-option label="Bento" value="Bento"> Bento </vs-option>
-                <vs-option label="Oreo" value="Oreo"> Oreo </vs-option>
+                <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
+                <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
+                <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -100,7 +101,7 @@
           <vs-col w="6">
             <div class="InputPop">
               <h4 class="HeadInput">เนื้อความ</h4>
-              <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5">
+              <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="addAnnoucementForm.body">
 
               </textarea>
             </div>
@@ -111,7 +112,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active = !active,AddNoti('bottom-right',1500,'#57c496')"
+              @click="active = !active,AddNoti('bottom-right',1500,'#57c496'), createAnnoucement()"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -148,6 +149,7 @@
               >
                 <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
                 <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
+                <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -202,10 +204,15 @@ export default {
     active1: false,
     value: '',
     search: "",
-    type: ['ข่าวสาร', 'ประกาศ'],
+    type: ['ข่าวสาร', 'ประกาศ', 'บทความ'],
     annoucements: [],
     showAnnoucementForm: {
       id: '',
+      title: '',
+      body: '',
+      type: '',
+    },
+    addAnnoucementForm:{
       title: '',
       body: '',
       type: '',
@@ -224,6 +231,11 @@ export default {
         body: '',
         type: '',
         img: ''
+      },
+      this.addAnnoucementForm = {
+        title: '',
+        body: '',
+        type: '',
       }
     },
 
@@ -233,8 +245,11 @@ export default {
       axios
         .get(baseURL)
         .then((res) => {
+          this.clearForm();
           this.annoucements = res.data.annoucement;
-          // console.log(res.data);
+          console.log(res.data);
+          console.log('load success');
+          console.log(this.annoucements);
         })
         .catch((error) => {
           console.log(error);
@@ -264,7 +279,19 @@ export default {
       axios.patch(baseURL+id, this.showAnnoucementForm).then((res) => {
         console.log(res.data);
          this.load();
-      })
+      }).catch((error) => {
+          console.log(error);
+      });
+
+    },
+    createAnnoucement() {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      axios.post(baseURL, this.addAnnoucementForm).then((res) => {
+        console.log(res.data);
+        this.load();
+      }).catch((error) => {
+          console.log(error);
+      });
 
     },
 
@@ -297,7 +324,10 @@ export default {
         },
     
   },
+  
 };
+
+
 </script>
 <style scoped>
 h2 {
