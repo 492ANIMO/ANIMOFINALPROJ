@@ -54,9 +54,6 @@ exports.create = async (req, res, next) => {
         annoucement: doc
       });
     })
-
-
-
   } catch (error) {
     next(error);
   }
