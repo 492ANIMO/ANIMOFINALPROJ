@@ -82,7 +82,9 @@ exports.create = async (req, res, next) => {
     if(req.file){
       client.avatar = req.file.path
     }
+
     await client.save((err) => {
+      // if error
       if (err) throw new Error('ไม่สามารถเพิ่มข้อมูลเจ้าของสัตว์เลี้ยงได้');
 
       // saved!
