@@ -65,7 +65,7 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, type, vaccines, treatments, healthChecks, detail, price } = req.body;
+    let { name, type, vaccines, treatments, healthChecks, detail, price } = req.body;
 
     //validation
     const errors = validationResult(req);
@@ -74,6 +74,10 @@ exports.create = async (req, res, next) => {
         error.statusCode = 422;
         error.validation = errors.array();
         throw error;
+    }
+    // check if input value is empty string
+    if (req.body.detail === '') {
+      detail = '-';
     }
 
     // const vaccines = await Vaccine.find().where('_id').in(vaccineId).exec();
@@ -93,7 +97,8 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'บันทึกข้อมูลสำเร็จ',
-      package
+      package,
+      test: detail
     });
 
   } catch (error) {
@@ -104,8 +109,13 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { name, vaccines, treatments, healthChecks, detail, price, type } = req.body;
+    let { name, vaccines, treatments, healthChecks, detail, price, type } = req.body;
     console.log(req.body);
+
+     // check if input value is empty string
+     if (req.body.detail === '') {
+      req.body.detail = '-';
+    }
     
     // const package = await Package.findOneAndUpdate({
     //   _id: id

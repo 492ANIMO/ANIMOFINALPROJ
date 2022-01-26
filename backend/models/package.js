@@ -24,7 +24,7 @@ const schema = new Schema({
     name: { type: String, required: true, trim: true},
     detail: { type: String, trim: true} }],
     
-  detail: { type: String, trim: true},
+  detail: { type: String, trim: true, default: '-'},
   price: { type: Number },
   type: { type: String, trim: true},
   
