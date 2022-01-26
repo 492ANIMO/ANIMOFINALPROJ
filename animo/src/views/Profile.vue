@@ -289,7 +289,12 @@
                     v-model="newPet.name"
                     label="ชื่อสัตว์เลี้ยง"
                     placeholder="ชื่อสัตว์เลี้ยง"
-                  ></vs-input>
+                    @blur="$v.newPet.name.$touch()"
+                  >
+                    <template v-if="$v.newPet.name.$error" #message-danger> 
+                      <p v-if="!$v.newPet.name.required">กรุณากรอกชื่อสัตว์เลี้ยง</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <vs-col
@@ -304,11 +309,15 @@
                     placeholder="ประเภทสัตว์"
                     v-model="newPet.type"
                     class="type"
+                    @blur="$v.newPet.type.$touch()"
                   >
                     <vs-option label="สุนัข" value="สุนัข"> สุนัข </vs-option>
                     <vs-option label="แมว" value="แมว"> แมว </vs-option>
                     <vs-option label="นก" value="นก"> นก </vs-option>
                     <vs-option label="อื่นๆ" value="อื่นๆ"> อื่นๆ </vs-option>
+                    <template v-if="$v.newPet.type.$error" #message-danger> 
+                      <p v-if="!$v.newPet.type.required">กรุณาเลือกประเภทสัตว์เลี้ยง</p>
+                    </template>
                   </vs-select>
                 </div>
               </vs-col>
@@ -323,8 +332,14 @@
                     label="น้ำหนัก(กิโลกรัม)"
                     placeholder="กิโลกรัม"
                     type="number"
-                    min=1 max=99
-                  ></vs-input>
+                    min=0 max=200
+                    @blur="$v.newPet.weight.$touch()"
+                  >
+                    <template v-if="$v.newPet.weight.$error" #message-danger> 
+                      <p v-if="!$v.newPet.weight.required">กรุณากรอกน้ำหนักสัตว์เลี้ยง</p>
+                      <p v-if="!$v.newPet.weight.minValue">น้ำหนักสัตว์เลี้ยงต้องมากกว่า 0 กิโลกรัม</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <div class="space"></div>
@@ -355,10 +370,14 @@
                     placeholder="เพศ"
                     v-model="newPet.gender"
                     class="small"
+                    @blur="$v.newPet.gender.$touch()"
                   >
                     <vs-option label="เพศผู้" value="เพศผู้"> เพศผู้ </vs-option>
                     <vs-option label="เพศเมีย" value="เพศเมีย"> เพศเมีย </vs-option>
                     <vs-option label="ไม่ระบุ" value="ไม่ระบุ"> ไม่ระบุ </vs-option>
+                    <template v-if="$v.newPet.gender.$error" #message-danger> 
+                      <p v-if="!$v.newPet.gender.required">กรุณาเลือกเพศสัตว์เลี้ยง</p>
+                    </template>
                   </vs-select>
                 </div>
               </div>
@@ -374,7 +393,13 @@
                     placeholder="ปี"
                     type="number"
                     min=1 max=99
-                  ></vs-input>
+                    @blur="$v.newPet.age.year.$touch()"
+                  >
+                    <template v-if="$v.newPet.age.year.$error" #message-danger> 
+                      <p v-if="!$v.newPet.age.year.minValue">อายุขอ
+                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 ปีได้</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <div class="space"></div>
@@ -386,7 +411,13 @@
                     placeholder="เดือน"
                     type="number"
                     min=1 max=12
-                  ></vs-input>
+                    @blur="$v.newPet.age.month.$touch()"
+                  >
+                    <template v-if="$v.newPet.age.month.$error" #message-danger> 
+                      <p v-if="!$v.newPet.age.month.minValue">อายุขอ
+                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 เดือนได้</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <div class="space"></div>
@@ -424,6 +455,7 @@
                   @click="active2 = !active2, handleAddPetForm(),AddNoti('bottom-right',1500,'#57c496')"
                   class="BT3"
                   style="float: right; width: 80px"
+                  :disabled="$v.$invalid"
                 >
                   ยืนยัน </vs-button
                 ><br /><br />
@@ -647,7 +679,7 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
-import { required, numeric, minLength, maxLength} from 'vuelidate/lib/validators';
+import { required, numeric, minLength, maxLength, minValue} from 'vuelidate/lib/validators';
 
 export default {
   name: "Profile",
@@ -736,7 +768,24 @@ export default {
         minLengthValue: minLength(10),
         maxLengthValue: maxLength(10),
       },
+    },
+    newPet: {
+      name: { required },
+      type: { required },
+      // breed: { required },
+      gender: { required },
+      bloodType: { required },
+      weight: { 
+        required,
+        minValue: minValue(0)
+      },
+      age: {
+        year: { minValue: minValue(0) },
+        month: { minValue: minValue(0) }
+      },
+
     }
+    
   },
   created() {
     this.getClientById();
