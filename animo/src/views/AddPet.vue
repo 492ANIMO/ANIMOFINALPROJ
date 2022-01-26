@@ -69,7 +69,7 @@
 <script>
 import Navbar from "@/components/NavbarAdmin.vue";
 import NavbarSide from "@/components/NavbarSideAdmin.vue";
-import axios from "axios";
+// import axios from "axios";
 import mixins from "../mixins.js";
 
 export default {

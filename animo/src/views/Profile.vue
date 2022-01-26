@@ -117,7 +117,12 @@
                     v-model="client.firstName"
                     label="ชื่อ"
                     :placeholder="this.client.firstName"
-                  ></vs-input>
+                    @blur="$v.client.firstName.$touch()"
+                  >
+                    <template v-if="$v.client.firstName.$error" #message-danger> 
+                      <p v-if="!$v.client.firstName.required" >กรุณากรอกชื่อ</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <vs-col
@@ -132,7 +137,12 @@
                     v-model="client.lastName"
                     label="นามสกุล"
                     :placeholder="this.client.lastName"
-                  ></vs-input>
+                    @blur="$v.client.lastName.$touch()"
+                  >
+                    <template v-if="$v.client.lastName.$error" #message-danger> 
+                      <p v-if="!$v.client.lastName.required" >กรุณากรอกนามสกุล</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
             </vs-row>
@@ -151,7 +161,13 @@
                     v-model="client.contact"
                     label="เบอร์โทร"
                     :placeholder="this.client.contact"
-                  ></vs-input>
+                    @blur="$v.client.contact.$touch()"
+                  > 
+                    <template v-if="$v.client.contact.$error" #message-danger> 
+                      <p v-if="!$v.client.contact.required">กรุณากรอกเบอร์มือถือด้วยเลข 10 หลัก</p>
+                      <p v-if="!$v.client.contact.numeric || !$v.client.contact.minLengthValue || !$v.client.contact.maxLengthValue">เบอร์มือถือต้องประกอบด้วยเลข 10 หลัก</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <vs-col
@@ -248,6 +264,7 @@
                   @click="(active1 = !active1), updateClientById(client),EditNoti('bottom-right',1500,'#da9952')"
                   class="BT"
                   style="float: right; width: 80px"
+                  :disabled="$v.$invalid"
                 ><font-awesome-icon class="iconBTr" icon="edit" />
                   แก้ไข </vs-button
                 ><br /><br />
@@ -630,7 +647,7 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
-
+import { required, numeric, minLength, maxLength} from 'vuelidate/lib/validators';
 
 export default {
   name: "Profile",
@@ -705,6 +722,22 @@ export default {
     }
     
   }),
+   validations: {
+    client:{
+      firstName:{
+        required
+      },
+      lastName:{
+        required
+      },
+      contact:{
+        required,
+        numeric,
+        minLengthValue: minLength(10),
+        maxLengthValue: maxLength(10),
+      },
+    }
+  },
   created() {
     this.getClientById();
 
