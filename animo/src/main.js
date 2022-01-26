@@ -4,6 +4,7 @@ import App from './App.vue'
 import Vuesax from './plugins/vuesax'
 import router from './router'
 
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faChartPie } from '@fortawesome/free-solid-svg-icons'
@@ -42,9 +43,11 @@ library.add(faEdit)
 import Highchart from "highcharts/highcharts";
 import HighchartsVue from "highcharts-vue";
 import stockInit from "highcharts/modules/stock";
+import Vuelidate from 'vuelidate'
 
 stockInit(Highchart);
 Vue.use(HighchartsVue);
+Vue.use(Vuelidate);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
