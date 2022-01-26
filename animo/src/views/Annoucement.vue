@@ -107,16 +107,24 @@
         </vs-row>
 
         <vs-row>
-          <vs-col w="6">
+          <vs-col w="12">
             <div class="InputPop">
               <h4 class="HeadInput">เนื้อความ</h4>
-              <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="addAnnoucementForm.body"
+              <!-- <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="addAnnoucementForm.body"
               @blur="$v.addAnnoucementForm.body.$touch()"
               >
                 <template v-if="$v.addAnnoucementForm.body.$error" #message-danger> 
                   <p v-if="!$v.addAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
                 </template>
-              </textarea>
+              </textarea> -->
+
+              <vue-editor v-model="addAnnoucementForm.body"
+              @blur="$v.addAnnoucementForm.body.$touch()">
+              </vue-editor>
+              <!-- validation message -->
+              <div v-if="$v.addAnnoucementForm.body.$error" > 
+                  <p v-if="!$v.addAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
+              </div>
             </div>
           </vs-col>
         </vs-row>        
@@ -180,16 +188,26 @@
         </vs-row>
 
         <vs-row>
-          <vs-col w="6">
+          <vs-col w="12">
             <div class="InputPop">
               <h4 class="HeadInput">เนื้อความ</h4>
-              <textarea  class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="showAnnoucementForm.body"
+              <!-- <textarea  class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="showAnnoucementForm.body"
               @blur="$v.showAnnoucementForm.body.$touch()"
               >
                 <template v-if="$v.showAnnoucementForm.body.$error" #message-danger> 
                   <p v-if="!$v.showAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
                 </template>
-              </textarea>
+              </textarea> -->
+              <vue-editor v-model="showAnnoucementForm.body"
+              @blur="$v.showAnnoucementForm.body.$touch()">
+              </vue-editor>
+              <div v-if="$v.showAnnoucementForm.body.$error" > 
+                  <p v-if="!$v.showAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
+              </div>
+              <!-- <template v-if="$v.showAnnoucementForm.body.$error" #message-danger> 
+              <p v-if="!$v.showAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
+              </template> -->
+              
             </div>
           </vs-col>
         </vs-row>        
@@ -219,12 +237,14 @@ import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
 import mixins from "../mixins.js";
 import { required } from 'vuelidate/lib/validators';
+import { VueEditor } from "vue2-editor";
 
 export default {
   name: "Annoucement",
   components: {
     Navbar,
     NavbarSide,
+    VueEditor
   },
   mixins: [mixins],
   data: () => ({
