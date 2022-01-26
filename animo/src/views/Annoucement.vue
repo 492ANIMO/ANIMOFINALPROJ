@@ -78,7 +78,12 @@
                 v-model="addAnnoucementForm.title"
                 label="ชื่อหัวข้อ"
                 placeholder="ชื่อหัวข้อ"
-              ></vs-input>
+                @blur="$v.addAnnoucementForm.title.$touch()"
+              >
+                <template v-if="$v.addAnnoucementForm.title.$error" #message-danger> 
+                  <p v-if="!$v.addAnnoucementForm.title.required" >กรุณาระบุชื่อหัวข้อ</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
           <vs-col w="6">
@@ -88,10 +93,14 @@
                 placeholder="ประเภทบทความ"
                 v-model="addAnnoucementForm.type"
                 class="type"
+                @blur="$v.addAnnoucementForm.type.$touch()"
               >
                 <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
                 <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
                 <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
+                <template v-if="$v.addAnnoucementForm.type.$error" #message-danger> 
+                  <p v-if="!$v.addAnnoucementForm.type.required" >กรุณาเลือกประเภทบทความ</p>
+                </template>
               </vs-select>
             </div>
           </vs-col>
@@ -101,8 +110,12 @@
           <vs-col w="6">
             <div class="InputPop">
               <h4 class="HeadInput">เนื้อความ</h4>
-              <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="addAnnoucementForm.body">
-
+              <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="addAnnoucementForm.body"
+              @blur="$v.addAnnoucementForm.body.$touch()"
+              >
+                <template v-if="$v.addAnnoucementForm.body.$error" #message-danger> 
+                  <p v-if="!$v.addAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
+                </template>
               </textarea>
             </div>
           </vs-col>
@@ -115,6 +128,7 @@
               @click="active = !active,AddNoti('bottom-right',1500,'#57c496'), createAnnoucement()"
               class="BT1"
               style="float: right; width: 80px"
+              :disabled="$v.addAnnoucementForm.$invalid"
             >
               ยืนยัน </vs-button
             ><br /><br />
@@ -135,7 +149,12 @@
                 v-model="showAnnoucementForm.title"
                 label="ชื่อหัวข้อ"
                 placeholder="ชื่อหัวข้อ"
-              ></vs-input>
+              @blur="$v.showAnnoucementForm.title.$touch()"
+              >
+                <template v-if="$v.showAnnoucementForm.title.$error" #message-danger> 
+                  <p v-if="!$v.showAnnoucementForm.title.required" >กรุณาระบุชื่อหัวข้อ</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
           <vs-col w="6">
@@ -146,10 +165,15 @@
                 placeholder="-"
                 v-model="showAnnoucementForm.type"
                 class="type"
+                @blur="$v.showAnnoucementForm.type.$touch()"
+
               >
                 <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
                 <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
                 <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
+                <template v-if="$v.showAnnoucementForm.type.$error" #message-danger> 
+                  <p v-if="!$v.showAnnoucementForm.type.required" >กรุณาเลือกประเภทบทความ</p>
+                </template>
               </vs-select>
             </div>
           </vs-col>
@@ -159,8 +183,12 @@
           <vs-col w="6">
             <div class="InputPop">
               <h4 class="HeadInput">เนื้อความ</h4>
-              <textarea  class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="showAnnoucementForm.body">
-
+              <textarea  class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="showAnnoucementForm.body"
+              @blur="$v.showAnnoucementForm.body.$touch()"
+              >
+                <template v-if="$v.showAnnoucementForm.body.$error" #message-danger> 
+                  <p v-if="!$v.showAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
+                </template>
               </textarea>
             </div>
           </vs-col>
@@ -173,6 +201,7 @@
               @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(showAnnoucementForm._id)"
               class="BT2"
               style="float: right; width: 80px"
+              :disabled="$v.showAnnoucementForm.$invalid"
             >
               แก้ไข </vs-button
             ><br /><br />
@@ -189,6 +218,7 @@ import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
 import mixins from "../mixins.js";
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   name: "Annoucement",
@@ -219,7 +249,18 @@ export default {
     }
 
   }),
-  
+    validations: {
+      addAnnoucementForm: {
+        title: { required },
+        body: { required },
+        type: { required },
+      },
+      showAnnoucementForm: {
+        title: { required },
+        body: { required },
+        type: { required },
+      },
+  },
   created() {
     this.load();
   },
