@@ -324,7 +324,12 @@
                 v-model="currentPackage.name"
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
-              ></vs-input>
+                @blur="$v.currentPackage.name.$touch()"
+              >
+                <template v-if="$v.currentPackage.name.$error" #message-danger> 
+                  <p v-if="!$v.currentPackage.name.required" >กรุณากรอกชื่อแพ็คเกจ</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
@@ -334,6 +339,7 @@
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
                 v-model="currentPackage.type"
+                @blur="$v.currentPackage.type.$touch()"
               >
                 <vs-option
                   :key="i"
@@ -343,6 +349,9 @@
                 >
                   {{ type }}
                 </vs-option>
+                <template v-if="$v.currentPackage.type.$error" #message-danger> 
+                  <p v-if="!$v.currentPackage.type.required" >กรุณาเลือกประเภทสัตว์</p>
+                </template>
               </vs-select>
             </div>
           </vs-col>
@@ -383,7 +392,14 @@
                 v-model="currentPackage.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
-              ></vs-input>
+                @blur="$v.currentPackage.price.$touch()"
+
+              >
+                <template v-if="$v.currentPackage.price.$error" #message-danger> 
+                  <p v-if="!$v.currentPackage.price.required" >กรุณากรอกราคาของแพ็คเกจ</p>
+                  <p v-if="!$v.currentPackage.price.minValue" >กรุณากรอกราคาของแพ็คเกจด้วยตัวเลขตั้งแต่ 0 ขึ้นไป</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
         </vs-row>
@@ -422,6 +438,7 @@
               @click="(Detail1 = !Detail1), updatePackage(currentPackage._id),EditNoti('bottom-right',1500,'#da9952')"
               class="BT2"
               style="float: right; width: 80px"
+              :disabled="$v.currentPackage.$invalid"
             >
               แก้ไข </vs-button
             ><br /><br />
@@ -506,6 +523,15 @@ export default {
   }),
   validations: {
     newPackage: {
+      name: { required },
+      type: { required },
+      price: { 
+        required, 
+        numeric, 
+        minValue: minValue(0)
+      }
+    },
+    currentPackage: {
       name: { required },
       type: { required },
       price: { 
