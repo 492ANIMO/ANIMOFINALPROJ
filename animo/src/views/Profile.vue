@@ -631,6 +631,7 @@ import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
 
+
 export default {
   name: "Profile",
   components: {
