@@ -630,6 +630,7 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
+import { required, email, numeric, minLength, maxLength} from 'vuelidate/lib/validators';
 
 export default {
   name: "Profile",
