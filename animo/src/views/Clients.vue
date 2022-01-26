@@ -270,9 +270,6 @@ export default {
         minLengthValue: minLength(10),
         maxLengthValue: maxLength(10),
       },
-
-  
-
     }
   }
   ,
