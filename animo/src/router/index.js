@@ -65,6 +65,11 @@ const routes = [
     component: () => import('../views/Contact.vue')
   },
   {
+    path: '/Admin/addpet',
+    name: 'AddPet',
+    component: () => import('../views/AddPet.vue')
+  },
+  {
     path: '/profile/:client_id',
     name: 'Profile',
     component: () => import('../views/Profile.vue'),

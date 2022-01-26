@@ -30,6 +30,7 @@
 <style scoped>
 h3 {
     font-size: 1.4vw;
+    color: #ffffff;
 }
 h6 {
     font-size: 1.25vw;

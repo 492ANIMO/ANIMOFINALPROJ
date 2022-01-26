@@ -22,6 +22,7 @@ import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faPhoneSquareAlt } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-solid-svg-icons'
+import { faDog } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faChartPie)
 library.add(faPaw)
@@ -39,6 +40,7 @@ library.add(faPhoneSquareAlt)
 library.add(faChartPie)
 library.add(faTrashAlt)
 library.add(faEdit)
+library.add(faDog)
 
 import Highchart from "highcharts/highcharts";
 import HighchartsVue from "highcharts-vue";
