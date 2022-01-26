@@ -91,6 +91,7 @@
                 v-model="appointment.owner._id"
                 class="type"
                 @change="getPetByOwner()"
+                @blur="$v.appointment.owner._id.$touch()"
               >
                 <vs-option
                   v-for="client in clients"
@@ -100,6 +101,9 @@
                 >
                   {{ client.firstName + " " + client.lastName }}
                 </vs-option>
+                <template v-if="$v.appointment.owner._id.$error" #message-danger> 
+                  <p v-if="!$v.appointment.owner._id.required" >กรุณาเลือกชื่อเจ้าของสัตว์เลี้ยง</p>
+                </template>
               </vs-select>
             </div>
           </vs-col>
@@ -112,6 +116,8 @@
                 v-model="appointment.pet._id"
                 class="type"
                 @change="getPetById()"
+                @blur="$v.appointment.pet._id.$touch()"
+
               >
                 <vs-option
                   v-for="pet in pets"
@@ -121,6 +127,9 @@
                 >
                   {{ pet.name }}
                 </vs-option>
+                <template v-if="$v.appointment.pet._id.$error" #message-danger> 
+                  <p v-if="!$v.appointment.pet._id.required" >กรุณาเลือกสัตว์เลี้ยง</p>
+                </template>
               </vs-select>
             </div>
           </vs-col>
@@ -181,7 +190,12 @@
                 label="วันที่นัดหมาย"
                 class="Date"
                  @change="getBookableTimes()"
-              ></vs-input>
+                @blur="$v.appointment.date.$touch()"
+              >
+                <template v-if="$v.appointment.date.$error" #message-danger> 
+                  <p v-if="!$v.appointment.date.required" >กรุณาเลือกวันที่นัดหมาย</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
           <div class="space"></div>
@@ -192,6 +206,7 @@
                 label="เวลานัดหมาย"
                 placeholder="เวลานัดหมาย"
                 v-model="appointment.time"
+                @blur="$v.appointment.time.$touch()"
               >
                  <vs-option
                   :key ="i"
@@ -202,6 +217,9 @@
                   {{ data }}
                 </vs-option>
                 <!-- <vs-option label="11.00" value="11.00"> 11.00 </vs-option> -->
+                <template v-if="$v.appointment.time.$error" #message-danger> 
+                  <p v-if="!$v.appointment.time.required" >กรุณาเลือกเวลานัดหมาย</p>
+                </template>
                
               </vs-select>
             </div>
@@ -229,6 +247,8 @@
               color="#71cf9d"
               @click="(active1 = !active1), createAppointment(),AddNoti('bottom-right',1500,'#57c496')"
               style="float: right; width: 80px"
+              :disabled="
+              $v.appointment.$invalid"
             >
               บันทึก </vs-button
             ><br /><br />
@@ -389,6 +409,7 @@ import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
 import mixins from "../mixins";
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   name: "Appointment",
@@ -437,7 +458,7 @@ export default {
     clients: [],
     client: {},
     appointment: {
-      name: '',
+      // name: '',
       owner: {
         _id: '',
         firstName: '',
@@ -468,6 +489,18 @@ export default {
 
 
   }),
+   validations: {
+    appointment: {
+      owner: {
+        _id: { required }
+      },
+      pet: { 
+        _id: { required }
+      },
+      date: { required },
+      time: { required },
+    }
+  },
   created() {
     this.load();
     this.getAllClients();
