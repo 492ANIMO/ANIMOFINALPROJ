@@ -809,7 +809,6 @@ export default {
     newPet: {
       name: { required },
       type: { required },
-      // breed: { required },
       gender: { required },
       bloodType: { required },
       weight: { 

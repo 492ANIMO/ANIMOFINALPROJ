@@ -77,7 +77,12 @@
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
                 class="textcolor"
-              ></vs-input>
+                @blur="$v.newPackage.name.$touch()"
+              >
+                <template v-if="$v.newPackage.name.$error" #message-danger> 
+                  <p v-if="!$v.newPackage.name.required" >กรุณากรอกชื่อแพ็คเกจ</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
@@ -86,6 +91,7 @@
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
                 v-model="newPackage.type"
+                @blur="$v.newPackage.type.$touch()"
               >
                 <vs-option
                   :key="i"
@@ -95,6 +101,9 @@
                 >
                   {{ type }}
                 </vs-option>
+                <template v-if="$v.newPackage.type.$error" #message-danger> 
+                  <p v-if="!$v.newPackage.type.required" >กรุณาเลือกประเภทสัตว์</p>
+                </template>
               </vs-select>
             </div>
           </vs-col>
@@ -226,7 +235,13 @@
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
                 class="textcolor"
-              ></vs-input>
+                @blur="$v.newPackage.price.$touch()"
+              >
+                <template v-if="$v.newPackage.price.$error" #message-danger> 
+                  <p v-if="!$v.newPackage.price.required" >กรุณากรอกราคาของแพ็คเกจ</p>
+                  <p v-if="!$v.newPackage.price.minValue" >กรุณากรอกราคาของแพ็คเกจด้วยตัวเลขตั้งแต่ 0 ขึ้นไป</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
         </vs-row>
@@ -288,6 +303,7 @@
               @click="(active = !active), createPackage(),AddNoti('bottom-right',1500,'#57c496')"
               class="BT1"
               style="float: right; width: 80px"
+              :disabled="$v.newPackage.$invalid"
             >
               ยืนยัน </vs-button
             ><br /><br />
@@ -444,6 +460,7 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
+import { required, numeric, minValue } from 'vuelidate/lib/validators';
 
 export default {
   name: "Package",
@@ -487,6 +504,17 @@ export default {
       price: ''
     },
   }),
+  validations: {
+    newPackage: {
+      name: { required },
+      type: { required },
+      price: { 
+        required, 
+        numeric, 
+        minValue: minValue(0)
+      }
+    },
+  },
   created() {
     this.getPackage(), this.getAllVacines();
     this.getAllTreatments();
