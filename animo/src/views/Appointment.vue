@@ -914,4 +914,11 @@ button.vs-select__option {
 ::v-deep .DtPg .vs-input {
   min-width: 700px;
 }
+::v-deep .vs-input__message p{
+  margin: 0px;
+  padding-left: 10px;
+}
+::v-deep .vs-select__message p{
+  margin: 0px;
+}
 </style>

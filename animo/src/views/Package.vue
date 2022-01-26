@@ -1020,4 +1020,11 @@ button.vs-select__option {
 ::v-deep .vs-select--state-success .vs-select__input {
   background: rgba(var(--vs-success), 0.1) !important;
 }
+::v-deep .vs-input__message p{
+  margin: 0px;
+  padding-left: 10px;
+}
+::v-deep .vs-select__message p{
+  margin: 0px;
+}
 </style>

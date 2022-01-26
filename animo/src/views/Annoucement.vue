@@ -123,7 +123,7 @@
               </vue-editor>
               <!-- validation message -->
               <div v-if="$v.addAnnoucementForm.body.$error" > 
-                  <p v-if="!$v.addAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
+                  <p v-if="!$v.addAnnoucementForm.body.required" ></p>
               </div>
             </div>
           </vs-col>
@@ -150,7 +150,7 @@
         </template>
 
         <vs-row>
-          <vs-col w="6">
+          <vs-col w="12">
             <div class="InputPop">
               <vs-input
               state="success"
@@ -632,5 +632,35 @@ background: #f0f3f4;
 }
 ::v-deep .vs-select--state-success .vs-select__input {
   background: rgba(var(--vs-success), 0.1) !important;
+}
+::v-deep svg {
+  height: 18px !important;
+  font-family: kanit;
+}
+::v-deep .ql-snow.ql-toolbar button {
+  width: 20px !important;
+}
+::v-deep .ql-snow .ql-picker-label::before {
+  font-family: kanit !important;
+}
+::v-deep .ql-toolbar.ql-snow {
+  border: none;
+  border-radius: 10px 10px 0px 0px;
+  background: #f0f3f4;
+}
+::v-deep .ql-editor {
+  background: #f6f8f8;
+  border-radius: 0px 0px 10px 10px !important;
+  border: 2px solid #f0f3f4;
+}
+::v-deep .ql-container.ql-snow {
+    border: none;
+}
+::v-deep .vs-input__message p{
+  margin: 0px;
+  padding-left: 10px;
+}
+::v-deep .vs-select__message p{
+  margin: 0px;
 }
 </style>

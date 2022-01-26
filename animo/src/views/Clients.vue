@@ -507,4 +507,11 @@ h3 {
 ::v-deep .vs-table__tr:first-of-type .vs-table__td:first-child {
   width: 25%;
 }
+::v-deep .vs-input__message p{
+  margin: 0px;
+  padding-left: 10px;
+}
+::v-deep .vs-select__message p{
+  margin: 0px;
+}
 </style>
