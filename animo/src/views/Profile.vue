@@ -264,7 +264,7 @@
                   @click="(active1 = !active1), updateClientById(client),EditNoti('bottom-right',1500,'#da9952')"
                   class="BT"
                   style="float: right; width: 80px"
-                  :disabled="$v.$invalid"
+                  :disabled="$v.client.$invalid"
                 ><font-awesome-icon class="iconBTr" icon="edit" />
                   แก้ไข </vs-button
                 ><br /><br />
@@ -396,7 +396,7 @@
                     @blur="$v.newPet.age.year.$touch()"
                   >
                     <template v-if="$v.newPet.age.year.$error" #message-danger> 
-                      <p v-if="!$v.newPet.age.year.minValue">อายุขอ
+                      <p v-if="!$v.newPet.age.year.minValue">อายุของ
                         สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 ปีได้</p>
                     </template>
                   </vs-input>
@@ -408,14 +408,16 @@
                   <vs-input
                     v-model="newPet.age.month"
                     label="(เดือน)"
-                    placeholder="เดือน"
+                    placeholder="-"
                     type="number"
-                    min=1 max=12
+                    min=1 max=11
                     @blur="$v.newPet.age.month.$touch()"
                   >
                     <template v-if="$v.newPet.age.month.$error" #message-danger> 
                       <p v-if="!$v.newPet.age.month.minValue">อายุขอ
                         สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 เดือนได้</p>
+                        <p v-if="!$v.newPet.age.month.maxValue">อายุขอ
+                        สัตว์เลี้ยงไม่สามารถมากกว่า 11 เดือนได้</p>
                     </template>
                   </vs-input>
                 </div>
@@ -455,7 +457,7 @@
                   @click="active2 = !active2, handleAddPetForm(),AddNoti('bottom-right',1500,'#57c496')"
                   class="BT3"
                   style="float: right; width: 80px"
-                  :disabled="$v.$invalid"
+                  :disabled="$v.newPet.$invalid"
                 >
                   ยืนยัน </vs-button
                 ><br /><br />
@@ -481,7 +483,12 @@
                     v-model="pet.name"
                     label="ชื่อสัตว์เลี้ยง"
                     :placeholder="this.pet.name"
-                  ></vs-input>
+                     @blur="$v.pet.name.$touch()"
+                  >
+                    <template v-if="$v.pet.name.$error" #message-danger> 
+                      <p v-if="!$v.pet.name.required">กรุณากรอกชื่อสัตว์เลี้ยง</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <vs-col
@@ -497,12 +504,15 @@
                     :placeholder="this.pet.type"
                     v-model="pet.type"
                     class="type"
+                    @blur="$v.pet.type.$touch()"
                   >
                     <vs-option :key="i"
                       v-for="(type, i) in petType"
                       :value="type" :label="type"> {{ type }} 
                     </vs-option>
-                        
+                    <template v-if="$v.pet.type.$error" #message-danger> 
+                      <p v-if="!$v.pet.type.required">กรุณาเลือกประเภทสัตว์เลี้ยง</p>
+                    </template>
                   </vs-select>
                 </div>
               </vs-col>
@@ -516,9 +526,15 @@
                   state="success"
                     v-model="pet.weight"
                     label="น้ำหนัก"
-                    :placeholder="this.pet.weight"
+                    :placeholder="this.pet.weight || '-'"
                     type="number"
-                  ></vs-input>
+                    @blur="$v.pet.weight.$touch()"
+                  >
+                    <template v-if="$v.pet.weight.$error" #message-danger> 
+                      <p v-if="!$v.pet.weight.required">กรุณากรอกน้ำหนักสัตว์เลี้ยง</p>
+                      <p v-if="!$v.pet.weight.minValue">น้ำหนักสัตว์เลี้ยงต้องมากกว่า 0 กิโลกรัม</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <div class="space"></div>
@@ -539,7 +555,7 @@
                   state="success"
                     v-model="pet.breed"
                     label="สายพันธุ์"
-                    :placeholder="this.pet.breed"
+                    :placeholder="this.pet.breed || '-'"
                   ></vs-input>
                 </div>
               </vs-col>
@@ -552,10 +568,14 @@
                     :placeholder="this.pet.gender"
                     v-model="pet.gender"
                     class="small"
+                    @blur="$v.pet.gender.$touch()"
                   >
                     <vs-option label="เพศผู้" value="เพศผู้"> เพศผู้ </vs-option>
                     <vs-option label="เพศเมีย" value="เพศเมีย"> เพศเมีย </vs-option>
                     <vs-option label="ไม่ระบุ" value="ไม่ระบุ"> ไม่ระบุ </vs-option>
+                    <template v-if="$v.pet.gender.$error" #message-danger> 
+                      <p v-if="!$v.pet.gender.required">กรุณาเลือกเพศสัตว์เลี้ยง</p>
+                    </template>
                   </vs-select>
                 </div>
               </div>
@@ -571,7 +591,14 @@
                     label="อายุ (ปี)"
                     :placeholder="this.pet.age.year"
                     type="number"
-                  ></vs-input>
+                    min=1 max=99
+                    @blur="$v.pet.age.year.$touch()"
+                  >
+                    <template v-if="$v.pet.age.year.$error" #message-danger> 
+                      <p v-if="!$v.pet.age.year.minValue">อายุขอ
+                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 ปีได้</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <div class="space"></div>
@@ -583,7 +610,16 @@
                     label="อายุ (เดือน)"
                     :placeholder="this.pet.age.month"
                     type="number"
-                  ></vs-input>
+                    min=1 max=11
+                    @blur="$v.pet.age.month.$touch()"
+                  >
+                    <template v-if="$v.pet.age.month.$error" #message-danger> 
+                      <p v-if="!$v.pet.age.month.minValue">อายุขอ
+                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 เดือนได้</p>
+                      <p v-if="!$v.pet.age.month.maxValue">อายุขอ
+                        สัตว์เลี้ยงไม่สามารถมากกว่า 11 เดือนได้</p>
+                    </template>
+                  </vs-input>
                 </div>
               </vs-col>
               <div class="space"></div>
@@ -635,6 +671,7 @@
                   @click="(active3 = !active3), updatePetById(pet),EditNoti('bottom-right',1500,'#da9952')"
                   class="BT"
                   style="float: right; width: 80px"
+                  :disabled="$v.pet.$invalid"
                 >
                   แก้ไข<font-awesome-icon
                     class="iconBTl"
@@ -679,7 +716,7 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
-import { required, numeric, minLength, maxLength, minValue} from 'vuelidate/lib/validators';
+import { required, numeric, minLength, maxLength, minValue, maxValue} from 'vuelidate/lib/validators';
 
 export default {
   name: "Profile",
@@ -781,10 +818,31 @@ export default {
       },
       age: {
         year: { minValue: minValue(0) },
-        month: { minValue: minValue(0) }
+        month: { 
+          minValue: minValue(0),
+          maxValue: maxValue(11),
+         }
       },
+    },
+    pet: {
+      name: { required },
+      type: { required },
+      // breed: { required },
+      gender: { required },
+      bloodType: { required },
+      weight: { 
+        required,
+        minValue: minValue(0)
+      },
+      age: {
+        year: { minValue: minValue(0) },
+        month: { 
+          minValue: minValue(0),
+          maxValue: maxValue(11),
+         }
+      },
+    },
 
-    }
     
   },
   created() {
