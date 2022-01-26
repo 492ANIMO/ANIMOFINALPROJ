@@ -64,7 +64,12 @@
                 v-model="client.firstName"
                 label="ชื่อ"
                 placeholder="ชื่อ"
-              ></vs-input>
+                @blur="$v.client.firstName.$touch()"
+              >
+                <template v-if="$v.client.firstName.$error" #message-danger> 
+                 <p v-if="!$v.client.firstName.required">กรุณากรอกชื่อ</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
@@ -72,8 +77,13 @@
               <vs-input
                 v-model="client.lastName"
                 label="นามสกุล"
-                placeholder="นามสกุล"
-              ></vs-input>
+                placeholder="นามสกุล" 
+                @blur="$v.client.lastName.$touch()"
+              >
+                <template v-if="$v.client.lastName.$error" #message-danger> 
+                 <p v-if="!$v.client.lastName.required">กรุณากรอกนามสกุล</p>
+                </template>
+              </vs-input>
             </div>
           </vs-col>
         </vs-row>
@@ -86,7 +96,14 @@
                 v-model="client.contact"
                 label="เบอร์โทร"
                 placeholder="เบอร์โทร"
-              ></vs-input>
+                @blur="$v.client.contact.$touch()"
+              >
+                <template v-if="$v.client.contact.$error" #message-danger> 
+                 <p v-if="!$v.client.contact.required">กรุณากรอกเบอร์มือถือด้วยเลข 10 หลัก</p>
+                 <p v-if="!$v.client.contact.numeric || !$v.client.contact.minLengthValue || !$v.client.contact.maxLengthValue">เบอร์มือถือต้องประกอบด้วยเลข 10 หลัก</p>
+                 <!-- <p v-if="!$v.client.contact.required">กรุณากรอกเบอร์โทรศัพท์</p> -->
+                </template>
+              </vs-input>
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
@@ -95,7 +112,18 @@
                 v-model="client.email"
                 label="อีเมลล์"
                 placeholder="อีเมลล์"
-              ></vs-input>
+                :class="{ error: $v.client.email.$error }"
+                @blur="$v.client.email.$touch()"
+              >
+              <template v-if="$v.client.email.$error" #message-danger> 
+                 <p v-if="!$v.client.email.required">กรุณากรอกอีเมลล์</p> 
+                 <p v-if="!$v.client.email.email">กรุณากรอกอีเมลล์ให้ถูกต้อง</p> 
+              </template>
+              </vs-input>
+<!-- 
+             <div v-if="$v.client.email.$error">
+                <p v-if="!$v.client.email.required" class="errorMessage">กรุณากรอกอีเมลล์</p>
+             </div> -->
             </div>
           </vs-col>
         </vs-row>
@@ -161,6 +189,10 @@
           </vs-col>
         </vs-row>
 
+        <vs-row>
+          <p v-if="$v.$anyError" class="errorMessage" style="float: left;">กรุณากรอกข้อมูลให้ครบถ้วน</p>
+        </vs-row>
+
         <template #footer>
           <div class="footer-dialog">
             <vs-button
@@ -168,9 +200,11 @@
               @click="active = !active, createClient(),AddNoti('bottom-right',1500,'#57c496')"
               class="BT1"
               style="float: right; width: 80px"
+              :disabled="$v.$invalid"
             >
-              ยืนยัน </vs-button
-            ><br /><br />
+              ยืนยัน </vs-button>
+              <br /><br />
+              
           </div>
         </template>
       </vs-dialog>
@@ -182,6 +216,7 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
+import { required, email, numeric, minLength, maxLength} from 'vuelidate/lib/validators';
 
 export default {
   name: "Dashboard",
@@ -217,6 +252,30 @@ export default {
     clientCount: ''
  
   }),
+  validations: {
+    client:{
+      email: {
+        required,
+        email
+      },
+      firstName:{
+        required
+      },
+      lastName:{
+        required
+      },
+      contact:{
+        required,
+        numeric,
+        minLengthValue: minLength(10),
+        maxLengthValue: maxLength(10),
+      },
+
+  
+
+    }
+  }
+  ,
   created() {
     this.getClients();
   },

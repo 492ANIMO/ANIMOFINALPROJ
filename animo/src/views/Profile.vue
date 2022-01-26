@@ -648,7 +648,7 @@ export default {
     active2: false,
     active3: false,
     deleteCF: false,
-    value: "",
+    value: '',
     baseurl: 'http://localhost:4000/api/',
     user: [
     ],

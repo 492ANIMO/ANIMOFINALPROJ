@@ -26,16 +26,29 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const client = await Client.findById(id);
-    if(!client){ 
-      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
-      error.statusCode = '400';
-      throw error; 
-    }
-    res.status(200).json({
-      message: 'สำเร็จ',
-      client,
+    Client.findById(id, (error, client) => {
+      if(error){
+        const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
+        error.statusCode = '400';
+        throw error; 
+      }
+
+      res.status(200).json({
+        message: 'สำเร็จ',
+        client,
+      });
     });
+
+
+    // if(!client){ 
+    //   const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
+    //   error.statusCode = '400';
+    //   throw error; 
+    // }
+    // res.status(200).json({
+    //   message: 'สำเร็จ',
+    //   client,
+    // });
 
   } catch (error) {
     next(error);
@@ -44,7 +57,8 @@ exports.show = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { firstName, lastName, email, contact, address, role } = req.body;
+    const { firstName, lastName, email, contact, address } = req.body;
+    
     //check email ซ้ำ
     const existClient = await Client.findOne({email: email});
     if (existClient){
@@ -63,19 +77,23 @@ exports.create = async (req, res, next) => {
       address,
       role: 'client',
       uid: new Date().getTime().toString()
-      // uid: new Date().getTime().toString().slice(3, -1)
     })
 
     if(req.file){
       client.avatar = req.file.path
     }
-    await client.save();
 
-    res.status(201).json({
-      message: 'เพิ่มข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
-      client
+    await client.save((err) => {
+      // if error
+      if (err) throw new Error('ไม่สามารถเพิ่มข้อมูลเจ้าของสัตว์เลี้ยงได้');
+
+      // saved!
+      res.status(201).json({
+        message: 'เพิ่มข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
+        client
+      });
+
     });
-
   } catch (error) {
     next(error);
   }
@@ -138,21 +156,26 @@ exports.update = async (req, res, next) => {
     const {id} = req.params;
     const { firstName, lastName, email, contact, address, role } = req.body;
 
-    let client = await Client.findByIdAndUpdate({_id:id}, {
-      firstName,
-      lastName,
-      email,
-      contact,
-      address
-    }, { returnDocument: 'after' });
-    if(!client){
-      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
-      throw error;
-    }
+    // A.findByIdAndUpdate(id, update, options, callback) // executes
+    Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' }, (error, client) => {
+      if(error){
+        const error = new Error('ไม่สามารถแก้ไขข้อมูลเจ้าของสัตว์เลี้ยง')
+        throw error;
+      }
 
-    res.status(200).json({
-      message: 'แก้ไขข้อมูลสำเร็จ',
-      client
+      res.status(200).json({
+        message: 'แก้ไขข้อมูลสำเร็จ',
+        client
+
+    });
+    // if(!client){
+    //   const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+    //   throw error;
+    // }
+
+    // res.status(200).json({
+    //   message: 'แก้ไขข้อมูลสำเร็จ',
+    //   client
   });
 
   } catch (error) {

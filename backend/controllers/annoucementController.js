@@ -5,7 +5,7 @@ const Annoucement = require('../models/annoucement');
 
 exports.index = async (req, res, next) => {
   try {
-    const annoucement = await Annoucement.find();
+    const annoucement = await Annoucement.find().sort({updatedAt: -1});
     if(!annoucement || annoucement==''){ throw new Error('ไม่พบข้อมูลข่าวสาร'); }
 
     // docs count
@@ -41,26 +41,19 @@ exports.show = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     const {title, body, author, img, type} = req.body;
-    let annoucement = new Annoucement({
-      title,
-      body,
-      author,
-      img,
-      type,
-    })
+    let annoucement = new Annoucement(req.body)
     if(req.file){
       annoucement.img = req.file.path
     }
 
-    annoucement.save((error)=>{
-      if(error) throw error;
+    await annoucement.save((error, doc)=>{
+      if(error) throw new Error('เพิ่มไม่สำเร็จ');
+
+      res.status(200).json({
+        message: 'เพิ่มข่าวสารสำเร็จ',
+        annoucement: doc
+      });
     })
-
-    res.status(200).json({
-      message: 'เพิ่มข่าวสารสำเร็จ',
-      annoucement
-    });
-
   } catch (error) {
     next(error);
   }
@@ -69,19 +62,36 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const {title, body, author, img} = req.body;
-    
-    const annoucement = await Annoucement.updateOne({_id:id },{
-      title,
-      body, 
-      author, 
-      img,
-      type,
-    })
+    const {title, body, author, img, type} = req.body;
+
+    // const annoucement = await Annoucement.findByIdAndUpdate({_id:id },{
+    //   title,
+    //   body, 
+    //   author, 
+    //   img,
+    //   type,
+    // },
+    // { 
+    //   new: true 
+    // })
+
+    const annoucement = await Annoucement.findByIdAndUpdate(
+      {
+        _id: id,
+      },
+      req.body,
+      {
+        new: true,
+      },
+    );
+    if(!annoucement){
+      const error = new Error('แก้ไขข้อมูลข่าวสารไม่สำเร็จ')
+      throw error;
+    }
 
     res.status(200).json({
       message: 'แก้ไขข้อมูลข่าวสารสำเร็จ',
-      annoucement
+      annoucement, body: req.body
     });
 
   } catch (error) {

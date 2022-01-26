@@ -75,7 +75,7 @@
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="value"
+                v-model="addAnnoucementForm.title"
                 label="ชื่อหัวข้อ"
                 placeholder="ชื่อหัวข้อ"
               ></vs-input>
@@ -86,11 +86,12 @@
               <vs-select
                 label="ประเภทบทความ"
                 placeholder="ประเภทบทความ"
-                v-model="value"
+                v-model="addAnnoucementForm.type"
                 class="type"
               >
-                <vs-option label="Bento" value="Bento"> Bento </vs-option>
-                <vs-option label="Oreo" value="Oreo"> Oreo </vs-option>
+                <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
+                <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
+                <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -100,7 +101,7 @@
           <vs-col w="6">
             <div class="InputPop">
               <h4 class="HeadInput">เนื้อความ</h4>
-              <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5">
+              <textarea class="TArea" placeholder="เนื้อความ..." cols="90" rows="5" v-model="addAnnoucementForm.body">
 
               </textarea>
             </div>
@@ -111,7 +112,7 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active = !active,AddNoti('bottom-right',1500,'#57c496')"
+              @click="active = !active,AddNoti('bottom-right',1500,'#57c496'), createAnnoucement()"
               class="BT1"
               style="float: right; width: 80px"
             >
@@ -148,6 +149,7 @@
               >
                 <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
                 <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
+                <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -168,7 +170,7 @@
           <div class="footer-dialog">
             <vs-button
               color="#d78461"
-              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(this.showAnnoucementForm._id)"
+              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(showAnnoucementForm._id)"
               class="BT2"
               style="float: right; width: 80px"
             >
@@ -202,16 +204,22 @@ export default {
     active1: false,
     value: '',
     search: "",
-    type: ['ข่าวสาร', 'ประกาศ'],
+    type: ['ข่าวสาร', 'ประกาศ', 'บทความ'],
     annoucements: [],
     showAnnoucementForm: {
       id: '',
       title: '',
       body: '',
       type: '',
+    },
+    addAnnoucementForm:{
+      title: '',
+      body: '',
+      type: '',
     }
 
   }),
+  
   created() {
     this.load();
   },
@@ -219,11 +227,85 @@ export default {
     clearForm(){
        // clear data
       this.showAnnoucementForm = {
+        id: '',
+        title: '',
+        body: '',
+        type: '',
+        img: ''
+      },
+      this.addAnnoucementForm = {
         title: '',
         body: '',
         type: '',
       }
     },
+
+    load() {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+
+      axios
+        .get(baseURL)
+        .then((res) => {
+          this.clearForm();
+          this.annoucements = res.data.annoucement;
+          console.log(res.data);
+          console.log('load success');
+          console.log(this.annoucements);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    showAnnoucementDetail(id) {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      this.showAnnoucementForm._id = id;
+      console.log(this.showAnnoucementForm._id);
+      axios
+        .get(baseURL+id)
+        .then((res) => {
+          this.showAnnoucementForm = res.data.annoucement;
+          console.log(res.data);
+          // this.load();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    
+    },
+
+    updateAnnoucement(id) {
+      console.log('id : '+ id);
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      axios.patch(baseURL+id, this.showAnnoucementForm).then((res) => {
+        console.log(res.data);
+         this.load();
+      }).catch((error) => {
+          console.log(error);
+      });
+
+    },
+    createAnnoucement() {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      axios.post(baseURL, this.addAnnoucementForm).then((res) => {
+        console.log(res.data);
+        this.load();
+      }).catch((error) => {
+          console.log(error);
+      });
+
+    },
+    deleteAnnoucement(id) {
+      let baseURL = "http://localhost:4000/api/annoucements/";
+      axios.post(baseURL+id).then((res) => {
+        console.log(res.data.message);
+        this.load();
+      }).catch((error) => {
+          console.log(error);
+      });
+
+    },
+
     AddNoti(position = null ,duration ,color) {
           this.$vs.notification({
             color,
@@ -251,42 +333,12 @@ export default {
             text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
           })
         },
-    load() {
-      let baseURL = "http://localhost:4000/api/annoucements/";
-
-      axios
-        .get(baseURL)
-        .then((res) => {
-          this.annoucements = res.data.annoucement;
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    showAnnoucementDetail(id) {
-      let baseURL = "http://localhost:4000/api/annoucements/";
-      this.showAnnoucementForm._id = id;
-      console.log(this.showAnnoucementForm._id);
-      axios
-        .get(baseURL+id)
-        .then((res) => {
-          this.showAnnoucementForm = res.data.annoucement;
-          console.log(res.data);
-          this.load();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
     
-    },
-
-    updateAnnoucement(id) {
-      console.log('id : '+ id);
-    }
   },
+  
 };
+
+
 </script>
 <style scoped>
 h2 {
