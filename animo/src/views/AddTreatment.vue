@@ -47,7 +47,7 @@
                 v-for="(data, i) in treatments"
               :data="data">
                   <vs-td> {{ data.name }} </vs-td>
-                  <vs-td> การรักษา </vs-td>
+                  <vs-td> {{ data.type }} </vs-td>
                   <vs-td>
                     <vs-button
                       color="#ca7676"

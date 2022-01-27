@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
   name: { type: String, required: true, trim: true},
-  detail: { type: String, trim: true}
+  detail: { type: String, trim: true},
+  type: { type: String, trim: true, enum: ['การรักษา', 'การตรวจสุขภาพ'], default: 'การรักษา'}
 },{
   collection: 'treatments'
 });

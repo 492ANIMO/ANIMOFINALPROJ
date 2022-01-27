@@ -620,7 +620,7 @@ export default {
     },
 
     getAllTreatments() {
-      let baseURL = "http://localhost:4000/api/treatments/";
+      let baseURL = "http://localhost:4000/api/treatments/treatment-list/";
 
       axios
         .get(baseURL)
@@ -634,12 +634,12 @@ export default {
     },
 
     getAllHealthChecks() {
-      let baseURL = "http://localhost:4000/api/healthChecks/";
+      let baseURL = "http://localhost:4000/api/treatments/healthcheck-list/";
 
       axios
         .get(baseURL)
         .then((res) => {
-          this.healthCheck_options = res.data.healthcheck;
+          this.healthCheck_options = res.data.treatment;
           console.log(res.data);
         })
         .catch((error) => {
@@ -662,6 +662,7 @@ export default {
             detail: '',
             price: '',
           };
+          console.log(this.newPackage);
           this.getPackage();
         })
         .catch((error) => {

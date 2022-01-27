@@ -21,6 +21,40 @@ exports.index = async (req, res, next) => {
     next(error);
   }
 }
+exports.treatments = async (req, res, next) => {
+  try {
+    const treatment = await Treatment.find({type: 'การรักษา'});
+    if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
+
+    const count = await Treatment.countDocuments();
+
+    res.status(200).json({
+      message: 'ดึงข้อมูลสำเร็จ',
+      treatment,
+      count
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+exports.healthChecks = async (req, res, next) => {
+  try {
+    const treatment = await Treatment.find({type: 'การตรวจสุขภาพ'});
+    if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
+
+    const count = await Treatment.countDocuments();
+
+    res.status(200).json({
+      message: 'ดึงข้อมูลสำเร็จ',
+      treatment,
+      count
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
 
 exports.show = async (req, res, next) => {
   try {
