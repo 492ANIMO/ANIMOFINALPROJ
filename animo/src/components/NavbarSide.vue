@@ -14,7 +14,6 @@
         <li><router-link to="/package"><font-awesome-icon class="icon" icon="syringe"/>แพ็คเกจ</router-link></li>
         <li><router-link to="/reservation"><font-awesome-icon class="icon" icon="file-medical"/>การจอง</router-link></li>
         <li><router-link to="/appointment"><font-awesome-icon class="icon" icon="clipboard-list"/>การนัดหมาย</router-link></li>
-        <li><router-link to="/annoucement"><font-awesome-icon class="icon" icon="newspaper"/>บทความ</router-link></li>
     </ul>
 </div>
 

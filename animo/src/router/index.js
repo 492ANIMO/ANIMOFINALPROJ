@@ -55,19 +55,29 @@ const routes = [
     component: () => import('../views/Appointment.vue')
   },
   {
-    path: '/annoucement',
-    name: 'Annoucement',
-    component: () => import('../views/Annoucement.vue')
-  },
-  {
     path: '/contact',
     name: 'Contact',
     component: () => import('../views/Contact.vue')
   },
   {
+    path: '/Admin/annoucement',
+    name: 'Annoucement',
+    component: () => import('../views/Annoucement.vue')
+  },
+  {
     path: '/Admin/addpet',
     name: 'AddPet',
     component: () => import('../views/AddPet.vue')
+  },
+  {
+    path: '/Admin/addvaccine',
+    name: 'AddVaccine',
+    component: () => import('../views/AddVaccine.vue')
+  },
+  {
+    path: '/Admin/addtreatment',
+    name: 'AddTreatment',
+    component: () => import('../views/AddTreatment.vue')
   },
   {
     path: '/profile/:client_id',

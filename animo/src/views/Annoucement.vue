@@ -150,7 +150,7 @@
         </template>
 
         <vs-row>
-          <vs-col w="12">
+          <vs-col w="6">
             <div class="InputPop">
               <vs-input
               state="success"
@@ -232,8 +232,8 @@
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
-import NavbarSide from "@/components/NavbarSide.vue";
+import Navbar from "@/components/NavbarAdmin.vue";
+import NavbarSide from "@/components/NavbarSideAdmin.vue";
 import axios from "axios";
 import mixins from "../mixins.js";
 import { required } from 'vuelidate/lib/validators';
@@ -625,7 +625,7 @@ background: #f0f3f4;
   font-size: 13px;
 }
 .HeadInput {
-  font-size: 14.5px;
+  font-size: 14.25px;
   color: #696969;
   font-weight: 400;
   margin: 0px;
@@ -649,9 +649,10 @@ background: #f0f3f4;
   background: #f0f3f4;
 }
 ::v-deep .ql-editor {
-  background: #f6f8f8;
+  background: #fafcfc;
   border-radius: 0px 0px 10px 10px !important;
   border: 2px solid #f0f3f4;
+  font-family: kanit;
 }
 ::v-deep .ql-container.ql-snow {
     border: none;

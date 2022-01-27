@@ -8,6 +8,9 @@
         </div>
       </li>
       <li><router-link to="/Admin/addpet"><font-awesome-icon class="icon" icon="dog"/>ประเภทสัตว์</router-link></li>
+      <li><router-link to="/Admin/addvaccine"><font-awesome-icon class="icon" icon="syringe"/>รายการวัคซีน</router-link></li>
+      <li><router-link to="/Admin/addtreatment"><font-awesome-icon class="icon" icon="notes-medical"/>รายการรักษา</router-link></li>
+      <li><router-link to="/Admin/annoucement"><font-awesome-icon class="icon" icon="newspaper"/>บทความ</router-link></li>
     </ul>
   </div>
 </template>
