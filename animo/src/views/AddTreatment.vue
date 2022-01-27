@@ -31,7 +31,7 @@
             <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
           </vs-button>
         </div>
-        <h4 class="list">รายการทั้งหมด 1 รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ this.treatments.length }} รายการ</h4>
         <template>
           <div class="center examplex">
             <vs-table striped>
