@@ -92,7 +92,7 @@ export default {
     vaccines: [],
     vaccine:{
       name: '',
-      lotNumber: ''
+      lot_number: ''
     }
   }),
   created(){
