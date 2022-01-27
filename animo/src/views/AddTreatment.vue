@@ -6,7 +6,7 @@
     </div>
     <div class="Content1">
       <div class="Content2">
-        <h2><font-awesome-icon class="icon" icon="syringe" />รายการวัคซีน</h2>
+        <h2><font-awesome-icon class="icon" icon="syringe" />รายการรักษา</h2>
         <div class="line">
           <h3>
             <font-awesome-icon class="icon" icon="plus" />เพิ่มรายการรักษา
@@ -43,9 +43,11 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr>
-                  <vs-td> ตรวจสุขภาพปอด </vs-td>
-                  <vs-td> ตรวจสุขภาพ </vs-td>
+                <vs-tr :key="i"
+                v-for="(data, i) in treatments"
+              :data="data">
+                  <vs-td> {{ data.name }} </vs-td>
+                  <vs-td> การรักษา </vs-td>
                   <vs-td>
                     <vs-button
                       color="#ca7676"
@@ -73,7 +75,7 @@
 <script>
 import Navbar from "@/components/NavbarAdmin.vue";
 import NavbarSide from "@/components/NavbarSideAdmin.vue";
-// import axios from "axios";
+import axios from "axios";
 import mixins from "../mixins.js";
 
 export default {
@@ -88,7 +90,32 @@ export default {
     active1: false,
     value: "",
     search: "",
+
+    treatments: [],
+    treatment: {
+      name: '',
+      type: ''
+    },
+
   }),
+  created(){
+    this.showAllTreatments()
+  },
+  methods: {
+    showAllTreatments(){
+      let baseURL = "http://localhost:4000/api/treatments/"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.treatments = res.data.treatment;
+        console.log(res.data);
+        console.log(this.treatments);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  }
 };
 </script>
 <style scoped>

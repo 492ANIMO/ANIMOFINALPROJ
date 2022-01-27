@@ -19,7 +19,7 @@
                 <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
             </vs-button>
         </div>
-        <h4 class="list">รายการทั้งหมด 1 รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ this.vaccines.length }} รายการ</h4>
         <template>
     <div class="center examplex">
       <vs-table striped>
@@ -37,13 +37,15 @@
           </vs-tr>
         </template>
         <template #tbody>
-          <vs-tr
+          <vs-tr :key="i"
+                v-for="(data, i) in vaccines"
+              :data="data"
           >
             <vs-td>
-              วัคซีนพิษสุนัขบ้า
+              {{ data.name }}
             </vs-td>
             <vs-td>
-              1212312121
+              {{ data.lot_number }}
             </vs-td>
             <vs-td>
                 <vs-button
@@ -72,7 +74,7 @@
 <script>
 import Navbar from "@/components/NavbarAdmin.vue";
 import NavbarSide from "@/components/NavbarSideAdmin.vue";
-// import axios from "axios";
+import axios from "axios";
 import mixins from "../mixins.js";
 
 export default {
@@ -87,7 +89,30 @@ export default {
     active1: false,
     value: "",
     search: "",
+    vaccines: [],
+    vaccine:{
+      name: '',
+      lotNumber: ''
+    }
   }),
+  created(){
+    this.showAllVaccines()
+  },
+  methods: {
+    showAllVaccines(){
+      let baseURL = "http://localhost:4000/api/vaccines/"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.vaccines = res.data.vaccine;
+        console.log(res.data);
+        console.log(this.vaccines);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  }
 };
 </script>
 <style scoped>
