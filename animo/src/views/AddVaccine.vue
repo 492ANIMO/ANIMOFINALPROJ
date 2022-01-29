@@ -13,9 +13,10 @@
           </h3>
         </div>
         <div class="container-box">
-            <vs-input label="ชื่อวัคซีน" v-model="value" placeholder="ชื่อวัคซีน..." />
-            <vs-input label="เลขล็อตวัคซีน" v-model="value" placeholder="เลขล็อตวัคซีน..." />
-            <vs-button color="#6b9bce" @click="active = !active" class="BT2">
+            <vs-input label="ชื่อวัคซีน" v-model="vaccine.name" placeholder="ชื่อวัคซีน..." />
+            <vs-input label="เลขล็อตวัคซีน" v-model="vaccine.lot_number" placeholder="เลขล็อตวัคซีน..." />
+            <vs-button color="#6b9bce" @click="active = !active,
+            createVaccine()" class="BT2">
                 <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
             </vs-button>
         </div>
@@ -111,7 +112,27 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+    },
+
+    createVaccine(){
+      let baseURL = "http://localhost:4000/api/vaccines/"
+
+      axios
+        .post(baseURL, this.vaccines)
+        .then((res) => {
+          this.vaccine = {
+            name: '',
+            lot_number: ''
+          };
+          console.log(res.data);
+          this.showAllVaccines();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
+
+
   }
 };
 </script>
