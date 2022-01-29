@@ -51,7 +51,7 @@
             <vs-td>
                 <vs-button
                   color="#ca7676"
-                  @click="active=!active"
+                  @click="active=!active, deleteVaccine(data._id)"
                   class="BT1"
                   style="width:70px"
                 >
@@ -130,7 +130,21 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    }
+    },
+
+    deleteVaccine(id){
+      let baseURL = "http://localhost:4000/api/vaccines/"
+      console.log(`id: ${id}`);
+
+      axios.delete(baseURL+id, id).then((res)=>{
+        console.log(res.data);
+
+        this.showAllVaccines();
+        
+      }) .catch((error) => {
+          console.log(error);
+      });
+    },
 
 
   }
