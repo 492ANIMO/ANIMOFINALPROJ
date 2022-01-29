@@ -76,23 +76,16 @@ exports.create = async (req, res, next) => {
   try {
     const {name, type, manufacturer, lot_number, detail} = req.body;
     
-    const treatment = new Treatment({
-      name,
-      type,
-      manufacturer,
-      lot_number,
-      detail
+    const treatment = new Treatment(req.body)
+
+    await treatment.save((error, doc)=>{
+      if(error) throw new Error('เพิ่มรายการการรักษาไม่สำเร็จ');
+
+      res.status(200).json({
+        message: 'เพิ่มการรักษาสำเร็จ',
+        treatment: doc
+      });
     })
-
-    treatment.save((error)=>{
-      if(error) throw error;
-    })
-
-    res.status(200).json({
-      message: 'เพิ่มการรักษาสำเร็จ',
-      treatment
-    });
-
   } catch (error) {
     next(error);
   }
