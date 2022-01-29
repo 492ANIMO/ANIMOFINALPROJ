@@ -118,7 +118,7 @@ export default {
       let baseURL = "http://localhost:4000/api/vaccines/"
 
       axios
-        .post(baseURL, this.vaccines)
+        .post(baseURL, this.vaccine)
         .then((res) => {
           this.vaccine = {
             name: '',

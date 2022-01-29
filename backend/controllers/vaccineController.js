@@ -41,22 +41,17 @@ exports.create = async (req, res, next) => {
   try {
     const {name, type, manufacturer, lot_number, detail} = req.body;
     
-    const vaccine = new Vaccine({
-      name,
-      type,
-      manufacturer,
-      lot_number,
-      detail
-    })
+    const vaccine = new Vaccine(req.body)
 
-    vaccine.save((error)=>{
+    await vaccine.save((error, doc)=>{
       if(error) throw error;
+
+      res.status(200).json({
+        message: 'เพิ่มวัคซีนสำเร็จ',
+        vaccine: doc
+      });
     })
 
-    res.status(200).json({
-      message: 'เพิ่มวัคซีนสำเร็จ',
-      vaccine
-    });
 
   } catch (error) {
     next(error);

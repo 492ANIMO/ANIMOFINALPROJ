@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const schema = new Schema({
   name: { type: String, required: true, trim: true},
-  type: { type: String, required: true, trim: true},
+  type: { type: String,  trim: true},
   manufacturer: { type: String, trim: true},
   lot_number: { type: String, trim: true},
   detail: { type: String, trim: true}
