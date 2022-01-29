@@ -6,7 +6,7 @@ const Treatment = require('../models/treatment');
 
 exports.index = async (req, res, next) => {
   try {
-    const treatment = await Treatment.find();
+    const treatment = await Treatment.find().sort({updatedAt: -1});
     if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
 
     const count = await Treatment.countDocuments();

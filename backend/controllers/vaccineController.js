@@ -5,7 +5,7 @@ const Vaccine = require('../models/vaccine');
 
 exports.index = async (req, res, next) => {
   try {
-    const vaccine = await Vaccine.find();
+    const vaccine = await Vaccine.find().sort({updatedAt: -1});
     if(!vaccine){ throw new Error('ไม่พบข้อมูลวัคซีน'); }
 
     const count = await Vaccine.countDocuments();

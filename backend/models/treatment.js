@@ -6,6 +6,7 @@ const schema = new Schema({
   detail: { type: String, trim: true},
   type: { type: String, trim: true, enum: ['การรักษา', 'การตรวจสุขภาพ'], default: 'การรักษา'}
 },{
+  timestamps: true, 
   collection: 'treatments'
 });
 module.exports = mongoose.model('Treatment', schema);
