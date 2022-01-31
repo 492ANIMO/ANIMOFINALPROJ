@@ -7,6 +7,7 @@
     <div class="Content1">
       <div class="Content2">
         <h2><font-awesome-icon class="icon" icon="notes-medical" />รายการรักษา</h2>
+
         <div class="line">
           <h3>
             <font-awesome-icon class="icon" icon="plus" />เพิ่มรายการรักษา
@@ -15,23 +16,23 @@
         <div class="container-box">
           <vs-input
             label="ชื่อการรักษา"
-            v-model="value"
+            v-model="treatment.name"
             placeholder="ชื่อการรักษา..."
           />
           <vs-select
             label="ประเภทการรักษา"
             placeholder="ประเภทการรักษา"
-            v-model="value"
+            v-model="treatment.type"
             class="type"
           >
             <vs-option label="การรักษา" value="การรักษา"> การรักษา </vs-option>
             <vs-option label="การตรวจสุขภาพ" value="การตรวจสุขภาพ"> การตรวจสุขภาพ </vs-option>
           </vs-select>
-          <vs-button color="#6b9bce" @click="active = !active" class="BT2">
+          <vs-button color="#6b9bce" @click="active = !active, createTreatment()" class="BT2">
             <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
           </vs-button>
         </div>
-        <h4 class="list">รายการทั้งหมด 1 รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ this.treatments.length }} รายการ</h4>
         <template>
           <div class="center examplex">
             <vs-table striped>
@@ -43,13 +44,17 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr>
-                  <vs-td> ตรวจสุขภาพปอด </vs-td>
-                  <vs-td> ตรวจสุขภาพ </vs-td>
+                <vs-tr :key="i"
+                v-for="(data, i) in treatments"
+              :data="data">
+                  <vs-td> {{ data.name }} </vs-td>
+                  <vs-td> {{ data.type }} </vs-td>
                   <vs-td>
                     <vs-button
                       color="#ca7676"
-                      @click="active = !active"
+                      @click="active = !active,
+                        deleteTreatment(data._id)
+                      "
                       class="BT1"
                       style="width: 70px"
                     >
@@ -73,7 +78,7 @@
 <script>
 import Navbar from "@/components/NavbarAdmin.vue";
 import NavbarSide from "@/components/NavbarSideAdmin.vue";
-// import axios from "axios";
+import axios from "axios";
 import mixins from "../mixins.js";
 
 export default {
@@ -88,7 +93,62 @@ export default {
     active1: false,
     value: "",
     search: "",
+
+    treatments: [],
+    treatment: {
+      name: '',
+      type: ''
+    },
+
   }),
+  created(){
+    this.showAllTreatments()
+  },
+  methods: {
+    showAllTreatments(){
+      let baseURL = "http://localhost:4000/api/treatments/"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.treatments = res.data.treatment;
+        console.log(res.data);
+        console.log(this.treatments);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
+    createTreatment(){
+      let baseURL = "http://localhost:4000/api/treatments/"
+
+      axios
+        .post(baseURL, this.treatment)
+        .then((res) => {
+          this.treatment = {
+            name: '',
+            type: ''
+          };
+          console.log(res.data);
+          this.showAllTreatments();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    deleteTreatment(id){
+       let baseURL = "http://localhost:4000/api/treatments/";
+       console.log(`id: ${id}`);
+
+      axios.delete(baseURL+id, id).then((res)=>{
+        console.log(res.data);
+
+        this.showAllTreatments();
+        
+      }) .catch((error) => {
+          console.log(error);
+      });
+    }
+  }
 };
 </script>
 <style scoped>

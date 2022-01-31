@@ -13,13 +13,14 @@
           </h3>
         </div>
         <div class="container-box">
-            <vs-input label="ชื่อวัคซีน" v-model="value" placeholder="ชื่อวัคซีน..." />
-            <vs-input label="เลขล็อตวัคซีน" v-model="value" placeholder="เลขล็อตวัคซีน..." />
-            <vs-button color="#6b9bce" @click="active = !active" class="BT2">
+            <vs-input label="ชื่อวัคซีน" v-model="vaccine.name" placeholder="ชื่อวัคซีน..." />
+            <vs-input label="เลขล็อตวัคซีน" v-model="vaccine.lot_number" placeholder="เลขล็อตวัคซีน..." />
+            <vs-button color="#6b9bce" @click="active = !active,
+            createVaccine()" class="BT2">
                 <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
             </vs-button>
         </div>
-        <h4 class="list">รายการทั้งหมด 1 รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ this.vaccines.length }} รายการ</h4>
         <template>
     <div class="center examplex">
       <vs-table striped>
@@ -37,18 +38,20 @@
           </vs-tr>
         </template>
         <template #tbody>
-          <vs-tr
+          <vs-tr :key="i"
+                v-for="(data, i) in vaccines"
+              :data="data"
           >
             <vs-td>
-              วัคซีนพิษสุนัขบ้า
+              {{ data.name }}
             </vs-td>
             <vs-td>
-              1212312121
+              {{ data.lot_number }}
             </vs-td>
             <vs-td>
                 <vs-button
                   color="#ca7676"
-                  @click="active=!active"
+                  @click="active=!active, deleteVaccine(data._id)"
                   class="BT1"
                   style="width:70px"
                 >
@@ -72,7 +75,7 @@
 <script>
 import Navbar from "@/components/NavbarAdmin.vue";
 import NavbarSide from "@/components/NavbarSideAdmin.vue";
-// import axios from "axios";
+import axios from "axios";
 import mixins from "../mixins.js";
 
 export default {
@@ -87,7 +90,64 @@ export default {
     active1: false,
     value: "",
     search: "",
+    vaccines: [],
+    vaccine:{
+      name: '',
+      lot_number: ''
+    }
   }),
+  created(){
+    this.showAllVaccines()
+  },
+  methods: {
+    showAllVaccines(){
+      let baseURL = "http://localhost:4000/api/vaccines/"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.vaccines = res.data.vaccine;
+        console.log(res.data);
+        console.log(this.vaccines);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
+
+    createVaccine(){
+      let baseURL = "http://localhost:4000/api/vaccines/"
+
+      axios
+        .post(baseURL, this.vaccine)
+        .then((res) => {
+          this.vaccine = {
+            name: '',
+            lot_number: ''
+          };
+          console.log(res.data);
+          this.showAllVaccines();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    deleteVaccine(id){
+      let baseURL = "http://localhost:4000/api/vaccines/"
+      console.log(`id: ${id}`);
+
+      axios.delete(baseURL+id, id).then((res)=>{
+        console.log(res.data);
+
+        this.showAllVaccines();
+        
+      }) .catch((error) => {
+          console.log(error);
+      });
+    },
+
+
+  }
 };
 </script>
 <style scoped>

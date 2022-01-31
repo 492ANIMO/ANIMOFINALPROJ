@@ -11,18 +11,6 @@ exports.index = async (req, res, next) => {
    
     const package = await Package.find()
     .sort({updatedAt: -1})
-    .populate({ 
-      path: 'vaccines',
-     select: '-createdAt -updatedAt -__v', 
-    })
-    .populate({ 
-      path: 'treatments',
-     select: '-createdAt -updatedAt -__v', 
-    })
-    .populate({ 
-      path: 'healthChecks',
-     select: '-createdAt -updatedAt -__v', 
-    })
     if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
 
     res.status(200).json({
@@ -39,18 +27,6 @@ exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
     const package = await Package.findById(id)
-    // .populate({ 
-    //   path: 'vaccines',
-    //  select: '-createdAt -updatedAt -__v', 
-    // })
-    // .populate({ 
-    //   path: 'treatments',
-    //  select: '-createdAt -updatedAt -__v', 
-    // })
-    // .populate({ 
-    //   path: 'healthChecks',
-    //  select: '-createdAt -updatedAt -__v', 
-    // })
     if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
 
     res.status(200).json({
@@ -80,16 +56,12 @@ exports.create = async (req, res, next) => {
       detail = '-';
     }
 
-    // const vaccines = await Vaccine.find().where('_id').in(vaccineId).exec();
-    // const treatments = await Treatment.find().where('_id').in(treatmentId).exec();
-    // const healthChecks = await HealthCheck.find().where('_id').in(healthCheckId).exec();
-
     const package = new Package({
       name,
       type,
       vaccines,
       treatments,
-      healthChecks,
+      healthChecks, //
       detail,
       price
     })
@@ -116,20 +88,7 @@ exports.update = async (req, res, next) => {
      if (req.body.detail === '') {
       req.body.detail = '-';
     }
-    
-    // const package = await Package.findOneAndUpdate({
-    //   _id: id
-    // }, {
-    //   name,
-    //   vaccines,
-    //   treatments,
-    //   healthChecks,
-    //   detail,
-    //   price,
-    //   type
-    // }, {
-    //   returnDocument: 'after'
-    // })
+
     const package = await Package.findOneAndUpdate({
       _id: id
     }, req.body, {

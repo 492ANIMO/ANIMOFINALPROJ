@@ -3,7 +3,7 @@
     <ul>
       <li>
         <div class="NavProfile">
-          <h3>Doctor Name</h3>
+          <h3>Admin</h3>
           <h6>Role : Admin</h6>
         </div>
       </li>

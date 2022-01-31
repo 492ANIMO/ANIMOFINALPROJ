@@ -18,11 +18,15 @@ const schema = new Schema({
     detail: { type: String, trim: true}
   }],
   treatments: [{ 
-    name: { type: String, required: true, trim: true},
-    detail: { type: String, trim: true} }],
+    name: { type: String, required: true, trim: true },
+    detail: { type: String, trim: true } ,
+    type: { type: String, trim: true }
+  }],
   healthChecks: [{ 
     name: { type: String, required: true, trim: true},
-    detail: { type: String, trim: true} }],
+    detail: { type: String, trim: true},
+    type: { type: String, trim: true }
+   }],
     
   detail: { type: String, trim: true, default: '-'},
   price: { type: Number },

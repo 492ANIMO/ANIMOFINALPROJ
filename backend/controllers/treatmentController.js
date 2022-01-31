@@ -6,7 +6,41 @@ const Treatment = require('../models/treatment');
 
 exports.index = async (req, res, next) => {
   try {
-    const treatment = await Treatment.find();
+    const treatment = await Treatment.find().sort({updatedAt: -1});
+    if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
+
+    const count = await Treatment.countDocuments();
+
+    res.status(200).json({
+      message: 'ดึงข้อมูลสำเร็จ',
+      treatment,
+      count
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+exports.treatments = async (req, res, next) => {
+  try {
+    const treatment = await Treatment.find({type: 'การรักษา'});
+    if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
+
+    const count = await Treatment.countDocuments();
+
+    res.status(200).json({
+      message: 'ดึงข้อมูลสำเร็จ',
+      treatment,
+      count
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+exports.healthChecks = async (req, res, next) => {
+  try {
+    const treatment = await Treatment.find({type: 'การตรวจสุขภาพ'});
     if(!treatment){ throw new Error('ไม่พบข้อมูลการรักษา'); }
 
     const count = await Treatment.countDocuments();
@@ -42,23 +76,16 @@ exports.create = async (req, res, next) => {
   try {
     const {name, type, manufacturer, lot_number, detail} = req.body;
     
-    const treatment = new Treatment({
-      name,
-      type,
-      manufacturer,
-      lot_number,
-      detail
+    const treatment = new Treatment(req.body)
+
+    await treatment.save((error, doc)=>{
+      if(error) throw new Error('เพิ่มรายการการรักษาไม่สำเร็จ');
+
+      res.status(200).json({
+        message: 'เพิ่มการรักษาสำเร็จ',
+        treatment: doc
+      });
     })
-
-    treatment.save((error)=>{
-      if(error) throw error;
-    })
-
-    res.status(200).json({
-      message: 'เพิ่มการรักษาสำเร็จ',
-      treatment
-    });
-
   } catch (error) {
     next(error);
   }
