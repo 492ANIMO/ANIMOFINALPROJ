@@ -6,7 +6,7 @@
     </div>
     <div class="Content1">
       <div class="Content2">
-        <h2><font-awesome-icon class="icon" icon="syringe" />รายการวัคซีน</h2>
+        <h2><font-awesome-icon class="icon" icon="notes-medical" />รายการรักษา</h2>
         <div class="line">
           <h3>
             <font-awesome-icon class="icon" icon="plus" />เพิ่มรายการรักษา

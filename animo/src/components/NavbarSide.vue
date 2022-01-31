@@ -39,7 +39,7 @@ ul {
     margin: 0;
     padding: 0;
     width: 20%;
-    background-color: #46AE9C;
+    background-color: #45ae9b;
     color: #ffffff;
     position: fixed;
     height: 100%;
