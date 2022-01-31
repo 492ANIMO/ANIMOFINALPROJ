@@ -23,15 +23,6 @@ exports.index = async (req, res, next) => {
      },
      select: '-createdAt -updatedAt -__v', 
     })
-    .populate({ 
-      path: 'reservation',
-      populate: {
-       path: 'package',
-       model: 'Package',
-       select: '-createdAt -updatedAt -__v',
-     },
-     select: '-createdAt -updatedAt -__v', 
-    })
     
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
@@ -63,15 +54,15 @@ exports.show = async (req, res, next) => {
      },
      select: '-createdAt -updatedAt -__v', 
     })
-    .populate({ 
-      path: 'reservation',
-      populate: {
-       path: 'package',
-       model: 'Package',
-       select: '-createdAt -updatedAt -__v',
-     },
-     select: '-createdAt -updatedAt -__v', 
-    })
+    // .populate({ 
+    //   path: 'reservation',
+    //   populate: {
+    //    path: 'package',
+    //    model: 'Package',
+    //    select: '-createdAt -updatedAt -__v',
+    //  },
+    //  select: '-createdAt -updatedAt -__v', 
+    // })
     
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
@@ -242,17 +233,23 @@ exports.confirm = async (req, res, next) => {
     const {id} = req.params;
     const { detail } = req.body;
 
-    const appointment = await Appointment.updateOne({_id:id},{
-    //   $addToSet: { 
-    //   'medical.vaccine': vaccines,
-    //   'medical.healthCheck': healthChecks,
-    //   'medical.treatment': treatments,
-
-    // },
+    // update appointment detail and status
+    const appointment = await Appointment.findByIdAndUpdate(id ,{
       detail,
       status: 'รักษาเสร็จสิ้น'
     });
+    
+    if (!appointment){
+      console.log(appointment);
+      throw new Error('ไม่สามารถยืนยันการรักษาได้')
+    }
 
+    console.log("Updated Appointment : ", appointment);
+    res.status(200).json({
+      message: 'ยืนยันการรักษาสำเร็จ',
+      data: appointment
+    });
+  
     // const appointmentObj = await Appointment.findById(id)
     // .populate('pet', 'name')
     // .populate('reservation', 'package')
@@ -274,10 +271,7 @@ exports.confirm = async (req, res, next) => {
 
     // if(appointment.modifiedCount===0){ throw new Error('เพิ่มข้อมูลการรักษาไม่สำเร็จ'); }
 
-    res.status(200).json({
-      message: 'สำเร็จ',
-      data: appointment
-    });
+   
 
   } catch (error) {
     next(error);
