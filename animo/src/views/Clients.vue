@@ -140,13 +140,31 @@
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputPop">
+             <div class="InputSL">
+              <vs-select
+                label="จังหวัด"
+                placeholder="เลือกจังหวัด"
+                v-model="client.address.province"
+                @change="onChangeProvince()"
+              >
+                <vs-option
+                  :key="i"
+                  v-for="(data, i) in selectProvince"
+                  :value="data.province"
+                  :label="data.province"
+                >
+                  {{ data.province }}
+                </vs-option>
+              
+              </vs-select>
+            </div>
+            <!-- <div class="InputPop">
               <vs-input
                 v-model="client.address.province"
                 label="จังหวัด"
                 placeholder="จังหวัด"
               ></vs-input>
-            </div>
+            </div> -->
           </vs-col>
         </vs-row>
         <div class="space"></div>
@@ -155,24 +173,63 @@
           <vs-col
             class="InputSM"
             w="2"
-          >
-            <div class="InputPop">
+          > 
+          <div class="InputSL">
+              <vs-select
+                label="อำเภอ"
+                placeholder="เลือกอำเภอ"
+                v-model="client.address.district"
+                @change="onChangeDistrict()"
+              >
+                <vs-option
+                  :key="i"
+                  v-for="(data, i) in selectDistrict"
+                  :value="data"
+                  :label="data"
+                >
+                  {{ data }}
+                </vs-option>
+              </vs-select>
+                <p>{{`selected district: ${client.address.district}`}}</p>
+              
+            </div>
+            
+            <!-- <div class="InputPop">
               <vs-input
                 v-model="client.address.district"
                 label="อำเภอ"
                 placeholder="อำเภอ"
               ></vs-input>
-            </div>
+            </div> -->
           </vs-col>
           <div class="space"></div>
           <vs-col class="InputSM" w="2" >
-            <div class="InputPop">
+             <div class="InputSL">
+              <vs-select
+                label="ตำบล"
+                placeholder="เลือกตำบล"
+                v-model="client.address.subdistrict"
+              >
+                <vs-option
+                  :key="i"
+                  v-for="(data, i) in selectSubDistrict"
+                  :value="data"
+                  :label="data"
+                >
+                  {{ data }}
+                </vs-option>
+              </vs-select>
+                <p>{{`selected subdistrict: ${client.address.subdistrict}`}}</p>
+              
+            </div>
+
+            <!-- <div class="InputPop">
               <vs-input
                 v-model="client.address.subdistrict"
                 label="ตำบล"
                 placeholder="ตำบล"
               ></vs-input>
-            </div>
+            </div> -->
           </vs-col>
           <div class="space"></div>
           
@@ -218,6 +275,7 @@ import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
 import { required, email, numeric, minLength, maxLength} from 'vuelidate/lib/validators';
+import { getProvince, getDistrict, getSubDistrict } from '../services/address'
 
 export default {
   name: "Dashboard",
@@ -234,6 +292,9 @@ export default {
     search: '',
     users: [
     ],
+    selectProvince: [],
+    selectDistrict: [],
+    selectSubDistrict: [],
     client: {
       firstName: '',
       lastName: '',
@@ -276,8 +337,11 @@ export default {
   ,
   created() {
     this.getClients();
+    this.loadData();
+    
   },
   methods: {
+    
     AddNoti(position = null ,duration ,color) {
           this.$vs.notification({
             color,
@@ -287,6 +351,39 @@ export default {
             text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
           })
         },
+
+    loadData() {
+      getProvince()
+      .then(res => {
+        this.selectProvince = res.data.data
+        console.log(this.selectProvince);
+      }).catch(err => {
+        console.log(err);
+      })
+    },
+
+    onChangeProvince() {
+      getDistrict(this.client.address.province).then((res) => {
+        console.log(res);
+        this.selectDistrict = res.data.data
+        console.log(this.selectDistrict);
+
+      }).catch((err) => {
+        console.log(err);
+      })
+    },
+
+    onChangeDistrict(){
+     console.log(`selected: ${this.client.address.district}`)
+     getSubDistrict(this.client.address.province, this.client.address.district).then((res)=>{
+       console.log(res);
+        this.selectSubDistrict = res.data.data
+        console.log(this.selectSubDistrict);
+     }).catch((err)=>{
+       console.log(err);
+     })
+    },
+
     getClients() {
       let baseURL = "http://localhost:4000/api/clients/";
       axios.get(baseURL).then((res) => {
@@ -371,6 +468,10 @@ export default {
     }
 
   },
+
+  computed: {
+    
+  }
 };
 </script>
 
