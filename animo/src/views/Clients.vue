@@ -152,16 +152,6 @@
         <div class="space"></div>
 
         <vs-row>
-          <vs-col class="InputSM" w="2" >
-            <div class="InputPop">
-              <vs-input
-                v-model="client.address.subdistrict"
-                label="ตำบล"
-                placeholder="ตำบล"
-              ></vs-input>
-            </div>
-          </vs-col>
-          <div class="space"></div>
           <vs-col
             class="InputSM"
             w="2"
@@ -175,6 +165,17 @@
             </div>
           </vs-col>
           <div class="space"></div>
+          <vs-col class="InputSM" w="2" >
+            <div class="InputPop">
+              <vs-input
+                v-model="client.address.subdistrict"
+                label="ตำบล"
+                placeholder="ตำบล"
+              ></vs-input>
+            </div>
+          </vs-col>
+          <div class="space"></div>
+          
           <vs-col
             class="InputSM"
             w="2"
