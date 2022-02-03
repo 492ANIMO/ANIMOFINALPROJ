@@ -1,6 +1,7 @@
 // const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs')
 //config
 const config = require('../config/index');
 
@@ -567,8 +568,6 @@ exports.logout = (req,res) => {
     res.clearCookie('jwt')
     .status(200)
     .json({ message: "Successfully logged out 😏 🍀" });
-
-
     
   } catch (error) {
     next(error)
