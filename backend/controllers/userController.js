@@ -173,8 +173,6 @@ exports.create = async (req, res, next) => {
   }
 }
 
-
-
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
@@ -243,7 +241,6 @@ exports.update = async (req, res, next) => {
     next(error);
   }
 }
-
 
 exports.destroy = async (req, res, next) => {
   try {
@@ -330,7 +327,7 @@ exports.login = async (req, res, next) => {
       role: user.role
     }, config.SECRET, {expiresIn: '1 days'})
 
-     //decode วันหมดอายุ
+     //decode วันหมดอายุ 
      const expires_in = jwt.decode(token);
 
      return res.status(200).json({
@@ -338,8 +335,6 @@ exports.login = async (req, res, next) => {
       expires_in: expires_in.exp,
       token_type: 'Bearer'
   }); 
-    
-
   } catch (error) {
     next(error)
   }
