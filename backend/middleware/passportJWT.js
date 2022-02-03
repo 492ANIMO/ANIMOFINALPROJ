@@ -24,5 +24,5 @@ passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
 }));
 
 // create property
-module.exports.isLogin = passport.authenticate('jwt', { session: false });
+module.exports.isLogin = passport.authenticate('jwt', { session: false }); //return true/false
 
