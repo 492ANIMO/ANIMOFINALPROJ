@@ -660,7 +660,6 @@ export default {
     },
     confirmAppointment(id) {
       let baseURL = "http://localhost:4000/api/appointments/confirm/" + id;
-      console.log(this.appointment);
       axios
         .patch(baseURL, {
           detail: this.currentAppointment.detail,
@@ -695,6 +694,7 @@ export default {
           };
 
           console.log(res.data.message);
+          console.log(res.data.data);
 
           this.load();
         })

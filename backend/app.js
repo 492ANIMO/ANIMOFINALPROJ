@@ -74,7 +74,7 @@ app.use((req, res, next) => {
 })
 
 app.use('/', indexRouter);
-app.use('/auth', authRouter);
+app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/clients', clientRouter);
 app.use('/api/staffs', staffRouter);
