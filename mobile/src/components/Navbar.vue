@@ -72,7 +72,7 @@ ul {
     font-size: 20px;
     color: #ffffff;
     height: 100%;
-    z-index: 99;
+    z-index: auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -230,10 +230,14 @@ export default {
   font-size: 18px;
   margin-left: -5px;
   margin-bottom: 12px;
+  z-index: 1;
 }
 ::v-deep .vs-select__input {
   width: 100%;
   border-radius: 10px;
   padding: 7px 13px 7px 10px;
+}
+::v-deep .vs-select {
+  z-index: 1;
 }
 </style>
