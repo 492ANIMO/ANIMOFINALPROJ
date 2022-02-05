@@ -1,0 +1,145 @@
+.content {
+    height: calc(100% - 70px);
+    width: 100%;
+    border-radius: 15px 15px 0px 0px;
+    z-index: auto !important;
+    margin-top: -10px;
+    text-align: center;
+    overflow: hidden;
+    position: absolute;
+  }
+.mypet {
+    background: rgb(133, 209, 220);
+    background: linear-gradient(
+      180deg,
+      rgba(133, 209, 220, 1) 0%,
+      rgba(130, 184, 222, 1) 100%
+    );
+}
+  .content1 {
+    padding: 20px;
+    display: grid;
+    text-align: center;
+  }
+  .content2 {
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 83.5vh;
+  }
+  .PetCard {
+    width: 100%;
+    height: 140px;
+    background: #ffffff;
+    margin-block: 10px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    display: inline-flex;
+    cursor: pointer;
+    max-width: 600px;
+    text-align: left !important;
+    margin-right: 10px;
+  }
+  .search {
+    padding-bottom: 10px;
+  }
+  .PicCat {
+    height: 140px;
+    width: 140px;
+    border-radius: 20px;
+  }
+  .PicCatDT {
+    width: 100%;
+    border-radius: 20px;
+  }
+  .PetDT {
+    height: 140px;
+    width: 100%;
+    margin-left: 20px;
+    display: inline-block;
+    align-items: center;
+  }
+  .PetDT h2 {
+    font-weight: 500;
+    color: #696969;
+    padding-top: 5px;
+  }
+  .TextDT {
+    color: #AEAEAE;
+    font-weight: 400;
+    padding-left: 8px;
+  }
+  .TextDT b{
+    color: #8b8b8b;
+    font-weight: 500;
+  }
+  .TextDT1 {
+    color: #63BCC9;
+    font-size: 15px;
+    font-weight: 400;
+    float: right;
+    padding-right: 15px;
+  }
+  .gander {
+    color:#c2c2c2;
+    position: relative;
+    top: -30px;
+    margin-right: 18px;
+    float: right;
+    font-size: 25px;
+  }
+  .button-add {
+    height: 35px;
+    border-radius: 20px;
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 10px !important;
+    align-items: center;
+    display: grid;
+    width: 100px;
+    margin: auto;
+  }
+  .button-add .icon-add {
+    text-align: center;
+    width: 100%;
+  }
+  .button-add a {
+    color: #696969;
+    text-decoration: none;
+  }
+  .footer-button {
+    float: right;
+    padding: 12px;
+    margin-right: -20px;
+  }
+  .button-detail {
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 5px;
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    margin-right: 10px;
+  }
+  .edit {
+    background: rgb(215, 132, 97);
+    background: linear-gradient(
+      45deg,
+      rgba(215, 132, 97, 1) 0%,
+      rgba(215, 169, 106, 1) 100%
+    );
+  }
+  .delete {
+    background: rgb(197, 94, 94);
+    background: linear-gradient(
+      45deg,
+      rgba(197, 94, 94, 1) 0%,
+      rgba(248, 139, 109, 1) 100%
+    );
+  }
+  .content-detail {
+      border-radius: 20px;
+      z-index: auto;
+      background: #ffffff;
+      padding: 10px 0px 0px 20px;
+  }

@@ -9,7 +9,7 @@
         </div>
           <div class="centerNav">
             <img src="../assets/ANIMO.png" alt="Animo" class="Logo1" />
-          <h2 class="HeadPage">สัตว์เลี้ยง</h2>
+          <h2 class="HeadPage">{{ namepage }}</h2>
           </div>
           <h2 class="rightNav"><font-awesome-icon icon="user-circle" /></h2>
       </div>
@@ -40,11 +40,14 @@
 <script>
 export default {
   name: "Navbar",
-
   data: () => ({
     drawer: false,
     group: null,
+    namepage: '',
   }),
+  props: [
+    'namepage'
+  ],
   watch: {
     group() {
       this.drawer = false;
