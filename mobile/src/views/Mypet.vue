@@ -85,7 +85,7 @@
         </div>
 
         <template #footer>
-          <div class="footer-button">
+          <div class="footer-button-none">
             <div class="button-detail edit">
               แก้ไข
             </div>

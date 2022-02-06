@@ -11,7 +11,7 @@
             <img src="../assets/ANIMO.png" alt="Animo" class="Logo1" />
           <h2 class="HeadPage">{{ namepage }}</h2>
           </div>
-          <h2 class="rightNav"><font-awesome-icon icon="user-circle" /></h2>
+          <router-link to="/profile"><h2 class="rightNav"><font-awesome-icon icon="user-circle" /></h2></router-link>
       </div>
     </div>
 

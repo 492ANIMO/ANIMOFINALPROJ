@@ -13,7 +13,17 @@ const routes = [
     path: '/addpet',
     name: 'Addpet',
     component: () => import('../views/Addpet.vue')
-  }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('../views/Profile.vue')
+  },
+  {
+    path: '/package',
+    name: 'Package',
+    component: () => import('../views/Package.vue')
+  },
 ]
 
 const router = new VueRouter({
