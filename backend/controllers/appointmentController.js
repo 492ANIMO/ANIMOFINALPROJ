@@ -54,15 +54,6 @@ exports.show = async (req, res, next) => {
      },
      select: '-createdAt -updatedAt -__v', 
     })
-    // .populate({ 
-    //   path: 'reservation',
-    //   populate: {
-    //    path: 'package',
-    //    model: 'Package',
-    //    select: '-createdAt -updatedAt -__v',
-    //  },
-    //  select: '-createdAt -updatedAt -__v', 
-    // })
     
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
