@@ -250,29 +250,35 @@ exports.confirm = async (req, res, next) => {
       message: 'ยืนยันการรักษาสำเร็จ',
       data: appointment
     });
-  
-    // const appointmentObj = await Appointment.findById(id)
-    // .populate('pet', 'name')
-    // .populate('reservation', 'package')
-    // console.log(appointmentObj)
 
-    // const pet = appointmentObj.pet._id;
-    // console.log(pet)
+    const confirmedAppointment = await Appointment.findById(id).populate({ 
+      path: 'pet',
+      populate: {
+       path: 'owner',
+       model: 'Client',
+       select: '-createdAt -updatedAt -__v',
+     },
+     select: '-createdAt -updatedAt -__v', 
+    })
 
-    // const packageName = await Package.findById(appointmentObj.reservation.package[0]).select('name')
+    console.log(`confirmed: ${confirmedAppointment}`);
 
-    // // add to history
-    // const history = new History({
-    //   package: appointmentObj.reservation.package[0],
-    //   appointment: id,
-    //   pet
+    // add to history
+    const history = new History({
+      pet: confirmedAppointment.pet,
+      package: confirmedAppointment.reservation.package,
+      appointment: id
+    })
+    await history.save();
+    if(!history){
+      throw new Error('เพิ่มประวัติการรักษาไม่สำเร็จ');
+    }
 
-    // })
-    // await history.save();
-
-    // if(appointment.modifiedCount===0){ throw new Error('เพิ่มข้อมูลการรักษาไม่สำเร็จ'); }
-
-   
+    res.status(200).json({
+      message: 'เพิ่มประวัติการรักษาสำเร็จ',
+      data: history
+    });
+    // if(appointment.modifiedCount===0){ throw new Error('เพิ่มประวัติการรักษาไม่สำเร็จ'); }
 
   } catch (error) {
     next(error);

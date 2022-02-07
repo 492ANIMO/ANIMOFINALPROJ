@@ -1,9 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const Pet = require('../models/pet')
+const Package = require('../models/package')
+const Appointment = require('../models/appointment')
+
 const schema = new Schema({
-  pet: { type: Schema.Types.ObjectId, ref: 'Pet', require: true },
-  package: { type: Schema.Types.ObjectId, ref: 'Package' },
+  pet: Pet.schema,
+  package: Package.schema,
   appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' }
 },{
   timestamps: true,
