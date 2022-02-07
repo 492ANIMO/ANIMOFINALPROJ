@@ -25,7 +25,7 @@
                   </template>
                   <template #tbody>
                     <vs-tr :key="i" v-for="(data, i) in $vs.getPage($vs.getSearch(reservations, search), page, max)" :data="data">
-                      <vs-td>{{ data._id }}</vs-td>
+                      <vs-td>{{ data.resId }}</vs-td>
                       <vs-td>{{ data.pet.owner.firstName+" "+data.pet.owner.lastName }}</vs-td>
                       <vs-td>{{ format_date(data.date) }}</vs-td>
                       <vs-td>{{ data.time }}</vs-td>

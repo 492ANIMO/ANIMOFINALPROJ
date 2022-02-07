@@ -15,7 +15,6 @@ const schema = new Schema({
   by: {type: String, trim: true, enum: ['นัดโดยสัตวแพทย์', 'การจอง'], default: 'นัดโดยสัตวแพทย์'},
   doctor: { type: String, trim: true, required: false},
 
-  // reservation: { type: Schema.Types.ObjectId, ref: 'Reservation' },
   reservation: Reservation.schema,
   medical:{
     vaccine: [{
@@ -31,6 +30,9 @@ const schema = new Schema({
       name: { type: String, trim: true },
       medDetail: { type: String }
     }]
+  },
+  appId:{
+    type: String, default: '0000000000', unique: true
   }
   
 },{

@@ -113,7 +113,8 @@ exports.create = async (req, res, next) => {
       time,
       type,
       detail,
-      packageObj
+      packageObj,
+      appId: new Date().getTime().toString()
     })
     await appointment.save();
 
