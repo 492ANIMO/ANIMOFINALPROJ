@@ -136,7 +136,8 @@ exports.create = async (req, res, next) => {
       time,
       doctor,
       status,
-      owner
+      owner,
+      resId: new Date().getTime().toString()
     });
     await reservation.save();
     if(!reservation){ throw new Error('การจองไม่สำเร็จ กรุณาลองใหม่'); }

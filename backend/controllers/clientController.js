@@ -2,6 +2,9 @@
 // import models
 const User = require('../models/user');
 const Client = require('../models/client');
+const Pet = require('../models/pet');
+const Appointment = require('../models/appointment');
+const Reservation = require('../models/reservation');
 
 
 exports.index = async (req, res, next) => {
@@ -26,29 +29,18 @@ exports.index = async (req, res, next) => {
 exports.show = async (req, res, next) => {
   try {
     const {id} = req.params;
-    Client.findById(id, (error, client) => {
-      if(error){
-        const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
-        error.statusCode = '400';
-        throw error; 
-      }
+    const client = await Client.findById(id);
 
-      res.status(200).json({
-        message: 'สำเร็จ',
-        client,
-      });
+
+    if(!client){ 
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
+      error.statusCode = '400';
+      throw error; 
+    }
+    res.status(200).json({
+      message: 'สำเร็จ',
+      client,
     });
-
-
-    // if(!client){ 
-    //   const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
-    //   error.statusCode = '400';
-    //   throw error; 
-    // }
-    // res.status(200).json({
-    //   message: 'สำเร็จ',
-    //   client,
-    // });
 
   } catch (error) {
     next(error);
@@ -104,27 +96,109 @@ exports.destroy = async (req, res, next) => {
     const {id} = req.params;
     // check if client have user accout
     let client = await Client.findById(id).populate('user');
+    if(!client){
+      throw new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+    }
 
-    if(client.user === undefined) { //doesnt have usr account -> delete client
+    let user = await User.find({'profile': id});
+    console.log(`user: ${user}`);
+
+    if(!user || user=='') { //doesnt have usr account -> delete client
       let deleteClient = await Client.deleteOne({_id:id});
       if(deleteClient.deletedCount === 0){ 
         throw new Error('ลบข้อมูลเจ้าของสัตว์เลี้ยงไม่สำเร็จ');
       }
+      // check if client have pet
+      let pet = await Pet.find({'owner': id}).populate({
+        path: 'owner',
+        model: 'Client'
+      });
+      console.log('pet: '+pet);
+
+      // if client have pet
+      if(pet.length!==0){
+        const petIds = await Pet.find({'owner': id}).distinct('_id')
+        console.log(`Id: ${petIds}`);
+
+        const appointment = await Appointment.deleteMany({'pet': {$in: petIds}})
+        .populate({ 
+          path: 'pet',
+          model: 'Pet'
+       })
+        if(!appointment){
+          throw new Error('ลบข้อมูลการนัดไม่สำเร็จ')
+        }
+        console.log('appointment: ' + appointment);
+    
+        const reservation = await Reservation.deleteMany({'pet': {$in: petIds}})
+        if(!reservation){
+          throw new Error('ลบข้อมูลการจองไม่สำเร็จ')
+        }
+        console.log(`reservation: ${reservation}`);
+    
+        const deletedPet = await Pet.deleteMany({'owner': id}).populate({
+          path: 'owner',
+          model: 'Client'
+        });
+        pet = deletedPet
+        
+      }
+
       res.status(200).json({
         message: 'ไม่มีuser ลบข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
-        client
+        client,
+        pet,
+        
+
       });
-    } else{ //client have user account -> delete user account
-      const user = await User.deleteOne({_id:client.user});
+    } else{ 
+      //client have user account -> delete user account
+      const user = await User.deleteOne({profile:id});
       if(user.deletedCount === 0) throw new Error('ไม่สามารถลบบัญชีผู้ใช้ของสัตว์เลี้ยงได้')
 
       client = await Client.deleteOne({_id:id});
       if(client.deletedCount === 0) throw new Error('ไม่สามารถลบข้อมูลเจ้าของสัตว์เลี้ยงได้')
 
+      let pet = await Pet.find({'owner': id}).populate({
+        path: 'owner',
+        model: 'Client'
+      });
+      console.log('pet: '+pet);
+
+      // if client have pet
+      if(pet.length!==0){
+        const petIds = await Pet.find({'owner': id}).distinct('_id')
+        console.log(`Id: ${petIds}`);
+        const appointment = await Appointment.deleteMany({'pet': {$in: petIds}})
+        .populate({ 
+          path: 'pet',
+          model: 'Pet'
+       })
+        if(!appointment){
+          throw new Error('ลบข้อมูลการนัดไม่สำเร็จ')
+        }
+        console.log('appointment: ' + appointment);
+    
+        const reservation = await Reservation.deleteMany({'pet': {$in: petIds}})
+        if(!reservation){
+          throw new Error('ลบข้อมูลการจองไม่สำเร็จ')
+        }
+        console.log(`reservation: ${reservation}`);
+    
+        const deletedPet = await Pet.deleteMany({'owner': id}).populate({
+          path: 'owner',
+          model: 'Client'
+        });
+        pet = deletedPet
+        
+      }
+      
+
       res.status(200).json({
         message: 'ลบข้อมูลเจ้าของสัตว์เลี้ยงและบัญชีผู้ใช้เรียบร้อย',
         user, 
-        client
+        client,
+        pet
       });
     }
 

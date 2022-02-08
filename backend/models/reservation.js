@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const Package = require('../models/package');
 
 const schema = new Schema({
-  // package: [{ type: Schema.Types.ObjectId, ref: 'Package' }],
+  resId: {type: String, default: '0000000000', unique: true},
   package: Package.schema,
   pet: {type: Schema.Types.ObjectId, ref: 'Pet'},
   date: {type: Date, required: true},

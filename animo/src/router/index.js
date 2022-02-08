@@ -28,7 +28,7 @@ const routes = [
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -36,23 +36,32 @@ const routes = [
     name: 'Clients',
     component: () => import('../views/Clients.vue'),
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
     path: '/package',
     name: 'Package',
-    component: () => import('../views/Package.vue')
+    component: () => import('../views/Package.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/reservation',
     name: 'Reservation',
-    component: () => import('../views/Reservation.vue')
+    component: () => import('../views/Reservation.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/appointment',
     name: 'Appointment',
-    component: () => import('../views/Appointment.vue')
+    component: () => import('../views/Appointment.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/contact',

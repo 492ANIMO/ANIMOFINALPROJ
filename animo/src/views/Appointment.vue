@@ -44,7 +44,7 @@
               )"
               :data="data"
             >
-              <vs-td>{{ data._id }}</vs-td>
+              <vs-td>{{ data.appId }}</vs-td>
               <vs-td>{{
                 data.pet.owner.firstName + " " + data.pet.owner.lastName
               }}</vs-td>

@@ -39,7 +39,7 @@ export default {
     }),
     methods:{
         login(){
-            let baseURL = "http://localhost:4000/api/users/login/";
+            let baseURL = "http://localhost:4000/api/auth/login/";
 
             axios
                 .post(baseURL, { email: this.email, password: this.password })
