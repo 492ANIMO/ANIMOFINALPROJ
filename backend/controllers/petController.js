@@ -154,17 +154,15 @@ exports.destroy = async (req, res, next) => {
       model: 'Pet'
    })
     if(!appointment){
-      throw new Error('ดึงข้อมูลการนัดไม่สำเร็จ')
+      throw new Error('ลบข้อมูลการนัดไม่สำเร็จ')
     }
     console.log('appointment: ' + appointment);
-    console.log('ลบนัดทั้งหมดแล้ว');
 
     const reservation = await Reservation.deleteMany({'pet': pet._id})
     if(!reservation){
-      throw new Error('ดึงข้อมูลการจองไม่สำเร็จ')
+      throw new Error('ลบข้อมูลการจองไม่สำเร็จ')
     }
     console.log(`reservation: ${reservation}`);
-    console.log('ลบการจองทั้งหมด');
 
     const deletedPet = await Pet.findByIdAndDelete(pet._id);
 
