@@ -49,7 +49,7 @@
     <div class="footer-button">
         <h4 class="register-h4">ยังไม่มีบัญชีใช่ไหม? สมัครเลย!</h4>
       <div class="button-register">
-        <h4>เพิ่มสัตว์เลี้ยง</h4>
+        <h4>ลงทะเบียนผู้ใช้</h4>
       </div>
     </div>
   </div>
