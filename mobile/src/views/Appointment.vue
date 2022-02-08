@@ -3,40 +3,37 @@
     <Navbar namepage="แพ็คเกจ" />
     <div class="content package">
       <div class="content1">
+        <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
         <div class="content2">
-          <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
-          <div class="filter-package">
-            <div class="bg-filter">
-              <img src="../assets/pet1.png" alt="Animo" class="Pic-package" />
+
+            <div class="filter-package">
+                <div class="bg-filter">
+                    <img src="../assets/pet1.png" alt="Animo" class="Pic-package" />
+                </div>
+                <h4>สุนัข</h4>
             </div>
-            <h4>สุนัข</h4>
-          </div>
-          <div class="filter-package">
-            <div class="bg-filter">
-              <img src="../assets/pet2.png" alt="Animo" class="Pic-package" />
+            <div class="filter-package">
+                <div class="bg-filter">
+                    <img src="../assets/pet2.png" alt="Animo" class="Pic-package" />
+                </div>
+                <h4>แมว</h4>
             </div>
-            <h4>แมว</h4>
-          </div>
-          <div class="filter-package">
-            <div class="bg-filter">
-              <img src="../assets/pet3.png" alt="Animo" class="Pic-package" />
+            <div class="filter-package">
+                <div class="bg-filter">
+                    <img src="../assets/pet3.png" alt="Animo" class="Pic-package" />
+                </div>
+                <h4>สัตว์ฟันแทะ</h4>
             </div>
-            <h4>สัตว์ฟันแทะ</h4>
-          </div>
-          <div class="filter-package">
-            <div class="bg-filter">
-              <img src="../assets/pet4.png" alt="Animo" class="Pic-package" />
+            <div class="filter-package">
+                <div class="bg-filter">
+                    <img src="../assets/pet4.png" alt="Animo" class="Pic-package" />
+                </div>
+                <h4>อื่นๆ</h4>
             </div>
-            <h4>อื่นๆ</h4>
-          </div>
 
           <div class="Package-Card" @click="active = !active">
             <div class="bg-package package-yellow">
-              <img
-                src="../assets/pet1.png"
-                alt="Animo"
-                class="Pic-package-dt"
-              />
+                <img src="../assets/pet1.png" alt="Animo" class="Pic-package-dt" />
             </div>
             <div class="PetDT">
               <h2>แพ็คเกจลูกสุนัข</h2>
@@ -54,11 +51,7 @@
 
           <div class="Package-Card" @click="active = !active">
             <div class="bg-package package-orange">
-              <img
-                src="../assets/pet2.png"
-                alt="Animo"
-                class="Pic-package-dt"
-              />
+                <img src="../assets/pet2.png" alt="Animo" class="Pic-package-dt" />
             </div>
             <div class="PetDT">
               <h2>แพ็คเกจลูกสุนัข</h2>
@@ -76,11 +69,7 @@
 
           <div class="Package-Card" @click="active = !active">
             <div class="bg-package package-pink">
-              <img
-                src="../assets/pet3.png"
-                alt="Animo"
-                class="Pic-package-dt"
-              />
+                <img src="../assets/pet3.png" alt="Animo" class="Pic-package-dt" />
             </div>
             <div class="PetDT">
               <h2>แพ็คเกจลูกสุนัข</h2>
@@ -98,11 +87,7 @@
 
           <div class="Package-Card" @click="active = !active">
             <div class="bg-package package-red">
-              <img
-                src="../assets/pet4.png"
-                alt="Animo"
-                class="Pic-package-dt"
-              />
+                <img src="../assets/pet4.png" alt="Animo" class="Pic-package-dt" />
             </div>
             <div class="PetDT">
               <h2>แพ็คเกจลูกสุนัข</h2>
@@ -117,9 +102,45 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
+    <vs-dialog v-model="active">
+      <template #header>
+        <img src="../assets/bento.png" alt="Animo" class="PicCatDT" />
+      </template>
+
+      <div class="content-detail">
+        <h2 style="font-size: 25px; color: #696969">Muji</h2>
+        <font-awesome-icon class="gander" icon="venus" />
+        <div class="TextDT" style="font-size: 18px">
+          <font>ประเภทสัตว์ : <b>สุนัข</b></font>
+        </div>
+        <div class="TextDT" style="font-size: 18px">
+          <font>อายุ : <b>2 ปี 3 เดือน</b></font>
+        </div>
+        <div class="TextDT" style="font-size: 18px">
+          <font>น้ำหนัก : <b>3 กิโลกรัม</b></font>
+        </div>
+        <div class="TextDT" style="font-size: 18px">
+          <font>ข้อมูล : <b>ข้อมูล</b></font>
+        </div>
+        <div class="TextDT" style="font-size: 18px">
+          <font>ข้อมูล : <b>ข้อมูล</b></font>
+        </div>
+        <div class="TextDT" style="font-size: 18px">
+          <font>ข้อมูล : <b>ข้อมูล</b></font>
+        </div>
+      </div>
+
+      <template #footer>
+        <div class="footer-button">
+          <div class="button-detail edit">แก้ไข</div>
+          <div class="button-detail delete">ลบ</div>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -127,7 +148,7 @@
 import Navbar from "../components/Navbar";
 
 export default {
-  name: "Package",
+  name: "Appointment",
   data() {
     return {
       search: "",
@@ -141,42 +162,26 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
-::v-deep .content1 {
-  position: absolute;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  width: 100%;
-  height: calc(100% - 0px);
-  padding-bottom: 0px;
-}
-::v-deep .content {
-  padding-bottom: 0px;
-  display: grid;
-}
-::v-deep .content2 {
-  padding-bottom: 0px;
-  height: 100%;
-}
 ::v-deep .PetDT h2 {
-  font-weight: 500;
-  font-size: 18px;
-  color: #696969;
-}
+    font-weight: 500;
+    font-size: 18px;
+    color: #696969;
+  }
 ::v-deep .PetDT font {
-  font-size: 13px;
-}
+    font-size: 13px;
+  }
 ::v-deep .TextDT {
-  margin-top: -5px;
-}
+    margin-top: -5px;
+  }
 ::v-deep .TextDT1 {
-  margin-top: -8px;
-}
+    margin-top: -8px;
+  }
 ::v-deep .PetDT {
-  height: 90px;
-  width: 100%;
-  margin-left: 20px;
-  display: inline-block;
-  align-items: center;
+    height: 90px;
+    width: 100%;
+    margin-left: 20px;
+    display: inline-block;
+    align-items: center;
 }
 ::v-deep .vs-input {
   width: 100%;
