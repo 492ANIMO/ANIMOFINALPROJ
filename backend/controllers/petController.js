@@ -2,6 +2,8 @@
 const User = require('../models/user');
 const Client = require('../models/client');
 const Pet = require('../models/pet');
+const Appointment = require('../models/appointment');
+const Reservation = require('../models/reservation');
 
 exports.index = async (req, res, next) => {
   try {
@@ -133,16 +135,44 @@ exports.showMyPet = async (req, res, next) => {
 exports.destroy = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const pet = await Pet.findByIdAndDelete(id);
+    // const pet = await Pet.findByIdAndDelete(id);
+    // if(!pet){
+    //   const error = new Error('ลบข้อมูลสัตว์เลี้ยงไม่สำเร็จ');
+    //   error.statusCode = '400';
+    //   throw error;
+    // }
+    const pet = await Pet.findById(id);
     if(!pet){
-      const error = new Error('ลบข้อมูลสัตว์เลี้ยงไม่สำเร็จ');
-      error.statusCode = '400';
+      const error = new Error('ไม่พบข้อมูลสัตว์เลี้ยง');
+      error.statusCode = 400;
       throw error;
     }
 
+    const appointment = await Appointment.deleteMany({'pet': pet._id})
+    .populate({ 
+      path: 'pet',
+      model: 'Pet'
+   })
+    if(!appointment){
+      throw new Error('ดึงข้อมูลการนัดไม่สำเร็จ')
+    }
+    console.log('appointment: ' + appointment);
+    console.log('ลบนัดทั้งหมดแล้ว');
+
+    const reservation = await Reservation.deleteMany({'pet': pet._id})
+    if(!reservation){
+      throw new Error('ดึงข้อมูลการจองไม่สำเร็จ')
+    }
+    console.log(`reservation: ${reservation}`);
+    console.log('ลบการจองทั้งหมด');
+
+    const deletedPet = await Pet.findByIdAndDelete(pet._id);
+
     res.status(200).json({
       message: 'ลบข้อมูลสัตว์เลี้ยงสำเร็จ',
-      deletedItem: pet
+      appointment,
+      reservation,
+      deletedPet
     });
 
   } catch (error) {
