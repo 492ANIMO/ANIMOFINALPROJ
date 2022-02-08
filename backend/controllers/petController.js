@@ -142,13 +142,16 @@ exports.destroy = async (req, res, next) => {
     //   throw error;
     // }
     const pet = await Pet.findById(id);
+    const petIds = await Pet.findById(id).distinct('_id')
+    console.log(`Id: ${petIds}`);
+
     if(!pet){
       const error = new Error('ไม่พบข้อมูลสัตว์เลี้ยง');
       error.statusCode = 400;
       throw error;
     }
 
-    const appointment = await Appointment.deleteMany({'pet': pet._id})
+    const appointment = await Appointment.deleteMany({'pet': {$in: petIds}})
     .populate({ 
       path: 'pet',
       model: 'Pet'
@@ -158,7 +161,7 @@ exports.destroy = async (req, res, next) => {
     }
     console.log('appointment: ' + appointment);
 
-    const reservation = await Reservation.deleteMany({'pet': pet._id})
+    const reservation = await Reservation.deleteMany({'pet': {$in: petIds}})
     if(!reservation){
       throw new Error('ลบข้อมูลการจองไม่สำเร็จ')
     }

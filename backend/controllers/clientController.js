@@ -103,7 +103,7 @@ exports.destroy = async (req, res, next) => {
     let user = await User.find({'profile': id});
     console.log(`user: ${user}`);
 
-    if(!user) { //doesnt have usr account -> delete client
+    if(!user || user=='') { //doesnt have usr account -> delete client
       let deleteClient = await Client.deleteOne({_id:id});
       if(deleteClient.deletedCount === 0){ 
         throw new Error('ลบข้อมูลเจ้าของสัตว์เลี้ยงไม่สำเร็จ');
@@ -114,9 +114,13 @@ exports.destroy = async (req, res, next) => {
         model: 'Client'
       });
       console.log('pet: '+pet);
+
       // if client have pet
       if(pet.length!==0){
-        const appointment = await Appointment.deleteMany({'pet': pet._id})
+        const petIds = await Pet.find({'owner': id}).distinct('_id')
+        console.log(`Id: ${petIds}`);
+
+        const appointment = await Appointment.deleteMany({'pet': {$in: petIds}})
         .populate({ 
           path: 'pet',
           model: 'Pet'
@@ -126,7 +130,7 @@ exports.destroy = async (req, res, next) => {
         }
         console.log('appointment: ' + appointment);
     
-        const reservation = await Reservation.deleteMany({'pet': pet._id})
+        const reservation = await Reservation.deleteMany({'pet': {$in: petIds}})
         if(!reservation){
           throw new Error('ลบข้อมูลการจองไม่สำเร็จ')
         }
@@ -163,7 +167,9 @@ exports.destroy = async (req, res, next) => {
 
       // if client have pet
       if(pet.length!==0){
-        const appointment = await Appointment.deleteMany({'pet': pet._id})
+        const petIds = await Pet.find({'owner': id}).distinct('_id')
+        console.log(`Id: ${petIds}`);
+        const appointment = await Appointment.deleteMany({'pet': {$in: petIds}})
         .populate({ 
           path: 'pet',
           model: 'Pet'
@@ -173,7 +179,7 @@ exports.destroy = async (req, res, next) => {
         }
         console.log('appointment: ' + appointment);
     
-        const reservation = await Reservation.deleteMany({'pet': pet._id})
+        const reservation = await Reservation.deleteMany({'pet': {$in: petIds}})
         if(!reservation){
           throw new Error('ลบข้อมูลการจองไม่สำเร็จ')
         }
