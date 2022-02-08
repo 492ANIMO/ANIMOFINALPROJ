@@ -13,7 +13,8 @@ export default {
 };
 </script>
 <style scope>
-  body {
-    margin: 0px;
-  }
+body {
+  margin: 0px;
+  font-family: kanit;
+}
 </style>

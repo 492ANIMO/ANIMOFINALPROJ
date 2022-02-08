@@ -183,7 +183,7 @@ export default {
 }
 .package-pink {
     background: rgb(249,199,235);
-background: linear-gradient(138deg, rgba(249,199,235,1) 0%, rgba(240,156,164,1) 100%);
+    background: linear-gradient(138deg, rgba(249,199,235,1) 0%, rgba(240,156,164,1) 100%);
 }
 .package-red {
     background: rgb(255,180,165);

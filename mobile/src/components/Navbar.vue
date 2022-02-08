@@ -76,6 +76,8 @@ ul {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: fixed;
+    top: 0px;
 }
 li {
     color: #ffffff;
@@ -147,6 +149,7 @@ li:hover:not(.active) {
 .BgNavSide {
   background: #46AE9C;
   height: 100%;
+  z-index: auto;
 }
 .v-navigation-drawer--is-mobile:not(.v-navigation-drawer--close), .v-navigation-drawer--temporary:not(.v-navigation-drawer--close) {
   border-radius: 0px 30px 30px 0px;

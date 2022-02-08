@@ -29,6 +29,7 @@ import { faClock } from '@fortawesome/free-solid-svg-icons'
 import { faVenus } from '@fortawesome/free-solid-svg-icons'
 import { faMars } from '@fortawesome/free-solid-svg-icons'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faUserSecret)
 library.add(faUserCircle)
@@ -52,6 +53,7 @@ library.add(faClock)
 library.add(faVenus)
 library.add(faMars)
 library.add(faHome)
+library.add(faChevronLeft)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
