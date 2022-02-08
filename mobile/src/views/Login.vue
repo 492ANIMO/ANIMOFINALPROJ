@@ -47,7 +47,7 @@
     </div>
 
     <div class="footer-button">
-        <h4 class="register-h4">ยังไม่มีบัญชีใช่ไหม? สมัครเลย!</h4>
+        <h4 class="register-h4">ยังไม่มีบัญชีใช่ไหม? ลงทะเบียนเลย!</h4>
       <div class="button-register">
         <h4>ลงทะเบียนผู้ใช้</h4>
       </div>
@@ -153,6 +153,7 @@ export default {
 }
 .or h3 {
   font-family: kanit;
+  font-size: 15px;
   font-weight: 400 !important;
   color: #c2c2c2;
 }
@@ -242,9 +243,12 @@ export default {
 }
 ::v-deep .vs-input__label--label {
   color: #696969;
-  font-size: 22px;
+  font-size: 22px !important;
   margin-left: -10px;
   font-family: kanit;
+}
+::v-deep .vs-input__label {
+  font-size: 15px;
 }
 ::v-deep .footer-button {
     display: grid;
