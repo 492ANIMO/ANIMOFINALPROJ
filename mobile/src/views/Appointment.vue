@@ -15,10 +15,10 @@
               />
             </div>
             <div class="PetDT">
-                <div class="status status-1">
+                <div class="status " :class="bindAppointmentType(appointment.by)">
                   <h4>{{ appointment.status }}</h4>
                 </div>
-              <h2>แพ็คเกจแมวโต</h2>
+              <h2>{{appointment.type}}</h2>
               <div class="TextDT">
                 <font>วันที่ : <b>{{ format_date(appointment.date) }}</b> เวลา : <b>{{ appointment.time }} น.</b> </font>
               </div>
@@ -106,6 +106,15 @@ export default {
   },
   methods:{
     ...mapActions(['fetchMyAppointment']),
+
+    bindAppointmentType: function(by){
+      if(by === 'รอยืนยัน'){
+        return 'status-1'
+      }else{
+        return 'status-2'
+      }
+    },
+
   },
   computed: {
     ...mapGetters(['allAppointments']),
