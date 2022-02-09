@@ -1,8 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import myPet from './modules/myPet';
+import user from './modules/user';
 
+// load vuex
 Vue.use(Vuex)
 
+
+// create store
 export default new Vuex.Store({
   state: {
   },
@@ -11,5 +16,7 @@ export default new Vuex.Store({
   actions: {
   },
   modules: {
+    myPet,
+    user
   }
 })

@@ -107,6 +107,7 @@ exports.showByClient = async (req, res, next) => {
 exports.showMyPet = async (req, res, next) => {
   try {
     let user = req.user;
+    console.log('req.user: '+req.user);
     // not logged in
     if(!user){  
       const error = new Error('Unauthorized');

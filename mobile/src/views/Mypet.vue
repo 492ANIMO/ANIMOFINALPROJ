@@ -6,19 +6,19 @@
         <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
         <div class="content2">
 
-          <div class="PetCard" @click="active = !active">
+          <div class="PetCard" v-for="pet in allPets" :key="pet.id" @click="active = !active">
             <img src="../assets/bento.png" alt="Animo" class="PicCat"/>
             <div class="PetDT">
-              <h2>Bento</h2>
+              <h2>{{ pet.name }}</h2>
               <font-awesome-icon class="gander" icon="mars" />
               <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>แมว</b></font>
+                <font>ประเภทสัตว์ : <b>{{ pet.type }}</b></font>
               </div>
               <div class="TextDT">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
+                <font>อายุ : <b>{{ pet.age.year }} ปี {{ pet.age.month }} เดือน</b></font>
               </div>
               <div class="TextDT">
-                <font>น้ำหนัก : <b>3 กิโลกรัม</b></font>
+                <font>น้ำหนัก : <b>{{ pet.weight }} กิโลกรัม</b></font>
               </div>
               <div class="TextDT1">
                 <font>ข้อมูลเพิ่มเติม...</font>
@@ -26,7 +26,7 @@
             </div>
           </div>
 
-          <div class="PetCard">
+          <!-- <div class="PetCard">
             <img src="../assets/muji.png" alt="Animo" class="PicCat" />
             <div class="PetDT">
               <h2>Muji</h2>
@@ -44,7 +44,7 @@
                 <font>ข้อมูลเพิ่มเติม...</font>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="button-add">
             <router-link to="/addpet"><font-awesome-icon class="icon" icon="plus"/></router-link>
@@ -72,15 +72,7 @@
               <div class="TextDT" style="font-size: 18px">
                 <font>น้ำหนัก : <b>3 กิโลกรัม</b></font>
               </div>
-              <div class="TextDT" style="font-size: 18px">
-                <font>ข้อมูล : <b>ข้อมูล</b></font>
-              </div>
-              <div class="TextDT" style="font-size: 18px">
-                <font>ข้อมูล : <b>ข้อมูล</b></font>
-              </div>
-              <div class="TextDT" style="font-size: 18px">
-                <font>ข้อมูล : <b>ข้อมูล</b></font>
-              </div>
+
 
         </div>
 
@@ -100,9 +92,21 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "Mypet",
+  methods: {
+    ...mapActions(['fetchMyPet', 'fetchCurrentUser'])
+  },
+  computed: {
+    ...mapGetters(['allPets'])
+  },
+  created(){
+    this.fetchMyPet();
+    this.fetchCurrentUser();
+  },
+
  data() {
    return {
      search: '',
