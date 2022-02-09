@@ -6,16 +6,18 @@
         <div class="profile-content">
           <img src="../assets/bento.png" alt="Animo" class="profile-client" />
         </div>
-        <h2 class="name-profile">Yoshinori Kane</h2>
+        <h2 class="name-profile">{{ currentUser.profile.firstName }} {{ currentUser.profile.lastName }}</h2>
         <div class="content-detail">
           <div class="TextDT">
-            <font>อีเมลล์ : <b>yoshinori@example.com</b></font>
+            <font>อีเมลล์ : <b>{{ currentUser.email }}</b></font>
           </div>
           <div class="TextDT">
-            <font>เบอร์โทร : <b>09-99999999</b></font>
+            <font>เบอร์โทร : <b>{{ currentUser.profile.contact }}</b></font>
           </div>
           <div class="TextDT">
-            <font>ที่อยู่ : <b>เชียงใหม่ 50200</b></font>
+            <font>ที่อยู่ : <b>
+              {{ currentUser.profile.address.detail }} {{ currentUser.profile.address.subdistrict }}
+              {{ currentUser.profile.address.district }} {{ currentUser.profile.address.province }} {{ currentUser.profile.address.postalCode }}</b></font>
           </div>
         </div>
       </div>
@@ -33,19 +35,29 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   name: "Mypet",
-  data() {
+  components: {
+    Navbar,
+  },
+    data() {
     return {
       search: "",
       active: false,
       value: "",
     };
   },
-  components: {
-    Navbar,
+  methods: {
+    ...mapActions(['fetchCurrentUser'])
   },
+  computed: {
+    ...mapGetters(['currentUser'])
+  },
+  created(){
+    this.fetchCurrentUser();
+  }
 };
 </script>
 <style scoped>

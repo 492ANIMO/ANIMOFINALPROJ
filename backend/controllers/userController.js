@@ -53,6 +53,7 @@ exports.getCurrentProfile = async (req, res, next) => {
   try {
     // destructoring
     const {_id, email, role} = req.user
+    console.log('req.user: '+req.user);
 
     const user = await User.findById(_id).select('-password').populate({ 
       path: 'profile'

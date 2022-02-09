@@ -6,19 +6,19 @@
         <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
         <div class="content2">
 
-          <div class="PetCard" @click="active = !active">
+          <div class="PetCard" v-for="pet in allPets" :key="pet._id" @click="active = !active, fetchPetDetail(pet._id)">
             <img src="../assets/bento.png" alt="Animo" class="PicCat"/>
             <div class="PetDT">
-              <h2>Bento</h2>
+              <h2>{{ pet.name }}</h2>
               <font-awesome-icon class="gander" icon="mars" />
               <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>แมว</b></font>
+                <font>ประเภทสัตว์ : <b>{{ pet.type }}</b></font>
               </div>
               <div class="TextDT">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
+                <font>อายุ : <b>{{ pet.age.year }} ปี {{ pet.age.month }} เดือน</b></font>
               </div>
               <div class="TextDT">
-                <font>น้ำหนัก : <b>3 กิโลกรัม</b></font>
+                <font>น้ำหนัก : <b>{{ pet.weight }} กิโลกรัม</b></font>
               </div>
               <div class="TextDT1">
                 <font>ข้อมูลเพิ่มเติม...</font>
@@ -26,7 +26,7 @@
             </div>
           </div>
 
-          <div class="PetCard">
+          <!-- <div class="PetCard">
             <img src="../assets/muji.png" alt="Animo" class="PicCat" />
             <div class="PetDT">
               <h2>Muji</h2>
@@ -44,7 +44,7 @@
                 <font>ข้อมูลเพิ่มเติม...</font>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="button-add">
             <router-link to="/addpet"><font-awesome-icon class="icon" icon="plus"/></router-link>
@@ -61,27 +61,26 @@
 
         <div class="content-detail">
 
-              <h2 style="font-size: 25px; color: #696969;">Muji</h2>
+              <h2 style="font-size: 25px; color: #696969;">{{ petDetail.name }}</h2>
               <font-awesome-icon class="gander" icon="venus" />
               <div class="TextDT" style="font-size: 18px">
-                <font>ประเภทสัตว์ : <b>สุนัข</b></font>
+                <font>ประเภทสัตว์ : <b>{{ petDetail.type }}</b></font>
               </div>
               <div class="TextDT" style="font-size: 18px">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
+                <font>พันธุ์ : <b>{{ petDetail.breed }}</b></font>
               </div>
               <div class="TextDT" style="font-size: 18px">
-                <font>น้ำหนัก : <b>3 กิโลกรัม</b></font>
+                <font>เพศ : <b>{{ petDetail.gender }}</b></font>
               </div>
               <div class="TextDT" style="font-size: 18px">
-                <font>ข้อมูล : <b>ข้อมูล</b></font>
+                <font>อายุ : <b>{{ petDetail.age.year }} ปี {{ petDetail.age.month }} เดือน</b></font>
               </div>
               <div class="TextDT" style="font-size: 18px">
-                <font>ข้อมูล : <b>ข้อมูล</b></font>
+                <font>น้ำหนัก : <b>{{ petDetail.weight }} กิโลกรัม</b></font>
               </div>
               <div class="TextDT" style="font-size: 18px">
-                <font>ข้อมูล : <b>ข้อมูล</b></font>
+                <font>กรุ๊ปเลือด : <b>{{ petDetail.bloodType }} </b></font>
               </div>
-
         </div>
 
         <template #footer>
@@ -100,9 +99,21 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "Mypet",
+  methods: {
+    ...mapActions(['fetchMyPet', 'fetchCurrentUser', 'fetchPetDetail'])
+  },
+  computed: {
+    ...mapGetters(['allPets', 'petDetail'])
+  },
+  created(){
+    this.fetchMyPet();
+    this.fetchCurrentUser();
+  },
+
  data() {
    return {
      search: '',

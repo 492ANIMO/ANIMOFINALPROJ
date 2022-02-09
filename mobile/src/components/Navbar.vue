@@ -43,7 +43,7 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
-    namepage: '',
+    // namepage: '',
   }),
   props: [
     'namepage'
