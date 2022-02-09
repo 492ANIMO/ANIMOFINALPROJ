@@ -34,7 +34,7 @@
           v-for="pack in allPackage" :key="pack._id" @click="active = !active">
             <div class="bg-package package-yellow" :class="BindPackageType(pack.type)">
               <img
-                src="../assets/pet1.png"
+                :src="getImgUrl(pack.type)"
                 alt="Animo"
                 class="Pic-package-dt"
               />
@@ -152,6 +152,20 @@ export default {
       } else{
         return 'package-red'
       }
+    },
+    getImgUrl: function(type){
+      const images = require.context('../assets/', false, /\.png$/)
+      let pet;
+      if(type==='สุนัข'){
+        pet = 'pet1'
+      } else if(type==='แมว'){
+        pet = 'pet2'
+      } else if(type==='สัตว์ฟันแทะ'){
+        pet = 'pet3'
+      } else{
+        pet = 'pet4'
+      }
+      return images('./' + pet + ".png")
     }
     
   },
