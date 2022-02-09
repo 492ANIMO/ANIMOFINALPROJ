@@ -141,6 +141,17 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+::v-deep .Package-Card {
+    border-radius: 10px;
+}
+::v-deep .bg-package {
+    border-radius: 10px;
+}
+::v-deep .Pic-appointment-dt {
+    height: 90px;
+    width: 90px;
+    border-radius: 10px 0px 0px 10px;
+}
 ::v-deep .content1 {
   position: absolute;
   overflow-y: scroll;

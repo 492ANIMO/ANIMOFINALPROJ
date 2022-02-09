@@ -39,6 +39,11 @@ const routes = [
     name: 'Appointment',
     component: () => import('../views/Appointment.vue')
   },
+  {
+    path: '/history',
+    name: 'History',
+    component: () => import('../views/History.vue')
+  },
 ]
 
 const router = new VueRouter({
