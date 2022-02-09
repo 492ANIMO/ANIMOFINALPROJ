@@ -6,7 +6,7 @@
         <div class="profile-content">
           <img src="../assets/bento.png" alt="Animo" class="profile-client" />
         </div>
-        <h2 class="name-profile">Yoshinori Kane</h2>
+        <h2 class="name-profile">{{ currentUser.profile.firstName }} {{ currentUser.profile.lastName }}</h2>
         <div class="content-detail">
           <div class="TextDT">
             <font>อีเมลล์ : <b>{{ currentUser.email }}</b></font>

@@ -1,7 +1,11 @@
 import axios from "axios";
 
 const state = {
-  currentUser: {}
+  currentUser: {
+    profile:{
+      address:{}
+    }
+  }
 }
 
 const getters = {
