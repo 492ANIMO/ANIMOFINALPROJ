@@ -30,8 +30,9 @@
             <h4>อื่นๆ</h4>
           </div>
 
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package package-yellow">
+          <div class="Package-Card" 
+          v-for="pack in allPackage" :key="pack._id" @click="active = !active">
+            <div class="bg-package package-yellow" :class="BindPackageType(pack.type)">
               <img
                 src="../assets/pet1.png"
                 alt="Animo"
@@ -39,9 +40,9 @@
               />
             </div>
             <div class="PetDT">
-              <h2>แพ็คเกจลูกสุนัข</h2>
+              <h2>{{ pack.name }}</h2>
               <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>แมว</b></font>
+                <font>ประเภทสัตว์ : <b>{{ pack.type }}</b></font>
               </div>
               <div class="TextDT">
                 <font>อายุ : <b>2 ปี 3 เดือน</b></font>
@@ -125,6 +126,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import {mapActions, mapGetters} from 'vuex';
 
 export default {
   name: "Package",
@@ -137,8 +139,31 @@ export default {
   components: {
     Navbar,
   },
+  methods: {
+    ...mapActions(['fetchPackage']),
+
+    BindPackageType: function(type){
+      if(type==='สุนัข'){
+        return 'package-yellow'
+      } else if(type==='แมว'){
+        return 'package-orange'
+      } else if(type==='สัตว์ฟันแทะ'){
+        return 'package-pink'
+      } else{
+        return 'package-red'
+      }
+    }
+    
+  },
+  computed: {
+    ...mapGetters(['allPackage'])
+  },
+  created(){
+    this.fetchPackage();
+  },
 };
 </script>
+
 <style scoped>
 @import url("../assets/css/style.css");
 ::v-deep .content1 {
