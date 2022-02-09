@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <div class="Package-Card" @click="active = !active">
+          <!-- <div class="Package-Card" @click="active = !active">
             <div class="bg-package package-orange">
               <img
                 src="../assets/pet2.png"
@@ -117,7 +117,7 @@
                 <font>ข้อมูลเพิ่มเติม...</font>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
