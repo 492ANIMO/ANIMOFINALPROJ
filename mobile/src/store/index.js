@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import myPet from './modules/myPet';
 import user from './modules/user';
 import petPackage from './modules/package';
+import appointment from './modules/appointment';
 
 // load vuex
 Vue.use(Vuex)
@@ -18,6 +19,7 @@ export default new Vuex.Store({
   modules: {
     myPet,
     user,
-    petPackage
+    petPackage,
+    appointment
   }
 })
