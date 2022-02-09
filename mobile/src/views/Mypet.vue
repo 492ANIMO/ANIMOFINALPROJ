@@ -6,7 +6,7 @@
         <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
         <div class="content2">
 
-          <div class="PetCard" v-for="pet in allPets" :key="pet.id" @click="active = !active">
+          <div class="PetCard" v-for="pet in allPets" :key="pet._id" @click="active = !active, fetchPetDetail(pet._id)">
             <img src="../assets/bento.png" alt="Animo" class="PicCat"/>
             <div class="PetDT">
               <h2>{{ pet.name }}</h2>
@@ -61,19 +61,26 @@
 
         <div class="content-detail">
 
-              <h2 style="font-size: 25px; color: #696969;">Muji</h2>
+              <h2 style="font-size: 25px; color: #696969;">{{ petDetail.name }}</h2>
               <font-awesome-icon class="gander" icon="venus" />
               <div class="TextDT" style="font-size: 18px">
-                <font>ประเภทสัตว์ : <b>สุนัข</b></font>
+                <font>ประเภทสัตว์ : <b>{{ petDetail.type }}</b></font>
               </div>
               <div class="TextDT" style="font-size: 18px">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
+                <font>พันธุ์ : <b>{{ petDetail.breed }}</b></font>
               </div>
               <div class="TextDT" style="font-size: 18px">
-                <font>น้ำหนัก : <b>3 กิโลกรัม</b></font>
+                <font>เพศ : <b>{{ petDetail.gender }}</b></font>
               </div>
-
-
+              <div class="TextDT" style="font-size: 18px">
+                <font>อายุ : <b>{{ petDetail.age.year }} ปี {{ petDetail.age.month }} เดือน</b></font>
+              </div>
+              <div class="TextDT" style="font-size: 18px">
+                <font>น้ำหนัก : <b>{{ petDetail.weight }} กิโลกรัม</b></font>
+              </div>
+              <div class="TextDT" style="font-size: 18px">
+                <font>กรุ๊ปเลือด : <b>{{ petDetail.bloodType }} </b></font>
+              </div>
         </div>
 
         <template #footer>
@@ -97,10 +104,10 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
   name: "Mypet",
   methods: {
-    ...mapActions(['fetchMyPet', 'fetchCurrentUser'])
+    ...mapActions(['fetchMyPet', 'fetchCurrentUser', 'fetchPetDetail'])
   },
   computed: {
-    ...mapGetters(['allPets'])
+    ...mapGetters(['allPets', 'petDetail'])
   },
   created(){
     this.fetchMyPet();

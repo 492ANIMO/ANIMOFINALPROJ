@@ -25,7 +25,7 @@
               placeholder="ประเภทสัตว์"
               v-model="value"
             >
-              <vs-option label="แมว" value="1">
+              <vs-option label="แมว" value="แมว">
                 แมว
               </vs-option>
             </vs-select>
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add">
+        <div class="button-addpet add" >
           <h4>เพิ่มสัตว์เลี้ยง</h4>
         </div>
       </div>
@@ -99,17 +99,17 @@ export default {
     };
   },
   methods:{
-    ...mapActions(['fetchCurrentUser', 'addMyPet'])
+    ...mapActions(['fetchCurrentUser', 'addMyPet']),
+ 
   },
   computed:{
-    ...mapGetters(['currentUser'])
+    ...mapGetters(['currentUser', 'pet']),
   },
   components: {
     Navbar,
   },
   created(){
     this.fetchCurrentUser();
-
   },
 };
 </script>

@@ -2,20 +2,19 @@ import axios from "axios";
 
 const state = {
   mypets: [
-    {
-      id: 1,
-      name: 'cocoa'
-    },
-    {
-      id: 2,
-      name: 'coffee'
-    },
+
   ],
+  pet:{
+  },
+  petDetail: {
+    age:{},
+  }
 };
 
 const getters = {
   allPets: (state) => state.mypets,
-  pet: (state) => state.pet
+  pet: (state) => state.pet,
+  petDetail: (state) => state.petDetail
 };
 
 const actions = {
@@ -37,9 +36,18 @@ const actions = {
     commit('setMyPets', response.data.pet)
   },
 
+  async fetchPetDetail({commit}, id){
+    const baseUrl = 'http://localhost:4000/api/pets/';
+    const response = await axios(`${baseUrl}${id}`)
+    console.log(`id: ${id}`);
+    console.log(response.data.pet);
+    commit('petDetail', response.data.pet)
+  },
+
   async addMyPet({commit}, pet){
     const baseUrl = 'http://localhost:4000/api/pets/mypet/'
-    const response = await axios.post(baseUrl, pet)
+
+    let response = await axios.post(baseUrl, pet)
 
     console.log(response.data.pet);
     commit('newPet', response.data.pet)
@@ -50,7 +58,8 @@ const actions = {
 const mutations = {
   // synchronous
   setMyPets: (state, mypets) => (state.mypets = mypets),
-  newPet: (state, pet) => (state.pet = pet)
+  newPet: (state, pet) => (state.pet = pet),
+  petDetail: (state, petDetail) => (state.petDetail = petDetail)
 };
 
 export default{
