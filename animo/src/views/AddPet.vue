@@ -34,13 +34,13 @@
           </vs-tr>
         </template>
         <template #tbody>
-          <vs-tr
+          <vs-tr v-for="data in count" :key="data._id"
           >
             <vs-td>
-              สุนัข
+              {{ data._id }}
             </vs-td>
             <vs-td>
-              30 ตัว
+              {{ data.count }}
             </vs-td>
             <vs-td>
                 <vs-button
@@ -69,7 +69,7 @@
 <script>
 import Navbar from "@/components/NavbarAdmin.vue";
 import NavbarSide from "@/components/NavbarSideAdmin.vue";
-// import axios from "axios";
+import axios from "axios";
 import mixins from "../mixins.js";
 
 export default {
@@ -84,11 +84,31 @@ export default {
     active1: false,
     value: "",
     search: "",
+    count: []
   }),
+  methods: {
+    countPetType(){
+      let baseURL = "http://localhost:4000/api/pets/petCount"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.count = res.data;
+        console.log(res.data);
+        console.log(this.count);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+  },
+  created(){
+    this.countPetType();
+  }
 };
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+
 
 ::v-deep .InputLast .vs-input-content {
   max-width: 170px;

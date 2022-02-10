@@ -202,4 +202,22 @@ exports.update = async (req, res, next) => {
   }
 }
 
+exports.petCount = async (req, res, next) => {
+  try {
+    const result = await Pet.aggregate([{
+      $group: {
+        _id: '$type', 
+        count: {$sum: 1}
+      }
+    }])
+
+    console.log(result)
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+
+
+}
+
 
