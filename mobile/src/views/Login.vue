@@ -11,17 +11,18 @@
           <h4>เข้าสู่ระบบเพื่อเข้าใช้งาน</h4>
           <div class="content-login-2">
             <div class="input-login">
-              <vs-input label="อีเมลล์" v-model="value" placeholder="อีเมลล" />
+              <vs-input label="อีเมลล์" v-model="email" placeholder="อีเมลล" />
             </div>
             <div class="input-login">
               <vs-input
+                type="password"
                 label="รหัสผ่าน"
-                v-model="value"
+                v-model="password"
                 placeholder="รหัสผ่าน"
               />
             </div>
             <div class="input-login">
-              <div class="button-login login-color">
+              <div class="button-login login-color" @click="login(email, password)">
                 <h3>เข้าสู่ระบบ</h3>
               </div>
             </div>
@@ -56,12 +57,31 @@
 </template>
 
 <script>
+import axios from 'axios'
+// import { authenticationService } from '../services/authService'
 export default {
   name: "Login",
   data() {
     return {
       active: false,
+      email: '',
+      password: '',
     };
+  },
+  methods: {
+    login(email, password){
+      const baseUrl =  "http://localhost:4000/api/auth/login/";
+
+      axios.post(baseUrl, {email, password}).then((res)=>{
+        let token = res.data.access_token;
+        localStorage.setItem("jwt", token);
+        console.log(res.data.access_token);
+        this.$router.push({name:'Mypet'})
+      
+      }).catch((error) => {
+        console.log(error)
+    });
+    }
   },
   components: {},
 };

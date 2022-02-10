@@ -107,6 +107,7 @@ exports.showByClient = async (req, res, next) => {
 exports.showMyPet = async (req, res, next) => {
   try {
     let user = req.user;
+    console.log('req.user: '+req.user);
     // not logged in
     if(!user){  
       const error = new Error('Unauthorized');
@@ -199,6 +200,24 @@ exports.update = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+}
+
+exports.petCount = async (req, res, next) => {
+  try {
+    const result = await Pet.aggregate([{
+      $group: {
+        _id: '$type', 
+        count: {$sum: 1}
+      }
+    }])
+
+    console.log(result)
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+
+
 }
 
 

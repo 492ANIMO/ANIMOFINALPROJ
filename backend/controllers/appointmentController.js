@@ -219,6 +219,30 @@ exports.showByOwner = async (req, res, next) => {
   }
 }
 
+// get appointment by clientId
+exports.showMyAppointment = async (req, res, next) => {
+  try {
+    const user = req.user;
+    console.log(user);
+    
+    // const {clientId} = req.params;
+    const clientId = user.profile;
+    console.log(clientId);
+
+    const pet = await Pet.find().where('owner').in(clientId).exec();
+    console.log(pet)
+    const appointment = await Appointment.find().where('pet').in(pet).populate('pet').exec();
+    // get appointment by pet id
+    res.status(200).json({
+      message: 'สำเร็จ',
+      appointment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 // confirm appointment (by appointment id) -> for reservation
 exports.confirm = async (req, res, next) => {
   try {

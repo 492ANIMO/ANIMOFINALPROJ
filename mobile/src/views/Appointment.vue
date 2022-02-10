@@ -6,6 +6,31 @@
         <div class="content2">
           <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
 
+          <div class="Package-Card" v-for="appointment in allAppointments" :key="appointment._id" @click="active = !active">
+            <div class="bg-package">
+              <img
+                src="../assets/bento.png"
+                alt="Animo"
+                class="Pic-appointment-dt"
+              />
+            </div>
+            <div class="PetDT">
+                <div class="status " :class="bindAppointmentType(appointment.by)">
+                  <h4>{{ appointment.status }}</h4>
+                </div>
+              <h2>{{appointment.type}}</h2>
+              <div class="TextDT">
+                <font>วันที่ : <b>{{ format_date(appointment.date) }}</b> เวลา : <b>{{ appointment.time }} น.</b> </font>
+              </div>
+              <div class="TextDT">
+                <font>ประเภท : <b>{{ appointment.by }}</b></font>
+              </div>
+              <div class="TextDT1">
+                <font>ข้อมูลเพิ่มเติม...</font>
+              </div>
+            </div>
+          </div>
+          
           <div class="Package-Card" @click="active = !active">
             <div class="bg-package">
               <img
@@ -64,9 +89,12 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import mixins from "../mixins";
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "Appointment",
+  mixins: [mixins],
   data() {
     return {
       search: "",
@@ -76,6 +104,25 @@ export default {
   components: {
     Navbar,
   },
+  methods:{
+    ...mapActions(['fetchMyAppointment']),
+
+    bindAppointmentType: function(by){
+      if(by === 'รอยืนยัน'){
+        return 'status-1'
+      }else{
+        return 'status-2'
+      }
+    },
+
+  },
+  computed: {
+    ...mapGetters(['allAppointments']),
+  },
+  created(){
+    this.fetchMyAppointment();
+  },
+  
 };
 </script>
 <style scoped>

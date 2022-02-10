@@ -13,7 +13,7 @@
           <div class="content-input">
             <vs-input
               label="ชื่อสัตว์เลี้ยง"
-              v-model="value"
+              v-model="pet.name"
               placeholder="ชื่อสัตว์เลี้ยง"
             />
           </div>
@@ -25,7 +25,7 @@
               placeholder="ประเภทสัตว์"
               v-model="value"
             >
-              <vs-option label="แมว" value="1">
+              <vs-option label="แมว" value="แมว">
                 แมว
               </vs-option>
             </vs-select>
@@ -64,8 +64,8 @@
           <div class="content-input alone">
             <vs-select
               class="input-alone"
-              label="ทำหมั้น"
-              placeholder="ทำหมั้น"
+              label="ทำหมัน"
+              placeholder="ทำหมัน"
               v-model="value"
             >
               <vs-option label="ทำหมันแล้ว" value="1">
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add">
+        <div class="button-addpet add" >
           <h4>เพิ่มสัตว์เลี้ยง</h4>
         </div>
       </div>
@@ -86,6 +86,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: "Addpet",
@@ -94,10 +95,21 @@ export default {
       search: "",
       value: "",
       active: false,
+
     };
+  },
+  methods:{
+    ...mapActions(['fetchCurrentUser', 'addMyPet']),
+ 
+  },
+  computed:{
+    ...mapGetters(['currentUser', 'pet']),
   },
   components: {
     Navbar,
+  },
+  created(){
+    this.fetchCurrentUser();
   },
 };
 </script>
