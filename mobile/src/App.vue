@@ -17,4 +17,8 @@ body {
   margin: 0px;
   font-family: kanit;
 }
+::-webkit-scrollbar {
+  width: 0px;
+}
+
 </style>

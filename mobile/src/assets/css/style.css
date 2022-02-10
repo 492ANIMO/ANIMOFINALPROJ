@@ -240,6 +240,18 @@ background: linear-gradient(138deg, rgba(249,199,235,1) 0%, rgba(240,156,164,1) 
 background: rgb(255,180,165);
 background: linear-gradient(135deg, rgba(255,180,165,1) 0%, rgba(225,116,116,1) 100%);
 }
+.package-blue{
+background: rgb(121,192,227);
+background: linear-gradient(135deg, rgba(121,192,227,1) 0%, rgba(94,159,217,1) 100%);
+}
+.package-green {
+    background: rgb(180,230,154);
+    background: linear-gradient(135deg, rgba(180,230,154,1) 0%, rgba(124,218,160,1) 100%);
+}
+.history {
+    background: rgb(158,184,235);
+    background: linear-gradient(180deg, rgba(158,184,235,1) 0%, rgba(124,184,218,1) 100%);
+}
 .Package-Card {
 width: 100%;
 height: 90px;
@@ -306,4 +318,72 @@ color: #ffffff;
 .appointment {
 background: rgb(145,212,168);
 background: linear-gradient(180deg, rgba(145,212,168,1) 0%, rgba(144,207,211,1) 100%);
+}
+.white-button {
+    background: #ffffff;
+    color: #c2c2c2;
+    border: #f0f0f0 solid 1px;
+}
+.right {
+    float: right;
+}
+.active-text {
+    color: #808FDD !important;
+    font-weight: 500;
+}
+.box-package-dt {
+    width: 100%;
+    word-wrap: break-word;
+    margin-left: 10px;
+}
+.box-package {
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    padding: 8px 15px;
+    border-radius: 10px;
+    text-align: left;
+    margin-top: 10px;
+    white-space: initial;
+    width: calc(100vw - 30px);
+}
+
+.box-package h2{
+    font-size: 18px !important;
+    font-weight: 500;
+}
+.box-package font{
+    color: #c2c2c2;
+    font-size: 15px;
+}
+.box-package b{
+    color: #696969;
+    font-weight: 400;
+}
+.active-color {
+    background: #808FDD !important;
+}
+.dot-line {
+    background: #DDE4E5;
+    height: 2px;
+    width: 100%;
+    display: flex;
+    margin: auto;
+}
+.dot {
+    width: 40px;
+    height: 40px;
+    background: #DDE4E5;
+    border-radius: 50%;
+    text-align: center;
+    align-items: center;
+}
+.dot h2{
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    height: 100%;
 }

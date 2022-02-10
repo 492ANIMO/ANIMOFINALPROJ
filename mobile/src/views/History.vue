@@ -84,14 +84,7 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
-.package-green {
-    background: rgb(180,230,154);
-    background: linear-gradient(135deg, rgba(180,230,154,1) 0%, rgba(124,218,160,1) 100%);
-}
-.history {
-    background: rgb(158,184,235);
-    background: linear-gradient(180deg, rgba(158,184,235,1) 0%, rgba(124,184,218,1) 100%);
-}
+
 font-awesome-icon {
     /* color: #ffffff; */
     height: 20px;
