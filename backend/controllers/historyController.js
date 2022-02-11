@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 
 // import models
 const History = require('../models/history');
+const Appointment = require('../models/appointment');
 
 exports.index = async (req, res, next) => {
   try {
@@ -63,6 +64,30 @@ exports.showByPetId = async (req, res, next) => {
       }
     });
 
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.myHistory = async (req, res, next) =>{
+  try {
+    let user = req.user;
+    if(!user){  
+      const error = new Error('Unauthorized');
+      error.statusCode = 401;
+      throw error;
+    }
+
+    console.log(`profile: ${user.profile}`)
+    const history = await History.find({
+      'pet.owner': user.profile
+    }).populate({
+      path: 'pet'
+    })
+
+    console.log(`history: ${history}`)
+
+    res.send(history)
   } catch (error) {
     next(error);
   }
