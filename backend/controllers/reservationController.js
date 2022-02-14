@@ -176,7 +176,6 @@ exports.destroy = async (req, res, next) => {
 }
 
 // confirm reservation by reservation id
-
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
@@ -203,7 +202,7 @@ exports.confirm = async (req, res, next) => {
     const package = await Package.find().where('_id').in(reservation.package).exec();
     if(!package){throw new Error('ไม่พบข้อมูลแพ็คเกจ');}
 
-    // change status 
+    // change reservation status 
     reservation = await Reservation.updateOne({_id:id},{
       status: 'ยืนยัน',
       doctor

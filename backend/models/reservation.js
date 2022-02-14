@@ -9,7 +9,7 @@ const schema = new Schema({
   pet: {type: Schema.Types.ObjectId, ref: 'Pet'},
   date: {type: Date, required: true},
   time:{type: String, trim: true, required: true},
-  status: {type: String, trim: true, default: 'pending', enum: ['pending', 'รอยืนยัน', 'ยืนยันแล้ว']},
+  status: {type: String, trim: true, default: 'pending', enum: ['pending', 'รอยืนยัน', 'ยืนยัน']},
   doctor: {type: String, trim: true},
   owner: { type: Schema.Types.ObjectId, ref: 'Client' }
 },{
