@@ -120,9 +120,11 @@ exports.create = async (req, res, next) => {
         onModel: 'Client'
       })
 
-    }else if(role === 'staff' || role === 'admin'){
+    }else if(role === 'staff' || role === 'admin' || role === 'vet'){
       if(role === 'admin') {
         position = 'admin'
+      }else if(role === 'vet'){
+        position = 'vet'
       }else{
         position = 'staff'
       }
@@ -149,25 +151,20 @@ exports.create = async (req, res, next) => {
         profile: staff._id,
         onModel: 'Staff'
       })
-
     }else{
         user = new User({
         email: email,
         password: encryptPassword,
         role: role
       })
-      
     }
     
     await user.save((err, doc) => {
       if(err){ 
-
         const error = new Error('เพิ่มบัญชีผู้ใช้ไม่สำเร็จ');
         error.statusCode = 500;
         throw error;
-
       } else{
-
         res.status(200).json({
           message: 'เพิ่มผู้ใช้สำเร็จ',
           user

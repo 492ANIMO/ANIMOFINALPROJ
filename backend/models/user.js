@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   email: { type: String, required: true, trim: true, unique: true, index: true },
   password: { type: String, required: true, trim: true },
-  role: { type: String, enum : ['client', 'staff', 'admin'], default: 'client' },
+  role: { type: String, enum : ['client', 'staff', 'admin', 'vet'], default: 'client' },
 
   profile: { type: Schema.Types.ObjectId, required: true, refPath: 'onModel' },
 
