@@ -7,6 +7,7 @@ const annoucementData = require('../data/annoucements');
 const annoucementSeeder = async () => {
   try {
       await Annoucement.deleteMany({});
+
       for (let i = 0; i < 10; i++) {
           await Annoucement.create({
             // title: `test${i}`,

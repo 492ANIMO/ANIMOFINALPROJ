@@ -10,7 +10,8 @@ const clientSeeder = async () => {
           await Client.create({
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
-            contact: faker.phone.phoneNumber(),
+            contact: faker.phone.phoneNumber('06########'),
+            
             email: faker.internet.email(),
             address: {
               province: faker.address.state(),
@@ -21,6 +22,7 @@ const clientSeeder = async () => {
             },
             uid: new Date().getTime().toString()
           });
+
       }
       console.log("Client data Import Success");
       process.exit();
