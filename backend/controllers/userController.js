@@ -72,8 +72,9 @@ exports.getCurrentProfile = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { email, password, role, firstName, lastName, contact, address, position } = req.body;
-
+    const { email, password, role, firstName, lastName, contact, address } = req.body;
+    let position = 'staff';
+    
     //validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -120,6 +121,12 @@ exports.create = async (req, res, next) => {
       })
 
     }else if(role === 'staff' || role === 'admin'){
+      if(role === 'admin') {
+        position = 'admin'
+      }else{
+        position = 'staff'
+      }
+
       const staff = await Staff.create({
         firstName, 
         lastName,

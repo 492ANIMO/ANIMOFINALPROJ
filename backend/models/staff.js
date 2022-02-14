@@ -15,7 +15,7 @@ const schema = new Schema({
     postalCode: { type: String },
     detail: { type: String, trim: true }
   },
-  position: { type: String, default: 'staff', enum: ['vet', 'staff'] },
+  position: { type: String, default: 'staff', enum: ['vet', 'staff', 'admin'] },
   avatar: { type: String },
 
   // foreign key
