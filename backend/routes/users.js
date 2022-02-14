@@ -17,12 +17,9 @@ router.get('/:id', userController.show);
 
 router.post('/', [upload.single('avatar')], userController.create);
 
-// router.patch('/staff/edit/:id', userController.updateStaffUser); //*
 router.patch('/:id', [upload.single('avatar')], userController.update);
 
-// router.delete('/staff/delete/:id', userController.destroyStaff);
 router.delete('/:id', userController.destroy);
-
 
 
 module.exports = router;

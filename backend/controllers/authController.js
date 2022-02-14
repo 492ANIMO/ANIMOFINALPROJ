@@ -50,7 +50,7 @@ exports.login = async (req, res, next) => {
   }
 }
 
-exports.logout = (req,res) => {
+exports.logout = (req,res, next) => {
   try {
   
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')

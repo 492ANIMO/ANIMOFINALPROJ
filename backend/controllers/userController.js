@@ -21,7 +21,7 @@ exports.index = async (req, res, next) => {
     if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
 
     res.status(200).json({
-      message: 'ดึงข้อมูลผู้ใช้งานสำเร็จสำเร็จ',
+      message: 'ดึงข้อมูลผู้ใช้งานสำเร็จ',
       user,
     });
 
@@ -104,6 +104,7 @@ exports.create = async (req, res, next) => {
         email,
         contact,
         address,
+        uid: new Date().getTime().toString()
       })
       if(req.file){
         client.avatar = req.file.path
@@ -183,23 +184,23 @@ exports.update = async (req, res, next) => {
     const {id} = req.params;
     const {email, password, firstName, lastName, contact, address} = req.body;
 
+    let user = await User.findById(id).populate('profile');
+    if(!user) { throw new Error('แก้ไขข้อมูลไม่สำเร็จ เนื่องจากไม่พบข้อมูลผู้ใช้') }
+
     //check email ซ้ำ
     const existEmail = await User.findOne({email: email});
     if (existEmail){
-      const error = new Error('อีเมล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
+      const error = new Error('อีเมลล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
       error.statusCode = 400;
       throw error;
     }
 
     // encrypt password
     const encryptPassword = await bcrypt.hash(password, 10);
-    let user = await User.updateOne({_id:id},{ email,  password: encryptPassword }, {
+    user = await User.updateOne({_id:id},{ email,  password: encryptPassword }, {
       returnOriginal: false //option
     });
   
-    user = await User.findById(id).populate('profile');
-    if(!user) { throw new Error('แก้ไขข้อมูลไม่สำเร็จ เนื่องจากไม่พบข้อมูลเจ้าของสัตว์เลี้ยง') }
-
     // get profile id of user
     const profileId = user.profile._id;
     console.log("this "+user.profileId)
@@ -212,7 +213,7 @@ exports.update = async (req, res, next) => {
           email,
           contact,
           address,
-        }, )
+        })
 
         user = await User.findById(id).populate('profile');
         
@@ -226,9 +227,7 @@ exports.update = async (req, res, next) => {
           contact,
           address,
         })
-
         user = await User.findById(id).populate('profile');
-        
         break;
     
       default:
@@ -278,6 +277,7 @@ exports.destroy = async (req, res, next) => {
         break;
 
       case 'staff':
+      case 'vet':
         // unlink user and client
         let staff = await Staff.updateOne({_id:profileId}, {
           _user: null
@@ -290,9 +290,7 @@ exports.destroy = async (req, res, next) => {
         res.status(200).json({
           message: 'ลบผู้ใช้สำเร็จ',
           staff
-          
         });
-        
         break;
 
       default:
