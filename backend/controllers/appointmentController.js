@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator');
 
 // import models
 const Appointment = require('../models/appointment');
+const Reservation = require('../models/reservation');
 const Package = require('../models/package');
 const Pet = require('../models/pet');
 const Client = require('../models/client');
@@ -232,10 +233,13 @@ exports.showMyAppointment = async (req, res, next) => {
     const pet = await Pet.find().where('owner').in(clientId).exec();
     console.log(pet)
     const appointment = await Appointment.find().where('pet').in(pet).populate('pet').exec();
+    const reservation = await Reservation.find({status: 'pending'}).where('owner').in(clientId).exec();
+
     // get appointment by pet id
     res.status(200).json({
       message: 'สำเร็จ',
-      appointment
+      appointment,
+      reservation
     });
 
   } catch (error) {
@@ -299,6 +303,7 @@ exports.confirm = async (req, res, next) => {
     next(error);
   }
 }
+
 
 
 
