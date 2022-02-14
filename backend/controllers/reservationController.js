@@ -107,6 +107,10 @@ exports.create = async (req, res, next) => {
       throw new Error('ไม่พบแพ็คเกจในระบบ');
     }
 
+    if(package.type !== pet.type){
+      throw new Error('ไม่สามารถจองแพ็คเกจนี้ได้ เนื่องจากประเภทของสัตว์เลี้ยงไม่ถูกต้อง');
+    }
+
     // check if avaliable timeslot
     if(!timeslot.includes(time)){
       throw new Error('ไม่สามารถเพิ่มการจองในช่วงเวลานี้ได้');
@@ -170,100 +174,6 @@ exports.destroy = async (req, res, next) => {
     next(error);
   }
 }
-
-// edit reservation by reservation Id
-// exports.update = async (req, res, next) => {
-//   try {
-//     const {id} = req.params;
-//     const { petId, packageId, date, time, doctor, status } = req.body;
-
-//     const pet = await Pet.findById(petId);
-//     if(!pet){throw new Error('ไม่พบข้อมูลสัตว์เลี้ยง');}
-
-//     const packageObj = await Package.findById(packageId);
-//     if(!packageObj){throw new Error('ไม่พบข้อมูลแพ็คเกจ');}
-
-//     let newStatus;
-    
-//     // change status
-//     switch(status) {
-//       case 'ไปตามเวลานัด':
-//         // check if avaliable timeslot
-//         if(!timeslot.includes(time)){
-//           throw new Error('ไม่สามารถเพิ่มการนัดหมายในเวลาดังกล่าวได้');
-//         }
-
-//         // check if avaliable time 
-//         const booked = await Appointment.find({
-//           'date': date, 
-//           'time': time });
-//         console.log(booked)
-//         if(booked.length!==0){
-//           throw new Error('ไม่สามารถเพิ่มการนัดหมายได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว');
-//         }
-
-//         // change status 
-//         let reservation = await Reservation.updateOne({_id:id},{
-//           status
-//         });
-//         if(reservation.modifiedCount===0){ throw new Error('เปลี่ยนสถานะการจองไม่สำเร็จ'); }
-
-//         const appointment = new Appointment({
-//           pet,
-//           date,
-//           time,
-//           type: 'package',
-//           packageObj
-//         })
-//         await appointment.save();
-
-//         res.status(200).json({
-//           message: 'บันทึกข้อมูลสำเร็จ',
-//           appointment
-//         });
-//         break;
-
-//       case 'เลื่อนเวลานัด':
-//         newStatus = 'เลื่อนเวลานัด'
-//         break;
-
-//       default:
-//         // code block
-//     }
-
-//     if(newStatus==='เลื่อนเวลานัด'){
-//       // check if avaliable time 
-//       const booked = await Appointment.find({
-//         'date': date, 
-//         'time': time });
-//       if(booked.length!==0){
-//         throw new Error('เวลาดังกล่าวถูกจองไปแล้ว กรุณาเลือกเวลาอื่น');
-//       }
-
-//       const reservation = await Reservation.updateOne({_id:id},{
-//         date,
-//         time,
-//         status: newStatus
-//       });
-
-//       if(reservation.modifiedCount===0){ throw new Error('แก้ไขข้อมูลการจองไม่สำเร็จ'); }
-//       // update appointment date, status
-//       const appointment = await Appointment.findOneAndUpdate({'pet': petId},{
-//         date,
-//         time,
-//       })
-//       if(!appointment){ throw new Error('เปลี่ยนแปลงข้อมูลการนัดหมายไม่สำเร็จ'); }
-
-//       res.status(200).json({
-//         message: 'เลื่อนเวลานัดสำเร็จ',
-//         reservation
-//       });
-//     }
-
-//   } catch (error) {
-//     next(error);
-//   }
-// }
 
 // confirm reservation by reservation id
 
