@@ -13,6 +13,4 @@ router.delete('/:id', clientController.destroy);
 router.delete('/', clientController.destroyAll);
 router.patch('/:id', clientController.update);
 
-
-
 module.exports = router;
