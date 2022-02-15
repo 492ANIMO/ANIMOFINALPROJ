@@ -6,7 +6,7 @@ const Client = require('../models/client');
 const clientSeeder = async () => {
   try {
       await Client.deleteMany({});
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < 20; i++) {
           await Client.create({
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),

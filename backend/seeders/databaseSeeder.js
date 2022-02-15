@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 
 const annoucementSeeder = require('./annoucementSeeder');
 const clientSeeder = require('./clientSeeder');
+const userSeeder = require('./userSeeder');
 
 // connect database
 const connectDB = async () => {
@@ -23,3 +24,5 @@ const connectDB = async () => {
 connectDB();
 annoucementSeeder();
 clientSeeder();
+// userSeeder();
+

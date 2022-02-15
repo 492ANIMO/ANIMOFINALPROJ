@@ -52,7 +52,7 @@ exports.show = async (req, res, next) => {
 exports.getCurrentProfile = async (req, res, next) => {
   try {
     // destructoring
-    const {_id, email, role} = req.user
+    const {_id} = req.user
     console.log('req.user: '+req.user);
 
     const user = await User.findById(_id).select('-password').populate({ 
@@ -74,7 +74,6 @@ exports.create = async (req, res, next) => {
   try {
     const { email, password, role, firstName, lastName, contact, address } = req.body;
     let position = 'staff';
-    
     //validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -83,7 +82,6 @@ exports.create = async (req, res, next) => {
         error.validation = errors.array();
         throw error;
     }
-
     //check email ซ้ำ
     const existEmail = await User.findOne({email: email});
     if (existEmail){
@@ -96,8 +94,9 @@ exports.create = async (req, res, next) => {
     const encryptPassword = bcrypt.hashSync(password, 10);
     let user;
 
-    // check role
+    // check role : client user | clinic user
     if(role === 'client'){
+      // create client instance
       let client = await Client.create({
         firstName, 
         lastName,
@@ -109,10 +108,11 @@ exports.create = async (req, res, next) => {
       if(req.file){
         client.avatar = req.file.path
       }
+      // save client to database
       await client.save((error) => {
         if(error) throw new Error(error);
       })
-
+      // create user instance
         user = new User({
         email: email,
         password: encryptPassword,
@@ -122,6 +122,8 @@ exports.create = async (req, res, next) => {
       })
 
     }else if(role === 'staff' || role === 'admin' || role === 'vet'){
+
+      // set position
       if(role === 'admin') {
         position = 'admin'
       }else if(role === 'vet'){
@@ -129,7 +131,7 @@ exports.create = async (req, res, next) => {
       }else{
         position = 'staff'
       }
-
+      // create staff instance
       const staff = await Staff.create({
         firstName, 
         lastName,
@@ -141,10 +143,11 @@ exports.create = async (req, res, next) => {
         if(req.file){
           staff.avatar = req.file.path
         }
+        // save staff to database
         await staff.save((error) => {
           if(error) throw new Error(error);
         })
-
+        // create user instance
         user = new User({
         email: email,
         password: encryptPassword,
@@ -153,13 +156,15 @@ exports.create = async (req, res, next) => {
         onModel: 'Staff'
       })
     }else{
+      // create user instance
         user = new User({
         email: email,
         password: encryptPassword,
         role: role
       })
     }
-    
+
+    // save user to database
     await user.save((err, doc) => {
       if(err){ 
         const error = new Error('เพิ่มบัญชีผู้ใช้ไม่สำเร็จ');
@@ -170,7 +175,6 @@ exports.create = async (req, res, next) => {
           message: 'เพิ่มผู้ใช้สำเร็จ',
           user
         });
-
       }
     });
   
@@ -189,12 +193,15 @@ exports.update = async (req, res, next) => {
 
     //check email ซ้ำ
     const existEmail = await User.findOne({email: email});
-    if (existEmail){
+    console.log(`existEmail: ${existEmail}`)
+    console.log(`=? ${existEmail._id != id}`)
+    
+    if (existEmail && existEmail._id != id){
       const error = new Error('อีเมลล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
       error.statusCode = 400;
       throw error;
     }
-
+  
     // encrypt password
     const encryptPassword = await bcrypt.hash(password, 10);
     user = await User.updateOne({_id:id},{ email,  password: encryptPassword }, {
@@ -202,18 +209,12 @@ exports.update = async (req, res, next) => {
     });
   
     // get profile id of user
-    const profileId = user.profile._id;
+    const profileId = user.profile;
     console.log("this "+user.profileId)
 
     switch (user.role) {
       case 'client':
-        let client = await Client.findByIdAndUpdate({ _id: profileId },{
-          firstName,
-          lastName,
-          email,
-          contact,
-          address,
-        })
+        let client = await Client.findByIdAndUpdate({ _id: profileId }, req.body)
 
         user = await User.findById(id).populate('profile');
         
@@ -254,24 +255,26 @@ exports.destroy = async (req, res, next) => {
     })
     if(!user) throw new Error('ไม่พบข้อมูลผู้ใช้');
 
-    const profileId = user.profile._id;
+    const profileId = user.profile;
     
     switch (user.role) {
       case 'client':
         // unlink user and client
-        let client = await Client.updateOne({_id:profileId}, {
+        let client = await Client.updateOne({_id: profileId}, {
           _user: null
         });
 
+
         user = await User.deleteOne({_id:id});
         if(!user) throw new Error('ไม่สามารถลบบัญชีผู้ใช้เจ้าของสัตว์เลี้ยงได้')
+
+        // recheck on client
         client = await Client.findById(profileId)
 
         res.status(200).json({
-          message: 'ลบผู้ใช้สำเร็จ',
+          message: 'ลบบัญชีผู้ใช้สำเร็จ',
           user,
           client
-          
         });
 
         break;
@@ -279,12 +282,14 @@ exports.destroy = async (req, res, next) => {
       case 'staff':
       case 'vet':
         // unlink user and client
-        let staff = await Staff.updateOne({_id:profileId}, {
+        let staff = await Staff.updateOne({_id: profileId}, {
           _user: null
         });
         // delete user data
         user = await User.deleteOne({_id:id});
         if(!user) throw new Error('ไม่สามารถลบบัญชีผู้ใช้เจ้าหน้าที่ได้ได้')
+
+        // recheck on client
         staff = await Staff.findById(profileId)
 
         res.status(200).json({
@@ -305,54 +310,3 @@ exports.destroy = async (req, res, next) => {
     next(error);
   }
 }
-
-exports.login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-    const user = await User.findOne({email: email});
-    console.log('user: '+user);
-    if(!user){
-      const error = new Error('ไม่พบผู้ใช้งานในระบบ');
-      error.statusCode = 404;
-      throw error;
-    }
-    // check password
-    const isValid = bcrypt.compareSync(password, user.password);
-    if(!isValid){
-      const error = new Error('รหัสผ่านไม่ถูกต้อง');
-      error.statusCode = 401;
-      throw error;
-    }
-
-    // generate token
-    const token = await jwt.sign({
-      id: user._id,
-      role: user.role
-    }, config.SECRET, {expiresIn: '1 days'})
-
-     //decode วันหมดอายุ 
-     const expires_in = jwt.decode(token);
-
-     return res.status(200).json({
-      access_token: token,
-      expires_in: expires_in.exp,
-      token_type: 'Bearer'
-  }); 
-  } catch (error) {
-    next(error)
-  }
-}
-
-exports.logout = (req,res) => {
-  try {
-  
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
-    res.clearCookie('jwt')
-    .status(200)
-    .json({ message: "Successfully logged out 😏 🍀" });
-    
-  } catch (error) {
-    next(error)
-  }
-  
-};
