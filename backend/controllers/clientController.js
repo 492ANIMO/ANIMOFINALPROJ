@@ -55,8 +55,6 @@ exports.create = async (req, res, next) => {
       error.statusCode = 400;
       throw error;
   }
-    // let uid = new Date().getTime().toString();
-    // uid = uid.slice(3, -1);
 
     let client = new Client({
       firstName,
@@ -72,16 +70,17 @@ exports.create = async (req, res, next) => {
       client.avatar = req.file.path
     }
 
-    await client.save((err) => {
+    const savedClient = await client.save();
+    if(!savedClient){
       // if error
-      if (err) throw new Error('ไม่สามารถเพิ่มข้อมูลเจ้าของสัตว์เลี้ยงได้');
+      throw new Error('ไม่สามารถเพิ่มข้อมูลเจ้าของสัตว์เลี้ยงได้');
+    }
 
-      // saved!
-      res.status(201).json({
-        message: 'เพิ่มข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
-        client
-      });
 
+    // saved!
+    res.status(201).json({
+      message: 'เพิ่มข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
+      client: savedClient
     });
   } catch (error) {
     next(error);
@@ -227,27 +226,29 @@ exports.update = async (req, res, next) => {
     const {id} = req.params;
     const { firstName, lastName, email, contact, address, role } = req.body;
 
+    //check email ซ้ำ
+    const existEmail = await Client.findOne({email: email});
+    console.log(`existEmail: ${existEmail}`)
+    console.log(`=? ${existEmail._id != id}`)
+    
+    if (existEmail && existEmail._id != id){
+      const error = new Error('อีเมลล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
+      error.statusCode = 400;
+      throw error;
+    }
+
     // A.findByIdAndUpdate(id, update, options, callback) // executes
-    Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' }, (error, client) => {
-      if(error){
-        const error = new Error('ไม่สามารถแก้ไขข้อมูลเจ้าของสัตว์เลี้ยง')
-        throw error;
-      }
+    const client = await Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' });
 
-      res.status(200).json({
-        message: 'แก้ไขข้อมูลสำเร็จ',
-        client
+     if(!client){
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      throw error;
+    }
 
-    });
-    // if(!client){
-    //   const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
-    //   throw error;
-    // }
-
-    // res.status(200).json({
-    //   message: 'แก้ไขข้อมูลสำเร็จ',
-    //   client
-  });
+    res.status(200).json({
+      message: 'แก้ไขข้อมูลสำเร็จ',
+      client
+    })
 
   } catch (error) {
     next(error);
