@@ -31,9 +31,7 @@ const schema = new Schema({
       medDetail: { type: String }
     }]
   },
-  appId:{
-    type: String, default: '0000000000', unique: true
-  }
+  appId:{ type: String }
   
 },{
   timestamps: true, 

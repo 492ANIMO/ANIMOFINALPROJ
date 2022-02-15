@@ -87,7 +87,7 @@ exports.create = async (req, res, next) => {
   }
 }
 
-exports.destroy = async (req, res, next) => {
+exports.destroyOld = async (req, res, next) => {
   try {
     const {id} = req.params;
     // check if client have user accout
@@ -203,6 +203,63 @@ exports.destroy = async (req, res, next) => {
   }
 }
 
+exports.destroy = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+
+    // check if client exist ?
+    const client = await Client.findById(id).populate('user')
+    if(!client){
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      error.statusCode = 404
+      throw error;
+    }
+
+    // check if client have user account ?
+    const user = await User.find({'profile': id});
+    console.log(`user: ${user}`)
+    if(user.length !== 0){
+      console.log(`have user`);
+      
+      const deletedUser = await User.deleteOne({'profile': id});
+      console.log(`deletedUser: ${deletedUser}`);
+    }else{
+      console.log(`dont have user`);
+    }
+
+    // check if client have pet ?
+    const pets = await Pet.find({'owner': id}).distinct('_id');
+    console.log(`pet id: ${pets}`);
+      // delete client's pet
+      const deletedPet = await Pet.deleteMany({'owner': id});
+      console.log(`จำนวนสัตว์เลี้ยงที่ถูกลบ: ${deletedPet.deletedCount}`);
+      
+
+    // check if client's pet have appointment ?
+    const appointment = await Appointment.deleteMany({'pet': {$in: pets}}).populate({ path: 'pet', model: 'Pet' });
+    console.log(`จำนวนการนัดที่ถูกลบ: ${appointment.deletedCount}`);
+    if(appointment.deletedCount !== 0){
+      console.log(`ลบข้อมูลการนัดของสัตว์เลี้ยงไม่สำเร็จ: ${appointment}`);
+    }
+    console.log(`ลบข้อมูลการนัดของสัตว์เลี้ยงสำเร็จ: ${appointment}`);
+
+    // check if client's pet have reservation ?
+    const reservation = await Reservation.deleteMany({'owner': id});
+    console.log(`จำนวนการจองที่ถูกลบ: ${reservation.deletedCount}`);
+
+    // delete client
+    const deleteClient = await Client.deleteOne({'_id': id});
+    console.log(`จำนวนclient ที่ถูกลบ: ${deleteClient.deletedCount}`);
+
+    
+    res.status(200).json({
+      message: 'ลบข้อมูลเจ้าของสัตว์เลี้ยงสำเร็จ',
+    });
+  } catch (error) {
+    next(error)
+  }
+}
+
 exports.destroyAll = async (req, res, next) => {
   try {
 
@@ -252,5 +309,13 @@ exports.update = async (req, res, next) => {
 
   } catch (error) {
     next(error);
+  }
+}
+
+exports.updateMyProfile = async (req, res, next) => {
+  try {
+    
+  } catch (error) {
+    next(error)
   }
 }
