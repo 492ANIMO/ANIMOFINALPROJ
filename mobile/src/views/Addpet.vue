@@ -13,7 +13,7 @@
           <div class="content-input">
             <vs-input
               label="ชื่อสัตว์เลี้ยง"
-              v-model="pet.name"
+              v-model="addPetForm.name"
               placeholder="ชื่อสัตว์เลี้ยง"
             />
           </div>
@@ -23,7 +23,7 @@
               class="select-grid"
               label="ประเภทสัตว์"
               placeholder="ประเภทสัตว์"
-              v-model="value"
+              v-model="addPetForm.type"
             >
               <vs-option label="แมว" value="แมว">
                 แมว
@@ -32,7 +32,7 @@
             <vs-input
             class="input-grid1"
               label="สายพันธุ์"
-              v-model="value"
+              v-model="addPetForm.breed"
               placeholder="สายพันธุ์"
             />
           </div>
@@ -41,10 +41,10 @@
             <vs-input
               class="input-grid"
               label="อายุ"
-              v-model="value"
-              placeholder="เดือน"
+              v-model="addPetForm.age.year"
+              placeholder="ปี"
             />
-            <vs-input label="" v-model="value" placeholder="ปี" />
+            <vs-input label="" v-model="addPetForm.age.month" placeholder="เดือน" />
           </div>
 
           <div class="content-input grid">
@@ -52,13 +52,13 @@
               class="select-grid"
               label="เพศ"
               placeholder="เพศ"
-              v-model="value"
+              v-model="addPetForm.gender"
             >
               <vs-option label="ผู้" value="1">
                 ผู้
               </vs-option>
             </vs-select>
-            <vs-input class="input-grid1" label="น้ำหนัก" v-model="value" placeholder="น้ำหนัก" />
+            <vs-input class="input-grid1" label="น้ำหนัก" v-model="addPetForm.weight" placeholder="น้ำหนัก" />
           </div>
 
           <div class="content-input alone">
@@ -66,7 +66,7 @@
               class="input-alone"
               label="ทำหมัน"
               placeholder="ทำหมัน"
-              v-model="value"
+              v-model="addPetForm.sterilization"
             >
               <vs-option label="ทำหมันแล้ว" value="1">
                 ทำหมันแล้ว
@@ -76,7 +76,7 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" >
+        <div class="button-addpet add" @click="addMyPet()">
           <h4>เพิ่มสัตว์เลี้ยง</h4>
         </div>
       </div>
@@ -103,7 +103,7 @@ export default {
  
   },
   computed:{
-    ...mapGetters(['currentUser', 'pet']),
+    ...mapGetters(['currentUser', 'pet', 'addPetForm']),
   },
   components: {
     Navbar,
