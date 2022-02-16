@@ -4,6 +4,8 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import vuesax from './plugins/vuesax'
+import Vuelidate from 'vuelidate'
+
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -58,6 +60,9 @@ library.add(faHome)
 library.add(faChevronLeft)
 library.add(faCheckCircle)
 library.add(faTimesCircle)
+
+
+Vue.use(Vuelidate)
 
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
