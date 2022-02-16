@@ -7,13 +7,26 @@ const state = {
   },
   petDetail: {
     age:{},
+  },
+  addPetForm:{
+    age:{
+      year: '',
+      month: ''
+    },
+    type: '',
+    breed: '',
+    gender: '',
+    weight: '',
+    sterilization: '',
+
   }
 };
 
 const getters = {
   allPets: (state) => state.mypets,
   pet: (state) => state.pet,
-  petDetail: (state) => state.petDetail
+  petDetail: (state) => state.petDetail,
+  addPetForm: (state) => state.addPetForm
 };
 
 const actions = {
@@ -51,14 +64,15 @@ const actions = {
     console.log(response.data.pet);
     commit('newPet', response.data.pet)
   }
-  
+
 };
 
 const mutations = {
   // synchronous
   setMyPets: (state, mypets) => (state.mypets = mypets),
-  newPet: (state, pet) => (state.pet = pet),
-  petDetail: (state, petDetail) => (state.petDetail = petDetail)
+  newPet: (state, addPetForm) => (state.pet = addPetForm),
+  petDetail: (state, petDetail) => (state.petDetail = petDetail),
+
 };
 
 export default{

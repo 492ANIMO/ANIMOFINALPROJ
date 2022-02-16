@@ -26,7 +26,7 @@
 
           <div class="content-input">
             <vs-input v-model="registerForm.email" label="อีเมลล์" placeholder="animo@example.com">
-                <template v-if="!validEmail && valueEmail !== ''" #message-danger>
+                <template v-if="!validEmail && registerForm.email !== ''" #message-danger>
                     อีเมลล์ไม่ถูกต้อง
                 </template>
             </vs-input>
@@ -142,8 +142,9 @@ export default {
     ...mapGetters(['registerForm']),
 
     validEmail() {
-        return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.valueEmail)
-    }
+        return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.registerForm.email)
+    },
+
   },
   methods:{
     ...mapActions(['createClientUser']),
