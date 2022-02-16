@@ -27,15 +27,19 @@ const getters = {
 const actions = {
 
   async createClientUser(){
-    const baseUrl = 'http://localhost:4000/api/users/client/register/';
-    const response = await axios.post(baseUrl, state.form);
-    console.log(response.data);
-    // commit('setForm', response.data.appointment);
+    try {
+      const baseUrl = 'http://localhost:4000/api/users/client/register/';
+      const response = await axios.post(baseUrl, state.form);
+      console.log(response.data);
+      if(response.error){
+        throw new Error(response.error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
   },
-
 };
 const mutations = {
-  setForm: (state, form) => (state.form = form),
 
 };
 

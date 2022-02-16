@@ -116,6 +116,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { required } from 'vuelidate/lib/validators';
 
 export default {
   name: "Addpet",
@@ -128,6 +129,11 @@ export default {
       active: false,
     
     };
+  },
+  validations:{
+    registerForm:{
+      firstName: { required }
+    }
   },
   created(){
 
