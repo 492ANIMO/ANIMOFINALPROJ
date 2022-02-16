@@ -11,7 +11,7 @@
           <div class="content-input">
             <vs-input
               label="ชื่อจริง"
-              v-model="value"
+              v-model="registerForm.firstName"
               placeholder="ชื่อจริง"
             />
           </div>
@@ -19,13 +19,13 @@
           <div class="content-input">
             <vs-input
               label="นามสกุล"
-              v-model="value"
+              v-model="registerForm.lastName"
               placeholder="นามสกุล"
             />
           </div>
 
           <div class="content-input">
-            <vs-input v-model="valueEmail" label="อีเมลล์" placeholder="animo@example.com">
+            <vs-input v-model="registerForm.email" label="อีเมลล์" placeholder="animo@example.com">
                 <template v-if="!validEmail && valueEmail !== ''" #message-danger>
                     อีเมลล์ไม่ถูกต้อง
                 </template>
@@ -35,7 +35,7 @@
           <div class="content-input">
             <vs-input
               label="เบอร์โทร"
-              v-model="value"
+              v-model="registerForm.contact"
               placeholder="เบอร์โทร"
             />
           </div>
@@ -44,7 +44,7 @@
             <vs-input
               label="รหัสผ่าน"
               type="password"
-              v-model="value1"
+              v-model="registerForm.password"
               placeholder="รหัสผ่าน"
             />
           </div>
@@ -52,7 +52,7 @@
           <div class="content-input">
             <vs-input
               label="ยืนยันรหัสผ่าน"
-              v-model="value"
+              v-model="registerForm.confirmPassword"
               placeholder="ยืนยันรหัสผ่าน"
             />
           </div><br>
@@ -60,7 +60,7 @@
           <div class="content-input">
             <vs-input
               label="ที่อยู่"
-              v-model="value"
+              v-model="registerForm.address.detail"
               placeholder="ถนน ซอย บ้านเลขที่"
             />
           </div>
@@ -70,7 +70,7 @@
               class="select-grid"
               label="จังหวัด"
               placeholder="จังหวัด"
-              v-model="value"
+              v-model="registerForm.address.province"
             >
               <vs-option label="แมว" value="1"> แมว </vs-option>
             </vs-select>
@@ -81,7 +81,7 @@
               class="select-grid"
               label="อำเภอ"
               placeholder="อำเภอ"
-              v-model="value"
+              v-model="registerForm.address.district"
             >
               <vs-option label="แมว" value="1"> แมว </vs-option>
             </vs-select>
@@ -89,7 +89,7 @@
               class="input-grid1"
               label="ตำบล"
               placeholder="ตำบล"
-              v-model="value"
+              v-model="registerForm.address.subdistrict"
             >
               <vs-option label="แมว" value="1"> แมว </vs-option>
             </vs-select>
@@ -99,14 +99,14 @@
             <vs-input
             class="input-alone"
               label="รหัสไปรษณีย์"
-              v-model="value"
+              v-model="registerForm.address.postalCode"
               placeholder="รหัสไปรษณีย์"
             />
           </div>
         </div>
       </div><br><br>
       <div class="footer-button">
-        <div class="button-addpet register-color">
+        <div class="button-addpet register-color" @click="createClientUser()">
           <h4>ลงทะเบียน</h4>
         </div>
       </div>
@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: "Addpet",
@@ -125,12 +126,22 @@ export default {
       value1: "",
       valueEmail: "",
       active: false,
+    
     };
   },
+  created(){
+
+  },
   computed: {
-      validEmail() {
-          return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.valueEmail)
-        }
+    ...mapGetters(['registerForm']),
+
+    validEmail() {
+        return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.valueEmail)
+    }
+  },
+  methods:{
+    ...mapActions(['createClientUser']),
+
   }
 };
 </script>

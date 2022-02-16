@@ -21,4 +21,6 @@ router.patch('/:id', [passportJWT.isLogin, upload.single('avatar')], userControl
 
 router.delete('/:id',[passportJWT.isLogin], userController.destroy);
 
+router.post('/client/register', userController.clientRegister)
+
 module.exports = router;
