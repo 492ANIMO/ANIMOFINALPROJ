@@ -20,7 +20,7 @@
                 </div>
               <h2>{{appointment.type}}</h2>
               <div class="TextDT">
-                <font>วันที่ : <b>{{ format_date(appointment.date) }}</b> เวลา : <b>{{ appointment.time }} น.</b> </font>
+                <font>วันที่ : <b>{{ format_date(appointment.date) + ' : ' }}</b> <font-awesome-icon icon="clock"/> <b>{{appointment.time }} น.</b> </font>
               </div>
               <div class="TextDT">
                 <font>ประเภท : <b>{{ appointment.by }}</b></font>
@@ -45,10 +45,10 @@
                 </div>
               <h2>แพ็คเกจแมวโต</h2>
               <div class="TextDT">
-                <font>วันที่ : <b>20/20/2022</b> เวลา : <b>8.00 น</b> </font>
+                <font>วันที่ : <b>20/20/2022</b> <font-awesome-icon icon="clock"/> <b>8.00 น</b> </font>
               </div>
               <div class="TextDT">
-                <font>ประเภท : <b>จองแพ็คเกจ</b></font>
+                <font>ประเภท : <b>การจอง</b></font>
               </div>
               <div class="TextDT1">
                 <font>ข้อมูลเพิ่มเติม...</font>
@@ -70,10 +70,10 @@
                 </div>
               <h2>แพ็คเกจลูกสุนัข</h2>
               <div class="TextDT">
-                <font>วันที่ : <b>20/20/2022</b> เวลา : <b>8.00 น</b> </font>
+                <font>วันที่ : <b>20/20/2022</b> <font-awesome-icon icon="clock"/> <b>8.00 น</b> </font>
               </div>
               <div class="TextDT">
-                <font>ประเภท : <b>จองแพ็คเกจ</b></font>
+                <font>ประเภท : <b>การจอง</b></font>
               </div>
               <div class="TextDT1">
                 <font>ข้อมูลเพิ่มเติม...</font>

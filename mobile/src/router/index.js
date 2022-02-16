@@ -45,6 +45,11 @@ const routes = [
     component: () => import('../views/History.vue')
   },
   {
+    path: '/step0',
+    name: 'Step0',
+    component: () => import('../views/Step0.vue')
+  },
+  {
     path: '/step1',
     name: 'Step1',
     component: () => import('../views/Step1.vue')
@@ -58,6 +63,11 @@ const routes = [
     path: '/step3',
     name: 'Step3',
     component: () => import('../views/Step3.vue')
+  },
+  {
+    path: '/annoucement',
+    name: 'Annoucement',
+    component: () => import('../views/Annoucement.vue')
   }
 ]
 

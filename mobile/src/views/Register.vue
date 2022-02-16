@@ -104,7 +104,7 @@
             />
           </div>
         </div>
-      </div><br><br>
+      </div>
       <div class="footer-button">
         <div class="button-addpet register-color">
           <h4>ลงทะเบียน</h4>
@@ -149,6 +149,7 @@ export default {
     align-items: center;
     background: rgb(77,192,141);
     background: linear-gradient(135deg, rgba(77,192,141,1) 0%, rgba(96,147,193,1) 100%);
+    position: sticky;
 }
 .bar-register h4{
     color: #ffffff;
@@ -181,12 +182,15 @@ export default {
     rgba(133, 209, 220, 1) 14%,
     rgba(131, 184, 222, 1) 100%
   );
+  position: fixed !important;
 }
 ::v-deep .content {
   background: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: calc(100% - 50px);
+  overflow: auto;
 }
 ::v-deep .content1 {
   padding: 30px;
