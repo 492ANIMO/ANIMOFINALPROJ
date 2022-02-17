@@ -25,6 +25,7 @@ const actions = {
     const response = await axios.get(baseUrl, {headers});
     console.log(response.data.user);
     commit('setCurrentUser', response.data.user);
+    commit('setOwner', response.data.user.profile._id, { root: true });
   },
 
 

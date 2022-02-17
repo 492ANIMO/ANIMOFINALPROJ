@@ -191,7 +191,9 @@ exports.confirm = async (req, res, next) => {
     // check if avaliable time 
     const booked = await Appointment.find({
       'date': date, 
-      'time': time });
+      'time': time,
+
+     });
     console.log(booked)
     if(booked.length!==0){
       throw new Error('ไม่สามารถยืนยันการจองได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว กรุณากดยกเลิกการจอง');
@@ -220,6 +222,7 @@ exports.confirm = async (req, res, next) => {
       by: 'การจอง',
       status: 'ไปตามเวลานัด',
       doctor,
+      appId: new Date().getTime().toString()
     })
     await appointment.save();
 

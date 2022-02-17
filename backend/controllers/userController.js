@@ -310,3 +310,74 @@ exports.destroy = async (req, res, next) => {
     next(error);
   }
 }
+
+exports.clientRegister = async (req, res, next) => {
+  try {
+    const { email, password, firstName, lastName, contact, address } = req.body;
+
+    const role = 'client';
+
+    //validation
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        const error = new Error('ข้อมูลที่รับมาไม่ถูกต้อง');
+        error.statusCode = 422;
+        error.validation = errors.array();
+        throw error;
+    }
+    //check email ซ้ำ
+    const existEmail = await User.findOne({email: email});
+    if (existEmail){
+      const error = new Error('อีเมล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
+      error.statusCode = 400;
+      throw error;
+  }
+
+    // encrypt password
+    const encryptPassword = bcrypt.hashSync(password, 10);
+    let user;
+
+    // check role : client user | clinic user
+      // create client instance
+      let client = await Client.create({
+        firstName, 
+        lastName,
+        email,
+        contact,
+        address,
+        uid: new Date().getTime().toString()
+      })
+      if(req.file){
+        client.avatar = req.file.path
+      }
+      // save client to database
+      await client.save((error) => {
+        if(error) throw new Error(error);
+      })
+      // create user instance
+        user = new User({
+        email: email,
+        password: encryptPassword,
+        role: role,
+        profile: client._id,
+        onModel: 'Client'
+      })
+
+    // save user to database
+    await user.save((err, doc) => {
+      if(err){ 
+        const error = new Error('เพิ่มบัญชีผู้ใช้ไม่สำเร็จ');
+        error.statusCode = 500;
+        throw error;
+      } else{
+        res.status(200).json({
+          message: 'เพิ่มผู้ใช้สำเร็จ',
+          user
+        });
+      }
+    });
+  
+  } catch (error) {
+    next(error);
+  }
+}
