@@ -18,6 +18,7 @@ const state = {
     gender: '',
     weight: '',
     sterilization: '',
+    ownerId: ''
 
   }
 };
@@ -56,13 +57,15 @@ const actions = {
     commit('petDetail', response.data.pet)
   },
 
-  async addMyPet({commit}, pet){
-    const baseUrl = 'http://localhost:4000/api/pets/mypet/'
-
-    let response = await axios.post(baseUrl, pet)
-
-    console.log(response.data.pet);
-    commit('newPet', response.data.pet)
+  async addMyPet(){
+    try {
+      const baseUrl = 'http://localhost:4000/api/pets/'
+      const response = await axios.post(baseUrl, state.addPetForm)
+      
+      console.log(response.data);
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 };
@@ -72,6 +75,7 @@ const mutations = {
   setMyPets: (state, mypets) => (state.mypets = mypets),
   newPet: (state, addPetForm) => (state.pet = addPetForm),
   petDetail: (state, petDetail) => (state.petDetail = petDetail),
+  setOwner: (state, owner) => (state.addPetForm.ownerId = owner)
 
 };
 

@@ -54,7 +54,7 @@
               placeholder="เพศ"
               v-model="addPetForm.gender"
             >
-              <vs-option label="ผู้" value="1">
+              <vs-option label="ผู้" value="ผู้">
                 ผู้
               </vs-option>
             </vs-select>
