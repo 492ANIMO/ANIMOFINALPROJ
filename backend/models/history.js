@@ -8,7 +8,8 @@ const Appointment = require('../models/appointment')
 const schema = new Schema({
   pet: Pet.schema,
   package: Package.schema,
-  appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' }
+  appointment: Appointment.schema
+  // appointment: { type: Schema.Types.ObjectId, ref: 'Appointment' }
 },{
   timestamps: true,
   collection: 'histories'
