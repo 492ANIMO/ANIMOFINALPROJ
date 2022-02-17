@@ -5,6 +5,7 @@ import user from './modules/user';
 import petPackage from './modules/package';
 import appointment from './modules/appointment';
 import register from './modules/register';
+import history from './modules/history';
 
 // load vuex
 Vue.use(Vuex)
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     user,
     petPackage,
     appointment,
-    register
+    register,
+    history
   }
 })

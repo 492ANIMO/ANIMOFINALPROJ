@@ -6,6 +6,25 @@
         <div class="content2">
           <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
 
+          <div v-for="history in allHistories" :key="history._id" class="Package-Card" @click="active = !active">
+            <div class="bg-package package-green">
+                <font-awesome-icon class="Pic-appointment-dt" icon="check-circle" />
+            </div>
+            <div class="PetDT">
+              <h2 v-if="history.by === 'การจอง'">{{history.reservation.package.name}}</h2>
+              <h2 v-if="history.by === 'นัดโดยสัตวแพทย์'">{{history.type}}</h2>
+              <div class="TextDT">
+                <font>วันที่ : <b>{{ format_date(history.date) }}</b></font>
+              </div>
+              <div class="TextDT">
+                <font>สัตว์เลี้ยง : <b>{{ history.pet.name }}</b></font>
+              </div>
+              <div class="TextDT1">
+                <font>ข้อมูลเพิ่มเติม...</font>
+              </div>
+            </div>
+          </div>
+
           <div class="Package-Card" @click="active = !active">
             <div class="bg-package package-green">
                 <font-awesome-icon class="Pic-appointment-dt" icon="check-circle" />
@@ -67,10 +86,14 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Navbar from "../components/Navbar";
+import mixins from "../mixins";
+
 
 export default {
   name: "History",
+  mixins: [mixins],
   data() {
     return {
       search: "",
@@ -80,6 +103,15 @@ export default {
   components: {
     Navbar,
   },
+  methods:{
+    ...mapActions(['fetchMyHistories'])
+  },
+  computed: {
+    ...mapGetters(['allHistories'])
+  },
+  created(){
+    this.fetchMyHistories();
+  }
 };
 </script>
 <style scoped>
