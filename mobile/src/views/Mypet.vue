@@ -88,7 +88,7 @@
             <div class="button-detail edit">
               แก้ไข
             </div>
-            <div class="button-detail delete">
+            <div class="button-detail delete" @click="deleteMyPet()">
               ลบ
             </div>
           </div>
@@ -99,12 +99,12 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 
 export default {
   name: "Mypet",
   methods: {
-    ...mapActions(['fetchMyPet', 'fetchCurrentUser', 'fetchPetDetail'])
+    ...mapActions(['fetchMyPet', 'fetchCurrentUser', 'fetchPetDetail', 'deleteMyPet'])
   },
   computed: {
     ...mapGetters(['allPets', 'petDetail'])
@@ -116,6 +116,7 @@ export default {
 
  data() {
    return {
+     ...mapState(['petDetailPopup']),
      search: '',
      active: false,
    }

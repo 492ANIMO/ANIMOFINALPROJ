@@ -3,9 +3,8 @@ import axios from "axios";
 const state = {
   mypets: [
   ],
-  pet:{
-  },
   petDetail: {
+    _id: '',
     age:{},
   },
   addPetForm:{
@@ -19,15 +18,14 @@ const state = {
     weight: '',
     sterilization: '',
     ownerId: ''
-
-  }
+  },
 };
 
 const getters = {
   allPets: (state) => state.mypets,
   pet: (state) => state.pet,
   petDetail: (state) => state.petDetail,
-  addPetForm: (state) => state.addPetForm
+  addPetForm: (state) => state.addPetForm,
 };
 
 const actions = {
@@ -50,6 +48,7 @@ const actions = {
   },
 
   async fetchPetDetail({commit}, id){
+
     const baseUrl = 'http://localhost:4000/api/pets/';
     const response = await axios(`${baseUrl}${id}`)
     console.log(`id: ${id}`);
@@ -61,16 +60,47 @@ const actions = {
     try {
       const baseUrl = 'http://localhost:4000/api/pets/'
       const response = await axios.post(baseUrl, state.addPetForm)
-      
+      state.petDetail = {
+        _id: '',
+        age:{},
+      }
       console.log(response.data);
     } catch (error) {
       console.log(error)
     }
+  },
+  async deleteMyPet(){
+    try {
+      const baseUrl = 'http://localhost:4000/api/pets/'
+      axios.delete(baseUrl+state.petDetail._id).then((res)=>{
+        console.log(`id: ${state.petDetail._id}`)
+        console.log(res.data);
+        console.log('ลบสัตว์เลี้ยงเรียบร้อย');
+        state.addPetForm = {
+          age: {
+            year: '',
+            month: ''
+          },
+          type: '',
+          breed: '',
+          gender: '',
+          weight: '',
+          sterilization: '',
+          ownerId: ''
+        }
+        
+        
+      }) .catch((error) => {
+          console.log(error);
+      });
+ 
+    } catch (error) {
+      console.log(error)
+    }
   }
-
 };
 
-const mutations = {
+const mutations = { 
   // synchronous
   setMyPets: (state, mypets) => (state.mypets = mypets),
   newPet: (state, addPetForm) => (state.pet = addPetForm),
