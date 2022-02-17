@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :onload="openLoading">
     <Navbar namepage="ANIMO" />
     <div class="content">
       <div>
@@ -25,12 +25,10 @@
               placeholder="ประเภทสัตว์"
               v-model="addPetForm.type"
             >
-              <vs-option label="แมว" value="แมว">
-                แมว
-              </vs-option>
+              <vs-option label="แมว" value="แมว"> แมว </vs-option>
             </vs-select>
             <vs-input
-            class="input-grid1"
+              class="input-grid1"
               label="สายพันธุ์"
               v-model="addPetForm.breed"
               placeholder="สายพันธุ์"
@@ -44,7 +42,11 @@
               v-model="addPetForm.age.year"
               placeholder="ปี"
             />
-            <vs-input label="" v-model="addPetForm.age.month" placeholder="เดือน" />
+            <vs-input
+              label=""
+              v-model="addPetForm.age.month"
+              placeholder="เดือน"
+            />
           </div>
 
           <div class="content-input grid">
@@ -54,11 +56,14 @@
               placeholder="เพศ"
               v-model="addPetForm.gender"
             >
-              <vs-option label="ผู้" value="ผู้">
-                ผู้
-              </vs-option>
+              <vs-option label="ผู้" value="ผู้"> ผู้ </vs-option>
             </vs-select>
-            <vs-input class="input-grid1" label="น้ำหนัก" v-model="addPetForm.weight" placeholder="น้ำหนัก" />
+            <vs-input
+              class="input-grid1"
+              label="น้ำหนัก"
+              v-model="addPetForm.weight"
+              placeholder="น้ำหนัก"
+            />
           </div>
 
           <div class="content-input alone">
@@ -68,10 +73,8 @@
               placeholder="ทำหมัน"
               v-model="addPetForm.sterilization"
             >
-              <vs-option label="ทำหมันแล้ว" value="1">
-                ทำหมันแล้ว
-              </vs-option>
-            </vs-select> 
+              <vs-option label="ทำหมันแล้ว" value="1"> ทำหมันแล้ว </vs-option>
+            </vs-select>
           </div>
         </div>
       </div>
@@ -86,7 +89,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Addpet",
@@ -95,21 +98,31 @@ export default {
       search: "",
       value: "",
       active: false,
-
     };
   },
-  methods:{
-    ...mapActions(['fetchCurrentUser', 'addMyPet']),
- 
+  methods: {
+    ...mapActions(["fetchCurrentUser", "addMyPet"]),
+    openLoading() {
+      const loading = this.$vs.loading({
+        text: "กำลังโหลด...",
+        color: "#43ccb4",
+        type: "scale",
+        scale: "1.2",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
+    },
   },
-  computed:{
-    ...mapGetters(['currentUser', 'pet', 'addPetForm']),
+  computed: {
+    ...mapGetters(["currentUser", "pet", "addPetForm"]),
   },
   components: {
     Navbar,
   },
-  created(){
+  created() {
     this.fetchCurrentUser();
+    //this.openLoading();
   },
 };
 </script>

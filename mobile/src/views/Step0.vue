@@ -3,44 +3,54 @@
     <Navbar namepage="ANIMO" />
     <div class="content">
       <div>
-          <div class="Head-text">
-              <h2 class="active-text">รายละเอียดแพ็คเกจ</h2>
-          </div>
-
-        <div class="content1">
-            <h2 class="head-step">แพ็คเกจลูกสุนัข</h2>
-
-            <div class="box-package">
-                <h2>วัคซีนพิษสุนัขบ้า</h2>
-                <div class="box-package-dt">
-                <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font><br>
-                <font>อายุมากกว่า : <b>5 เดือน</b></font><br>
-                <font>รายละเอียด : <b>ฉีดปีละ 2 เข็ม โดยราคาที่จ่ายเป็นราคาสำหรับเข็มเดียว จะต้องกลับมาฉีดอีก 6 เดือนข้างหน้า</b></font><br>
-                </div>
-            </div>
-
-            <div class="box-package">
-                <h2>ถ่ายพยาธิ</h2>
-                <div class="box-package-dt">
-                <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font><br>
-                <font>อายุมากกว่า : <b>1 เดือน</b></font><br>
-                <font>รายละเอียด : <b>งดน้ำ งดอาหาร ก่อนมา 2 ชั่วโมง</b></font><br>
-                </div>
-            </div>
-
-            <div class="box-package">
-                <font class="right">ราคาสุทธิ : <b class="active-text">1,250 บาท</b></font><br>
-            </div>
-            
+        <div class="Head-text">
+          <h2 class="active-text">รายละเอียดแพ็คเกจ</h2>
         </div>
 
+        <div class="content1">
+          <h2 class="head-step">แพ็คเกจลูกสุนัข</h2>
+
+          <div class="box-package">
+            <h2>วัคซีนพิษสุนัขบ้า</h2>
+            <div class="box-package-dt">
+              <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
+              ><br />
+              <font>อายุมากกว่า : <b>5 เดือน</b></font
+              ><br />
+              <font
+                >รายละเอียด :
+                <b
+                  >ฉีดปีละ 2 เข็ม โดยราคาที่จ่ายเป็นราคาสำหรับเข็มเดียว
+                  จะต้องกลับมาฉีดอีก 6 เดือนข้างหน้า</b
+                ></font
+              ><br />
+            </div>
+          </div>
+
+          <div class="box-package">
+            <h2>ถ่ายพยาธิ</h2>
+            <div class="box-package-dt">
+              <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
+              ><br />
+              <font>อายุมากกว่า : <b>1 เดือน</b></font
+              ><br />
+              <font>รายละเอียด : <b>งดน้ำ งดอาหาร ก่อนมา 2 ชั่วโมง</b></font
+              ><br />
+            </div>
+          </div>
+
+          <div class="box-package">
+            <font class="right"
+              >ราคาสุทธิ : <b class="active-text">1,250 บาท</b></font
+            ><br />
+          </div>
+        </div>
       </div>
-      <div class="footer-button ">
+      <div class="footer-button">
         <div class="button-addpet active-color">
           <h4>จองแพ็คเก็จ</h4>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -60,6 +70,22 @@ export default {
   components: {
     Navbar,
   },
+  methods: {
+    openLoading() {
+      const loading = this.$vs.loading({
+        text: "กำลังโหลด...",
+        color: "#43ccb4",
+        type: "scale",
+        scale: "1.2",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
+    },
+  },
+  created() {
+    //this.openLoading();
+  },
 };
 </script>
 <style scoped>
@@ -68,13 +94,13 @@ export default {
   font-size: 20px;
 }
 ::v-deep .Head-text {
-    display: grid;
-    grid: auto / auto;
-    text-align: center;
-    position: sticky;
-    top: 0px;
-    z-index: 2;
-    background: #ffffff;
+  display: grid;
+  grid: auto / auto;
+  text-align: center;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+  background: #ffffff;
 }
 ::v-deep .bar {
   background: rgb(142, 193, 231);
@@ -85,7 +111,7 @@ export default {
   );
 }
 ::v-deep .content {
-  background: #E8EBF5;
+  background: #e8ebf5;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -154,9 +180,9 @@ export default {
   z-index: 1;
 }
 ::v-deep .footer-button {
-    display: grid;
-    justify-items: center;
-    position: sticky;
-    bottom: 0px;
+  display: grid;
+  justify-items: center;
+  position: sticky;
+  bottom: 0px;
 }
 </style>

@@ -11,7 +11,7 @@
             <img src="../assets/ANIMO.png" alt="Animo" class="Logo1" />
           <h2 class="HeadPage">{{ namepage }}</h2>
           </div>
-          <router-link to="/profile"><h2 class="rightNav"><font-awesome-icon icon="user-circle" /></h2></router-link>
+          <router-link to="/mobile/profile"><h2 class="rightNav"><font-awesome-icon icon="user-circle" /></h2></router-link>
       </div>
     </div>
 
@@ -19,12 +19,11 @@
       <div class="BgNavSide">
         <ul>
           <div>
-            <li><font-awesome-icon class="iconR" icon="paw"/>สัตว์เลี้ยง</li>
-            <li><font-awesome-icon class="iconR" icon="syringe"/>แพ็คเกจ</li>
-            <li><font-awesome-icon class="iconR" icon="file-medical"/>การรักษา</li>
-            <li><font-awesome-icon class="iconR" icon="clock"/>ประวัติการรักษา</li>
-            <li><font-awesome-icon class="iconR" icon="clipboard-list"/>การนัดหมาย</li>
-            <li><font-awesome-icon class="iconR" icon="newspaper"/>บทความ</li>
+            <router-link to="/mobile/mypet"><li><a><font-awesome-icon class="iconR" icon="paw"/>สัตว์เลี้ยง</a></li></router-link>
+            <router-link to="/mobile/package"><li><a><font-awesome-icon class="iconR" icon="syringe"/>แพ็คเกจ</a></li></router-link>
+            <router-link to="/mobile/history"><li><a><font-awesome-icon class="iconR" icon="clock"/>ประวัติการรักษา</a></li></router-link>
+            <router-link to="/mobile/appointment"><li><a><font-awesome-icon class="iconR" icon="clipboard-list"/>การนัดหมาย</a></li></router-link>
+            <router-link to="/mobile/annoucement"><li><a><font-awesome-icon class="iconR" icon="newspaper"/>ข่าวสาร</a></li></router-link>
           </div>
           
           <div>
@@ -66,6 +65,12 @@ body {
   padding-top: 5px;
   font-size: 30px !important;
 }
+router-link {
+  text-decoration: none;
+}
+a {
+  text-decoration: none;
+}
 ul {
     list-style-type: none;
     padding-top: 30px;
@@ -83,7 +88,7 @@ ul {
 li {
     color: #ffffff;
     padding: 15px 20px;
-    text-decoration: none;
+    text-decoration: none !important;
     align-items: center;
 }
 li:hover:not(.active) {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Navbar namepage="ข่าวสาร/บทความ" />
+    <Navbar namepage="ข่าวสาร" />
     <div class="content">
       <div>
         <div class="Head-text">
@@ -27,7 +27,8 @@
                   <font>อ่านเพิ่มเติม...</font>
                 </div>
               </div>
-            </div><br>
+            </div>
+            <br />
 
             <div class="news-box">
               <img src="../assets/bento.png" alt="Animo" class="news-box-pic" />
@@ -42,7 +43,8 @@
                   <font>อ่านเพิ่มเติม...</font>
                 </div>
               </div>
-            </div><br>
+            </div>
+            <br />
 
             <div class="news-box">
               <img src="../assets/bento.png" alt="Animo" class="news-box-pic" />
@@ -57,8 +59,8 @@
                   <font>อ่านเพิ่มเติม...</font>
                 </div>
               </div>
-            </div><br><br>
-
+            </div>
+            <br /><br />
           </div>
         </div>
       </div>
@@ -80,6 +82,22 @@ export default {
   },
   components: {
     Navbar,
+  },
+  methods: {
+    openLoading() {
+      const loading = this.$vs.loading({
+        text: "กำลังโหลด...",
+        color: "#43ccb4",
+        type: "scale",
+        scale: "1.2",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
+    },
+  },
+  created() {
+    //this.openLoading();
   },
 };
 </script>

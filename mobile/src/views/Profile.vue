@@ -154,12 +154,24 @@ export default {
       console.log(status);
       console.log("field: " + field);
     },
+    openLoading() {
+      const loading = this.$vs.loading({
+        text: "กำลังโหลด...",
+        color: "#43ccb4",
+        type: "scale",
+        scale: "1.2",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
+    },
   },
   computed: {
     ...mapGetters(["currentUser"]),
   },
   created() {
     this.fetchCurrentUser();
+    //this.openLoading();
   },
 };
 </script>
@@ -281,6 +293,5 @@ export default {
   margin-bottom: -10px;
   margin-right: -10px;
   width: 70px;
-
 }
 </style>

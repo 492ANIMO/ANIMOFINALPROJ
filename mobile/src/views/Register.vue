@@ -1,9 +1,11 @@
 <template>
   <div>
-      <div class="bar-register">
-          <router-link to="/login"><h4><font-awesome-icon class="iconR" icon="chevron-left" /></h4></router-link>
-          <h4>ANIMO</h4>
-      </div>
+    <div class="bar-register">
+      <router-link to="/login"
+        ><h4><font-awesome-icon class="iconR" icon="chevron-left" /></h4
+      ></router-link>
+      <h4>ANIMO</h4>
+    </div>
     <div class="content">
       <div>
         <h2 class="Head-text">ลงทะเบียนผู้ใช้</h2>
@@ -25,10 +27,17 @@
           </div>
 
           <div class="content-input">
-            <vs-input v-model="registerForm.email" label="อีเมลล์" placeholder="animo@example.com">
-                <template v-if="!validEmail && registerForm.email !== ''" #message-danger>
-                    อีเมลล์ไม่ถูกต้อง
-                </template>
+            <vs-input
+              v-model="registerForm.email"
+              label="อีเมลล์"
+              placeholder="animo@example.com"
+            >
+              <template
+                v-if="!validEmail && registerForm.email !== ''"
+                #message-danger
+              >
+                อีเมลล์ไม่ถูกต้อง
+              </template>
             </vs-input>
           </div>
 
@@ -55,7 +64,8 @@
               v-model="registerForm.confirmPassword"
               placeholder="ยืนยันรหัสผ่าน"
             />
-          </div><br>
+          </div>
+          <br />
 
           <div class="content-input">
             <vs-input
@@ -97,7 +107,7 @@
 
           <div class="content-input alone">
             <vs-input
-            class="input-alone"
+              class="input-alone"
               label="รหัสไปรษณีย์"
               v-model="registerForm.address.postalCode"
               placeholder="รหัสไปรษณีย์"
@@ -115,8 +125,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { required } from 'vuelidate/lib/validators';
+import { mapActions, mapGetters } from "vuex";
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "Addpet",
@@ -127,71 +137,88 @@ export default {
       value1: "",
       valueEmail: "",
       active: false,
-    
     };
   },
-  validations:{
-    registerForm:{
-      firstName: { required }
-    }
+  validations: {
+    registerForm: {
+      firstName: { required },
+    },
   },
-  created(){
-
+  created() {
+    //this.openLoading();
   },
   computed: {
-    ...mapGetters(['registerForm']),
+    ...mapGetters(["registerForm"]),
 
     validEmail() {
-        return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.registerForm.email)
+      return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
+        this.registerForm.email
+      );
     },
-
   },
-  methods:{
-    ...mapActions(['createClientUser']),
-
-  }
+  methods: {
+    ...mapActions(["createClientUser"]),
+    openLoading() {
+      const loading = this.$vs.loading({
+        text: "กำลังโหลด...",
+        color: "#43ccb4",
+        type: "scale",
+        scale: "1.2",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
+    },
+  },
 };
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
 .register-color {
-    background: rgb(123,198,204);
-    background: linear-gradient(135deg, rgba(123,198,204,1) 0%, rgba(131,179,216,1) 100%);
+  background: rgb(123, 198, 204);
+  background: linear-gradient(
+    135deg,
+    rgba(123, 198, 204, 1) 0%,
+    rgba(131, 179, 216, 1) 100%
+  );
 }
 .bar-register {
-    height: 80px;
-    width: 100%;
-    display: grid;
-    grid: auto / 10px auto 10px;
-    text-align: center;
-    align-items: center;
-    background: rgb(77,192,141);
-    background: linear-gradient(135deg, rgba(77,192,141,1) 0%, rgba(96,147,193,1) 100%);
-    position: sticky;
+  height: 80px;
+  width: 100%;
+  display: grid;
+  grid: auto / 10px auto 10px;
+  text-align: center;
+  align-items: center;
+  background: rgb(77, 192, 141);
+  background: linear-gradient(
+    135deg,
+    rgba(77, 192, 141, 1) 0%,
+    rgba(96, 147, 193, 1) 100%
+  );
+  position: sticky;
 }
-.bar-register h4{
-    color: #ffffff;
-    font-size: 30px;
-    font-weight: 500;
-    margin: 20px;
-    margin-top: 10px;
+.bar-register h4 {
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 500;
+  margin: 20px;
+  margin-top: 10px;
 }
 ::v-deep .vs-input-content + .vs-input__message {
-    text-align: left;
+  text-align: left;
 }
 ::v-deep .Head-text {
-    font-size: 30px;
-    position: sticky;
-    top: 0px;
-    z-index: 2;
-    background: #ffffff;
-
+  font-size: 30px;
+  position: sticky;
+  top: 0px;
+  z-index: 2;
+  background: #ffffff;
 }
 ::v-deep .content {
-    overflow: scroll;
+  overflow: scroll;
 }
 ::v-deep .footer-button {
-    z-index: 2;
+  z-index: 2;
 }
 ::v-deep .bar {
   background: rgb(133, 209, 220);

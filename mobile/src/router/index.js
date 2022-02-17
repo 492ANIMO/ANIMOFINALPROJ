@@ -5,67 +5,67 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: '/mobile/mypet',
     name: 'Mypet',
     component: () => import('../views/Mypet.vue')
   },
   {
-    path: '/addpet',
+    path: '/mobile/addpet',
     name: 'Addpet',
     component: () => import('../views/Addpet.vue')
   },
   {
-    path: '/profile',
+    path: '/mobile/profile',
     name: 'Profile',
     component: () => import('../views/Profile.vue')
   },
   {
-    path: '/package',
+    path: '/mobile/package',
     name: 'Package',
     component: () => import('../views/Package.vue')
   },
   {
-    path: '/login',
+    path: '/',
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/register',
+    path: '/mobile/register',
     name: 'Register',
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/appointment',
+    path: '/mobile/appointment',
     name: 'Appointment',
     component: () => import('../views/Appointment.vue')
   },
   {
-    path: '/history',
+    path: '/mobile/history',
     name: 'History',
     component: () => import('../views/History.vue')
   },
   {
-    path: '/step0',
+    path: '/mobile/step0',
     name: 'Step0',
     component: () => import('../views/Step0.vue')
   },
   {
-    path: '/step1',
+    path: '/mobile/step1',
     name: 'Step1',
     component: () => import('../views/Step1.vue')
   },
   {
-    path: '/step2',
+    path: '/mobile/step2',
     name: 'Step2',
     component: () => import('../views/Step2.vue')
   },
   {
-    path: '/step3',
+    path: '/mobile/step3',
     name: 'Step3',
     component: () => import('../views/Step3.vue')
   },
   {
-    path: '/annoucement',
+    path: '/mobile/annoucement',
     name: 'Annoucement',
     component: () => import('../views/Annoucement.vue')
   }

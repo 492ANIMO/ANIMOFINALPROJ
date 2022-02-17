@@ -91,6 +91,22 @@ export default {
   components: {
     Navbar,
   },
+  methods: {
+    openLoading() {
+          const loading = this.$vs.loading({
+            text: 'กำลังโหลด...',
+            color: '#43ccb4',
+            type: 'scale',
+            scale: '1.2',
+          })
+          setTimeout(() => {
+            loading.close()
+          }, 3000)
+        }
+  },
+  created() {
+    //this.openLoading();
+  }
 };
 </script>
 <style scoped>

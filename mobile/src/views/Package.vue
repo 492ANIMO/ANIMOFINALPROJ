@@ -30,9 +30,16 @@
             <h4>อื่นๆ</h4>
           </div>
 
-          <div class="Package-Card" 
-          v-for="pack in allPackage" :key="pack._id" @click="active = !active">
-            <div class="bg-package package-yellow" :class="BindPackageType(pack.type)">
+          <div
+            class="Package-Card"
+            v-for="pack in allPackage"
+            :key="pack._id"
+            @click="active = !active"
+          >
+            <div
+              class="bg-package package-yellow"
+              :class="BindPackageType(pack.type)"
+            >
               <img
                 :src="getImgUrl(pack.type)"
                 alt="Animo"
@@ -42,7 +49,9 @@
             <div class="PetDT">
               <h2>{{ pack.name }}</h2>
               <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>{{ pack.type }}</b></font>
+                <font
+                  >ประเภทสัตว์ : <b>{{ pack.type }}</b></font
+                >
               </div>
               <div class="TextDT">
                 <font>อายุ : <b>2 ปี 3 เดือน</b></font>
@@ -126,7 +135,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import {mapActions, mapGetters} from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Package",
@@ -140,40 +149,51 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(['fetchPackage']),
+    ...mapActions(["fetchPackage"]),
 
-    BindPackageType: function(type){
-      if(type==='สุนัข'){
-        return 'package-yellow'
-      } else if(type==='แมว'){
-        return 'package-orange'
-      } else if(type==='สัตว์ฟันแทะ'){
-        return 'package-pink'
-      } else{
-        return 'package-red'
+    BindPackageType: function (type) {
+      if (type === "สุนัข") {
+        return "package-yellow";
+      } else if (type === "แมว") {
+        return "package-orange";
+      } else if (type === "สัตว์ฟันแทะ") {
+        return "package-pink";
+      } else {
+        return "package-red";
       }
     },
-    getImgUrl: function(type){
-      const images = require.context('../assets/', false, /\.png$/)
+    getImgUrl: function (type) {
+      const images = require.context("../assets/", false, /\.png$/);
       let pet;
-      if(type==='สุนัข'){
-        pet = 'pet1'
-      } else if(type==='แมว'){
-        pet = 'pet2'
-      } else if(type==='สัตว์ฟันแทะ'){
-        pet = 'pet3'
-      } else{
-        pet = 'pet4'
+      if (type === "สุนัข") {
+        pet = "pet1";
+      } else if (type === "แมว") {
+        pet = "pet2";
+      } else if (type === "สัตว์ฟันแทะ") {
+        pet = "pet3";
+      } else {
+        pet = "pet4";
       }
-      return images('./' + pet + ".png")
-    }
-    
+      return images("./" + pet + ".png");
+    },
+    openLoading() {
+      const loading = this.$vs.loading({
+        text: "กำลังโหลด...",
+        color: "#43ccb4",
+        type: "scale",
+        scale: "1.2",
+      });
+      setTimeout(() => {
+        loading.close();
+      }, 3000);
+    },
   },
   computed: {
-    ...mapGetters(['allPackage'])
+    ...mapGetters(["allPackage"]),
   },
-  created(){
+  created() {
     this.fetchPackage();
+    //this.openLoading();
   },
 };
 </script>
@@ -181,15 +201,15 @@ export default {
 <style scoped>
 @import url("../assets/css/style.css");
 ::v-deep .Package-Card {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 ::v-deep .bg-package {
-    border-radius: 10px;
+  border-radius: 10px;
 }
 ::v-deep .Pic-appointment-dt {
-    height: 90px;
-    width: 90px;
-    border-radius: 10px 0px 0px 10px;
+  height: 90px;
+  width: 90px;
+  border-radius: 10px 0px 0px 10px;
 }
 ::v-deep .content1 {
   position: absolute;
