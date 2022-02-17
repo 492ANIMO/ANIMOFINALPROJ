@@ -4,23 +4,60 @@
     <div class="content">
       <div class="content-profile">
         <div class="profile-content">
-          <img src="../assets/bento.png" alt="Animo" class="profile-client" />
+          <div class="edit-image-box1">
+            <div class="edit-image-box">
+              <div class="edit-image" @click="toggleShow">แก้ไข</div>
+            </div>
+          </div>
+
+          <img
+            src="../assets/bento.png"
+            alt="Animo"
+            class="profile-client"
+            @click="toggleShow"
+          />
         </div>
-        <h2 class="name-profile">{{ currentUser.profile.firstName }} {{ currentUser.profile.lastName }}</h2>
+        <h2 class="name-profile">
+          {{ currentUser.profile.firstName }} {{ currentUser.profile.lastName }}
+        </h2>
         <div class="content-detail">
           <div class="TextDT">
-            <font>อีเมลล์ : <b>{{ currentUser.email }}</b></font>
+            <font
+              >อีเมลล์ : <b>{{ currentUser.email }}</b></font
+            >
           </div>
           <div class="TextDT">
-            <font>เบอร์โทร : <b>{{ currentUser.profile.contact }}</b></font>
+            <font
+              >เบอร์โทร : <b>{{ currentUser.profile.contact }}</b></font
+            >
           </div>
           <div class="TextDT">
-            <font>ที่อยู่ : <b>
-              {{ currentUser.profile.address.detail }} {{ currentUser.profile.address.subdistrict }}
-              {{ currentUser.profile.address.district }} {{ currentUser.profile.address.province }} {{ currentUser.profile.address.postalCode }}</b></font>
+            <font
+              >ที่อยู่ :
+              <b>
+                {{ currentUser.profile.address.detail }}
+                {{ currentUser.profile.address.subdistrict }}
+                {{ currentUser.profile.address.district }}
+                {{ currentUser.profile.address.province }}
+                {{ currentUser.profile.address.postalCode }}</b
+              ></font
+            >
           </div>
         </div>
       </div>
+      <div>
+        <my-upload
+          field="img"
+          v-model="show"
+          url="/upload"
+          :langExt="langExt"
+          noSquare="false"
+          noCircle="false"
+          noRotate="false"
+          img-format="png"
+        ></my-upload>
+      </div>
+
       <div class="footer-button">
         <div class="button-home">
           <h4><font-awesome-icon icon="home" /></h4>
@@ -35,45 +72,143 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import {mapActions, mapGetters} from 'vuex';
+import myUpload from "vue-image-crop-upload/upload-2.vue";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Mypet",
   components: {
     Navbar,
+    "my-upload": myUpload,
   },
-    data() {
+  data() {
     return {
       search: "",
       active: false,
       value: "",
+      show: false,
+      langExt: {
+        hint: "อัพโหลดภาพ",
+        loading: "กำลังอัพโหลด…",
+        noSupported:
+          "เบราเซอร์ไม่รองรับ, กรุณาใช้ IE เวอร์ชั่น 10 ขึ้นไป หรือใช้เบราเซอร์ตัวอื่น",
+        success: "อัพโหลดสำเร็จ",
+        fail: "อัพโหลดล้มเหลว",
+        preview: "ตัวอย่าง",
+        btn: {
+          off: "ยกเลิก",
+          close: "ปิด",
+          back: "กลับ",
+          save: "บันทึก",
+        },
+        error: {
+          onlyImg: "ไฟล์ภาพเท่านั้น",
+          outOfSize: "ไฟล์ใหญ่เกินกำหนด: ",
+          lowestPx: "ไฟล์เล็กเกินไป. อย่างน้อยต้องมีขนาด: ",
+        },
+      },
+      params: {
+        token: "123456798",
+        name: "avatar",
+      },
+      headers: {
+        smail: "*_~",
+      },
+      imgDataUrl: "", // the datebase64 url of created image
     };
   },
   methods: {
-    ...mapActions(['fetchCurrentUser'])
+    ...mapActions(["fetchCurrentUser"]),
+    toggleShow() {
+      this.show = !this.show;
+    },
+    /**
+     * crop success
+     *
+     * [param] imgDataUrl
+     * [param] field
+     */
+    cropSuccess(imgDataUrl) {
+      console.log("-------- crop success --------");
+      this.imgDataUrl = imgDataUrl;
+    },
+    /**
+     * upload success
+     *
+     * [param] jsonData  server api return data, already json encode
+     * [param] field
+     */
+    cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
+    },
+    /**
+     * upload fail
+     *
+     * [param] status    server api return error status, like 500
+     * [param] field
+     */
+    cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
+      console.log("field: " + field);
+    },
   },
   computed: {
-    ...mapGetters(['currentUser'])
+    ...mapGetters(["currentUser"]),
   },
-  created(){
+  created() {
     this.fetchCurrentUser();
-  }
+  },
 };
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+
+.edit-image-box1 {
+  width: 100%;
+  height: 160px;
+  display: inline-grid;
+  grid: auto / auto;
+  position: absolute;
+  z-index: 2;
+  transform: translateY(-50%);
+  overflow: hidden;
+}
+.edit-image-box {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  z-index: 2;
+  overflow: hidden;
+}
+.edit-image {
+  width: 100%;
+  height: 40px;
+  z-index: 2;
+  color: #ffffff;
+  background: #696969;
+  opacity: 70%;
+  transform: translateY(330%);
+}
+
 .home {
-    background: rgb(99,201,164);
-    background: linear-gradient(149deg, rgba(99,201,164,1) 14%, rgba(99,180,201,1) 100%);
+  background: rgb(99, 201, 164);
+  background: linear-gradient(
+    149deg,
+    rgba(99, 201, 164, 1) 14%,
+    rgba(99, 180, 201, 1) 100%
+  );
 }
 .button-home {
-    padding: 10px;
-    width: 60px;
-    color: #ffffff;
-    border-radius: 20px;
-    font-size: 20px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
-    background: rgb(99,201,164);
+  padding: 10px;
+  width: 60px;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+  background: rgb(99, 201, 164);
 }
 .name-profile {
   font-size: 35px;
@@ -103,14 +238,14 @@ export default {
   height: 150px;
 }
 ::v-deep .footer-button {
-    display: grid;
-    grid: auto / 20% 80%;
-    justify-items: center;
+  display: grid;
+  grid: auto / 20% 80%;
+  justify-items: center;
 }
 ::v-deep .content-detail {
-    text-align: left;
-    font-size: 20px;
-    width: 95%;
+  text-align: left;
+  font-size: 20px;
+  width: 95%;
 }
 ::v-deep .content {
   display: flex;
@@ -132,5 +267,20 @@ export default {
   margin-top: -50px;
   padding: 0px;
   border-radius: 20px;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap {
+  width: 80%;
+  max-width: 300px;
+  border-radius: 20px;
+  height: 300px;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap .vicp-step1 .vicp-drop-area {
+  border-radius: 10px;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap .vicp-operate a {
+  margin-bottom: -10px;
+  margin-right: -10px;
+  width: 70px;
+
 }
 </style>
