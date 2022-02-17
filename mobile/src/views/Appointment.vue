@@ -15,15 +15,17 @@
               />
             </div>
             <div class="PetDT">
-                <div class="status " :class="bindAppointmentType(appointment.by)">
+                <div class="status " :class="bindAppointmentType(appointment.status)">
                   <h4>{{ appointment.status }}</h4>
                 </div>
-              <h2>{{appointment.type}}</h2>
+              <h2 v-if="!appointment.by">{{appointment.package.name}}</h2>
+              <h2 v-else>{{appointment.type}}</h2>
               <div class="TextDT">
                 <font>วันที่ : <b>{{ format_date(appointment.date) + ' : ' }}</b> <font-awesome-icon icon="clock"/> <b>{{appointment.time }} น.</b> </font>
               </div>
               <div class="TextDT">
-                <font>ประเภท : <b>{{ appointment.by }}</b></font>
+                <font v-if="!appointment.by">ประเภท : <b>การจอง</b></font>
+                <font v-else>ประเภท : <b>{{ appointment.by }}</b></font>
               </div>
               <div class="TextDT1">
                 <font>ข้อมูลเพิ่มเติม...</font>
@@ -107,8 +109,8 @@ export default {
   methods:{
     ...mapActions(['fetchMyAppointment']),
 
-    bindAppointmentType: function(by){
-      if(by === 'รอยืนยัน'){
+    bindAppointmentType: function(status){
+      if(status === 'รอยืนยัน' || status === "pending"){
         return 'status-1'
       }else{
         return 'status-2'

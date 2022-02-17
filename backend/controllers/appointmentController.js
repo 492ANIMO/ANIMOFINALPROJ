@@ -232,8 +232,12 @@ exports.showMyAppointment = async (req, res, next) => {
 
     const pet = await Pet.find().where('owner').in(clientId).exec();
     console.log(pet)
-    const appointment = await Appointment.find().where('pet').in(pet).populate('pet').exec();
+    let appointment = await Appointment.find().where('pet').in(pet).populate('pet').exec();
     const reservation = await Reservation.find({status: 'pending'}).where('owner').in(clientId).exec();
+    console.log(`reservation: ${reservation}`)
+
+    appointment.push(...reservation);
+    console.log(`appointment+reservation: ${appointment}`)
 
     // get appointment by pet id
     res.status(200).json({
