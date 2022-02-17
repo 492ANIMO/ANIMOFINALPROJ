@@ -6,6 +6,7 @@ import petPackage from './modules/package';
 import appointment from './modules/appointment';
 import register from './modules/register';
 import history from './modules/history';
+import annoucement from './modules/annoucement';
 
 // load vuex
 Vue.use(Vuex)
@@ -24,6 +25,7 @@ export default new Vuex.Store({
     petPackage,
     appointment,
     register,
-    history
+    history,
+    annoucement
   }
 })

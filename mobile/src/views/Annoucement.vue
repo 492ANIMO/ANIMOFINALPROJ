@@ -14,6 +14,25 @@
         </div>
         <div class="content1">
           <div class="content-scroll">
+
+            <div v-for="annoucement in allAnnoucements" :key="annoucement._id">
+                <div class="news-box">
+                <img src="../assets/muji.png" alt="Animo" class="news-box-pic" />
+                <div class="news-box-text">
+                  <h2>{{ annoucement.title }}</h2>
+                  <div class="news-box-dt">
+                    <h4>
+                      {{annoucement.body | strippedContent}}
+                    </h4>
+                  </div>
+                  <div class="TextDT1">
+                    <font>อ่านเพิ่มเติม...</font>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+
             <div class="news-box">
               <img src="../assets/muji.png" alt="Animo" class="news-box-pic" />
               <div class="news-box-text">
@@ -69,7 +88,9 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Navbar from "../components/Navbar";
+
 
 export default {
   name: "Annoucement",
@@ -83,7 +104,9 @@ export default {
   components: {
     Navbar,
   },
+<<<<<<< HEAD
   methods: {
+    ...mapActions(['fetchAnnoucements']),
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",
@@ -99,6 +122,19 @@ export default {
   created() {
     //this.openLoading();
   },
+  computed: {
+    ...mapGetters(['allAnnoucements']),
+    
+  },
+  beforeMount(){
+    this.fetchAnnoucements();
+  },
+  filters: {
+    strippedContent: function(string) {
+           return string.replace(/<\/?[^>]+>/ig, " "); 
+    }
+}
+>>>>>>> bf45a79ef2a0b01729708a688fe5117abe507549
 };
 </script>
 <style scoped>
