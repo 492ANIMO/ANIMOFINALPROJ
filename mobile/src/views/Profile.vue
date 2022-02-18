@@ -11,7 +11,7 @@
           </div>
 
           <img
-            src="../assets/bento.png"
+            :src="this.baseurl+this.currentUser.profile.avatar"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"
@@ -115,6 +115,7 @@ export default {
         smail: "*_~",
       },
       imgDataUrl: "", // the datebase64 url of created image
+      baseurl: 'http://localhost:4000/api/',
     };
   },
   methods: {
