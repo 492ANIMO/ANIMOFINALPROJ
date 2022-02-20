@@ -133,7 +133,6 @@ export default {
            return string.replace(/<\/?[^>]+>/ig, " "); 
     }
 }
-
 };
 </script>
 <style scoped>
