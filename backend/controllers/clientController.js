@@ -295,7 +295,7 @@ exports.update = async (req, res, next) => {
     }
 
     // A.findByIdAndUpdate(id, update, options, callback) // executes
-    const client = await Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' });
+    let client = await Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' });
 
      if(!client){
       const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
@@ -313,6 +313,14 @@ exports.update = async (req, res, next) => {
 }
 
 exports.updateMyProfile = async (req, res, next) => {
+  try {
+    
+  } catch (error) {
+    next(error)
+  }
+}
+
+exports.updateProfileImage = async (req, res, next) => {
   try {
     
   } catch (error) {
