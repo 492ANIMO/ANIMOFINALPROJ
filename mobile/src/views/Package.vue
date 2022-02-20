@@ -4,6 +4,7 @@
     <div class="content package">
       <div class="content1">
         <div class="content2">
+          <div class="fix-filter">
           <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
           <div class="filter-package">
             <div class="bg-filter">
@@ -29,7 +30,9 @@
             </div>
             <h4>อื่นๆ</h4>
           </div>
+          </div>
 
+          <div class="space-filter"></div>
           <div
             class="Package-Card"
             v-for="pack in allPackage"
@@ -200,6 +203,19 @@ export default {
 
 <style scoped>
 @import url("../assets/css/style.css");
+.fix-filter {
+ background: #696969;
+ padding-top: 15px;
+ position: fixed;
+ width: calc(100% - 34px);
+ margin-left: -3px;
+ background: rgb(154, 221, 213);
+ z-index: 2;
+ padding-bottom: 10px;
+}
+.space-filter {
+  height: 160px;
+}
 ::v-deep .Package-Card {
   border-radius: 10px;
 }
@@ -218,6 +234,7 @@ export default {
   width: 100%;
   height: calc(100% - 0px);
   padding-bottom: 0px;
+  padding-top: 0px;
 }
 ::v-deep .content {
   padding-bottom: 0px;

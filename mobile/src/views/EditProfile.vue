@@ -8,7 +8,7 @@
     </div>
     <div class="content">
       <div>
-        <h2 class="Head-text">ลงทะเบียนผู้ใช้</h2>
+        <h2 class="Head-text">แก้ไขข้อมูลผู้ใช้</h2>
         <div class="content1">
           <div class="content-input">
             <vs-input
@@ -116,8 +116,8 @@
         </div>
       </div><br><br>
       <div class="footer-button">
-        <div class="button-addpet register-color" @click="createClientUser()">
-          <h4>ลงทะเบียน</h4>
+        <div class="button-addpet register-color" @click="createClientUser(), goToProfile()">
+          <h4>ยืนยันการแก้ไข</h4>
         </div>
       </div>
     </div>
@@ -129,7 +129,7 @@ import { mapActions, mapGetters } from "vuex";
 import { required } from "vuelidate/lib/validators";
 
 export default {
-  name: "Register",
+  name: "EditProfile",
   data() {
     return {
       search: "",
@@ -158,6 +158,9 @@ export default {
   },
   methods: {
     ...mapActions(["createClientUser"]),
+    goToProfile() {
+      this.$router.push("/mobile/profile")
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",

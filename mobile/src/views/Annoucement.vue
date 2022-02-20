@@ -104,7 +104,6 @@ export default {
   components: {
     Navbar,
   },
-<<<<<<< HEAD
   methods: {
     ...mapActions(['fetchAnnoucements']),
     openLoading() {
@@ -134,7 +133,6 @@ export default {
            return string.replace(/<\/?[^>]+>/ig, " "); 
     }
 }
->>>>>>> bf45a79ef2a0b01729708a688fe5117abe507549
 };
 </script>
 <style scoped>

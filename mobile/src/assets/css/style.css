@@ -269,7 +269,7 @@ margin-right: 10px;
 background: rgb(154, 221, 213);
 background: linear-gradient(
 180deg,
-rgba(154, 221, 213, 1) 0%,
+rgba(154, 221, 213, 1) 30%,
 rgba(144, 202, 221, 1) 100%
 );
 }

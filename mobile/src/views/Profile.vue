@@ -59,12 +59,13 @@
       </div>
 
       <div class="footer-button">
-        <div class="button-home">
-          <h4><font-awesome-icon icon="home" /></h4>
-        </div>
-        <div class="button-addpet home">
+          <div class="button-home" @click="goToMypet()">
+            <h4><font-awesome-icon icon="home"/></h4>
+          </div>
+        <div class="button-addpet home" @click="goToEditProfile()">
           <h4>แก้ไขข้อมูล</h4>
         </div>
+        
       </div>
     </div>
   </div>
@@ -119,6 +120,12 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCurrentUser"]),
+    goToMypet() {
+      this.$router.push('/mobile/mypet'); 
+    },
+    goToEditProfile() {
+      this.$router.push('/mobile/editprofile'); 
+    },
     toggleShow() {
       this.show = !this.show;
     },
