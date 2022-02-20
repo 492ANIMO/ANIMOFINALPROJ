@@ -51,9 +51,9 @@
           v-model="show"
           url="/upload"
           :langExt="langExt"
-          noSquare="false"
-          noCircle="false"
-          noRotate="false"
+          :noSquare="true"
+          :noCircle="true"
+          :noRotate="false"
           img-format="png"
         ></my-upload>
       </div>
