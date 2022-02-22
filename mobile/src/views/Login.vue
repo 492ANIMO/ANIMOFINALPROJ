@@ -58,6 +58,7 @@
 
 <script>
 import axios from 'axios'
+
 // import { authenticationService } from '../services/authService'
 export default {
   name: "Login",
@@ -68,6 +69,7 @@ export default {
       password: '',
     };
   },
+  components: {},
   methods: {
     login(email, password){
       const baseUrl =  "http://localhost:4000/api/auth/login/";
@@ -83,7 +85,15 @@ export default {
     });
     }
   },
-  components: {},
+  computed:{
+
+  },
+  created(){
+    if(localStorage.getItem("jwt")){
+        this.$router.push({name:'Mypet'})
+    }
+    
+  },
 };
 </script>
 <style scoped>

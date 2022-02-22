@@ -60,7 +60,7 @@
           @crop-upload-fail="cropUploadFail"
           field="img"
           v-model="show"
-          :url="baseurl+'clients/editProfileImage/'+currentUser.profile._id"
+          :url="baseurl+'clients/'+currentUser.profile._id+'/avatar/upload/'"
           :langExt="langExt"
           :noSquare="true"
           :noCircle="true"

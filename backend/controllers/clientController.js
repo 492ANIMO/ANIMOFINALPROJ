@@ -196,7 +196,7 @@ exports.update = async (req, res, next) => {
   }
 }
 
-exports.updateProfileImage = async (req, res, next) => {
+exports.upload = async (req, res, next) => {
   try {
     const { id } = req.params;
 
@@ -212,24 +212,27 @@ exports.updateProfileImage = async (req, res, next) => {
 
     console.log(`req: ${req}`);
 
-    
-
     if(req.file){
       console.log(`req.file: ${req.file}`)
       client.avatar = req.file.path
+
+      const updatedClient = await client.save();
+      if(!updatedClient){
+        // if error
+        throw new Error('ไม่สามารถเปลี่ยนรูปภาพโปรไฟล์ได้');
+      }
+
+      res.status(201).json({
+        message: 'เปลี่ยนรูปภาพสำเร็จ',
+        updatedClient
+      })
     }
 
-    const updatedClient = await client.save();
-    if(!updatedClient){
-      // if error
-      throw new Error('ไม่สามารถเพิ่มข้อมูลเจ้าของสัตว์เลี้ยงได้');
-    }
-
-
-    res.status(201).json({
-      message: 'เปลี่ยนรูปภาพสำเร็จ',
-      updatedClient
+    res.status(200).json({
+      message: 'สำเร็จ'
     })
+
+   
     
   } catch (error) {
     next(error)

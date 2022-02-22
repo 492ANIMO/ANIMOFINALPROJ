@@ -3,10 +3,29 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
+function guardMyRoute (to, from, next){
+  var isAuthenticated= false;
+  if(localStorage.getItem('jwt')){
+    isAuthenticated = true;
+  }
+  else{
+    isAuthenticated= false;
+  }
+
+  if(isAuthenticated){
+   next(); // allow to enter route
+  } 
+  else {
+   next('/'); // go to '/login';
+  }
+ 
+}
+
 const routes = [
   {
     path: '/mobile/mypet',
     name: 'Mypet',
+    beforeEnter : guardMyRoute,
     component: () => import('../views/Mypet.vue')
   },
   {
