@@ -55,6 +55,9 @@
       </div>
       <div>
         <my-upload
+          @crop-success="cropSuccess"
+          @crop-upload-success="cropUploadSuccess"
+          @crop-upload-fail="cropUploadFail"
           field="img"
           v-model="show"
           :url="baseurl+'clients/editProfileImage/'+currentUser.profile._id"
@@ -85,6 +88,7 @@
 import Navbar from "../components/Navbar";
 import myUpload from "vue-image-crop-upload/upload-2.vue";
 import { mapActions, mapGetters } from "vuex";
+
 
 export default {
   name: "Mypet",

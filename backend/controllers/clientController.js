@@ -331,7 +331,7 @@ exports.updateProfileImage = async (req, res, next) => {
     console.log(`req.file: ${req.file}`)
     console.log(`req.body: ${JSON.stringify(req.body)}`);
     console.log(`req.headers: ${JSON.stringify(req.headers)}`);
-    console.log(`req.params: ${JSON.stringify(req.params)}`);
+    console.log(`req.params: ${JSON.stringify(req.files)}`);
 
     
 
