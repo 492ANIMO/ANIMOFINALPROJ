@@ -102,6 +102,13 @@ const routes = [
     path: '/mobile/annoucement',
     name: 'Annoucement',
     component: () => import('../views/Annoucement.vue')
+  },
+
+
+  // the default route, when none of the above matches:
+  { 
+    path: '*', 
+    component: () => import('../views/Mypet.vue')
   }
 ]
 
