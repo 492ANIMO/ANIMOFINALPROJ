@@ -108,6 +108,7 @@ const routes = [
   // the default route, when none of the above matches:
   { 
     path: '*', 
+    beforeEnter : guardMyRoute,
     component: () => import('../views/Mypet.vue')
   }
 ]
