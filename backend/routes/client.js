@@ -13,7 +13,7 @@ router.delete('/:id', clientController.destroy);
 router.delete('/', clientController.destroyAll);
 
 
-router.post('/editProfileImage/:id',upload.single('avatar'), clientController.updateProfileImage);
+router.post('/editProfileImage/:id', clientController.updateProfileImage);
 
 router.patch('/:id', clientController.update);
 

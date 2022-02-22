@@ -62,6 +62,8 @@
           :noSquare="true"
           :noCircle="true"
           :noRotate="false"
+          :params="params"
+          :headers="headers"
           img-format="png"
         ></my-upload>
       </div>
