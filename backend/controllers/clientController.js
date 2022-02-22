@@ -313,15 +313,42 @@ exports.update = async (req, res, next) => {
 }
 
 exports.updateMyProfile = async (req, res, next) => {
-  try {
-    
-  } catch (error) {
-    next(error)
-  }
+  
 }
 
 exports.updateProfileImage = async (req, res, next) => {
   try {
+    const { id } = req.params;
+   
+
+    let client = await Client.findById(id);
+    if(!client){
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      error.statusCode = 400;
+      throw error;
+    }
+
+    console.log(`req.file: ${req.file}`)
+    console.log(`req.body: ${JSON.stringify(req.body)}`)
+
+    
+
+    if(req.file){
+      console.log(`req.file: ${req.file}`)
+      client.avatar = req.file.path
+    }
+
+    const updatedClient = await client.save();
+    if(!updatedClient){
+      // if error
+      throw new Error('ไม่สามารถเพิ่มข้อมูลเจ้าของสัตว์เลี้ยงได้');
+    }
+
+
+    res.status(201).json({
+      message: 'เปลี่ยนรูปภาพสำเร็จ',
+      updatedClient
+    })
     
   } catch (error) {
     next(error)

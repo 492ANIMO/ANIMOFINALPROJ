@@ -11,7 +11,15 @@
           </div>
 
           <img
+            v-if="this.currentUser.profile.avatar"
             :src="this.baseurl+this.currentUser.profile.avatar"
+            alt="Animo"
+            class="profile-client"
+            @click="toggleShow"
+          />
+          <img
+            v-else
+            :src="this.baseurl+'uploads/nopic.jpeg'"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"
@@ -49,7 +57,7 @@
         <my-upload
           field="img"
           v-model="show"
-          url="/upload"
+          :url="baseurl+'clients/editProfileImage/'+currentUser.profile._id"
           :langExt="langExt"
           :noSquare="true"
           :noCircle="true"
@@ -180,7 +188,7 @@ export default {
   created() {
     this.fetchCurrentUser();
     //this.openLoading();
-  },
+  }
 };
 </script>
 <style scoped>

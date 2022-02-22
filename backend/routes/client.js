@@ -11,6 +11,10 @@ router.get('/:id', clientController.show);
 router.post('/',upload.single('avatar') , clientController.create);
 router.delete('/:id', clientController.destroy);
 router.delete('/', clientController.destroyAll);
+
+
+router.post('/editProfileImage/:id',upload.single('avatar'), clientController.updateProfileImage);
+
 router.patch('/:id', clientController.update);
 
 module.exports = router;
