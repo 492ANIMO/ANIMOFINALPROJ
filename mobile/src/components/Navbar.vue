@@ -27,7 +27,7 @@
           </div>
           
           <div>
-            <li><font-awesome-icon class="iconR" icon="power-off"/>ออกจากระบบ</li>  
+            <li @click="logout()"><font-awesome-icon class="iconR" icon="power-off"/>ออกจากระบบ</li>  
           </div>
            
         </ul>
@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import { logout } from '../services/authService'
+
 export default {
   name: "Navbar",
   data: () => ({
@@ -52,6 +54,9 @@ export default {
       this.drawer = false;
     },
   },
+  methods: {
+    logout
+  }
 };
 </script>
 

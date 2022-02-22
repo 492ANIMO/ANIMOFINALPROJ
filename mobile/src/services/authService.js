@@ -1,31 +1,26 @@
 import axios from 'axios'
+import Router from '../router/index';
 
-export const authenticationService = {
-  login,
-  logout
-};
-
-
-function login(email, password) {
-  let baseUrl =  "http://localhost:4000/api/auth/login/";
-
-  axios.post(baseUrl, {email, password}).then((res)=>{
-    let token = res.data.access_token;
-    localStorage.setItem("jwt", token);
-    console.log(res.data.access_token);
-
-    return res.data.access_token;
-
-  }).catch((error) => {
-    console.log(error)
- });
+export const login = (email, password) => {
+  const baseUrl =  "http://localhost:4000/api/auth/login/";
+    axios.post(baseUrl, {email, password}).then((res) => {
+      let token = res.data.access_token;
+      localStorage.setItem("jwt", token);
+      console.log(res.data.access_token);
+  
+      if(res.data.access_token){
+        Router.push({name:'Mypet'})
+      }
+  
+    }).catch((error) => {
+      console.log(error)
+   });
 }
 
-function logout(){
+export const logout = () => { 
   localStorage.removeItem("jwt");
-  this.$router.replace('/login')
+  Router.replace('/');
 }
-
 
 
 //   return fetch(`${config.apiUrl}/users/authenticate`, requestOptions.post({ username, password }))
