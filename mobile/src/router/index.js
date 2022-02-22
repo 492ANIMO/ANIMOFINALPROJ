@@ -104,7 +104,6 @@ const routes = [
     component: () => import('../views/Annoucement.vue')
   },
 
-
   // the default route, when none of the above matches:
   { 
     path: '*', 

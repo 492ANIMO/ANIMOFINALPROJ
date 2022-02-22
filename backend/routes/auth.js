@@ -12,6 +12,8 @@ const authController = require('../controllers/authController');
 
 // auth using passport JWT
 router.post('/login', authController.login);
+router.post('/login/client', authController.loginClient);
+
 router.get('/logout', [passportJWT.isLogin], authController.logout);
 
 
