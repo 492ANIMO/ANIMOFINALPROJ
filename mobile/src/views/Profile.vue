@@ -11,7 +11,15 @@
           </div>
 
           <img
-            src="../assets/bento.png"
+            v-if="this.currentUser.profile.avatar"
+            :src="this.baseurl+this.currentUser.profile.avatar"
+            alt="Animo"
+            class="profile-client"
+            @click="toggleShow"
+          />
+          <img
+            v-else
+            :src="this.baseurl+'uploads/nopic.jpeg'"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"
@@ -47,13 +55,18 @@
       </div>
       <div>
         <my-upload
+          @crop-success="cropSuccess"
+          @crop-upload-success="cropUploadSuccess"
+          @crop-upload-fail="cropUploadFail"
           field="img"
           v-model="show"
-          url="/upload"
+          :url="baseurl+'clients/'+currentUser.profile._id+'/avatar/upload/'"
           :langExt="langExt"
-          noSquare="false"
-          noCircle="false"
-          noRotate="false"
+          :noSquare="true"
+          :noCircle="true"
+          :noRotate="false"
+          :params="params"
+          :headers="headers"
           img-format="png"
         ></my-upload>
       </div>
@@ -74,6 +87,7 @@
 import Navbar from "../components/Navbar";
 import myUpload from "vue-image-crop-upload/upload-2.vue";
 import { mapActions, mapGetters } from "vuex";
+
 
 export default {
   name: "Mypet",
@@ -115,6 +129,7 @@ export default {
         smail: "*_~",
       },
       imgDataUrl: "", // the datebase64 url of created image
+      baseurl: 'http://localhost:4000/api/',
     };
   },
   methods: {
@@ -178,7 +193,7 @@ export default {
   created() {
     this.fetchCurrentUser();
     //this.openLoading();
-  },
+  }
 };
 </script>
 <style scoped>

@@ -13,7 +13,7 @@
           <div class="content-input">
             <vs-input
               label="ชื่อจริง"
-              v-model="registerForm.firstName"
+              v-model="currentUser.profile.firstName"
               placeholder="ชื่อจริง"
             />
           </div>
@@ -21,19 +21,19 @@
           <div class="content-input">
             <vs-input
               label="นามสกุล"
-              v-model="registerForm.lastName"
+              v-model="currentUser.profile.lastName"
               placeholder="นามสกุล"
             />
           </div>
 
           <div class="content-input">
             <vs-input
-              v-model="registerForm.email"
+              v-model="currentUser.email"
               label="อีเมลล์"
               placeholder="animo@example.com"
             >
               <template
-                v-if="!validEmail && registerForm.email !== ''"
+                v-if="!validEmail && currentUser.email !== ''"
                 #message-danger
               >
                 อีเมลล์ไม่ถูกต้อง
@@ -44,7 +44,7 @@
           <div class="content-input">
             <vs-input
               label="เบอร์โทร"
-              v-model="registerForm.contact"
+              v-model="currentUser.profile.contact"
               placeholder="เบอร์โทร"
             />
           </div>
@@ -53,7 +53,7 @@
             <vs-input
               label="รหัสผ่าน"
               type="password"
-              v-model="registerForm.password"
+              v-model="currentUser.profile.password"
               placeholder="รหัสผ่าน"
             />
           </div>
@@ -61,7 +61,7 @@
           <div class="content-input">
             <vs-input
               label="ยืนยันรหัสผ่าน"
-              v-model="registerForm.confirmPassword"
+              v-model="currentUser.profile.confirmPassword"
               placeholder="ยืนยันรหัสผ่าน"
             />
           </div>
@@ -70,7 +70,7 @@
           <div class="content-input">
             <vs-input
               label="ที่อยู่"
-              v-model="registerForm.address.detail"
+              v-model="currentUser.profile.address.detail"
               placeholder="ถนน ซอย บ้านเลขที่"
             />
           </div>
@@ -80,7 +80,7 @@
               class="select-grid"
               label="จังหวัด"
               placeholder="จังหวัด"
-              v-model="registerForm.address.province"
+              v-model="currentUser.profile.address.province"
             >
               <vs-option label="แมว" value="1"> แมว </vs-option>
             </vs-select>
@@ -91,7 +91,7 @@
               class="select-grid"
               label="อำเภอ"
               placeholder="อำเภอ"
-              v-model="registerForm.address.district"
+              v-model="currentUser.profile.address.district"
             >
               <vs-option label="แมว" value="1"> แมว </vs-option>
             </vs-select>
@@ -99,7 +99,7 @@
               class="input-grid1"
               label="ตำบล"
               placeholder="ตำบล"
-              v-model="registerForm.address.subdistrict"
+              v-model="currentUser.profile.address.subdistrict"
             >
               <vs-option label="แมว" value="1"> แมว </vs-option>
             </vs-select>
@@ -109,14 +109,14 @@
             <vs-input
               class="input-alone"
               label="รหัสไปรษณีย์"
-              v-model="registerForm.address.postalCode"
+              v-model="currentUser.profile.address.postalCode"
               placeholder="รหัสไปรษณีย์"
             />
           </div>
         </div>
       </div><br><br>
       <div class="footer-button">
-        <div class="button-addpet register-color" @click="createClientUser(), goToProfile()">
+        <div class="button-addpet register-color" @click="editProfile(currentUser.profile)">
           <h4>ยืนยันการแก้ไข</h4>
         </div>
       </div>
@@ -127,6 +127,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { required } from "vuelidate/lib/validators";
+import { editProfile } from '../services/clientService';
 
 export default {
   name: "EditProfile",
@@ -144,20 +145,26 @@ export default {
       firstName: { required },
     },
   },
+  beforeMouted(){
+    this.fetchCurrentUser();
+  },
   created() {
     //this.openLoading();
+    // this.fetchCurrentUser();
   },
   computed: {
-    ...mapGetters(["registerForm"]),
+    ...mapGetters(["currentUser"]),
 
     validEmail() {
       return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
-        this.registerForm.email
+        this.currentUser.profile.email
       );
     },
   },
   methods: {
     ...mapActions(["createClientUser"]),
+    editProfile , //from clientService
+
     goToProfile() {
       this.$router.push("/mobile/profile")
     },
