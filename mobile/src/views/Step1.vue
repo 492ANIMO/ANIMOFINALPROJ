@@ -16,7 +16,7 @@
         <div class="content1">
             <h2 class="head-step">สัตว์เลี้ยงที่เข้าเงื่อนไข</h2>
 
-            <div class="Package-Card" @click="active = !active">
+            <div v-for="pet in allPets" :key="pet._id" class="Package-Card" @click="active = !active">
             <div class="bg-package">
               <img
                 src="../assets/bento.png"
@@ -25,12 +25,17 @@
               />
             </div>
             <div class="PetDT">
-              <h2>Bento</h2>
+              <h2>{{ pet.name}}</h2>
               <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>แมว</b></font>
+                <font>ประเภทสัตว์ : <b>{{ pet.type }}</b></font>
               </div>
               <div class="TextDT">
-                <font>อายุ : <b>2 เดือน</b></font>
+                <font>อายุ : 
+                  <b>
+                    {{ pet.age.year }} ปี 
+                    {{ pet.age.month }} เดือน
+                  </b>
+                </font>
               </div>
                 <div class="status-package">
                   <h4>เลือก</h4>
@@ -77,6 +82,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Navbar from "../components/Navbar";
 
 export default {
@@ -92,6 +98,7 @@ export default {
     Navbar,
   },
   methods: {
+    ...mapActions(['fetchMyPet']),
     goToStep0() {
       this.$router.push('/mobile/step0'); 
     },
@@ -112,7 +119,12 @@ export default {
   },
   created() {
     //this.openLoading();
+    this.fetchMyPet();
+  },
+  computed: {
+    ...mapGetters(["allPets"]),
   }
+
 };
 </script>
 <style scoped>

@@ -69,6 +69,7 @@ const actions = {
       console.log(error)
     }
   },
+
   async deleteMyPet(){
     try {
       const baseUrl = 'http://localhost:4000/api/pets/'
@@ -97,7 +98,8 @@ const actions = {
     } catch (error) {
       console.log(error)
     }
-  }
+  },
+
 };
 
 const mutations = { 

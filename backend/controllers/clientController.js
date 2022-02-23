@@ -28,7 +28,6 @@ exports.show = async (req, res, next) => {
     const {id} = req.params;
     const client = await Client.findById(id);
 
-
     if(!client){ 
       const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
       error.statusCode = '400';

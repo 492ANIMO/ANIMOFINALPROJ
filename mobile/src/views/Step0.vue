@@ -8,40 +8,63 @@
         </div>
 
         <div class="content1">
-          <h2 class="head-step">แพ็คเกจลูกสุนัข</h2>
+          <h2 class="head-step">{{ packageDetail.name }}</h2>
 
-          <div class="box-package">
-            <h2>วัคซีนพิษสุนัขบ้า</h2>
-            <div class="box-package-dt">
-              <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
-              ><br />
-              <font>อายุมากกว่า : <b>5 เดือน</b></font
-              ><br />
-              <font
-                >รายละเอียด :
-                <b
-                  >ฉีดปีละ 2 เข็ม โดยราคาที่จ่ายเป็นราคาสำหรับเข็มเดียว
-                  จะต้องกลับมาฉีดอีก 6 เดือนข้างหน้า</b
-                ></font
-              ><br />
+          <!-- vaccines -->
+          <div v-for="vaccine in packageDetail.vaccines" :key="vaccine.name" 
+          >
+            <div v-if="packageDetail.vaccines" class="box-package">
+              <h2>วัคซีนพิษสุนัขบ้า</h2>
+              <div class="box-package-dt">
+                <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
+                ><br />
+                <font>อายุมากกว่า : <b>5 เดือน</b></font
+                ><br />
+                <font
+                  >รายละเอียด :
+                  <b
+                    >ฉีดปีละ 2 เข็ม โดยราคาที่จ่ายเป็นราคาสำหรับเข็มเดียว
+                    จะต้องกลับมาฉีดอีก 6 เดือนข้างหน้า</b
+                  ></font
+                ><br />
+              </div>
             </div>
           </div>
 
-          <div class="box-package">
-            <h2>ถ่ายพยาธิ</h2>
-            <div class="box-package-dt">
-              <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
-              ><br />
-              <font>อายุมากกว่า : <b>1 เดือน</b></font
-              ><br />
-              <font>รายละเอียด : <b>งดน้ำ งดอาหาร ก่อนมา 2 ชั่วโมง</b></font
-              ><br />
+
+          <!-- treatments -->
+          <div v-for="treatment in packageDetail.treatments" :key="treatment.name">
+            <div class="box-package">
+              <h2>{{ treatment.name }}</h2>
+              <div class="box-package-dt">
+                <font>ประเภทสัตว์ : <b> ทุกประเภท </b></font
+                ><br />
+                <font>อายุมากกว่า : <b>1 เดือน</b></font
+                ><br />
+                <font>รายละเอียด : <b>{{ treatment.detail }}</b></font
+                ><br />
+              </div>
+            </div>
+          </div>
+
+          <!-- healthChecks -->
+          <div v-for="healthCheck in packageDetail.healthChecks" :key="healthCheck.name">
+            <div class="box-package">
+              <h2>{{ healthCheck.name }}</h2>
+              <div class="box-package-dt">
+                <font>ประเภทสัตว์ : <b> ทุกประเภท </b></font
+                ><br />
+                <font>อายุมากกว่า : <b>1 เดือน</b></font
+                ><br />
+                <font>รายละเอียด : <b>{{ healthCheck.detail }}</b></font
+                ><br />
+              </div>
             </div>
           </div>
 
           <div class="box-package">
             <font class="right"
-              >ราคาสุทธิ : <b class="active-text">1,250 บาท</b></font
+              >ราคาสุทธิ : <b class="active-text">{{ packageDetail.price }} บาท</b></font
             ><br />
           </div>
         </div>
@@ -56,6 +79,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Navbar from "../components/Navbar";
 
 export default {
@@ -71,6 +95,8 @@ export default {
     Navbar,
   },
   methods: {
+    ...mapActions(["getPackageDetail", 'fetchMyPetMatch']),
+
     goToStep1() {
       this.$router.push('/mobile/step1'); 
     },
@@ -88,7 +114,12 @@ export default {
   },
   created() {
     // this.openLoading();
+
   },
+  computed: {
+    ...mapGetters(['packageDetail']),
+
+  }
 };
 </script>
 <style scoped>
