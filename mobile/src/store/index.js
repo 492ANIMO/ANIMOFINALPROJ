@@ -8,6 +8,7 @@ import register from './modules/register';
 import history from './modules/history';
 import annoucement from './modules/annoucement';
 import reservation from './modules/reservation';
+import timeslot from './modules/timeslot';
 
 // load vuex
 Vue.use(Vuex)
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     register,
     history,
     annoucement,
-    reservation
+    reservation,
+    timeslot,
   }
 })

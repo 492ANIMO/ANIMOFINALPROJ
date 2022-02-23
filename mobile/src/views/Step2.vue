@@ -19,7 +19,7 @@
           <div class="Package-Card" @click="active = !active">
             <div class="step-time-box">
               <div class="content-input">
-                <vs-input type="date" label="วันที่" v-model="value" />
+                <vs-input type="date" label="วันที่" v-model="date" />
               </div>
               <div class="content-input">
                 <vs-select
@@ -48,7 +48,9 @@
 </template>
 
 <script>
+
 import Navbar from "../components/Navbar";
+import { getBookableTimes } from '../services/timeslotService'
 
 export default {
   name: "Step2",
@@ -57,12 +59,14 @@ export default {
       search: "",
       value: "",
       active: false,
+      date: ''
     };
   },
   components: {
     Navbar,
   },
   methods: {
+
     goToStep1() {
       this.$router.push('/mobile/step1'); 
     },
@@ -79,10 +83,14 @@ export default {
           setTimeout(() => {
             loading.close()
           }, 3000)
-        }
+    },
+    getBookableTimes //from service
   },
   created() {
     //this.openLoading();
+  },
+  computed: {
+
   }
 };
 </script>
