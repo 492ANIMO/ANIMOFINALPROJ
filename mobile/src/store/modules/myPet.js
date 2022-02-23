@@ -20,7 +20,7 @@ const state = {
     sterilization: '',
     ownerId: ''
   },
-  filterPet: []
+  filterPet: [],
 };
 
 const getters = {

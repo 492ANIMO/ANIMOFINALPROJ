@@ -24,7 +24,6 @@ const actions = {
     commit('setPackageDetail', response.data.package)
   },
   
-
 }
 
 const mutations = {
