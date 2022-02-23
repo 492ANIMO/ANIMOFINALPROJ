@@ -25,7 +25,7 @@
               placeholder="ประเภทสัตว์"
               v-model="addPetForm.type"
             >
-              <vs-option label="แมว" value="แมว"> แมว </vs-option>
+              <vs-option v-for="type in type" :key="type" :label="type" :value="type"> {{ type }} </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
@@ -57,6 +57,8 @@
               v-model="addPetForm.gender"
             >
               <vs-option label="ผู้" value="ผู้"> ผู้ </vs-option>
+              <vs-option label="เมีย" value="เมีย"> เมีย </vs-option>
+              <vs-option label="อื่นๆ" value="อื่นๆ"> อื่นๆ </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
@@ -98,6 +100,7 @@ export default {
       search: "",
       value: "",
       active: false,
+      type: ['สุนัข', 'แมว', 'กระต่าย']
     };
   },
   methods: {
