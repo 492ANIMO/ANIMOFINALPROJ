@@ -67,7 +67,6 @@ const actions = {
         type: store.getters.packageDetail.type
       } 
     });
-    console.log('::'+response.data.pet);
     commit('setMyPetFilter', response.data.pet)
   },
 

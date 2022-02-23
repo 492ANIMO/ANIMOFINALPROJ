@@ -95,7 +95,7 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(["getPackageDetail"]),
+    ...mapActions(['']),
 
     goToStep1() {
       this.$router.push('/mobile/step1'); 

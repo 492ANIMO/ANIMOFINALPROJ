@@ -2,7 +2,7 @@ import axios from "axios"
 
 const state = {
   packages: [],
-  packageDetail: { }
+  packageDetail: {}
 }
 
 const getters = {
@@ -23,6 +23,7 @@ const actions = {
     console.log(response.data.package);
     commit('setPackageDetail', response.data.package)
   },
+  
 
 }
 
