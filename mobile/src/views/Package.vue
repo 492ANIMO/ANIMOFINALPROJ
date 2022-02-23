@@ -37,7 +37,7 @@
             class="Package-Card"
             v-for="pack in allPackage"
             :key="pack._id"
-            @click="active = !active"
+            @click="goToStep0()"
           >
             <div
               class="bg-package package-yellow"
@@ -153,7 +153,9 @@ export default {
   },
   methods: {
     ...mapActions(["fetchPackage"]),
-
+    goToStep0() {
+      this.$router.push('/mobile/step0'); 
+    },
     BindPackageType: function (type) {
       if (type === "สุนัข") {
         return "package-yellow";
@@ -274,11 +276,6 @@ export default {
   min-width: 80%;
 }
 ::v-deep .vs-dialog__header {
-  padding: 0px;
-}
-::v-deep .vs-dialog__content {
-  margin-top: -50px;
-  padding: 0px;
-  border-radius: 20px;
+  font-size: 18px;
 }
 </style>

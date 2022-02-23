@@ -65,6 +65,7 @@
         </div>
       </div>
     </div>
+    
     <vs-dialog v-model="active">
       <template #header>
         <img src="../assets/bento.png" alt="Animo" class="PicCatDT" />
@@ -110,7 +111,7 @@
 
       <template #footer>
         <div class="footer-button-none">
-          <div class="button-detail edit">แก้ไข</div>
+          <div class="button-detail edit" @click="goToEditpet()">แก้ไข</div>
           <div class="button-detail delete" @click="deleteMyPet()">ลบ</div>
         </div>
       </template>
@@ -131,6 +132,9 @@ export default {
       "fetchPetDetail",
       "deleteMyPet",
     ]),
+    goToEditpet() {
+      this.$router.push('/mobile/editpet'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",

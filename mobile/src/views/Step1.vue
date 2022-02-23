@@ -64,10 +64,10 @@
 
       </div>
       <div class="footer-button ">
-        <div class="button-addpet white-button">
-          <h4>ยกเลิก</h4>
+        <div class="button-addpet white-button" @click="goToStep0()">
+          <h4>ย้อนกลับ</h4>
         </div>
-        <div class="button-addpet active-color">
+        <div class="button-addpet active-color" @click="goToStep2()">
           <h4>ถัดไป</h4>
         </div>
       </div>
@@ -92,6 +92,12 @@ export default {
     Navbar,
   },
   methods: {
+    goToStep0() {
+      this.$router.push('/mobile/step0'); 
+    },
+    goToStep2() {
+      this.$router.push('/mobile/step2'); 
+    },
     openLoading() {
           const loading = this.$vs.loading({
             text: 'กำลังโหลด...',

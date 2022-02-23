@@ -43,10 +43,28 @@
         <div class="button-addpet white-button">
           <h4>ยกเลิก</h4>
         </div>
-        <div class="button-addpet add">
+        <div class="button-addpet add" @click="active=!active">
           <h4>ยืนยัน</h4>
         </div>
       </div>
+
+      <vs-dialog not-close prevent-close v-model="active">
+      <template #header>
+      </template>
+
+      <div class="confirm-dt">
+        <font-awesome-icon class="Pic-confirm-dt" icon="check-circle"/>
+        <h2>การจองสำเร็จ</h2>
+        <h4>กรุณาไปตามเวลานัดหมายตามการจอง</h4>
+      </div>
+
+      <template #footer>
+        <div class="footer-button-none">
+          <div class="button-detail active-color" @click="goTomypet()">กลับหน้าหลัก</div>
+        </div>
+      </template>
+    </vs-dialog>
+    
     </div>
   </div>
 </template>
@@ -67,6 +85,9 @@ export default {
     Navbar,
   },
   methods: {
+    goTomypet() {
+      this.$router.push('/mobile/mypet'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",
@@ -86,7 +107,36 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
-
+.confirm-dt {
+  display: grid;
+  grid: auto / auto;
+  justify-content: center;
+  text-align: center;
+  margin-top: 10px;
+}
+.confirm-dt h2{
+  font-weight: 500;
+  color: #696969;
+}
+.confirm-dt h4{
+  font-weight: 400;
+  color: #a8a8a8;
+}
+.Pic-confirm-dt {
+  color: #4AC884;
+  text-align: center !important;
+  width: 90px;
+  height: 90px;
+  justify-self: center;
+}
+::v-deep .button-detail {
+  width: 120px;
+}
+::v-deep .footer-button-none {
+  display: flex;
+  justify-content: center;
+  width: calc(100% + 30px);
+}
 ::v-deep .status-package {
   position: relative;
   float: right;
@@ -174,12 +224,11 @@ export default {
   width: 80%;
   min-width: 80%;
 }
-::v-deep .vs-dialog__header {
-  padding: 0px;
+::v-deep .vs-dialog__header h2{
+  font-weight: 500;
 }
 ::v-deep .vs-dialog__content {
-  margin-top: -50px;
-  padding: 0px;
+  background: #ffffff;
   border-radius: 20px;
 }
 ::v-deep .vs-input__label--label {

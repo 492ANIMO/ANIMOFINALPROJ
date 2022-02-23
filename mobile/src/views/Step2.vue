@@ -36,10 +36,10 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet white-button">
-          <h4>ยกเลิก</h4>
+        <div class="button-addpet white-button" @click="goToStep1()">
+          <h4>ย้อนกลับ</h4>
         </div>
-        <div class="button-addpet active-color">
+        <div class="button-addpet active-color" @click="goToStep3()">
           <h4>ถัดไป</h4>
         </div>
       </div>
@@ -63,6 +63,12 @@ export default {
     Navbar,
   },
   methods: {
+    goToStep1() {
+      this.$router.push('/mobile/step1'); 
+    },
+    goToStep3() {
+      this.$router.push('/mobile/step3'); 
+    },
     openLoading() {
           const loading = this.$vs.loading({
             text: 'กำลังโหลด...',

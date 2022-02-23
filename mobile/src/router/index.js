@@ -15,6 +15,11 @@ const routes = [
     component: () => import('../views/Addpet.vue')
   },
   {
+    path: '/mobile/editpet',
+    name: 'Editpet',
+    component: () => import('../views/Editpet.vue')
+  },
+  {
     path: '/mobile/profile',
     name: 'Profile',
     component: () => import('../views/Profile.vue')

@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="footer-button">
+      <div class="footer-button" @click="goToStep1()">
         <div class="button-addpet active-color">
           <h4>จองแพ็คเก็จ</h4>
         </div>
@@ -71,6 +71,9 @@ export default {
     Navbar,
   },
   methods: {
+    goToStep1() {
+      this.$router.push('/mobile/step1'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",
@@ -84,7 +87,7 @@ export default {
     },
   },
   created() {
-    //this.openLoading();
+    // this.openLoading();
   },
 };
 </script>
@@ -184,5 +187,8 @@ export default {
   justify-items: center;
   position: sticky;
   bottom: 0px;
+}
+::v-deep .vs-loading {
+    background: rgba(255,255,255, 1);
 }
 </style>

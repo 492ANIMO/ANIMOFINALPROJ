@@ -65,7 +65,6 @@
         <div class="button-addpet home" @click="goToEditProfile()">
           <h4>แก้ไขข้อมูล</h4>
         </div>
-        
       </div>
     </div>
   </div>
