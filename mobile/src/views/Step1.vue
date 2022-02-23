@@ -16,7 +16,7 @@
         <div class="content1">
             <h2 class="head-step">สัตว์เลี้ยงที่เข้าเงื่อนไข</h2>
 
-            <div v-for="pet in allPets" :key="pet._id" class="Package-Card" @click="active = !active">
+            <div v-for="pet in filterPet" :key="pet._id" class="Package-Card" @click="active = !active">
             <div class="bg-package">
               <img
                 src="../assets/bento.png"
@@ -98,7 +98,7 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(['fetchMyPet']),
+    ...mapActions(['fetchMyPet', 'fetchFilterPet']),
     goToStep0() {
       this.$router.push('/mobile/step0'); 
     },
@@ -120,9 +120,10 @@ export default {
   created() {
     //this.openLoading();
     this.fetchMyPet();
+    this.fetchFilterPet();
   },
   computed: {
-    ...mapGetters(["allPets"]),
+    ...mapGetters(["allPets", "filterPet"]),
   }
 
 };

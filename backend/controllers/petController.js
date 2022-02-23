@@ -108,6 +108,7 @@ exports.showMyPet = async (req, res, next) => {
   try {
     let user = req.user;
     console.log('req.user: '+req.user);
+
     // not logged in
     if(!user){  
       const error = new Error('Unauthorized');
@@ -133,7 +134,7 @@ exports.showMyPet = async (req, res, next) => {
   }
 }
 
-exports.showMyPetMatched = async (req, res, next) => {
+exports.showMyPetFilter = async (req, res, next) => {
   try {
     let user = req.user;
     const  { type } = req.params;
@@ -148,7 +149,7 @@ exports.showMyPetMatched = async (req, res, next) => {
     user = await User.findById(user._id).populate('profile');
     const pet = await Pet.find({owner: user.profile._id, type: type});
     if(!pet){
-      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง');
+      const error = new Error('ไม่พบสัตว์เลี้ยง');
       error.statusCode = 401;
       throw error;
     }

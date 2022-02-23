@@ -95,7 +95,7 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(["getPackageDetail", 'fetchMyPetMatch']),
+    ...mapActions(["getPackageDetail"]),
 
     goToStep1() {
       this.$router.push('/mobile/step1'); 
@@ -114,7 +114,6 @@ export default {
   },
   created() {
     // this.openLoading();
-
   },
   computed: {
     ...mapGetters(['packageDetail']),
