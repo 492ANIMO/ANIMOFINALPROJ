@@ -26,7 +26,8 @@
               >
                 <h4>{{ appointment.status }}</h4>
               </div>
-              <h2 v-if="appointment.by!=='นัดโดยสัตวแพทย์'">{{ appointment.reservation.package.name }}</h2>
+              <h2 v-if="appointment.by==='การจอง'">{{appointment.reservation.package.name }}</h2>
+              <h2 v-else-if="appointment.status==='pending'">{{ appointment.package.name }}</h2>
               <h2 v-else>{{ appointment.type }}</h2>
               <div class="TextDT">
                 <font
