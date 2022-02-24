@@ -16,7 +16,7 @@
           <div class="content-scroll">
 
             <div v-for="annoucement in allAnnoucements" :key="annoucement._id">
-                <div class="news-box">
+                <div class="news-box" @click="goTonews()">
                 <img src="../assets/muji.png" alt="Animo" class="news-box-pic" />
                 <div class="news-box-text">
                   <h2>{{ annoucement.title }}</h2>
@@ -106,6 +106,9 @@ export default {
   },
   methods: {
     ...mapActions(['fetchAnnoucements']),
+    goTonews() {
+      this.$router.push('/mobile/news'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",

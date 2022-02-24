@@ -125,17 +125,21 @@ export default {
 .Pic-confirm-dt {
   color: #4AC884;
   text-align: center !important;
-  width: 90px;
-  height: 90px;
+  width: 60px;
+  height: 60px;
   justify-self: center;
 }
 ::v-deep .button-detail {
   width: 120px;
+  margin-right: 0px;
 }
 ::v-deep .footer-button-none {
   display: flex;
   justify-content: center;
-  width: calc(100% + 30px);
+  width: calc(100%);
+  padding: 10px;
+  padding-bottom: 15px;
+  margin-right: 0px;
 }
 ::v-deep .status-package {
   position: relative;

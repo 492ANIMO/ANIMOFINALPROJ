@@ -105,6 +105,58 @@
           </div>
         </div>
       </div>
+
+      <vs-dialog v-model="active">
+        <template #header>
+          <h2>รายละเอียด</h2>
+        </template>
+
+        <h2 class="Head-history">ข้อมูลสัตว์</h2>
+        <div class="box-package">
+            <font>ชื่อสัตว์เลี้ยง : <b>Muji</b></font
+            ><br />
+            <font>ประเภทสัตว์ : <b>สุนัข</b></font
+            ><br />
+            <font>การนัด : <b>สำเร็จ</b></font
+            ><br />
+        </div>
+
+        <h2 class="Head-history">แพ็คเกจสุนัขโต</h2>
+        <div class="box-package">
+          <h2>วัคซีนพิษสุนัขบ้า</h2>
+          <div class="box-package-dt">
+            <font>เลขล็อตวัคซีน : <b>12345XAVC</b></font
+            ><br />
+            <font>รายละเอียด : <b>อาการปกติดี</b></font
+            ><br />
+          </div>
+        </div>
+
+        <div class="box-package">
+          <h2>ตรวจสุขภาพ</h2>
+          <div class="box-package-dt">
+            <font>รายละเอียด : <b>อาการปกติดี</b></font
+            ><br />
+          </div>
+        </div>
+
+        <div class="box-package">
+          <h2>ทำหมัน</h2>
+          <div class="box-package-dt">
+            <font>รายละเอียด : <b>อาการปกติดี</b></font
+            ><br />
+          </div>
+        </div>
+
+        <template #footer>
+          <div class="footer-button-none">
+            <div class="button-detail active-color" @click="active=!active, goTomypet()">
+              ปิด
+            </div>
+          </div>
+        </template>
+      </vs-dialog>
+
     </div>
   </div>
 </template>
@@ -151,7 +203,29 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
-
+.Head-history {
+  font-weight: 500;
+  font-size: 19px;
+  padding-top: 10px;
+}
+::v-deep .box-package {
+  width: 100%;
+  margin-top: 5px;
+}
+::v-deep .box-package h2{
+  color: #696969;
+}
+::v-deep .button-detail {
+  width: 120px;
+  margin-right: 0px;
+}
+::v-deep .footer-button-none {
+  display: flex;
+  justify-content: center;
+  width: calc(100%);
+  padding: 10px;
+  margin-right: 0px;
+}
 font-awesome-icon {
   /* color: #ffffff; */
   height: 20px;
@@ -212,15 +286,17 @@ font-awesome-icon {
   border-radius: 20px;
 }
 ::v-deep .vs-dialog {
-  width: 80%;
-  min-width: 80%;
+  width: 90%;
+  min-width: 90%;
 }
-::v-deep .vs-dialog__header {
-  padding: 0px;
+::v-deep .vs-dialog__header h2 {
+  font-weight: 500;
+  color: #696969;
 }
 ::v-deep .vs-dialog__content {
-  margin-top: -50px;
-  padding: 0px;
-  border-radius: 20px;
+  border-radius: 0px;
+  background: #e8ebf5;
+  padding-top: 0px !important;
+  padding-bottom: 20px !important;
 }
 </style>

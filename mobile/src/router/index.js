@@ -108,6 +108,11 @@ const routes = [
     name: 'Annoucement',
     component: () => import('../views/Annoucement.vue')
   },
+  {
+    path: '/mobile/news',
+    name: 'News',
+    component: () => import('../views/News.vue')
+  },
 
 
   // the default route, when none of the above matches:
