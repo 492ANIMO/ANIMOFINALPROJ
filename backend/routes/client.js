@@ -12,7 +12,6 @@ router.post('/',upload.single('avatar') , clientController.create);
 router.delete('/:id', clientController.destroy);
 router.delete('/', clientController.destroyAll);
 
-
 router.post('/:id/avatar/upload/', clientController.upload);
 
 router.patch('/:id', clientController.update);

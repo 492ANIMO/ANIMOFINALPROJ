@@ -37,7 +37,7 @@
             class="Package-Card"
             v-for="pack in allPackage"
             :key="pack._id"
-            @click="goToStep0()"
+            @click="goToStep0(), getPackageDetail(pack._id)"
           >
             <div
               class="bg-package package-yellow"
@@ -64,72 +64,6 @@
               </div>
             </div>
           </div>
-
-          <!-- <div class="Package-Card" @click="active = !active">
-            <div class="bg-package package-orange">
-              <img
-                src="../assets/pet2.png"
-                alt="Animo"
-                class="Pic-package-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <h2>แพ็คเกจลูกสุนัข</h2>
-              <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>แมว</b></font>
-              </div>
-              <div class="TextDT">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
-
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package package-pink">
-              <img
-                src="../assets/pet3.png"
-                alt="Animo"
-                class="Pic-package-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <h2>แพ็คเกจลูกสุนัข</h2>
-              <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>แมว</b></font>
-              </div>
-              <div class="TextDT">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
-
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package package-red">
-              <img
-                src="../assets/pet4.png"
-                alt="Animo"
-                class="Pic-package-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <h2>แพ็คเกจลูกสุนัข</h2>
-              <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>แมว</b></font>
-              </div>
-              <div class="TextDT">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -152,7 +86,8 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(["fetchPackage"]),
+    ...mapActions(["fetchPackage", "getPackageDetail"]),
+
     goToStep0() {
       this.$router.push('/mobile/step0'); 
     },

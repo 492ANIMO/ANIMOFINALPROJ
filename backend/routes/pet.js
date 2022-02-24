@@ -9,7 +9,8 @@ const upload = require('../middleware/upload');
 
 /* GET users listing. */
 router.get('/', petController.index);
-router.get('/mypet', [passportJWT.isLogin], petController.showMyPet);
+router.get('/mypet/', [passportJWT.isLogin], petController.showMyPet);
+router.get('/mypet/:type', [passportJWT.isLogin], petController.showMyPetFilter);
 router.get('/petCount', petController.petCount);
 router.get('/:id', petController.show);
 router.get('/client/:clientId', petController.showByClient);

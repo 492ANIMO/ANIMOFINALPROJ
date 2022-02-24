@@ -23,8 +23,6 @@ exports.showBookableTime = async (req, res, next) => {
 
     console.log(bookableTimes);
 
-
-
     res.status(200).json({
       message: 'สำเร็จ',
       result,
