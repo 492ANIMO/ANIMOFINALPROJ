@@ -2,23 +2,23 @@ import axios from 'axios'
 
 const state = {
   times: [],
-
+  timeForm: {
+    date:'',
+    time: ''
+  }
 }
 
 const getters = {
   times: (state) => state.times,
+  form: (state) => state.timeForm
+  
 }
 
 const actions = {
   async setReservation({commit}, data){
     commit('setReservation', data)
   },
-  async setPet({commit}, data){
-    commit('setPet', data)
-  },
-  async setDate({commit}, data){
-    commit('setDate', data)
-  },
+
 
   async fetchBookableTime({commit}, date){
     const baseURL = "http://localhost:4000/api/timeslots/";

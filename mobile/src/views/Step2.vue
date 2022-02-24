@@ -19,16 +19,22 @@
           <div class="Package-Card" @click="active = !active">
             <div class="step-time-box">
               <div class="content-input">
-                <vs-input type="date" label="วันที่" v-model="date" />
+                <vs-input 
+                  type="date" 
+                  label="วันที่" 
+                  v-model="form.date"
+                  @change="getBookableTimes(form.date)"
+                />
               </div>
               <div class="content-input">
                 <vs-select
+                  
                   class="select-grid"
                   label="เวลา"
                   placeholder="เวลา"
-                  v-model="value"
+                  v-model="form.time"
                 >
-                  <vs-option label="แมว" value="1"> 8.00 น. - 9.00 น. </vs-option>
+                  <vs-option v-for="data in times" :key="data" :label="data" :value="data"> {{ data }} </vs-option>
                 </vs-select>
               </div>
             </div>
@@ -50,7 +56,9 @@
 <script>
 
 import Navbar from "../components/Navbar";
+import { mapGetters } from 'vuex'
 import { getBookableTimes } from '../services/timeslotService'
+
 
 export default {
   name: "Step2",
@@ -59,14 +67,13 @@ export default {
       search: "",
       value: "",
       active: false,
-      date: ''
+      
     };
   },
   components: {
     Navbar,
   },
   methods: {
-
     goToStep1() {
       this.$router.push('/mobile/step1'); 
     },
@@ -86,12 +93,14 @@ export default {
     },
     getBookableTimes //from service
   },
+   computed: {
+    ...mapGetters(['form', 'times']),
+    
+  },
   created() {
     //this.openLoading();
   },
-  computed: {
-
-  }
+  
 };
 </script>
 <style scoped>
