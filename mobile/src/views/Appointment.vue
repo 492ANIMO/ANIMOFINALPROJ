@@ -47,61 +47,8 @@
             </div>
           </div>
 
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package">
-              <img
-                src="../assets/bento.png"
-                alt="Animo"
-                class="Pic-appointment-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <div class="status status-1">
-                <h4>รอยืนยัน</h4>
-              </div>
-              <h2>แพ็คเกจแมวโต</h2>
-              <div class="TextDT">
-                <font
-                  >วันที่ : <b>20/20/2022</b>
-                  <font-awesome-icon icon="clock" /> <b>8.00 น</b>
-                </font>
-              </div>
-              <div class="TextDT">
-                <font>ประเภท : <b>การจอง</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
 
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package">
-              <img
-                src="../assets/muji.png"
-                alt="Animo"
-                class="Pic-appointment-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <div class="status status-2">
-                <h4>ไปตามนัด</h4>
-              </div>
-              <h2>แพ็คเกจลูกสุนัข</h2>
-              <div class="TextDT">
-                <font
-                  >วันที่ : <b>20/20/2022</b>
-                  <font-awesome-icon icon="clock" /> <b>8.00 น</b>
-                </font>
-              </div>
-              <div class="TextDT">
-                <font>ประเภท : <b>การจอง</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
+
         </div>
       </div>
     </div>
