@@ -1,11 +1,20 @@
 import axios from 'axios'
 
 const state = {
- appointments: []
+ appointments: [],
+ appointmentDetail: {
+   medical: {},
+   pet: {},
+   reservation:{
+     package:{}
+   }
+ }
 };
 
 const getters = {
   allAppointments: (state) => state.appointments,
+  appointmentDetail: (state) => state.appointmentDetail,
+
 };
 
 const actions = {
@@ -22,11 +31,17 @@ const actions = {
     });
     console.log(response.data.appointment);
     commit('setMyAppointments', response.data.appointment);
+  },
+
+  async getAppointmentDetail({commit}, id){
+    const appointmentDetail = state.appointments.find(appointment => appointment._id === id);
+    commit('setAppointmentDetail', appointmentDetail);
   }
 
 };
 const mutations = {
   setMyAppointments: (state, appointments) => (state.appointments = appointments),
+  setAppointmentDetail: (state, appointment) => (state.appointmentDetail = appointment),
 
 };
 
