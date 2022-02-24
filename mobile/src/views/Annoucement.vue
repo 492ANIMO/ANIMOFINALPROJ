@@ -16,7 +16,7 @@
           <div class="content-scroll">
 
             <div v-for="annoucement in allAnnoucements" :key="annoucement._id">
-                <div class="news-box" @click="goTonews()">
+                <div class="news-box" @click="goTonews(annoucement._id)">
                 <img src="../assets/muji.png" alt="Animo" class="news-box-pic" />
                 <div class="news-box-text">
                   <h2>{{ annoucement.title }}</h2>
@@ -31,53 +31,6 @@
                 </div>
               </div>
               <br>
-            </div>
-
-            <div class="news-box">
-              <img src="../assets/muji.png" alt="Animo" class="news-box-pic" />
-              <div class="news-box-text">
-                <h2>วิธีอาบน้ำให้น้องหมาอย่างถูกวิธี1234567890000000</h2>
-                <div class="news-box-dt">
-                  <h4>
-                    วิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธี
-                  </h4>
-                </div>
-                <div class="TextDT1">
-                  <font>อ่านเพิ่มเติม...</font>
-                </div>
-              </div>
-            </div>
-            <br />
-
-            <div class="news-box">
-              <img src="../assets/bento.png" alt="Animo" class="news-box-pic" />
-              <div class="news-box-text">
-                <h2>วิธีอาบน้ำให้น้องหมาอย่างถูกวิธี</h2>
-                <div class="news-box-dt">
-                  <h4>
-                    วิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธี
-                  </h4>
-                </div>
-                <div class="TextDT1">
-                  <font>อ่านเพิ่มเติม...</font>
-                </div>
-              </div>
-            </div>
-            <br />
-
-            <div class="news-box">
-              <img src="../assets/bento.png" alt="Animo" class="news-box-pic" />
-              <div class="news-box-text">
-                <h2>วิธีอาบน้ำให้น้องหมาอย่างถูกวิธี</h2>
-                <div class="news-box-dt">
-                  <h4>
-                    วิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธีวิธีอาบน้ำให้น้องหมาอย่างถูกวิธี
-                  </h4>
-                </div>
-                <div class="TextDT1">
-                  <font>อ่านเพิ่มเติม...</font>
-                </div>
-              </div>
             </div>
             <br /><br />
           </div>
@@ -105,8 +58,9 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(['fetchAnnoucements']),
-    goTonews() {
+    ...mapActions(['fetchAnnoucements', 'getAnnoucementDetail']),
+    goTonews(id) {
+      this.getAnnoucementDetail(id)
       this.$router.push('/mobile/news'); 
     },
     openLoading() {
