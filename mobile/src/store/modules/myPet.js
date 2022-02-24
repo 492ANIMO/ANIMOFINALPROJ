@@ -121,6 +121,19 @@ const actions = {
     }
   },
 
+  async editMyPet(){
+    try {
+      const baseUrl = 'http://localhost:4000/api/pets/';
+      const response = await axios.patch(baseUrl+state.petDetail._id, state.petDetail);
+      console.log(`data : ${JSON.stringify(state.petDetail)}`)
+      console.log(`id: ${state.petDetail._id}`)
+      console.log(response.data.message);
+
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
 };
 
 const mutations = { 
@@ -130,7 +143,6 @@ const mutations = {
   petDetail: (state, petDetail) => (state.petDetail = petDetail),
   setOwner: (state, owner) => (state.addPetForm.ownerId = owner),
   setMyPetFilter: (state, pet) => (state.filterPet = pet)
-
 };
 
 export default{
