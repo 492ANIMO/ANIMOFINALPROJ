@@ -17,23 +17,39 @@
           <h2 class="head-step">สรุปข้อมูลการจอง</h2>
 
           <div class="box-package">
-            <h2>วัคซีนพิษสุนัขบ้า</h2>
+            <h2>{{ packageDetail.name }}</h2>
             <div class="box-package-dt">
-              <font>ชื่อสัตว์เลี้ยง : <b>ฺBento</b></font
+              <font>ชื่อสัตว์เลี้ยง : <b>{{ selectedPet.name }}</b></font
               ><br />
-              <font>ประเภทสัตว์ : <b>แมว</b></font
+              <font>ประเภทสัตว์เลี้ยง : <b>{{ selectedPet.type }}</b></font
               ><br />
+
               <font><b>รายการแพ็คเกจ</b></font
               ><br />
-              <font><b>- วัคซีนพิษสุนัขบ้า</b></font
+
+              <font v-for="(data, i) in packageDetail.vaccines" :key="i">
+                <b>
+                  - {{data.name}}
+                </b><br />
+              </font>
+              <font v-for="(data, i) in packageDetail.healthChecks" :key="i">
+                <b>
+                  - {{data.name}}
+                </b><br />
+              </font>
+              <font v-for="(data, i) in packageDetail.treatments" :key="i">
+                <b>
+                  - {{data.name}}
+                </b><br />
+              </font>
+
+
+
+              <font>วันที่นัดหมาย : <b>{{ form.date }}</b></font
               ><br />
-              <font><b>- ถ่ายพยาธิ</b></font
+              <font>เวลา : <b>{{ form.time }}</b></font
               ><br />
-              <font>วันที่นัดหมาย : <b>20/10/2022</b></font
-              ><br />
-              <font>เวลา : <b>8.00 - 9.00</b></font
-              ><br />
-              <font>ราคาสุทธิ : <b class="active-text">1,250 บาท</b></font
+              <font>ราคาสุทธิ : <b class="active-text">{{ packageDetail.price }} บาท</b></font
               ><br />
             </div>
           </div>
@@ -43,7 +59,7 @@
         <div class="button-addpet white-button">
           <h4>ยกเลิก</h4>
         </div>
-        <div class="button-addpet add" @click="active=!active">
+        <div class="button-addpet add" @click="active=!active, createReservation()">
           <h4>ยืนยัน</h4>
         </div>
       </div>
@@ -70,6 +86,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Navbar from "../components/Navbar";
 
 export default {
@@ -85,6 +102,7 @@ export default {
     Navbar,
   },
   methods: {
+    ...mapActions(['createReservation']),
     goTomypet() {
       this.$router.push('/mobile/mypet'); 
     },
@@ -102,7 +120,11 @@ export default {
   },
   created() {
     //this.openLoading();
+    
   },
+  computed:{
+    ...mapGetters(['packageDetail', 'selectedPet', 'form'])
+  }
 };
 </script>
 <style scoped>

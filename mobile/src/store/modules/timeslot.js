@@ -19,7 +19,6 @@ const actions = {
     commit('setReservation', data)
   },
 
-
   async fetchBookableTime({commit}, date){
     const baseURL = "http://localhost:4000/api/timeslots/";
       await axios.post(baseURL,{

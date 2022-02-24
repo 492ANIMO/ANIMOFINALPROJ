@@ -1,5 +1,9 @@
+import axios from "axios"
+import store from '../index';
+
 const state = {
   reservation: {
+    
   },
   selectedPet: {
   },
@@ -25,6 +29,22 @@ const actions = {
   async setDate({commit}, data){
     commit('setDate', data)
   },
+  async createReservation(){
+    try {
+      const baseUrl = 'http://localhost:4000/api/reservations/';
+      console.log('packageId: '+ store.getters.packageDetail._id)
+      const response = await axios.post(baseUrl,{
+        petId: state.selectedPet._id,
+        packageId: store.getters.packageDetail._id,
+        date: store.getters.form.date,
+        time: store.getters.form.time,
+      })
+
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 }
 
 const mutations = {
