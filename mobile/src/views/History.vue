@@ -5,13 +5,10 @@
       <div class="content1">
         <div class="content2">
           <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
-
-          <div
-            v-for="history in allHistories"
-            :key="history._id"
-            class="Package-Card"
-            @click="active = !active"
-          >
+        
+          <div class="Package-Card"
+            v-for="(history, i) in allHistories" :key="i"
+            @click="getHistoryDetail(history._id),active = !active"  >
             <div class="bg-package package-green">
               <font-awesome-icon
                 class="Pic-appointment-dt"
@@ -21,6 +18,7 @@
             <div class="PetDT">
               <h2 v-if="history.by === 'การจอง'">
                 {{ history.reservation.package.name }}
+              
               </h2>
               <h2 v-if="history.by === 'นัดโดยสัตวแพทย์'">
                 {{ history.type }}
@@ -41,71 +39,9 @@
             </div>
           </div>
 
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package package-green">
-              <font-awesome-icon
-                class="Pic-appointment-dt"
-                icon="check-circle"
-              />
-            </div>
-            <div class="PetDT">
-              <h2>แพ็คเกจแมวโต</h2>
-              <div class="TextDT">
-                <font>วันที่ : <b>20/20/2022</b></font>
-              </div>
-              <div class="TextDT">
-                <font>สัตว์เลี้ยง : <b>Bento</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
-
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package package-green">
-              <font-awesome-icon
-                class="Pic-appointment-dt"
-                icon="check-circle"
-              />
-            </div>
-            <div class="PetDT">
-              <h2>แพ็คเกจแมวโต</h2>
-              <div class="TextDT">
-                <font>วันที่ : <b>20/20/2022</b></font>
-              </div>
-              <div class="TextDT">
-                <font>สัตว์เลี้ยง : <b>Bento</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
-
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package package-red">
-              <font-awesome-icon
-                class="Pic-appointment-dt"
-                icon="times-circle"
-              />
-            </div>
-            <div class="PetDT">
-              <h2>แพ็คเกจลูกสุนัข</h2>
-              <div class="TextDT">
-                <font>วันที่ : <b>20/20/2022</b></font>
-              </div>
-              <div class="TextDT">
-                <font>สัตว์เลี้ยง : <b>Muji</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-
+      
       <vs-dialog v-model="active">
         <template #header>
           <h2>รายละเอียด</h2>
@@ -113,15 +49,17 @@
 
         <h2 class="Head-history">ข้อมูลสัตว์</h2>
         <div class="box-package">
-            <font>ชื่อสัตว์เลี้ยง : <b>Muji</b></font
+            <font>ชื่อสัตว์เลี้ยง : <b>{{ historyDetail.pet.name }}</b></font
             ><br />
-            <font>ประเภทสัตว์ : <b>สุนัข</b></font
+            <font>ประเภทสัตว์ : <b>{{ historyDetail.pet.type }}</b></font
             ><br />
-            <font>การนัด : <b>สำเร็จ</b></font
+            <font>การนัด : <b>{{ historyDetail.status }}</b></font
             ><br />
         </div>
 
-        <h2 class="Head-history">แพ็คเกจสุนัขโต</h2>
+        <h2 v-if="historyDetail.by==='การจอง'" class="Head-history">{{ historyDetail.reservation.package.name }}</h2>
+        <h2 v-else class="Head-history">{{ historyDetail.type }}</h2>
+
         <div class="box-package">
           <h2>วัคซีนพิษสุนัขบ้า</h2>
           <div class="box-package-dt">
@@ -150,7 +88,7 @@
 
         <template #footer>
           <div class="footer-button-none">
-            <div class="button-detail active-color" @click="active=!active, goTomypet()">
+            <div class="button-detail active-color" @click="active=!active">
               ปิด
             </div>
           </div>
@@ -179,7 +117,7 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(["fetchMyHistories"]),
+    ...mapActions(["fetchMyHistories", 'getHistoryDetail']),
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",
@@ -193,7 +131,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allHistories"]),
+    ...mapGetters(["allHistories", 'seletedHistory', 'historyDetail']),
   },
   created() {
     this.fetchMyHistories();

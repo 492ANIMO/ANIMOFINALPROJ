@@ -1,11 +1,23 @@
 import axios from 'axios'
 
 const state = {
- histories: []
+ histories: [],
+ historyDetail: {
+   pet: {},
+   reservation: {},
+   medical: {},
+ },
+ seletedHistory: ''
 };
 
 const getters = {
   allHistories: (state) => state.histories,
+  historyDetail: (state) => state.historyDetail,
+  getHistoryById: (state) => (id) => {
+    return state.histories.find(history => history._id === id)
+  },
+  seletedHistory: (state) => state.seletedHistory,
+  
 };
 
 const actions = {
@@ -22,12 +34,24 @@ const actions = {
     });
     console.log(response.data.appointment);
     commit('setMyHistories', response.data.appointment);
-  }
+  },
 
+  async getHistoryDetail({commit}, id){
+    const historyDetail = state.histories.find(history => history._id === id);
+    // state.histories.find(history => history._id === data);
+    console.log(`id : ${JSON.stringify(id)}`)
+    commit('setSeletedHistory', id);
+    commit('setHistoryDetail', historyDetail);
+
+    // console.log(`eiei : ${JSON.stringify(test)}`)
+
+  }
 };
+
 const mutations = {
   setMyHistories: (state, histories) => (state.histories = histories),
-
+  setHistoryDetail: (state, historyDetail) => (state.historyDetail = historyDetail),
+  setSeletedHistory: (state, seletedHistory) => (state.seletedHistory = seletedHistory),
 };
 
 export default{

@@ -148,7 +148,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allPets", "petDetail"]),
+    ...mapGetters(["allPets", "petDetail", 'getHistoryById']),
   },
   created() {
     this.fetchMyPet();
