@@ -108,6 +108,7 @@ exports.showMyPet = async (req, res, next) => {
   try {
     let user = req.user;
     console.log('req.user: '+req.user);
+
     // not logged in
     if(!user){  
       const error = new Error('Unauthorized');
@@ -126,6 +127,36 @@ exports.showMyPet = async (req, res, next) => {
     res.status(200).json({
       message: 'สำเร็จ',
       pet: client.pet
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.showMyPetFilter = async (req, res, next) => {
+  try {
+    let user = req.user;
+    const  { type } = req.params;
+    console.log('req.user: '+req.user);
+    // not logged in
+    if(!user){  
+      const error = new Error('Unauthorized');
+      error.statusCode = 401;
+      throw error;
+    }
+    
+    user = await User.findById(user._id).populate('profile');
+    const pet = await Pet.find({owner: user.profile._id, type: type});
+    if(!pet){
+      const error = new Error('ไม่พบสัตว์เลี้ยง');
+      error.statusCode = 401;
+      throw error;
+    }
+    
+    res.status(200).json({
+      message: 'สำเร็จ',
+      pet
     });
 
   } catch (error) {

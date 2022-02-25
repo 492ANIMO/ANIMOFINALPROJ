@@ -10,7 +10,7 @@
             class="Package-Card"
             v-for="appointment in allAppointments"
             :key="appointment._id"
-            @click="active = !active"
+            @click="active = !active, getAppointmentDetail(appointment._id)"
           >
             <div class="bg-package">
               <img
@@ -26,7 +26,8 @@
               >
                 <h4>{{ appointment.status }}</h4>
               </div>
-              <h2 v-if="!appointment.by">{{ appointment.package.name }}</h2>
+              <h2 v-if="appointment.by==='การจอง'">{{appointment.reservation.package.name }}</h2>
+              <h2 v-else-if="appointment.status==='pending'">{{ appointment.package.name }}</h2>
               <h2 v-else>{{ appointment.type }}</h2>
               <div class="TextDT">
                 <font
@@ -46,61 +47,6 @@
               </div>
             </div>
           </div>
-
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package">
-              <img
-                src="../assets/bento.png"
-                alt="Animo"
-                class="Pic-appointment-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <div class="status status-1">
-                <h4>รอยืนยัน</h4>
-              </div>
-              <h2>แพ็คเกจแมวโต</h2>
-              <div class="TextDT">
-                <font
-                  >วันที่ : <b>20/20/2022</b>
-                  <font-awesome-icon icon="clock" /> <b>8.00 น</b>
-                </font>
-              </div>
-              <div class="TextDT">
-                <font>ประเภท : <b>การจอง</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
-
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package">
-              <img
-                src="../assets/muji.png"
-                alt="Animo"
-                class="Pic-appointment-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <div class="status status-2">
-                <h4>ไปตามนัด</h4>
-              </div>
-              <h2>แพ็คเกจลูกสุนัข</h2>
-              <div class="TextDT">
-                <font>วันที่ : <b>20/20/2022</b>
-                  <font-awesome-icon icon="clock" /> <b>8.00 น</b>
-                </font>
-              </div>
-              <div class="TextDT">
-                <font>ประเภท : <b>การจอง</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
@@ -111,30 +57,65 @@
 
         <h2 class="Head-history">ข้อมูลการนัด</h2>
         <div class="box-package">
-            <font>ชื่อสัตว์เลี้ยง : <b>Muji</b></font
+            <font>ชื่อสัตว์เลี้ยง : <b>{{ appointmentDetail.pet.name }}</b></font
             ><br />
-            <font>ประเภทสัตว์ : <b>สุนัข</b></font
+            <font>ประเภทสัตว์ : <b>{{ appointmentDetail.pet.type }}</b></font
             ><br />
-            <font>วันที่นัด : <b>20/02/2022</b></font
+            <font>วันที่นัด : <b>{{ format_date(appointmentDetail.date) }}</b></font
             ><br />
-            <font>เวลา : <b>8.00 น. -  9.00 น.</b></font
+            <font>เวลา : <b>{{ appointmentDetail.time }}</b></font
             ><br />
-            <font>สถานะ : <b>ไปตามเวลานัด</b></font
+            <font>สถานะ : <b>{{ appointmentDetail.status }}</b></font
             ><br />
-            <font>รายละเอียด : <b>งดน้ำก่อนมา 2 ชั่วโมง</b></font
+            <font>รายละเอียด : <b>{{ appointmentDetail.detail }}</b></font
             ><br />
-            <font>ราคา : <b class="active-text">1250 บาท</b></font><br/>
+            <font v-if="appointmentDetail.status==='pending'">ราคา : <b class="active-text">{{ appointmentDetail.package.price }} บาท</b></font>
+            <font v-else-if="appointmentDetail.by==='การจอง'">ราคา : <b class="active-text">{{ appointmentDetail.reservation.package.price }} บาท</b></font>
+            <br/>
         </div>
 
-        <h2 class="Head-history">รายการแพ็คเกจ</h2>
-        <div class="box-package">
-            <font><div class="dot-list"></div><b>วัคซีนพิษสุนัขบ้า</b></font><br/>
-            <font><div class="dot-list"></div><b>ตรวจเลือด</b></font><br/>
+        <div v-if="appointmentDetail.by === 'การจอง' || appointmentDetail.status === 'pending'" class="">
+          <h2 class="Head-history">รายการแพ็คเกจ</h2>
+
+          <div v-if="appointmentDetail.status === 'pending'" class="box-package">
+              <font v-for="(vaccine, i) in appointmentDetail.package.vaccines" :key="i">
+                <div class="dot-list"></div><b>{{ vaccine.name }}</b>
+                <br/>
+              </font>
+
+              <font v-for="(treatment, i) in appointmentDetail.package.treatments" :key="i">
+                <div class="dot-list"></div><b>{{ treatment.name }}</b>
+                <br/>
+              </font>
+              
+              <font v-for="(healthCheck, i) in appointmentDetail.package.healthChecks" :key="i">
+                <div class="dot-list"></div><b>{{ healthCheck.name }}</b>
+                <br/>
+              </font>
+          </div>
+
+          <div v-else class="box-package">
+              <font v-for="(vaccine, i) in appointmentDetail.reservation.package.vaccines" :key="i">
+                <div class="dot-list"></div><b>{{ vaccine.name }}</b>
+                <br/>
+              </font>
+
+              <font v-for="(treatment, i) in appointmentDetail.reservation.package.treatments" :key="i">
+                <div class="dot-list"></div><b>{{ treatment.name }}</b>
+                <br/>
+              </font>
+              
+              <font v-for="(healthCheck, i) in appointmentDetail.reservation.package.healthChecks" :key="i">
+                <div class="dot-list"></div><b>{{ healthCheck.name }}</b>
+                <br/>
+              </font>
+          </div>
+
         </div>
 
         <template #footer>
           <div class="footer-button-none">
-            <div class="button-detail active-color" @click="active=!active, goTomypet()">
+            <div class="button-detail active-color" @click="active=!active">
               ปิด
             </div>
           </div>
@@ -163,7 +144,7 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(["fetchMyAppointment"]),
+    ...mapActions(["fetchMyAppointment", 'getAppointmentDetail']),
 
     bindAppointmentType: function (status) {
       if (status === "รอยืนยัน" || status === "pending") {
@@ -185,7 +166,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allAppointments"]),
+    ...mapGetters(["allAppointments", 'appointmentDetail']),
   },
   created() {
     this.fetchMyAppointment();

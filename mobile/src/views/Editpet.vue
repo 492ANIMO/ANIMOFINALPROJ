@@ -13,7 +13,7 @@
           <div class="content-input">
             <vs-input
               label="ชื่อสัตว์เลี้ยง"
-              v-model="addPetForm.name"
+              v-model="petDetail.name"
               placeholder="ชื่อสัตว์เลี้ยง"
             />
           </div>
@@ -23,14 +23,14 @@
               class="select-grid"
               label="ประเภทสัตว์"
               placeholder="ประเภทสัตว์"
-              v-model="addPetForm.type"
+              v-model="petDetail.type"
             >
               <vs-option label="แมว" value="แมว"> แมว </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
               label="สายพันธุ์"
-              v-model="addPetForm.breed"
+              v-model="petDetail.breed"
               placeholder="สายพันธุ์"
             />
           </div>
@@ -39,12 +39,12 @@
             <vs-input
               class="input-grid"
               label="อายุ"
-              v-model="addPetForm.age.year"
+              v-model="petDetail.age.year"
               placeholder="ปี"
             />
             <vs-input
               label=""
-              v-model="addPetForm.age.month"
+              v-model="petDetail.age.month"
               placeholder="เดือน"
             />
           </div>
@@ -54,14 +54,14 @@
               class="select-grid"
               label="เพศ"
               placeholder="เพศ"
-              v-model="addPetForm.gender"
+              v-model="petDetail.gender"
             >
               <vs-option label="ผู้" value="ผู้"> ผู้ </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
               label="น้ำหนัก"
-              v-model="addPetForm.weight"
+              v-model="petDetail.weight"
               placeholder="น้ำหนัก"
             />
           </div>
@@ -71,7 +71,7 @@
               class="input-alone"
               label="ทำหมัน"
               placeholder="ทำหมัน"
-              v-model="addPetForm.sterilization"
+              v-model="petDetail.sterilization"
             >
               <vs-option label="ทำหมันแล้ว" value="1"> ทำหมันแล้ว </vs-option>
             </vs-select>
@@ -79,8 +79,8 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" @click="addMyPet()">
-          <h4>เพิ่มสัตว์เลี้ยง</h4>
+        <div class="button-addpet add" @click="editMyPet()">
+          <h4>แก้ไขข้อมูลสัตว์เลี้ยง</h4>
         </div>
       </div>
     </div>
@@ -101,7 +101,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchCurrentUser", "addMyPet"]),
+    ...mapActions(["fetchCurrentUser", "addMyPet", 'editMyPet']),
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",
@@ -115,7 +115,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["currentUser", "pet", "addPetForm"]),
+    ...mapGetters(["currentUser", "pet", "addPetForm", 'petDetail']),
   },
   components: {
     Navbar,

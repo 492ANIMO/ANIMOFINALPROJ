@@ -18,34 +18,11 @@
         <div class="content-news">
         <div class="Head-text-box">
           <img src="../assets/bento.png" alt="Animo" class="PicCatDT" />
-          <h2 class="Head-text-news">วิธีอาบน้ำหมาอย่างถูกต้อง</h2>
+          <h2 class="Head-text-news">{{ annoucementDetail.title }}</h2>
         </div>
 
         <div class="text-box-news">
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
-          <font>dvdgfnhggggggggggggggn cghmtghmtdhmfhmjfgmghmgyhggggggggg</font>
+          <p v-html="annoucementDetail.body"></p>
         </div>
 
         </div>
@@ -56,6 +33,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Navbar from "../components/Navbar";
 
 export default {
@@ -71,6 +49,7 @@ export default {
     Navbar,
   },
   methods: {
+  
     goTomypet() {
       this.$router.push("/mobile/mypet");
     },
@@ -91,11 +70,16 @@ export default {
   },
   created() {
     //this.openLoading();
+
   },
+  computed:{
+    ...mapGetters(['annoucementDetail'])
+  }
 };
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+
 .content-news {
   overflow-y: scroll;
 }

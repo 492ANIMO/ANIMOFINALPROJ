@@ -14,17 +14,21 @@ const schema = new Schema({
     type: { type: String, required: true, trim: true},
     manufacturer: { type: String, trim: true},
     lot_number: { type: String, trim: true},
-    detail: { type: String, trim: true}
+    detail: { type: String, trim: true},
+    petType: { type: String, trim: true},
   }],
   treatments: [{ 
     name: { type: String, required: true, trim: true },
     detail: { type: String, trim: true } ,
-    type: { type: String, trim: true }
+    type: { type: String, trim: true },
+    petType: { type: String, trim: true},
+
   }],
   healthChecks: [{ 
     name: { type: String, required: true, trim: true},
     detail: { type: String, trim: true},
-    type: { type: String, trim: true }
+    type: { type: String, trim: true },
+    petType: { type: String, trim: true},
    }],
     
   detail: { type: String, trim: true, default: '-'},

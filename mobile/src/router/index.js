@@ -114,7 +114,6 @@ const routes = [
     component: () => import('../views/News.vue')
   },
 
-
   // the default route, when none of the above matches:
   { 
     path: '*', 

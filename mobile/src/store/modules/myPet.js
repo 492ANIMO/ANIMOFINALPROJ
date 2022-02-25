@@ -1,4 +1,5 @@
 import axios from "axios";
+import store from '../index';
 
 const state = {
   mypets: [
@@ -19,6 +20,7 @@ const state = {
     sterilization: '',
     ownerId: ''
   },
+  filterPet: [],
 };
 
 const getters = {
@@ -26,6 +28,7 @@ const getters = {
   pet: (state) => state.pet,
   petDetail: (state) => state.petDetail,
   addPetForm: (state) => state.addPetForm,
+  filterPet: (state) => state.filterPet
 };
 
 const actions = {
@@ -45,6 +48,26 @@ const actions = {
     });
     console.log(response.data.pet);
     commit('setMyPets', response.data.pet)
+  },
+
+  async fetchFilterPet({commit}){
+    const token = localStorage.getItem('jwt');
+    const headers = {
+      "Content-type": "application/json; charset=UTF-8",
+      "Authorization": 'Bearer ' + token
+    };
+    const baseUrl = 'http://localhost:4000/api/pets/mypet/'
+    
+    console.log(`getter: ${store.getters.packageDetail.type}`);
+    const type = store.getters.packageDetail.type
+
+    const response = await axios.get(baseUrl+type,{
+      headers: headers,
+      params: { 
+        type: store.getters.packageDetail.type
+      } 
+    });
+    commit('setMyPetFilter', response.data.pet)
   },
 
   async fetchPetDetail({commit}, id){
@@ -69,6 +92,7 @@ const actions = {
       console.log(error)
     }
   },
+
   async deleteMyPet(){
     try {
       const baseUrl = 'http://localhost:4000/api/pets/'
@@ -88,12 +112,22 @@ const actions = {
           sterilization: '',
           ownerId: ''
         }
-        
-        
       }) .catch((error) => {
           console.log(error);
       });
  
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
+  async editMyPet(){
+    try {
+      const baseUrl = 'http://localhost:4000/api/pets/';
+      const response = await axios.patch(baseUrl+state.petDetail._id, state.petDetail);
+      console.log(`data : ${JSON.stringify(state.petDetail)}`)
+      console.log(`id: ${state.petDetail._id}`)
+      console.log(response.data.message);
     } catch (error) {
       console.log(error)
     }
@@ -105,8 +139,8 @@ const mutations = {
   setMyPets: (state, mypets) => (state.mypets = mypets),
   newPet: (state, addPetForm) => (state.pet = addPetForm),
   petDetail: (state, petDetail) => (state.petDetail = petDetail),
-  setOwner: (state, owner) => (state.addPetForm.ownerId = owner)
-
+  setOwner: (state, owner) => (state.addPetForm.ownerId = owner),
+  setMyPetFilter: (state, pet) => (state.filterPet = pet)
 };
 
 export default{

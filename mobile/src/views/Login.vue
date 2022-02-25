@@ -57,10 +57,8 @@
 </template>
 
 <script>
-// import axios from 'axios'
 import { login } from '../services/authService'
 
-// import { authenticationService } from '../services/authService'
 export default {
   name: "Login",
   data() {
@@ -81,7 +79,6 @@ export default {
     if(localStorage.getItem("jwt")){
         this.$router.push({name:'Mypet'})
     }
-    
   },
 };
 </script>
