@@ -632,27 +632,7 @@ button.vs-select__option {
 ::v-deep .DtPg .vs-input {
   min-width: 700px;
 }
-.TArea {
-  margin-left: 10px;
-  width: 680px;
-  background: #f4f7f8;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  color: #696969;
-  font-family: kanit;
-  resize: none;
-  transition: 0.3s all;
-}
-.TArea:focus-visible {
-  outline: none;
-  padding-left: 17px;
-  background: #f0f3f4;
-}
-.TArea::placeholder {
-  color: #afb7be;
-  font-size: 13px;
-}
+
 .HeadInput {
   font-size: 14.25px;
   color: #696969;

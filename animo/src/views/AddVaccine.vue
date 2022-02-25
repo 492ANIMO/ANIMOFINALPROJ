@@ -6,30 +6,15 @@
     </div>
     <div class="Content1">
       <div class="Content2">
+        <vs-button color="#6b9bce" @click="active3 = !active3,createVaccine()" class="BTadd BT2">
+          <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
+        </vs-button>
         <h2><font-awesome-icon class="icon" icon="syringe" />รายการวัคซีน</h2>
         <div class="line">
           <h3>
             <font-awesome-icon class="icon" icon="plus" />เพิ่มรายการวัคซีน
           </h3>
-        </div>
-        <div class="container-box">
-          <vs-input
-            label="ชื่อวัคซีน"
-            v-model="vaccine.name"
-            placeholder="ชื่อวัคซีน..."
-          />
-          <vs-input
-            label="เลขล็อตวัคซีน"
-            v-model="vaccine.lot_number"
-            placeholder="เลขล็อตวัคซีน..."
-          />
-          <vs-button
-            color="#6b9bce"
-            @click="(active3 = !active3), createVaccine()"
-            class="BT2"
-          >
-            <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
-          </vs-button>
+         
         </div>
         <h4 class="list">รายการทั้งหมด {{ this.vaccines.length }} รายการ</h4>
         <template>
@@ -71,55 +56,82 @@
         </template>
       </div>
 
-    <vs-dialog width="80%" scroll v-model="active3">
-            <template #header>
-              <h2>ข้อมูลสัตว์เลี้ยง</h2>
-            </template>
+      <vs-dialog width="80%" scroll v-model="active3">
+        <template #header>
+          <h2>ข้อมูลสัตว์เลี้ยง</h2>
+        </template>
 
-            <vs-row>
-              <vs-col
-                vs-type="flex"
-                vs-justify="center"
-                vs-align="center"
-                w="6"
+        <vs-row>
+          <vs-col w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="value"
+                label="ชื่อวัคซีน"
+                placeholder="value"
               >
-                <div class="InputPop">
-                  <vs-input
-                    v-model="value"
-                    label="ชื่อสัตว์เลี้ยง"
-                    :placeholder="value"
-                  >
-                  </vs-input>
-                </div>
-              </vs-col>
-              <vs-col
-                vs-type="flex"
-                vs-justify="center"
-                vs-align="center"
-                w="6"
+              </vs-input>
+            </div>
+          </vs-col>
+          <vs-col w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="value"
+                label="เลขล็อตวัคซีน"
+                placeholder="value"
               >
-                <div class="InputSL">
-                  <vs-select
-                    label="ประเภทสัตว์"
-                    :placeholder="value"
-                    v-model="value"
-                    class="type"
-                  >
-                    <vs-option
-                      :key="i"
-                      v-for="(type, i) in petType"
-                      :value="type"
-                      :label="type"
-                    >
-                      type 
-                    </vs-option>
-                  </vs-select>
-                </div>
-              </vs-col>
-            </vs-row>
-            <div class="space"></div>
-          </vs-dialog>
+              </vs-input>
+            </div>
+          </vs-col>
+        </vs-row><div class="space"></div>
 
+        <vs-row>
+          <vs-col w="6">
+            <div class="InputSL">
+              <vs-select
+                filter
+                label="ประเภทสัตว์"
+                :placeholder="value"
+                v-model="value"
+                class="type"
+              >
+              </vs-select>
+            </div>
+          </vs-col>
+          <vs-col w="6">
+            <div class="InputPop">
+              <vs-input
+                v-model="value"
+                label="อายุขั้นต่ำ"
+                placeholder="value"
+              >
+              </vs-input>
+            </div>
+          </vs-col>
+        </vs-row>
+
+        <vs-row>
+          <vs-col w="12">
+            <h4 class="HeadInput">รายละเอียดวัคซีน</h4>
+            <textarea class="TArea" placeholder="value">
+              ใส่ข้อมูลลลลลล
+            </textarea>
+            
+          </vs-col>
+        </vs-row>
+
+        <template #footer>
+          <div class="footer-dialog">
+            <vs-button
+              class="BT3"
+              color="#71cf9d"
+              @click="(active3 = !active3)"
+              style="float: right; width: 80px"
+            >
+              เพิ่มข้อมูล </vs-button
+            ><br /><br />
+          </div>
+        </template>
+      </vs-dialog>
     </div>
   </div>
 </template>
@@ -141,6 +153,7 @@ export default {
     active: false,
     active1: false,
     active2: false,
+    active3: false,
     value: "",
     search: "",
     vaccines: [],
@@ -206,10 +219,34 @@ export default {
 <style scoped>
 @import url("../assets/css/style.css");
 
-.container-box {
-  display: grid;
-  grid: auto / auto auto 12%;
-  padding: 30px 0px 0px 40px;
+.HeadInput {
+  font-size: 14.25px;
+  color: #696969;
+  font-weight: 400;
+  margin: 0px;
+  margin-top: 8px;
+  margin-bottom: 2px;
+}
+.TArea {
+  margin-left: 10px;
+  width: 680px;
+  background: #f4f7f8;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  color: #696969;
+  font-family: kanit;
+  resize: none;
+  transition: 0.3s all;
+}
+.TArea:focus-visible {
+  outline: none;
+  padding-left: 17px;
+  background: #f0f3f4;
+}
+.TArea::placeholder {
+  color: #afb7be;
+  font-size: 13px;
 }
 ::v-deep .InputLast .vs-input-content {
   max-width: 170px;
