@@ -36,9 +36,9 @@
               )"
               :data="data"
             >
-              <vs-td>{{ '00000'+data.pid }}</vs-td>
+              <vs-td>{{ "00000" + data.pid }}</vs-td>
               <vs-td>{{ data.name }}</vs-td>
-              <vs-td>{{ data.detail }}</vs-td>
+              <vs-td><div class="dt-package-box">{{ data.detail }}</div></vs-td>
               <vs-td>
                 <vs-button
                   color="#6b9bce"
@@ -79,8 +79,10 @@
                 class="textcolor"
                 @blur="$v.newPackage.name.$touch()"
               >
-                <template v-if="$v.newPackage.name.$error" #message-danger> 
-                  <p v-if="!$v.newPackage.name.required" >กรุณากรอกชื่อแพ็คเกจ</p>
+                <template v-if="$v.newPackage.name.$error" #message-danger>
+                  <p v-if="!$v.newPackage.name.required">
+                    กรุณากรอกชื่อแพ็คเกจ
+                  </p>
                 </template>
               </vs-input>
             </div>
@@ -101,8 +103,10 @@
                 >
                   {{ type }}
                 </vs-option>
-                <template v-if="$v.newPackage.type.$error" #message-danger> 
-                  <p v-if="!$v.newPackage.type.required" >กรุณาเลือกประเภทสัตว์</p>
+                <template v-if="$v.newPackage.type.$error" #message-danger>
+                  <p v-if="!$v.newPackage.type.required">
+                    กรุณาเลือกประเภทสัตว์
+                  </p>
                 </template>
               </vs-select>
             </div>
@@ -237,9 +241,13 @@
                 class="textcolor"
                 @blur="$v.newPackage.price.$touch()"
               >
-                <template v-if="$v.newPackage.price.$error" #message-danger> 
-                  <p v-if="!$v.newPackage.price.required" >กรุณากรอกราคาของแพ็คเกจ</p>
-                  <p v-if="!$v.newPackage.price.minValue" >กรุณากรอกราคาของแพ็คเกจด้วยตัวเลขตั้งแต่ 0 ขึ้นไป</p>
+                <template v-if="$v.newPackage.price.$error" #message-danger>
+                  <p v-if="!$v.newPackage.price.required">
+                    กรุณากรอกราคาของแพ็คเกจ
+                  </p>
+                  <p v-if="!$v.newPackage.price.minValue">
+                    กรุณากรอกราคาของแพ็คเกจด้วยตัวเลขตั้งแต่ 0 ขึ้นไป
+                  </p>
                 </template>
               </vs-input>
             </div>
@@ -269,7 +277,7 @@
                   <h4 class="AddPG">รายการทั้งหมด</h4>
                   <div class="TextArea3">
                     <h5
-                     class="AddPG"
+                      class="AddPG"
                       :key="i"
                       v-for="(vaccine, i) in newPackage.vaccines"
                     >
@@ -277,14 +285,14 @@
                     </h5>
                     <h5
                       class="AddPG"
-                      :key="'a'+i"
+                      :key="'a' + i"
                       v-for="(treatment, i) in newPackage.treatments"
                     >
                       -{{ treatment.name }}
                     </h5>
                     <h5
                       class="AddPG"
-                      :key="'b'+i"
+                      :key="'b' + i"
                       v-for="(healthCheck, i) in newPackage.healthChecks"
                     >
                       -{{ healthCheck.name }}
@@ -300,7 +308,11 @@
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="(active = !active), createPackage(),AddNoti('bottom-right',1500,'#57c496')"
+              @click="
+                (active = !active),
+                  createPackage(),
+                  AddNoti('bottom-right', 1500, '#57c496')
+              "
               class="BT1"
               style="float: right; width: 80px"
               :disabled="$v.newPackage.$invalid"
@@ -310,7 +322,7 @@
           </div>
         </template>
       </vs-dialog>
-    <!-- ข้อมูลแพ็คเกจสัตว์เลี้ยง -->
+      <!-- ข้อมูลแพ็คเกจสัตว์เลี้ยง -->
       <vs-dialog width="80%" scroll v-model="Detail1">
         <template #header>
           <h2>ข้อมูลแพ็คเกจสัตว์เลี้ยง</h2>
@@ -320,14 +332,15 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-              state="success"
                 v-model="currentPackage.name"
                 label="ชื่อแพ็คเกจ"
                 placeholder="ชื่อแพ็คเกจ"
                 @blur="$v.currentPackage.name.$touch()"
               >
-                <template v-if="$v.currentPackage.name.$error" #message-danger> 
-                  <p v-if="!$v.currentPackage.name.required" >กรุณากรอกชื่อแพ็คเกจ</p>
+                <template v-if="$v.currentPackage.name.$error" #message-danger>
+                  <p v-if="!$v.currentPackage.name.required">
+                    กรุณากรอกชื่อแพ็คเกจ
+                  </p>
                 </template>
               </vs-input>
             </div>
@@ -335,7 +348,6 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputSL">
               <vs-select
-              state="success"
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
                 v-model="currentPackage.type"
@@ -349,8 +361,10 @@
                 >
                   {{ type }}
                 </vs-option>
-                <template v-if="$v.currentPackage.type.$error" #message-danger> 
-                  <p v-if="!$v.currentPackage.type.required" >กรุณาเลือกประเภทสัตว์</p>
+                <template v-if="$v.currentPackage.type.$error" #message-danger>
+                  <p v-if="!$v.currentPackage.type.required">
+                    กรุณาเลือกประเภทสัตว์
+                  </p>
                 </template>
               </vs-select>
             </div>
@@ -362,21 +376,31 @@
             <div class="InputPop">
               <h4 class="HeadInput">รายการทั้งหมด</h4>
               <div class="DetailPK">
-                <h4 class="DetailText">
-                  รายการทั้งหมด
-                </h4>
+                <h4 class="DetailText">รายการทั้งหมด</h4>
                 <div class="TextArea2">
-                <div class="TextArea3">
-                  <h5 class="AddPG" :key="i" v-for="(vaccine, i) in currentPackage.vaccines">
-                    -{{ vaccine.name }}
-                  </h5>
-                  <h5 class="AddPG"  :key="'A'+i" v-for="(treatment, i) in currentPackage.treatments">
+                  <div class="TextArea3">
+                    <h5
+                      class="AddPG"
+                      :key="i"
+                      v-for="(vaccine, i) in currentPackage.vaccines"
+                    >
+                      -{{ vaccine.name }}
+                    </h5>
+                    <h5
+                      class="AddPG"
+                      :key="'A' + i"
+                      v-for="(treatment, i) in currentPackage.treatments"
+                    >
                       -{{ treatment.name }}
-                  </h5>
-                  <h5 class="AddPG" :key="'B'+i" v-for="(healthCheck, i) in currentPackage.healthChecks">
+                    </h5>
+                    <h5
+                      class="AddPG"
+                      :key="'B' + i"
+                      v-for="(healthCheck, i) in currentPackage.healthChecks"
+                    >
                       -{{ healthCheck.name }}
-                  </h5>
-                </div>
+                    </h5>
+                  </div>
                 </div>
               </div>
             </div>
@@ -388,16 +412,18 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputPop">
               <vs-input
-              state="success"
                 v-model="currentPackage.price"
                 label="ราคาสุทธิ"
                 placeholder="ราคาสุทธิ(บาท)"
                 @blur="$v.currentPackage.price.$touch()"
-
               >
-                <template v-if="$v.currentPackage.price.$error" #message-danger> 
-                  <p v-if="!$v.currentPackage.price.required" >กรุณากรอกราคาของแพ็คเกจ</p>
-                  <p v-if="!$v.currentPackage.price.minValue" >กรุณากรอกราคาของแพ็คเกจด้วยตัวเลขตั้งแต่ 0 ขึ้นไป</p>
+                <template v-if="$v.currentPackage.price.$error" #message-danger>
+                  <p v-if="!$v.currentPackage.price.required">
+                    กรุณากรอกราคาของแพ็คเกจ
+                  </p>
+                  <p v-if="!$v.currentPackage.price.minValue">
+                    กรุณากรอกราคาของแพ็คเกจด้วยตัวเลขตั้งแต่ 0 ขึ้นไป
+                  </p>
                 </template>
               </vs-input>
             </div>
@@ -409,7 +435,6 @@
           <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
             <div class="InputPop">
               <vs-input
-              state="success"
                 v-model="currentPackage.detail"
                 label="รายละเอียด"
                 placeholder="รายละเอียด"
@@ -422,20 +447,24 @@
         <template #footer>
           <div class="footer-dialog">
             <vs-button
-                  color="#ca7676"
-                  @click="deleteCF=!deleteCF"
-                  class="BT3"
-                  style="float: right; width: 80px"
-                >
-                  ลบ<font-awesome-icon
-                    class="iconBTl"
-                    style="font-size: 10px"
-                    icon="trash-alt"
-                  />
-                </vs-button>
+              color="#ca7676"
+              @click="deleteCF = !deleteCF"
+              class="BT3"
+              style="float: right; width: 80px"
+            >
+              ลบ<font-awesome-icon
+                class="iconBTl"
+                style="font-size: 10px"
+                icon="trash-alt"
+              />
+            </vs-button>
             <vs-button
               color="#d78461"
-              @click="(Detail1 = !Detail1), updatePackage(currentPackage._id),EditNoti('bottom-right',1500,'#da9952')"
+              @click="
+                (Detail1 = !Detail1),
+                  updatePackage(currentPackage._id),
+                  EditNoti('bottom-right', 1500, '#da9952')
+              "
               class="BT2"
               style="float: right; width: 80px"
               :disabled="$v.currentPackage.$invalid"
@@ -448,27 +477,31 @@
 
       <vs-dialog width="550px" v-model="deleteCF">
         <template #header>
-          <font class="font">
-            ยืนยัน <b>การลบแพ็คเกจ</b>
-          </font>
+          <font class="font"> ยืนยัน <b>การลบแพ็คเกจ</b> </font>
         </template>
 
-        <div class="con-content">
-            <br><br><br><br>
-        </div>
+        <div class="con-content"><br /><br /><br /><br /></div>
 
         <template #footer>
           <div class="footer">
-            <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
+            <vs-button dark class="CF2" @click="deleteCF = !deleteCF">
               ยกเลิก
             </vs-button>
-            <vs-button color="#ca7676" class="CF1" @click="(Detail1 = !Detail1),(deleteCF=!deleteCF), deletePackage(currentPackage._id),DeleteNoti('bottom-right',1500,'#c65151')">
+            <vs-button
+              color="#ca7676"
+              class="CF1"
+              @click="
+                (Detail1 = !Detail1),
+                  (deleteCF = !deleteCF),
+                  deletePackage(currentPackage._id),
+                  DeleteNoti('bottom-right', 1500, '#c65151')
+              "
+            >
               ยืนยัน
             </vs-button>
           </div>
         </template>
       </vs-dialog>
-
     </div>
   </div>
 </template>
@@ -477,7 +510,7 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
-import { required, numeric, minValue } from 'vuelidate/lib/validators';
+import { required, numeric, minValue } from "vuelidate/lib/validators";
 
 export default {
   name: "Package",
@@ -497,10 +530,10 @@ export default {
     petType: ["สุนัข", "แมว", "นก", "อื่นๆ"],
     packages: [],
 
-    currentPackage:{
-      name:'',
-      type: '',
-      detail: '',
+    currentPackage: {
+      name: "",
+      type: "",
+      detail: "",
       price: 0,
       vaccines: [],
       treatments: [],
@@ -512,33 +545,33 @@ export default {
     healthCheck_options: [],
 
     newPackage: {
-      name: '',
-      type: '',
+      name: "",
+      type: "",
       vaccines: [],
       treatments: [],
       healthChecks: [],
-      detail: '',
-      price: ''
+      detail: "",
+      price: "",
     },
   }),
   validations: {
     newPackage: {
       name: { required },
       type: { required },
-      price: { 
-        required, 
-        numeric, 
-        minValue: minValue(0)
-      }
+      price: {
+        required,
+        numeric,
+        minValue: minValue(0),
+      },
     },
     currentPackage: {
       name: { required },
       type: { required },
-      price: { 
-        required, 
-        numeric, 
-        minValue: minValue(0)
-      }
+      price: {
+        required,
+        numeric,
+        minValue: minValue(0),
+      },
     },
   },
   created() {
@@ -547,33 +580,33 @@ export default {
     this.getAllHealthChecks();
   },
   methods: {
-    AddNoti(position = null ,duration ,color) {
-          this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'เพิ่มข้อมูลสำเร็จ',
-            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    EditNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'แก้ไขข้อมูลสำเร็จ',
-            text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    DeleteNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'ลบข้อมูลสำเร็จ',
-            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
+    AddNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "เพิ่มข้อมูลสำเร็จ",
+        text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    EditNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "แก้ไขข้อมูลสำเร็จ",
+        text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    DeleteNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "ลบข้อมูลสำเร็จ",
+        text: `ลบรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
     getPackage() {
       let baseURL = "http://localhost:4000/api/packages/";
 
@@ -582,7 +615,6 @@ export default {
         .then((res) => {
           this.packages = res.data.package;
           console.log(res.data);
-          
         })
         .catch((error) => {
           console.log(error);
@@ -596,7 +628,7 @@ export default {
         .get(baseURL + id)
         .then((res) => {
           this.currentPackage = res.data.package;
-          console.log('this.currentPackage');
+          console.log("this.currentPackage");
           console.log(this.currentPackage);
           this.getPackage();
         })
@@ -654,13 +686,13 @@ export default {
         .post(baseURL, this.newPackage)
         .then(() => {
           this.newPackage = {
-            name: '',
-            type: '',
+            name: "",
+            type: "",
             vaccines: [],
             treatments: [],
             healthChecks: [],
-            detail: '',
-            price: '',
+            detail: "",
+            price: "",
           };
           console.log(this.newPackage);
           this.getPackage();
@@ -670,42 +702,50 @@ export default {
         });
     },
 
-    updatePackage(id){
+    updatePackage(id) {
       let baseURL = "http://localhost:4000/api/packages/";
-       console.log('id: '+id);
+      console.log("id: " + id);
 
-      axios.patch(baseURL+id, this.currentPackage).then((res)=>{
-       
-        console.log(res.data);
-        console.log('update เรียบร้อย');
+      axios
+        .patch(baseURL + id, this.currentPackage)
+        .then((res) => {
+          console.log(res.data);
+          console.log("update เรียบร้อย");
 
-        this.getPackage();
-        
-      }) .catch((error) => {
+          this.getPackage();
+        })
+        .catch((error) => {
           console.log(error);
-      });
-      
+        });
     },
-    deletePackage(id){
+    deletePackage(id) {
       let baseURL = "http://localhost:4000/api/packages/";
-       console.log('id: '+id);
+      console.log("id: " + id);
 
-      axios.delete(baseURL+id, id).then((res)=>{
-       
-        console.log(res.data);
-        console.log('ลบแพ็คเกจเรียบร้อย');
+      axios
+        .delete(baseURL + id, id)
+        .then((res) => {
+          console.log(res.data);
+          console.log("ลบแพ็คเกจเรียบร้อย");
 
-        this.getPackage();
-        
-      }) .catch((error) => {
+          this.getPackage();
+        })
+        .catch((error) => {
           console.log(error);
-      });
-      
-    }
+        });
+    },
   },
 };
 </script>
 <style scoped>
+::v-deep .dt-package-box {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 5px 0px;
+  padding: 0px 12px !important;
+}
 .font {
   font-size: 20px;
 }
@@ -752,7 +792,7 @@ h3 {
   --vs-button-padding: 5px 10px;
 }
 .BT2 {
- background: rgb(215, 132, 97);
+  background: rgb(215, 132, 97);
   background: linear-gradient(
     45deg,
     rgba(215, 132, 97, 1) 0%,
@@ -810,27 +850,35 @@ h3 {
   margin-left: 270px;
   --vs-button-padding: 5px 10px;
 }
-.CF1{
-background: rgb(197,94,94);
-background: linear-gradient(45deg, rgba(197,94,94,1) 0%, rgba(248,139,109,1) 100%);
-display: inline-block;
-color: #ffffff;
-border-radius: 20px;
-font-size: 13px;
-font-weight: 500;
-margin-bottom: 15px;
---vs-button-padding: 5px 20px;
+.CF1 {
+  background: rgb(197, 94, 94);
+  background: linear-gradient(
+    45deg,
+    rgba(197, 94, 94, 1) 0%,
+    rgba(248, 139, 109, 1) 100%
+  );
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  --vs-button-padding: 5px 20px;
 }
-.CF2{
-background: rgb(130,140,146);
-background: linear-gradient(45deg, rgba(130,140,146,1) 0%, rgba(106,106,106,1) 100%);
-display: inline-block;
-color: #ffffff;
-border-radius: 20px;
-font-size: 13px;
-font-weight: 500;
-margin-bottom: 15px;
---vs-button-padding: 5px 20px;
+.CF2 {
+  background: rgb(130, 140, 146);
+  background: linear-gradient(
+    45deg,
+    rgba(130, 140, 146, 1) 0%,
+    rgba(106, 106, 106, 1) 100%
+  );
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 15px;
+  --vs-button-padding: 5px 20px;
 }
 .InputSL {
   margin-top: -3px;
@@ -953,6 +1001,7 @@ button.vs-select__option {
 }
 ::v-deep .vs-table__td {
   padding: 5px 12px;
+  align-items: center;
 }
 ::v-deep .vs-table_not-found td {
   color: #696969;
@@ -1021,11 +1070,11 @@ button.vs-select__option {
 ::v-deep .vs-select--state-success .vs-select__input {
   background: rgba(var(--vs-success), 0.1) !important;
 }
-::v-deep .vs-input__message p{
+::v-deep .vs-input__message p {
   margin: 0px;
   padding-left: 10px;
 }
-::v-deep .vs-select__message p{
+::v-deep .vs-select__message p {
   margin: 0px;
 }
 </style>

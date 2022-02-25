@@ -12,7 +12,7 @@
         <div class="profile">
           <vs-avatar class="ProfileDT" circle size="120">
             <!-- <img src="../assets/pet1.jpeg" alt="" /> -->
-            <img :src="this.baseurl+this.client.avatar" alt="" />
+            <img :src="this.baseurl + this.client.avatar" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
             <h2>{{ this.client.firstName + " " + this.client.lastName }}</h2>
@@ -113,14 +113,13 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.firstName"
                     label="ชื่อ"
                     :placeholder="this.client.firstName"
                     @blur="$v.client.firstName.$touch()"
                   >
-                    <template v-if="$v.client.firstName.$error" #message-danger> 
-                      <p v-if="!$v.client.firstName.required" >กรุณากรอกชื่อ</p>
+                    <template v-if="$v.client.firstName.$error" #message-danger>
+                      <p v-if="!$v.client.firstName.required">กรุณากรอกชื่อ</p>
                     </template>
                   </vs-input>
                 </div>
@@ -133,14 +132,15 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.lastName"
                     label="นามสกุล"
                     :placeholder="this.client.lastName"
                     @blur="$v.client.lastName.$touch()"
                   >
-                    <template v-if="$v.client.lastName.$error" #message-danger> 
-                      <p v-if="!$v.client.lastName.required" >กรุณากรอกนามสกุล</p>
+                    <template v-if="$v.client.lastName.$error" #message-danger>
+                      <p v-if="!$v.client.lastName.required">
+                        กรุณากรอกนามสกุล
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -157,15 +157,24 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.contact"
                     label="เบอร์โทร"
                     :placeholder="this.client.contact"
                     @blur="$v.client.contact.$touch()"
-                  > 
-                    <template v-if="$v.client.contact.$error" #message-danger> 
-                      <p v-if="!$v.client.contact.required">กรุณากรอกเบอร์มือถือด้วยเลข 10 หลัก</p>
-                      <p v-if="!$v.client.contact.numeric || !$v.client.contact.minLengthValue || !$v.client.contact.maxLengthValue">เบอร์มือถือต้องประกอบด้วยเลข 10 หลัก</p>
+                  >
+                    <template v-if="$v.client.contact.$error" #message-danger>
+                      <p v-if="!$v.client.contact.required">
+                        กรุณากรอกเบอร์มือถือด้วยเลข 10 หลัก
+                      </p>
+                      <p
+                        v-if="
+                          !$v.client.contact.numeric ||
+                          !$v.client.contact.minLengthValue ||
+                          !$v.client.contact.maxLengthValue
+                        "
+                      >
+                        เบอร์มือถือต้องประกอบด้วยเลข 10 หลัก
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -178,7 +187,6 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.email"
                     label="อีเมลล์"
                     :placeholder="this.client.email"
@@ -197,7 +205,6 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.address.detail"
                     label="ที่อยู่"
                     :placeholder="this.client.address.detail"
@@ -212,7 +219,6 @@
               >
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.address.province"
                     label="จังหวัด"
                     :placeholder="this.client.address.province"
@@ -226,7 +232,6 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.address.subdistrict"
                     label="ตำบล"
                     :placeholder="this.client.address.subdistrict"
@@ -237,7 +242,6 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.address.district"
                     label="อำเภอ"
                     :placeholder="this.client.address.district"
@@ -248,7 +252,6 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                    state="success"
                     v-model="client.address.postalCode"
                     label="รหัสไปรษณีย์"
                     :placeholder="this.client.address.postalCode"
@@ -261,11 +264,15 @@
               <div class="footer-dialog">
                 <vs-button
                   color="#d78461"
-                  @click="(active1 = !active1), updateClientById(client),EditNoti('bottom-right',1500,'#da9952')"
+                  @click="
+                    (active1 = !active1),
+                      updateClientById(client),
+                      EditNoti('bottom-right', 1500, '#da9952')
+                  "
                   class="BT"
                   style="float: right; width: 80px"
                   :disabled="$v.client.$invalid"
-                ><font-awesome-icon class="iconBTr" icon="edit" />
+                  ><font-awesome-icon class="iconBTr" icon="edit" />
                   แก้ไข </vs-button
                 ><br /><br />
               </div>
@@ -291,8 +298,10 @@
                     placeholder="ชื่อสัตว์เลี้ยง"
                     @blur="$v.newPet.name.$touch()"
                   >
-                    <template v-if="$v.newPet.name.$error" #message-danger> 
-                      <p v-if="!$v.newPet.name.required">กรุณากรอกชื่อสัตว์เลี้ยง</p>
+                    <template v-if="$v.newPet.name.$error" #message-danger>
+                      <p v-if="!$v.newPet.name.required">
+                        กรุณากรอกชื่อสัตว์เลี้ยง
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -315,8 +324,10 @@
                     <vs-option label="แมว" value="แมว"> แมว </vs-option>
                     <vs-option label="นก" value="นก"> นก </vs-option>
                     <vs-option label="อื่นๆ" value="อื่นๆ"> อื่นๆ </vs-option>
-                    <template v-if="$v.newPet.type.$error" #message-danger> 
-                      <p v-if="!$v.newPet.type.required">กรุณาเลือกประเภทสัตว์เลี้ยง</p>
+                    <template v-if="$v.newPet.type.$error" #message-danger>
+                      <p v-if="!$v.newPet.type.required">
+                        กรุณาเลือกประเภทสัตว์เลี้ยง
+                      </p>
                     </template>
                   </vs-select>
                 </div>
@@ -332,12 +343,17 @@
                     label="น้ำหนัก(กิโลกรัม)"
                     placeholder="กิโลกรัม"
                     type="number"
-                    min=0 max=200
+                    min="0"
+                    max="200"
                     @blur="$v.newPet.weight.$touch()"
                   >
-                    <template v-if="$v.newPet.weight.$error" #message-danger> 
-                      <p v-if="!$v.newPet.weight.required">กรุณากรอกน้ำหนักสัตว์เลี้ยง</p>
-                      <p v-if="!$v.newPet.weight.minValue">น้ำหนักสัตว์เลี้ยงต้องมากกว่า 0 กิโลกรัม</p>
+                    <template v-if="$v.newPet.weight.$error" #message-danger>
+                      <p v-if="!$v.newPet.weight.required">
+                        กรุณากรอกน้ำหนักสัตว์เลี้ยง
+                      </p>
+                      <p v-if="!$v.newPet.weight.minValue">
+                        น้ำหนักสัตว์เลี้ยงต้องมากกว่า 0 กิโลกรัม
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -372,11 +388,19 @@
                     class="small"
                     @blur="$v.newPet.gender.$touch()"
                   >
-                    <vs-option label="เพศผู้" value="เพศผู้"> เพศผู้ </vs-option>
-                    <vs-option label="เพศเมีย" value="เพศเมีย"> เพศเมีย </vs-option>
-                    <vs-option label="ไม่ระบุ" value="ไม่ระบุ"> ไม่ระบุ </vs-option>
-                    <template v-if="$v.newPet.gender.$error" #message-danger> 
-                      <p v-if="!$v.newPet.gender.required">กรุณาเลือกเพศสัตว์เลี้ยง</p>
+                    <vs-option label="เพศผู้" value="เพศผู้">
+                      เพศผู้
+                    </vs-option>
+                    <vs-option label="เพศเมีย" value="เพศเมีย">
+                      เพศเมีย
+                    </vs-option>
+                    <vs-option label="ไม่ระบุ" value="ไม่ระบุ">
+                      ไม่ระบุ
+                    </vs-option>
+                    <template v-if="$v.newPet.gender.$error" #message-danger>
+                      <p v-if="!$v.newPet.gender.required">
+                        กรุณาเลือกเพศสัตว์เลี้ยง
+                      </p>
                     </template>
                   </vs-select>
                 </div>
@@ -392,12 +416,14 @@
                     label="อายุ(ปี)"
                     placeholder="ปี"
                     type="number"
-                    min=1 max=99
+                    min="1"
+                    max="99"
                     @blur="$v.newPet.age.year.$touch()"
                   >
-                    <template v-if="$v.newPet.age.year.$error" #message-danger> 
-                      <p v-if="!$v.newPet.age.year.minValue">อายุของ
-                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 ปีได้</p>
+                    <template v-if="$v.newPet.age.year.$error" #message-danger>
+                      <p v-if="!$v.newPet.age.year.minValue">
+                        อายุของ สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 ปีได้
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -410,14 +436,17 @@
                     label="(เดือน)"
                     placeholder="-"
                     type="number"
-                    min=1 max=11
+                    min="1"
+                    max="11"
                     @blur="$v.newPet.age.month.$touch()"
                   >
-                    <template v-if="$v.newPet.age.month.$error" #message-danger> 
-                      <p v-if="!$v.newPet.age.month.minValue">อายุขอ
-                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 เดือนได้</p>
-                        <p v-if="!$v.newPet.age.month.maxValue">อายุขอ
-                        สัตว์เลี้ยงไม่สามารถมากกว่า 11 เดือนได้</p>
+                    <template v-if="$v.newPet.age.month.$error" #message-danger>
+                      <p v-if="!$v.newPet.age.month.minValue">
+                        อายุขอ สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 เดือนได้
+                      </p>
+                      <p v-if="!$v.newPet.age.month.maxValue">
+                        อายุขอ สัตว์เลี้ยงไม่สามารถมากกว่า 11 เดือนได้
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -431,8 +460,12 @@
                     v-model="newPet.sterilization"
                     class="small"
                   >
-                    <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว" > ทำหมันแล้ว </vs-option>
-                    <vs-option label="ยังไม่เคยทำหมัน" value="ยังไม่เคยทำหมัน" > ยังไม่เคยทำหมัน </vs-option>
+                    <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว">
+                      ทำหมันแล้ว
+                    </vs-option>
+                    <vs-option label="ยังไม่เคยทำหมัน" value="ยังไม่เคยทำหมัน">
+                      ยังไม่เคยทำหมัน
+                    </vs-option>
                   </vs-select>
                 </div>
               </div>
@@ -454,7 +487,11 @@
               <div class="footer-dialog">
                 <vs-button
                   primary
-                  @click="active2 = !active2, handleAddPetForm(),AddNoti('bottom-right',1500,'#57c496')"
+                  @click="
+                    (active2 = !active2),
+                      handleAddPetForm(),
+                      AddNoti('bottom-right', 1500, '#57c496')
+                  "
                   class="BT3"
                   style="float: right; width: 80px"
                   :disabled="$v.newPet.$invalid"
@@ -479,14 +516,15 @@
               >
                 <div class="InputPop">
                   <vs-input
-                  state="success"
                     v-model="pet.name"
                     label="ชื่อสัตว์เลี้ยง"
                     :placeholder="this.pet.name"
-                     @blur="$v.pet.name.$touch()"
+                    @blur="$v.pet.name.$touch()"
                   >
-                    <template v-if="$v.pet.name.$error" #message-danger> 
-                      <p v-if="!$v.pet.name.required">กรุณากรอกชื่อสัตว์เลี้ยง</p>
+                    <template v-if="$v.pet.name.$error" #message-danger>
+                      <p v-if="!$v.pet.name.required">
+                        กรุณากรอกชื่อสัตว์เลี้ยง
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -499,19 +537,24 @@
               >
                 <div class="InputSL">
                   <vs-select
-                  state="success"
                     label="ประเภทสัตว์"
                     :placeholder="this.pet.type"
                     v-model="pet.type"
                     class="type"
                     @blur="$v.pet.type.$touch()"
                   >
-                    <vs-option :key="i"
+                    <vs-option
+                      :key="i"
                       v-for="(type, i) in petType"
-                      :value="type" :label="type"> {{ type }} 
+                      :value="type"
+                      :label="type"
+                    >
+                      {{ type }}
                     </vs-option>
-                    <template v-if="$v.pet.type.$error" #message-danger> 
-                      <p v-if="!$v.pet.type.required">กรุณาเลือกประเภทสัตว์เลี้ยง</p>
+                    <template v-if="$v.pet.type.$error" #message-danger>
+                      <p v-if="!$v.pet.type.required">
+                        กรุณาเลือกประเภทสัตว์เลี้ยง
+                      </p>
                     </template>
                   </vs-select>
                 </div>
@@ -523,16 +566,19 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                  state="success"
                     v-model="pet.weight"
                     label="น้ำหนัก"
                     :placeholder="this.pet.weight || '-'"
                     type="number"
                     @blur="$v.pet.weight.$touch()"
                   >
-                    <template v-if="$v.pet.weight.$error" #message-danger> 
-                      <p v-if="!$v.pet.weight.required">กรุณากรอกน้ำหนักสัตว์เลี้ยง</p>
-                      <p v-if="!$v.pet.weight.minValue">น้ำหนักสัตว์เลี้ยงต้องมากกว่า 0 กิโลกรัม</p>
+                    <template v-if="$v.pet.weight.$error" #message-danger>
+                      <p v-if="!$v.pet.weight.required">
+                        กรุณากรอกน้ำหนักสัตว์เลี้ยง
+                      </p>
+                      <p v-if="!$v.pet.weight.minValue">
+                        น้ำหนักสัตว์เลี้ยงต้องมากกว่า 0 กิโลกรัม
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -541,7 +587,6 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                  state="success"
                     v-model="pet.bloodType"
                     label="กรุ๊ปเลือด"
                     :placeholder="this.pet.bloodType"
@@ -552,7 +597,6 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                  state="success"
                     v-model="pet.breed"
                     label="สายพันธุ์"
                     :placeholder="this.pet.breed || '-'"
@@ -562,19 +606,26 @@
               <div class="space"></div>
               <div class="InputSL" w="2">
                 <div class="InputPop">
-                   <vs-select
-                   state="success"
+                  <vs-select
                     label="เพศ"
                     :placeholder="this.pet.gender"
                     v-model="pet.gender"
                     class="small"
                     @blur="$v.pet.gender.$touch()"
                   >
-                    <vs-option label="เพศผู้" value="เพศผู้"> เพศผู้ </vs-option>
-                    <vs-option label="เพศเมีย" value="เพศเมีย"> เพศเมีย </vs-option>
-                    <vs-option label="ไม่ระบุ" value="ไม่ระบุ"> ไม่ระบุ </vs-option>
-                    <template v-if="$v.pet.gender.$error" #message-danger> 
-                      <p v-if="!$v.pet.gender.required">กรุณาเลือกเพศสัตว์เลี้ยง</p>
+                    <vs-option label="เพศผู้" value="เพศผู้">
+                      เพศผู้
+                    </vs-option>
+                    <vs-option label="เพศเมีย" value="เพศเมีย">
+                      เพศเมีย
+                    </vs-option>
+                    <vs-option label="ไม่ระบุ" value="ไม่ระบุ">
+                      ไม่ระบุ
+                    </vs-option>
+                    <template v-if="$v.pet.gender.$error" #message-danger>
+                      <p v-if="!$v.pet.gender.required">
+                        กรุณาเลือกเพศสัตว์เลี้ยง
+                      </p>
                     </template>
                   </vs-select>
                 </div>
@@ -586,17 +637,18 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                  state="success"
                     v-model="pet.age.year"
                     label="อายุ (ปี)"
                     :placeholder="this.pet.age.year"
                     type="number"
-                    min=1 max=99
+                    min="1"
+                    max="99"
                     @blur="$v.pet.age.year.$touch()"
                   >
-                    <template v-if="$v.pet.age.year.$error" #message-danger> 
-                      <p v-if="!$v.pet.age.year.minValue">อายุขอ
-                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 ปีได้</p>
+                    <template v-if="$v.pet.age.year.$error" #message-danger>
+                      <p v-if="!$v.pet.age.year.minValue">
+                        อายุขอ สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 ปีได้
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -605,19 +657,21 @@
               <vs-col class="InputSM" w="2">
                 <div class="InputPop">
                   <vs-input
-                  state="success"
                     v-model="pet.age.month"
                     label="อายุ (เดือน)"
                     :placeholder="this.pet.age.month"
                     type="number"
-                    min=1 max=11
+                    min="1"
+                    max="11"
                     @blur="$v.pet.age.month.$touch()"
                   >
-                    <template v-if="$v.pet.age.month.$error" #message-danger> 
-                      <p v-if="!$v.pet.age.month.minValue">อายุขอ
-                        สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 เดือนได้</p>
-                      <p v-if="!$v.pet.age.month.maxValue">อายุขอ
-                        สัตว์เลี้ยงไม่สามารถมากกว่า 11 เดือนได้</p>
+                    <template v-if="$v.pet.age.month.$error" #message-danger>
+                      <p v-if="!$v.pet.age.month.minValue">
+                        อายุขอ สัตว์เลี้ยงไม่สามารถน้อยกว่า 0 เดือนได้
+                      </p>
+                      <p v-if="!$v.pet.age.month.maxValue">
+                        อายุขอ สัตว์เลี้ยงไม่สามารถมากกว่า 11 เดือนได้
+                      </p>
                     </template>
                   </vs-input>
                 </div>
@@ -625,15 +679,18 @@
               <div class="space"></div>
               <div class="InputSL" w="2">
                 <div class="InputPop">
-                   <vs-select
-                   state="success"
+                  <vs-select
                     label="ทำหมัน"
                     :placeholder="this.pet.sterilization"
                     v-model="pet.sterilization"
                     class="small"
                   >
-                    <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว" > ทำหมันแล้ว </vs-option>
-                    <vs-option label="ยังไม่เคยทำหมัน" value="ยังไม่เคยทำหมัน" > ยังไม่เคยทำหมัน </vs-option>
+                    <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว">
+                      ทำหมันแล้ว
+                    </vs-option>
+                    <vs-option label="ยังไม่เคยทำหมัน" value="ยังไม่เคยทำหมัน">
+                      ยังไม่เคยทำหมัน
+                    </vs-option>
                   </vs-select>
                 </div>
               </div>
@@ -643,7 +700,6 @@
               <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
                 <div class="InputPop">
                   <vs-input
-                  state="success"
                     v-model="pet.detail"
                     label="รายละเอียด"
                     :placeholder="this.pet.detail"
@@ -656,7 +712,7 @@
               <div class="footer-dialog">
                 <vs-button
                   color="#ca7676"
-                  @click="deleteCF=!deleteCF"
+                  @click="deleteCF = !deleteCF"
                   class="BT1"
                   style="float: right; width: 80px"
                 >
@@ -668,7 +724,11 @@
                 </vs-button>
                 <vs-button
                   color="#d78461"
-                  @click="(active3 = !active3), updatePetById(pet),EditNoti('bottom-right',1500,'#da9952')"
+                  @click="
+                    (active3 = !active3),
+                      updatePetById(pet),
+                      EditNoti('bottom-right', 1500, '#da9952')
+                  "
                   class="BT"
                   style="float: right; width: 80px"
                   :disabled="$v.pet.$invalid"
@@ -685,28 +745,32 @@
           </vs-dialog>
 
           <vs-dialog width="550px" v-model="deleteCF">
-        <template #header>
-          <font class="font">
-            ยืนยัน <b>การลบข้อมูลสัตว์เลี้ยง</b>
-          </font>
-        </template>
+            <template #header>
+              <font class="font"> ยืนยัน <b>การลบข้อมูลสัตว์เลี้ยง</b> </font>
+            </template>
 
-        <div class="con-content">
-            <br><br><br><br>
-        </div>
+            <div class="con-content"><br /><br /><br /><br /></div>
 
-        <template #footer>
-          <div class="footer">
-            <vs-button dark class="CF2" @click="deleteCF=!deleteCF">
-              ยกเลิก
-            </vs-button>
-            <vs-button color="#ca7676" class="CF1" @click="(active3 = !active3),(deleteCF=!deleteCF),deletePetById(pet),DeleteNoti('bottom-right',1500,'#c65151')">
-              ยืนยัน
-            </vs-button>
-          </div>
-        </template>
-
-      </vs-dialog>
+            <template #footer>
+              <div class="footer">
+                <vs-button dark class="CF2" @click="deleteCF = !deleteCF">
+                  ยกเลิก
+                </vs-button>
+                <vs-button
+                  color="#ca7676"
+                  class="CF1"
+                  @click="
+                    (active3 = !active3),
+                      (deleteCF = !deleteCF),
+                      deletePetById(pet),
+                      DeleteNoti('bottom-right', 1500, '#c65151')
+                  "
+                >
+                  ยืนยัน
+                </vs-button>
+              </div>
+            </template>
+          </vs-dialog>
         </div>
       </div>
     </div>
@@ -716,7 +780,14 @@
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
-import { required, numeric, minLength, maxLength, minValue, maxValue} from 'vuelidate/lib/validators';
+import {
+  required,
+  numeric,
+  minLength,
+  maxLength,
+  minValue,
+  maxValue,
+} from "vuelidate/lib/validators";
 
 export default {
   name: "Profile",
@@ -735,10 +806,9 @@ export default {
     active2: false,
     active3: false,
     deleteCF: false,
-    value: '',
-    baseurl: 'http://localhost:4000/api/',
-    user: [
-    ],
+    value: "",
+    baseurl: "http://localhost:4000/api/",
+    user: [],
     client: {
       firstName: "",
       lastName: "",
@@ -752,54 +822,53 @@ export default {
         postalCode: "",
         detail: "",
       },
-      avatar: ''
+      avatar: "",
     },
-    petType:['สุนัข', 'แมว', 'นก', 'อื่นๆ'],
+    petType: ["สุนัข", "แมว", "นก", "อื่นๆ"],
     pets: [],
     newPet: {
-      name: '',
-      type: '',
-      breed: '',
-      gender: '',
-      bloodType: '',
-      weight: '',
-      dob: '',
+      name: "",
+      type: "",
+      breed: "",
+      gender: "",
+      bloodType: "",
+      weight: "",
+      dob: "",
       age: {
-        year: '',
-        month: '',
+        year: "",
+        month: "",
       },
-      sterilization: '',
-      ownerId: '',
-      detail: ''
+      sterilization: "",
+      ownerId: "",
+      detail: "",
     },
     pet: {
-      name: '',
-      type: '',
-      breed: '',
-      gender: '',
-      bloodType: '',
-      weight: '',
-      dob: '',
+      name: "",
+      type: "",
+      breed: "",
+      gender: "",
+      bloodType: "",
+      weight: "",
+      dob: "",
       age: {
-        year: '',
-        month: ''
+        year: "",
+        month: "",
       },
-      sterilization: '',
-      ownerId: '',
-      detail: '',
-      avatar: ''
-    }
-    
+      sterilization: "",
+      ownerId: "",
+      detail: "",
+      avatar: "",
+    },
   }),
-   validations: {
-    client:{
-      firstName:{
-        required
+  validations: {
+    client: {
+      firstName: {
+        required,
       },
-      lastName:{
-        required
+      lastName: {
+        required,
       },
-      contact:{
+      contact: {
         required,
         numeric,
         minLengthValue: minLength(10),
@@ -811,16 +880,16 @@ export default {
       type: { required },
       gender: { required },
       bloodType: { required },
-      weight: { 
+      weight: {
         required,
-        minValue: minValue(0)
+        minValue: minValue(0),
       },
       age: {
         year: { minValue: minValue(0) },
-        month: { 
+        month: {
           minValue: minValue(0),
           maxValue: maxValue(11),
-         }
+        },
       },
     },
     pet: {
@@ -829,59 +898,55 @@ export default {
       // breed: { required },
       gender: { required },
       bloodType: { required },
-      weight: { 
+      weight: {
         required,
-        minValue: minValue(0)
+        minValue: minValue(0),
       },
       age: {
         year: { minValue: minValue(0) },
-        month: { 
+        month: {
           minValue: minValue(0),
           maxValue: maxValue(11),
-         }
+        },
       },
     },
-
-    
   },
   created() {
     this.getClientById();
-
   },
   methods: {
-    AddNoti(position = null ,duration ,color) {
-          this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'เพิ่มข้อมูลสำเร็จ',
-            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    EditNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'แก้ไขข้อมูลสำเร็จ',
-            text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    DeleteNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'ลบข้อมูลสำเร็จ',
-            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
+    AddNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "เพิ่มข้อมูลสำเร็จ",
+        text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    EditNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "แก้ไขข้อมูลสำเร็จ",
+        text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    DeleteNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "ลบข้อมูลสำเร็จ",
+        text: `ลบรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
     getClientById() {
       let baseURL = "http://localhost:4000/api/clients/";
       axios
         .get(baseURL + this.client_id)
         .then((res) => {
-
           this.client = res.data.client;
 
           axios
@@ -933,7 +998,7 @@ export default {
           bloodType: pet.bloodType,
           age: {
             year: pet.age.year,
-            month: pet.age.month
+            month: pet.age.month,
           },
           sterilization: pet.sterilization,
           detail: pet.detail,
@@ -941,17 +1006,16 @@ export default {
         .then((res) => {
           console.log(res.data.message);
 
-           axios
-          .get(baseURL + 'client/' + this.client_id)
-          .then((res) => {
-            this.pets = res.data.pet;
-            console.log(res.data.message);
-            console.log(this.pet)
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-          
+          axios
+            .get(baseURL + "client/" + this.client_id)
+            .then((res) => {
+              this.pets = res.data.pet;
+              console.log(res.data.message);
+              console.log(this.pet);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
         .catch((error) => {
           console.log(error);
@@ -972,59 +1036,59 @@ export default {
         });
     },
 
-    handleAddPetForm(){
+    handleAddPetForm() {
       this.newPet.ownerId = this.client_id;
-      
-      let baseURL = "http://localhost:4000/api/pets/";
-      axios.post(baseURL, this.newPet).then((res) => {
-        this.getClientById();
-        console.log(res.data.message)
-        this.newPet = {
-          name: '',
-          type: '',
-          breed: '',
-          gender: '',
-          bloodType: '',
-          weight: '',
-          dob: '',
-          age: {
-            year: '',
-            month: '',
-          },
-          sterilization: '',
-          ownerId: '',
-          detail: ''
-        }
 
-      }).catch((error) => {
+      let baseURL = "http://localhost:4000/api/pets/";
+      axios
+        .post(baseURL, this.newPet)
+        .then((res) => {
+          this.getClientById();
+          console.log(res.data.message);
+          this.newPet = {
+            name: "",
+            type: "",
+            breed: "",
+            gender: "",
+            bloodType: "",
+            weight: "",
+            dob: "",
+            age: {
+              year: "",
+              month: "",
+            },
+            sterilization: "",
+            ownerId: "",
+            detail: "",
+          };
+        })
+        .catch((error) => {
           console.log(error.response.data);
-      });
+        });
     },
 
-    getPetById(pet){
+    getPetById(pet) {
       let baseURL = "http://localhost:4000/api/pets/";
       axios
         .get(baseURL + pet._id)
         .then((res) => {
           this.pet = res.data.pet;
           console.log(res.data.message);
-          console.log(this.pet)
+          console.log(this.pet);
         })
         .catch((error) => {
           console.log(error);
         });
-      console.log(pet._id)
-    }
+      console.log(pet._id);
+    },
   },
 
-  computed: {
-  
-  },
+  computed: {},
 };
 </script>
 
 <style scoped>
-@import url('../assets/css/style.css');
+@import url("../assets/css/style.css");
 ::v-deep .vs-avatar {
   filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.1));
 }
@@ -1127,11 +1191,11 @@ export default {
 ::v-deep .vs-select--state-success .vs-select__input {
   background: rgba(var(--vs-success), 0.1) !important;
 }
-::v-deep .vs-input__message p{
+::v-deep .vs-input__message p {
   margin: 0px;
   padding-left: 10px;
 }
-::v-deep .vs-select__message p{
+::v-deep .vs-select__message p {
   margin: 0px;
 }
 </style>
