@@ -33,15 +33,16 @@
               <div class="line-or"></div>
             </div>
 
-            <div class="input-login" style="margin-top: 15px">
-              <div class="button-google google-color">
-                  <div class="bg-google">
-                     <img src="../assets/google.png" alt="Animo" class="pic-google" />
-                  </div>
-                <h3 class="text-google">เข้าสู่ระบบด้วย Google</h3>
-              </div>
-            </div><br><br>
-
+            <a href="http://localhost:4000/api/auth/google">
+              <div class="input-login" style="margin-top: 15px">
+                <div class="button-google google-color">
+                    <div class="bg-google">
+                      <img src="../assets/google.png" alt="Animo" class="pic-google" />
+                    </div>
+                  <h3 class="text-google">เข้าสู่ระบบด้วย Google</h3>
+                </div>
+              </div><br><br>
+            </a>
           </div>
         </div>
       </div>
@@ -84,6 +85,12 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+
+a {
+  color: inherit; /* blue colors for links too */
+  text-decoration: inherit; /* no underline */
+}
+
 .button-google {
   color: #ffffff;
   padding: 8px;

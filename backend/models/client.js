@@ -9,7 +9,7 @@ const Pet = require('./pet');
 const schema = new Schema({
   firstName: { type: String, required: true, trim: true, index: true },
   lastName: { type: String, required: true, trim: true },
-  contact: { type: String, required: true, trim: true },
+  contact: { type: String, trim: true },
   email: { type: String, trim: true },
   address: {
     province: { type: String, trim: true },
@@ -20,6 +20,7 @@ const schema = new Schema({
   },
   role: { type: String, default: 'client' },
   avatar: { type: String, default: 'uploads/nopic.jpeg' },
+  googleId: { type: String },
   uid: { type: String, default: '0000000000' },
 
   // foreign key

@@ -1,34 +1,55 @@
-const User = require('../models/user');
+const config = require('../config/index');
+
+// const User = require('../models/user');
+const User = require('../models/client');
 const bcrypt = require('bcryptjs');
-const passport = require('passport') , 
-LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 module.exports = (passport) => {
-    passport.use(new LocalStrategy({ 
-      usernameField: 'email' },
-      (email, password, done) => {
-        User.findOne({ email: email }, (err, user) => {
-            if (err) throw err;
+    passport.use(new GoogleStrategy({
+        clientID: config.GOOGLE_CLIENT_ID,
+        clientSecret: config.GOOGLE_CLIENT_SECRET,
+        callbackURL: "/api/auth/google/callback"
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        //   return cb(err, user);
+        // });
+        console.log(profile)
 
-            if (!user) {
-                console.log('user does not exist')
-                return done(null, false, { message: "User Doesn't Exist !" });
+        const newUser = {
+            googleId: profile.id,
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
+            email: profile.email,
+            role: 'client',
+            avatar: profile.photos[0].value,
+            uid: new Date().getTime().toString()
+        }
+
+        try {
+            let user = await User.findOne({ googleId: profile.id })
+            if(user){
+
+                done(null, user)
+            } else{
+                user = await User.create(newUser),
+                done(null, user)
             }
+        } catch (error) {
+            console.error(error)
+        }
+   
+      }
+    ));
 
-            if (bcrypt.compareSync(password, user.password)) {
-                return done(null, user);
-              }
-            return done(null, false);
-        })
-    }));
-
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser((user, done) => {
         done(null, user._id);
     });
 
-    passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
-            done(err, user);
-        });
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => done(err, user));
     });
 }

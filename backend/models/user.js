@@ -8,6 +8,8 @@ const userSchema = new Schema({
 
   profile: { type: Schema.Types.ObjectId, required: true, refPath: 'onModel' },
 
+  googleId: { type: String },
+
   onModel: {
     type: String,
     required: true,
