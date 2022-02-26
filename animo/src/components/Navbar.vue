@@ -5,7 +5,7 @@
             <li><h1 class="LogoText">ANIMO</h1></li>
             <li><router-link to="/">เกี่ยวกับเรา</router-link></li>
             <li><router-link to="/contact">สมาชิกในทีม</router-link></li>
-            <li class=login>
+            <li v-if="isLogin()" class=login>
                 <vs-button
                     class="Logtx"
                     border
@@ -13,6 +13,15 @@
                     @click="active1=!active1"
                 ><font-awesome-icon class="icon" icon="power-off"/>
                 ออกจากระบบ
+              </vs-button></li>
+            <li v-else @click="goToLogin()" class=login>
+                <vs-button
+                    class="Logtx"
+                    border
+                    color="#d4e9e7"
+                    @click="active1=!active1"
+                ><font-awesome-icon class="icon" icon="power-off"/>
+                เข้าสู่ระบบ
               </vs-button></li>
           </ul>
 
@@ -50,13 +59,20 @@ export default {
   props: {
   },
   data:() => ({
-        active1: false,
-    }),
+    active1: false,
+  }),
   methods:{
+    goToLogin(){
+      this.$router.push({name: 'Login'});
+    },
     logout(){
       localStorage.removeItem("jwt");
-      this.$router.replace('/login')
-    }
+      this.$router.push({name: 'Introduction'});
+    },
+    isLogin(){
+      return (localStorage.getItem("jwt") ? true : false)
+    },
+
   }
 }
 

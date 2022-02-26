@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import jwt_decode from "jwt-decode";
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,6 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue'),
     meta: {
-      public: true,
       disableIfLoggedIn: true
     }
   },
@@ -76,17 +76,29 @@ const routes = [
   {
     path: '/Admin/addpet',
     name: 'AddPet',
-    component: () => import('../views/AddPet.vue')
+    beforeEnter: roleAdmin,
+    component: () => import('../views/AddPet.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/Admin/addvaccine',
     name: 'AddVaccine',
-    component: () => import('../views/AddVaccine.vue')
+    beforeEnter: roleAdmin,
+    component: () => import('../views/AddVaccine.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/Admin/addtreatment',
     name: 'AddTreatment',
-    component: () => import('../views/AddTreatment.vue')
+    beforeEnter: roleAdmin,
+    component: () => import('../views/AddTreatment.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/profile/:client_id',
@@ -103,17 +115,38 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth)) {
+  if (to.matched.some(record => record.meta.requiresAuth)) { //ดึงค่า requireAuthen ที่เราใส่ไว้ใน meta ของแต่ละ route
     if (localStorage.getItem("jwt") == null) {
       next({
-        path: "/login"
+        name: "Login" //ยังไม่มี token -> ไป login
       });
     } else {
-      next();
+      next(); //มี token แล้ว -> ไป login
     }
   } else {
+    if(to.name === 'Login' && localStorage.getItem("jwt")){
+      return next({path: 'Clients'})
+    }
     next();
   }
 });
+
+function roleAdmin(to, from, next){
+  const token = localStorage.getItem('jwt');
+  console.log(`token: ${token}`)
+  const decoded = jwt_decode(token);
+  console.log('jwt decoded:'+JSON.stringify(decoded));
+
+  if(localStorage.getItem('jwt') && decoded.role==='admin'){
+    console.log('ดีจ้า admin');
+    next();
+  }
+  else{
+    console.log('แกไม่ใช่ admin');
+    next({name: 'Clients'});
+    // localStorage.removeItem("jwt");
+  }
+}
+
 
 export default router

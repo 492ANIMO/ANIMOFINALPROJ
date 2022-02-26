@@ -5,7 +5,7 @@
             <li><h1 class="LogoText">ANIMO</h1></li>
             <li><router-link to="/">เกี่ยวกับเรา</router-link></li>
             <li><router-link to="/contact">สมาชิกในทีม</router-link></li>
-            <li class=login>
+            <li v-if="isLogin()" class=login>
                 <vs-button
                     class="Logtx"
                     border
@@ -55,7 +55,10 @@ export default {
   methods:{
     logout(){
       localStorage.removeItem("jwt");
-      this.$router.replace('/login')
+      this.$router.push({name: 'Introduction'});
+    },
+    isLogin(){
+      return (localStorage.getItem("jwt") ? true : false)
     }
   }
 }

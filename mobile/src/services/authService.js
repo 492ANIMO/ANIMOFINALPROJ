@@ -6,7 +6,7 @@ export const login = (email, password) => {
     axios.post(baseUrl, {email, password}).then((res) => {
       let token = res.data.access_token;
       localStorage.setItem("jwt", token);
-      console.log(res.data.access_token);
+      console.log('res.data: '+res.data.access_token);
   
       if(res.data.access_token){
         Router.push({name:'Mypet'})
