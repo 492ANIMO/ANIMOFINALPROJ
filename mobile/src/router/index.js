@@ -20,8 +20,54 @@ function guardMyRoute(to, from, next){
   }
  
 }
+function setToken(to, from, next){
+  // var isAuthenticated= false;
+  // if(localStorage.getItem('jwt')){
+  //   isAuthenticated = true;
+  // }
+  // else{
+  //   isAuthenticated= false;
+  // }
+
+  // if(isAuthenticated){
+  //  next(); // allow to enter route
+  // } 
+  // else {
+  //  next('/'); // go to '/login';
+  // }
+
+
+  const queryString = window.location.search;
+  console.log(queryString)
+  const urlParams = new URLSearchParams(queryString);
+  const token = urlParams.get('token');
+  console.log(`token: ${token}`)
+
+  var isAuthenticated = false;
+  localStorage.setItem('jwt', token)
+ 
+  if(localStorage.getItem('jwt')){
+    isAuthenticated = true;
+  }
+  else{
+    isAuthenticated= false;
+  }
+
+  if(isAuthenticated){
+   next(); // allow to enter route
+  } 
+  else {
+   next('/'); // go to '/login';
+  }
+}
 
 const routes = [
+  {
+    path: '/mobile/google-auth',
+    name: 'Mypet',
+    beforeEnter : setToken,
+    component: () => import('../views/Mypet.vue')
+  },
   {
     path: '/mobile/mypet',
     name: 'Mypet',

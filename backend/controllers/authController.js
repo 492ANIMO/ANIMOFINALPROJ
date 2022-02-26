@@ -119,7 +119,9 @@ exports.googleAuth = async (req, res, next) => {
   const expires_in = jwt.decode(token);
 
     // res.redirect('http://localhost:8080/');
-    res.redirect('http://localhost:8080/mobile/mypet/?token=' + token);
+    console.log(` access_token: ${token}`)
+    res.redirect('http://localhost:8080/mobile/google-auth/?token=' + token);
+    
     // return res.status(200).json({
     //   access_token: token,
     //   expires_in: expires_in.exp,
