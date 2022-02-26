@@ -8,17 +8,16 @@ function guardMyRoute(to, from, next){
   var isAuthenticated= false;
 
   // decode jwt token 
-  // const token = localStorage.getItem('jwt'); //jwt
-  // const decoded = jwt_decode(token);
-  // console.log('jwt decoded:'+JSON.stringify(decoded));
+  const token = localStorage.getItem('jwt'); //jwt
+  const decoded = jwt_decode(token);
+  console.log('jwt decoded:'+JSON.stringify(decoded));
 
-  if(localStorage.getItem('jwt')){
-    console.log('guardRoute: authenticated')
+  if(localStorage.getItem('jwt') && decoded.role==='client'){
     isAuthenticated = true;
   }
   else{
-    console.log('guardRoute: not authenticated')
     isAuthenticated= false;
+    localStorage.removeItem("jwt");
   }
 
   if(isAuthenticated){
