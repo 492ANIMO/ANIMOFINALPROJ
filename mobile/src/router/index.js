@@ -1,14 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import jwt_decode from "jwt-decode";
 
 Vue.use(VueRouter)
 
 function guardMyRoute(to, from, next){
   var isAuthenticated= false;
+
+  // decode jwt token 
+  // const token = localStorage.getItem('jwt'); //jwt
+  // const decoded = jwt_decode(token);
+  // console.log('jwt decoded:'+JSON.stringify(decoded));
+
   if(localStorage.getItem('jwt')){
+    console.log('guardRoute: authenticated')
     isAuthenticated = true;
   }
   else{
+    console.log('guardRoute: not authenticated')
     isAuthenticated= false;
   }
 
@@ -24,9 +33,12 @@ function setToken(to, from, next){
   const queryString = window.location.search;
   console.log(queryString)
   const urlParams = new URLSearchParams(queryString);
-  const token = urlParams.get('token');
+  const token = urlParams.get('token'); //jwt
   console.log(`token: ${token}`)
 
+  const decoded = jwt_decode(token);
+  console.log('jwt decoded:'+JSON.stringify(decoded));
+   
   var isAuthenticated = false;
   localStorage.setItem('jwt', token)
  
@@ -48,7 +60,7 @@ function setToken(to, from, next){
 const routes = [
   {
     path: '/mobile/google-auth',
-    name: 'Mypet',
+    name: 'Mypet2',
     beforeEnter : setToken,
     component: () => import('../views/Mypet.vue')
   },
