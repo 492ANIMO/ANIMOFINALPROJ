@@ -271,6 +271,7 @@ exports.confirm = async (req, res, next) => {
 
     console.log("Updated Appointment : ", appointment);
 
+
     const confirmedAppointment = await Appointment.findById(id).populate({ 
       path: 'pet',
       populate: {
@@ -295,8 +296,11 @@ exports.confirm = async (req, res, next) => {
     }
 
     res.status(200).json({
-      message: 'เพิ่มประวัติการรักษาสำเร็จ',
-      data: history
+      message: 'ยืนยันการรักษาและเพิ่มประวัติการรักษาสำเร็จ',
+      data: {
+        appointment,
+        history
+      }
     });
 
   } catch (error) {
