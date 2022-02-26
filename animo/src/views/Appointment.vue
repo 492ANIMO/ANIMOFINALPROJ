@@ -275,8 +275,8 @@
 
         <vs-row>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputSL">
-              <vs-select
+            <div class="InputPop">
+              <vs-input
                 filter
                 label="ชื่อเจ้าของสัตว์เลี้ยง"
                 :placeholder="currentAppointment.pet.owner.firstName"
@@ -284,21 +284,18 @@
                 class="type"
                 disabled
               >
-              </vs-select>
+              </vs-input>
             </div>
           </vs-col>
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
-            <div class="InputSL">
-              <vs-select
+            <div class="InputPop">
+              <vs-input
                 label="ชื่อสัตว์เลี้ยง"
                 :placeholder="currentAppointment.pet.name"
                 v-model="value"
-                class="type"
                 disabled
               >
-                <vs-option label="Bento" value="Bento"> Bento </vs-option>
-                <vs-option label="Oreo" value="Oreo"> Oreo </vs-option>
-              </vs-select>
+              </vs-input>
             </div>
           </vs-col>
         </vs-row>
@@ -373,20 +370,33 @@
             </div>
           </vs-col>
         </vs-row>
-        <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
-            <div class="InputPop">
-              <vs-input
-                v-model="currentAppointment.detail"
-                label="รายละเอียด"
-                placeholder="รายละเอียด"
-              ></vs-input>
-            </div>
+          <vs-col w="12">
+            <h4 class="HeadInput">วัคซีนพิษสุนัขบ้า ( 1234567XAB )</h4>
+            <textarea class="TArea" label="รายละเอียดวัคซีน" placeholder="รายละเอียด">
+              ใส่ข้อมูลลลลลล
+            </textarea>
           </vs-col>
         </vs-row>
-        <div class="space"></div>
+
+        <vs-row>
+          <vs-col w="12">
+            <h4 class="HeadInput">ทำหมัน</h4>
+            <textarea class="TArea" label="รายละเอียดการรักษา" placeholder="รายละเอียด">
+              ใส่ข้อมูลลลลลล
+            </textarea>
+          </vs-col>
+        </vs-row>
+
+        <vs-row>
+          <vs-col w="12">
+            <h4 class="HeadInput">ตรวจสุขภาพฟัน</h4>
+            <textarea class="TArea" label="รายละเอียดการตรวจสุขภาพ" placeholder="รายละเอียด">
+              ใส่ข้อมูลลลลลล
+            </textarea>
+          </vs-col>
+        </vs-row>
 
         <template #footer>
           <div class="footer-dialog">
@@ -741,6 +751,14 @@ h3 {
   font-weight: 500;
   margin-left: 30px;
 }
+::v-deep .vs-select-content [disabled] {
+    opacity: 0.8;
+}
+::v-deep [disabled] {
+    opacity: 0.7;
+    color: rgb(27, 111, 136);
+    font-weight: 500;
+}
 .list {
   color: #adadad;
   margin: 5px;
@@ -799,6 +817,35 @@ h3 {
   margin-top: -3px;
   margin-left: 10px;
   display: block;
+}
+.HeadInput {
+  font-size: 14.25px;
+  color: #696969;
+  font-weight: 400;
+  margin: 0px;
+  margin-top: 8px;
+  margin-bottom: 2px;
+}
+.TArea {
+  margin-left: 10px;
+  width: 680px;
+  background: #f4f7f8;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  color: #696969;
+  font-family: kanit;
+  resize: none;
+  transition: 0.3s all;
+}
+.TArea:focus-visible {
+  outline: none;
+  padding-left: 17px;
+  background: #f0f3f4;
+}
+.TArea::placeholder {
+  color: #afb7be;
+  font-size: 13px;
 }
 ::v-deep .InputLast .vs-input-content {
   max-width: 170px;
