@@ -55,7 +55,7 @@ export default {
   methods:{
     logout(){
       localStorage.removeItem("jwt");
-      this.$router.replace('/login')
+      this.$router.push({name: 'Introduction'});
     },
     isLogin(){
       return (localStorage.getItem("jwt") ? true : false)
