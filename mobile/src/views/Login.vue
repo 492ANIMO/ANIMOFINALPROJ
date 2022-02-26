@@ -48,7 +48,7 @@
       </div>
     </div>
 
-    <div class="footer-button">
+    <div @click="goToRegister()" class="footer-button">
         <h4 class="register-h4">ยังไม่มีบัญชีใช่ไหม? ลงทะเบียนเลย!</h4>
       <div class="button-register">
         <h4>ลงทะเบียนผู้ใช้</h4>
@@ -71,7 +71,10 @@ export default {
   },
   components: {},
   methods: {
-    login //from auth service
+    login, //from auth service
+    goToRegister() {
+      this.$router.push('/mobile/register'); 
+    },
   },
   computed:{
 
