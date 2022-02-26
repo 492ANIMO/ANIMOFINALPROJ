@@ -20,7 +20,6 @@ const schema = new Schema({
   },
   role: { type: String, default: 'client' },
   avatar: { type: String, default: 'uploads/nopic.jpeg' },
-  googleId: { type: String },
   uid: { type: String, default: '0000000000' },
 
   // foreign key

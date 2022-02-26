@@ -18,25 +18,9 @@ function guardMyRoute(to, from, next){
   else {
    next('/'); // go to '/login';
   }
- 
 }
+
 function setToken(to, from, next){
-  // var isAuthenticated= false;
-  // if(localStorage.getItem('jwt')){
-  //   isAuthenticated = true;
-  // }
-  // else{
-  //   isAuthenticated= false;
-  // }
-
-  // if(isAuthenticated){
-  //  next(); // allow to enter route
-  // } 
-  // else {
-  //  next('/'); // go to '/login';
-  // }
-
-
   const queryString = window.location.search;
   console.log(queryString)
   const urlParams = new URLSearchParams(queryString);

@@ -1,7 +1,8 @@
 const config = require('../config/index');
 
 // const User = require('../models/user');
-const User = require('../models/client');
+const User = require('../models/user');
+const Client = require('../models/client');
 const bcrypt = require('bcryptjs');
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -19,23 +20,37 @@ module.exports = (passport) => {
         // });
         console.log(profile)
 
-        const newUser = {
-            googleId: profile.id,
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            email: profile.email,
-            role: 'client',
-            avatar: profile.photos[0].value,
-            uid: new Date().getTime().toString()
-        }
-
         try {
             let user = await User.findOne({ googleId: profile.id })
-            if(user){
-
+            if(user){ //user exist
                 done(null, user)
             } else{
-                user = await User.create(newUser),
+                const newProfile = await Client.create({
+                    firstName: profile.name.givenName,
+                    lastName: profile.name.familyName,
+                    email: profile.emails[0].value,
+                    role: 'client',
+                    avatar: profile.photos[0].value,
+                    uid: new Date().getTime().toString(),
+                    address: {
+                        province: '',
+                        district: '',
+                        subdistrict: '',
+                        postalCode: '',
+                        detail: '',
+                    },
+                    contact: ''
+                });
+
+                const newUser = {
+                    googleId: profile.id,
+                    email: profile.emails[0].value,
+                    role: 'client',
+                    onModel: 'Client',
+                    avatar: profile.photos[0].value,
+                    profile: newProfile._id
+                }
+                user = await User.create(newUser)
                 done(null, user)
             }
         } catch (error) {
