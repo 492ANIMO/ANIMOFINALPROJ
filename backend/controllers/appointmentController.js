@@ -174,7 +174,6 @@ exports.showByPet = async (req, res, next) => {
     const {petId} = req.params;
 
     const appointment = await Appointment.find({'pet': petId})
-  
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     res.status(200).json({
@@ -192,9 +191,9 @@ exports.showByOwner = async (req, res, next) => {
   try {
     const {clientId} = req.params;
 
-    const pet = await Pet.find().where('owner').in(clientId).exec();
+    const pets = await Pet.find().where('owner').in(clientId).exec();
     console.log(pet)
-    const appointment = await Appointment.find().where('pet').in(pet).populate('pet').exec();
+    const appointment = await Appointment.find().where('pet').in(pets).populate('pet').exec();
     // get appointment by pet id
     res.status(200).json({
       message: 'สำเร็จ',
@@ -210,19 +209,19 @@ exports.showByOwner = async (req, res, next) => {
 exports.showMyAppointment = async (req, res, next) => {
   try {
     const user = req.user;
-    console.log(user);
+    console.log('user: '+user);
     
     // const {clientId} = req.params;
     const clientId = user.profile;
-    console.log(clientId);
+    console.log('clientId: '+clientId);
 
     const pet = await Pet.find().where('owner').in(clientId).exec();
-    console.log(pet)
+    console.log('pet: '+pet)
     let appointment = await Appointment.find({status:'ไปตามเวลานัด'}).where('pet').in(pet).populate('pet').exec();
     const reservation = await Reservation.find({status: 'รอยืนยัน'}).where('owner').in(clientId).populate('pet').exec();
     console.log(`reservation: ${reservation}`)
 
-    appointment.push(...reservation);
+    appointment.push(...reservation); //spread operator
     console.log(`appointment+reservation: ${appointment}`)
 
     // get appointment by pet id
@@ -241,24 +240,36 @@ exports.showMyAppointment = async (req, res, next) => {
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { detail } = req.body;
+    const { detail, medical } = req.body;
+
+    const query = await Appointment.findById(id).populate({ 
+      path: 'pet',
+      model: 'Pet',
+      populate: {
+       path: 'owner',
+       model: 'Client',
+       select: '-createdAt -updatedAt -__v',
+     },
+     select: '-createdAt -updatedAt -__v', 
+    })
+
+    const petDetail = await Pet.findById(query.pet);
+
+    console.log('petDetail: '+ petDetail)
 
     // update appointment detail and status
     const appointment = await Appointment.findByIdAndUpdate(id ,{
       detail,
-      status: 'รักษาเสร็จสิ้น'
+      medical,
+      status: 'รักษาเสร็จสิ้น',
+      petDetail
     });
-    
     if (!appointment){
       console.log(appointment);
       throw new Error('ไม่สามารถยืนยันการรักษาได้')
     }
 
     console.log("Updated Appointment : ", appointment);
-    res.status(200).json({
-      message: 'ยืนยันการรักษาสำเร็จ',
-      data: appointment
-    });
 
     const confirmedAppointment = await Appointment.findById(id).populate({ 
       path: 'pet',
@@ -287,7 +298,6 @@ exports.confirm = async (req, res, next) => {
       message: 'เพิ่มประวัติการรักษาสำเร็จ',
       data: history
     });
-    // if(appointment.modifiedCount===0){ throw new Error('เพิ่มประวัติการรักษาไม่สำเร็จ'); }
 
   } catch (error) {
     next(error);
@@ -304,9 +314,9 @@ exports.succeedAppointment = async (req, res, next) => {
     const clientId = user.profile;
     console.log(clientId);
 
-    const pet = await Pet.find().where('owner').in(clientId).exec();
-    console.log(pet)
-    const appointment = await Appointment.find({'status': 'รักษาเสร็จสิ้น'}).where('pet').in(pet).populate('pet').exec();
+    const pets = await Pet.find().where('owner').in(clientId).exec();
+    console.log('pets: '+pets)
+    const appointment = await Appointment.find({'status': 'รักษาเสร็จสิ้น'}).where('pet').in(pets).populate('pet').exec();
   
     // get appointment by pet id
     res.status(200).json({

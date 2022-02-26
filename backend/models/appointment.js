@@ -31,9 +31,11 @@ const schema = new Schema({
       medDetail: { type: String }
     }]
   },
-  appId:{ type: String }
+  appId:{ type: String },
+  petDetail: Pet.schema
   
 },{
+  strict: false,
   timestamps: true, 
   collection: 'appointments'
 });
