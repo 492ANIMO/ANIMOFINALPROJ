@@ -103,3 +103,33 @@ exports.loginClient = async (req, res, next) => {
   }
 }
 
+// login google
+exports.googleAuth = async (req, res, next) => {
+  try {
+
+  console.log('redirected', req.user)
+
+  // generate token
+  const token = jwt.sign({
+    id: req.user._id,
+    role: req.user.role
+  }, config.SECRET, {expiresIn: '1 days'})
+
+  // decode วันหมดอายุ
+  const expires_in = jwt.decode(token);
+
+    // res.redirect('http://localhost:8080/');
+    console.log(` access_token: ${token}`)
+    res.redirect('http://localhost:8080/mobile/google-auth/?token=' + token);
+    
+    // return res.status(200).json({
+    //   access_token: token,
+    //   expires_in: expires_in.exp,
+    //   token_type: 'Bearer'
+    // }); 
+    
+  } catch (error) {
+    next(error)
+  }
+}
+

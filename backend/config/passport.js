@@ -1,34 +1,70 @@
+const config = require('../config/index');
+
+// const User = require('../models/user');
 const User = require('../models/user');
+const Client = require('../models/client');
 const bcrypt = require('bcryptjs');
-const passport = require('passport') , 
-LocalStrategy = require('passport-local').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 module.exports = (passport) => {
-    passport.use(new LocalStrategy({ 
-      usernameField: 'email' },
-      (email, password, done) => {
-        User.findOne({ email: email }, (err, user) => {
-            if (err) throw err;
+    passport.use(new GoogleStrategy({
+        clientID: config.GOOGLE_CLIENT_ID,
+        clientSecret: config.GOOGLE_CLIENT_SECRET,
+        callbackURL: "/api/auth/google/callback"
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+        //   return cb(err, user);
+        // });
+        console.log(profile)
 
-            if (!user) {
-                console.log('user does not exist')
-                return done(null, false, { message: "User Doesn't Exist !" });
+        try {
+            let user = await User.findOne({ googleId: profile.id })
+            if(user){ //user exist
+                done(null, user)
+            } else{
+                const newProfile = await Client.create({
+                    firstName: profile.name.givenName,
+                    lastName: profile.name.familyName,
+                    email: profile.emails[0].value,
+                    role: 'client',
+                    avatar: profile.photos[0].value,
+                    uid: new Date().getTime().toString(),
+                    address: {
+                        province: '',
+                        district: '',
+                        subdistrict: '',
+                        postalCode: '',
+                        detail: '',
+                    },
+                    contact: ''
+                });
+
+                const newUser = {
+                    googleId: profile.id,
+                    email: profile.emails[0].value,
+                    role: 'client',
+                    onModel: 'Client',
+                    avatar: profile.photos[0].value,
+                    profile: newProfile._id
+                }
+                user = await User.create(newUser)
+                done(null, user)
             }
+        } catch (error) {
+            console.error(error)
+        }
+   
+      }
+    ));
 
-            if (bcrypt.compareSync(password, user.password)) {
-                return done(null, user);
-              }
-            return done(null, false);
-        })
-    }));
-
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser((user, done) => {
         done(null, user._id);
     });
 
-    passport.deserializeUser(function (id, done) {
-        User.findById(id, function (err, user) {
-            done(err, user);
-        });
+    passport.deserializeUser((id, done) => {
+        User.findById(id, (err, user) => done(err, user));
     });
 }

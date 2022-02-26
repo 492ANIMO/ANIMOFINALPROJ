@@ -12,7 +12,7 @@
 
           <img
             v-if="this.currentUser.profile.avatar"
-            :src="this.baseurl+this.currentUser.profile.avatar"
+            src="../assets/muji.png"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"

@@ -10,6 +10,7 @@ LocalStrategy = require('passport-local').Strategy;
 
 //config
 const config = require('./config/index');
+
 //middleware
 const errorHandler = require('./middleware/errorHandler');
 
@@ -48,13 +49,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/uploads', express.static('uploads'));
 
+// Sessions
 app.use(session({
   secret: 'secret',
   cookie: {
     maxAge: 60 * 60 * 1000
   },
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false 
 }))
 
 /**
@@ -62,10 +64,12 @@ app.use(session({
  */
 // require the entire Passport config module (so app.js knows about it)
 require('./config/passport')(passport);
+
+// passport middleware
 // init passport
 app.use(passport.initialize())
-
 app.use(passport.session())
+
 app.use((req, res, next) => {
   console.log(req.session);
   console.log(req.user);
