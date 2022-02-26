@@ -6,34 +6,87 @@
     </div>
     <div class="Content1">
       <div class="ContentGarph">
-        <h2>จำนวนสัตว์ที่เข้ารับการรักษา</h2>
-        <template>
-          <div id="app">
-            <Chart/>
+        <div class="Content-0">
+          <h2>จำนวนสัตว์ที่เข้ารับการรักษา</h2>
+          <template>
+            <div id="app">
+              <Chart />
+            </div>
+          </template>
+        </div>
+        <div class="Content-1-box">
+          <div class="Content-1">
+            <h4 class="head-type">ประเภทสัตว์</h4>
+            <template>
+            <div id="app">
+              <PieChart class="p-chart"/>
+            </div>
+          </template>
           </div>
-        </template>
+          <br />
+          <div class="Content-1-1">
+           <h4>เคสวัคซีน</h4>
+           <br>
+           <div>
+              <div class="g-box">
+                <h5>วันนี้</h5>
+                <div>
+                  <h3 style="color: #2fc0a7">20</h3>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="g-box">
+                <h5>ทั้งหมด</h5>
+                <div>
+                  <h3 style="color: #32a0be">100</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div class="Content-1-1">
+            <h4>เคสการรักษา</h4>
+            <br>
+           <div>
+              <div class="g-box">
+                <h5>วันนี้</h5>
+                <div>
+                  <h3 style="color: #8d66b8">20</h3>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="g-box">
+                <h5>ทั้งหมด</h5>
+                <div>
+                  <h3 style="color: #5a62c6">100</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import Chart from "@/components/Chart";
-
+import PieChart from "@/components/PieChart";
 
 export default {
   name: "Dashboard",
   components: {
     Navbar,
     NavbarSide,
-    Chart
+    Chart,
+    PieChart
   },
-  data: () => ({
-  }),
+  data: () => ({}),
 };
-
 </script>
 <style scoped>
 h2 {
@@ -41,14 +94,67 @@ h2 {
   color: #696969;
   font-weight: 500;
 }
+h4 {
+  margin-top: -5px;
+  margin-bottom: 0px;
+  color: #696969;
+  font-weight: 500;
+  font-size: 20px;
+}
+.head-type {
+  position: absolute;
+  z-index: 3;
+  margin-top: -10px;
+}
+.p-chart {
+  transform: translateY(-25%);
+}
+.g-box{
+  text-align: center;
+  color: #696969;
+}
+.g-box h5 {
+  margin: 0px;
+  font-weight: 500;
+}
+.g-box h3 {
+  font-size: 35px;
+  margin: 5px;
+}
+.Content-1-box {
+  display: grid;
+  grid: auto / auto 20px 30% 20px 30%;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+.Content-1 {
+  background: #ffffff;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  height: 140px;
+  overflow: hidden;
+}
+.Content-1-1 {
+  background: #ffffff;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  height: 150px;
+  display: grid;
+  grid: auto / 50% 50%;
+}
+.Content-0 {
+  background: #ffffff;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+}
 .ContentGarph {
-    position: absolute;
-    left: calc(20% + 30px);;
-    width: calc(80% - 100px);
-    background: #FFFFFF;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-    padding: 20px;
+  position: absolute;
+  left: calc(20% + 30px);
+  width: calc(80% - 60px);
 }
 ::v-deep .vs-dialog__content {
   padding: 25px 30px;

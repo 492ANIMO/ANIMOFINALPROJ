@@ -253,21 +253,16 @@
             </div>
           </vs-col>
         </vs-row>
-        <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
-            <div class="InputPop">
-              <vs-input
-                v-model="newPackage.detail"
-                label="รายละเอียด"
-                placeholder="รายละเอียด"
-                class="textcolor"
-              ></vs-input>
-            </div>
+          <vs-col w="12">
+            <h4 class="HeadInput1">รายละเอียด</h4>
+            <textarea class="TArea" placeholder="รายละเอียด" v-model="newPackage.detail">
+              ใส่ข้อมูลลลลลล
+            </textarea>
+            
           </vs-col>
         </vs-row>
-        <div class="space"></div>
 
         <vs-row>
           <vs-col w="6">
@@ -384,21 +379,21 @@
                       :key="i"
                       v-for="(vaccine, i) in currentPackage.vaccines"
                     >
-                      -{{ vaccine.name }}
+                      -{{ ' '+ vaccine.name }}
                     </h5>
                     <h5
                       class="AddPG"
                       :key="'A' + i"
                       v-for="(treatment, i) in currentPackage.treatments"
                     >
-                      -{{ treatment.name }}
+                      -{{ ' '+ treatment.name }}
                     </h5>
                     <h5
                       class="AddPG"
                       :key="'B' + i"
                       v-for="(healthCheck, i) in currentPackage.healthChecks"
                     >
-                      -{{ healthCheck.name }}
+                      -{{ ' '+ healthCheck.name }}
                     </h5>
                   </div>
                 </div>
@@ -429,20 +424,16 @@
             </div>
           </vs-col>
         </vs-row>
-        <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
-            <div class="InputPop">
-              <vs-input
-                v-model="currentPackage.detail"
-                label="รายละเอียด"
-                placeholder="รายละเอียด"
-              ></vs-input>
-            </div>
+          <vs-col w="12">
+            <h4 class="HeadInput1">รายละเอียด</h4>
+            <textarea class="TArea" placeholder="รายละเอียด" v-model="currentPackage.detail">
+              ใส่ข้อมูลลลลลล
+            </textarea>
+            
           </vs-col>
         </vs-row>
-        <div class="space"></div>
 
         <template #footer>
           <div class="footer-dialog">
@@ -892,6 +883,36 @@ h3 {
   font-weight: 500;
   float: right;
 }
+
+.HeadInput1 {
+  font-size: 14.25px;
+  color: #696969;
+  font-weight: 400;
+  margin: 0px;
+  margin-top: 8px ;
+  margin-bottom: 2px;
+}
+.TArea {
+  margin-left: 10px;
+  width: 680px;
+  background: #f4f7f8;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  color: #696969;
+  font-family: kanit;
+  resize: none;
+  transition: 0.3s all;
+}
+.TArea:focus-visible {
+  outline: none;
+  padding-left: 17px;
+  background: #f0f3f4;
+}
+.TArea::placeholder {
+  color: #afb7be;
+  font-size: 13px;
+}
 ::v-deep .textcolor .vs-input {
   width: 350px;
   height: 35px;
@@ -934,6 +955,7 @@ h3 {
 ::v-deep .vs-input {
   width: 350px;
   height: 35px;
+  color: #696969;
 }
 ::v-deep .vs-input-content {
   width: 350px;
@@ -1008,6 +1030,7 @@ button.vs-select__option {
 }
 ::v-deep .vs-select {
   width: 250px;
+  color: #696969;
 }
 ::v-deep .SLPet {
   width: 300px;
@@ -1041,7 +1064,7 @@ button.vs-select__option {
   margin: 0px;
 }
 .DetailPK {
-  background: #e3eaea;
+  background: #f4f7f8;
   height: 165px;
   border-radius: 10px;
   width: 695px;

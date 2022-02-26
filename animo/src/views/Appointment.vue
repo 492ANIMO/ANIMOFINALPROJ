@@ -114,6 +114,7 @@
           </vs-col>
           <vs-col w="6">
             <div class="InputSL">
+              <span>{{appointment.pet.name}}</span>
               <vs-select
                 filter
                 label="ชื่อสัตว์เลี้ยง"
@@ -209,6 +210,7 @@
           <div class="space"></div>
           <vs-col class="InputSL" w="2">
             <div class="small">
+              <span>{{appointment.time}}</span>
               <vs-select
                 filter
                 label="เวลานัดหมาย"
@@ -234,20 +236,15 @@
             </div>
           </vs-col>
         </vs-row>
-        <div class="space"></div>
 
         <vs-row>
-          <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
-            <div class="InputPop">
-              <vs-input
-                v-model="appointment.detail"
-                label="รายละเอียด"
-                placeholder="รายละเอียด"
-              ></vs-input>
-            </div>
+          <vs-col w="12">
+            <h4 class="HeadInput">รายละเอียด</h4>
+            <textarea class="TArea" v-model="appointment.detail" label="รายละเอียดวัคซีน" placeholder="รายละเอียด">
+              ใส่ข้อมูลลลลลล
+            </textarea>
           </vs-col>
         </vs-row>
-        <div class="space"></div>
 
         <template #footer>
           <div class="footer-dialog">
@@ -279,8 +276,7 @@
               <vs-input
                 filter
                 label="ชื่อเจ้าของสัตว์เลี้ยง"
-                :placeholder="currentAppointment.pet.owner.firstName"
-                v-model="value"
+                v-model="currentAppointment.pet.owner.firstName"
                 class="type"
                 disabled
               >
@@ -291,8 +287,7 @@
             <div class="InputPop">
               <vs-input
                 label="ชื่อสัตว์เลี้ยง"
-                :placeholder="currentAppointment.pet.name"
-                v-model="value"
+                v-model="currentAppointment.pet.name"
                 disabled
               >
               </vs-input>
@@ -759,6 +754,18 @@ h3 {
     color: rgb(27, 111, 136);
     font-weight: 500;
 }
+.InputSL span {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 12.5px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(100%-5px);
+}
 .list {
   color: #adadad;
   margin: 5px;
@@ -818,12 +825,12 @@ h3 {
   margin-left: 10px;
   display: block;
 }
-.HeadInput {
+::v-deep .HeadInput {
   font-size: 14.25px;
   color: #696969;
   font-weight: 400;
   margin: 0px;
-  margin-top: 8px;
+  margin-top: 8px ;
   margin-bottom: 2px;
 }
 .TArea {
@@ -846,6 +853,14 @@ h3 {
 .TArea::placeholder {
   color: #afb7be;
   font-size: 13px;
+}
+.HeadInput {
+  font-size: 14.25px;
+  color: #696969;
+  font-weight: 400;
+  margin: 0px;
+  margin-top: 8px;
+  margin-bottom: 2px;
 }
 ::v-deep .InputLast .vs-input-content {
   max-width: 170px;
@@ -970,5 +985,11 @@ button.vs-select__option {
 }
 ::v-deep .vs-select__message p {
   margin: 0px;
+}
+::v-deep .vs-select__input:hover {
+  transform: translate(0, 0px) !important;
+}
+::v-deep .vs-select__input:focus {
+  transform: translate(0, 0px) !important;
 }
 </style>

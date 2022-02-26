@@ -285,12 +285,7 @@
             </template>
 
             <vs-row>
-              <vs-col
-                vs-type="flex"
-                vs-justify="center"
-                vs-align="center"
-                w="6"
-              >
+              <vs-col w="6">
                 <div class="InputPop">
                   <vs-input
                     v-model="newPet.name"
@@ -306,12 +301,7 @@
                   </vs-input>
                 </div>
               </vs-col>
-              <vs-col
-                vs-type="flex"
-                vs-justify="center"
-                vs-align="center"
-                w="6"
-              >
+              <vs-col w="6" >
                 <div class="InputSL">
                   <vs-select
                     label="ประเภทสัตว์"

@@ -16,55 +16,57 @@ export default {
         subtitle: {
           text: "",
         },
-        yAxis: {
+         yAxis: {
           title: {
             text: "จำนวนสัตว์",
           },
         },
-        legend: {
-          layout: "vertical",
-          align: "right",
-          verticalAlign: "middle",
-          itemStyle: {
-            color: '#696969',
-            fontWeight: 'thin'
+         plotOptions: {
+        pie: {
+            dataLabels: {
+                distance: 10,
+                style: {
+                    color: '#696969',
+                    fontSize: 18,
+                    borderWidth: 0,
+                }
             },
-        },
-        plotOptions: {
-          series: {
-            label: {
-              connectorAllowed: false,
-            },
-            pointStart: 2010,
-            borderRadius: 4
-          },
-        },
+        }
+    },
         chart: {
-          type: "column",
+          type: "pie",
           alignTicks: false,
           style: {
             fontFamily: "Kanit",
-            fontSize: 15,
             height: 300,
-            
           },
         },
-        
+
         series: [
           {
-            name: "แมว",
-            data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175],
-            color: '#f785b0'
-          },
-          {
-            name: "หมา",
-            data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
-            color: '#f29c77'
-          },
-          {
-            name: "หนู",
-            data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
-            color: '#b798e3'
+            innerSize: '60%',
+            data: [
+              {
+                name: "สุนัข",
+                y: 10,
+                color: '#f29c77'
+              },
+              {
+                name: "แมว",
+                y: 15,
+                color: '#f785b0'
+              },
+              {
+                name: "นก",
+                y: 20,
+                color: '#b798e3'
+              },
+              {
+                name: "อื่นๆ",
+                y: 30,
+                color: '#64ced0'
+              },
+            ],
           },
         ],
 
@@ -72,7 +74,7 @@ export default {
           rules: [
             {
               condition: {
-                maxWidth: 800,
+                maxWidth: 500,
               },
               chartOptions: {
                 legend: {
