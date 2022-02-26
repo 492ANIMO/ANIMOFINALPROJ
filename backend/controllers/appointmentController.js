@@ -233,7 +233,7 @@ exports.showMyAppointment = async (req, res, next) => {
     const pet = await Pet.find().where('owner').in(clientId).exec();
     console.log(pet)
     let appointment = await Appointment.find({status:'ไปตามเวลานัด'}).where('pet').in(pet).populate('pet').exec();
-    const reservation = await Reservation.find({status: 'pending'}).where('owner').in(clientId).populate('pet').exec();
+    const reservation = await Reservation.find({status: 'รอยืนยัน'}).where('owner').in(clientId).populate('pet').exec();
     console.log(`reservation: ${reservation}`)
 
     appointment.push(...reservation);
