@@ -24,7 +24,6 @@ exports.index = async (req, res, next) => {
      },
      select: '-createdAt -updatedAt -__v', 
     })
-    
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     const count = await Appointment.countDocuments();
@@ -55,7 +54,6 @@ exports.show = async (req, res, next) => {
      },
      select: '-createdAt -updatedAt -__v', 
     })
-    
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     res.status(200).json({
@@ -71,29 +69,18 @@ exports.show = async (req, res, next) => {
 // create new appointment
 exports.create = async (req, res, next) => {
   try {
-    const { petId, date, time, detail, type, packageId } = req.body;
-
-    //validation
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const error = new Error('ข้อมูลที่รับมาไม่ถูกต้อง');
-        error.statusCode = 422;
-        error.validation = errors.array();
-        throw error;
-    }
-
-    const packageObj = await Package.find().where('_id').in(packageId).exec();
+    const { petId, date, time, detail, type } = req.body;
 
     // check if avaliable timeslot เช็คว่าเป็นเวลาที่ให้จองได้หรือไม่
     if(!timeslot.includes(time)){
       throw new Error('ไม่สามารถเพิ่มการนัดหมายในเวลาดังกล่าวได้');
     }
 
-    // check if avaliable time   เช็คว่าเวลานั้นถูกจองไปหรือยัง
+    // check if avaliable time  เช็คว่าเวลานั้นถูกจองไปหรือยังจาด appointment ปัจจุบัน
     const booked = await Appointment.find({
       'date': date, 
       'time': time });
-    console.log(booked)
+    console.log('booked: '+booked)
       //  if found booked time -> reject
     if(booked.length!==0){
       throw new Error('ไม่สามารถเพิ่มการนัดหมายได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว');
@@ -105,14 +92,12 @@ exports.create = async (req, res, next) => {
       time,
       type,
       detail,
-      packageObj,
       appId: new Date().getTime().toString()
     })
     await appointment.save();
 
     appointment = await Appointment.findById(appointment._id)
     .populate('pet')
-    .populate('reservation');
 
     res.status(200).json({
       message: 'บันทึกข้อมูลสำเร็จ',
@@ -127,11 +112,11 @@ exports.create = async (req, res, next) => {
 // edit appointment by appointmentId
 exports.update = async (req, res, next) => {
   try {
-    const {id} = req.params;
-    const { petId, date, time, packageId, detail, type, status } = req.body;
+    const { id } = req.params;
+    const { petId, date, time, detail, type, status, doctor, medical } = req.body;
 
     const pet = await Pet.find().where('_id').in(petId).exec();
-    const packageObj = await Pet.find().where('_id').in(packageId).exec();
+
     // check if avaliable time 
     const booked = await Appointment.find({
       'date': date, 
@@ -142,13 +127,14 @@ exports.update = async (req, res, next) => {
     }
 
     const appointment = await Appointment.updateOne({_id:id},{
-      petId, 
+      pet: petId, 
       date, 
       time, 
-      packageId,
-      detail,
       type,
-      status
+      detail,
+      status,
+      doctor,
+      medical
     });
 
     if(appointment.modifiedCount===0){ throw new Error('แก้ไขข้อมูลการนัดหมายไม่สำเร็จ'); }
