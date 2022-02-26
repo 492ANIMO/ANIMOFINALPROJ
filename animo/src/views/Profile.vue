@@ -12,7 +12,7 @@
         <div class="profile">
           <vs-avatar class="ProfileDT" circle size="120">
             <!-- <img src="../assets/pet1.jpeg" alt="" /> -->
-            <img :src="this.baseurl + this.client.avatar" alt="" />
+            <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
             <h2>{{ this.client.firstName + " " + this.client.lastName }}</h2>
