@@ -101,8 +101,13 @@
                 >
                   {{ client.firstName + " " + client.lastName }}
                 </vs-option>
-                <template v-if="$v.appointment.owner._id.$error" #message-danger> 
-                  <p v-if="!$v.appointment.owner._id.required" >กรุณาเลือกชื่อเจ้าของสัตว์เลี้ยง</p>
+                <template
+                  v-if="$v.appointment.owner._id.$error"
+                  #message-danger
+                >
+                  <p v-if="!$v.appointment.owner._id.required">
+                    กรุณาเลือกชื่อเจ้าของสัตว์เลี้ยง
+                  </p>
                 </template>
               </vs-select>
             </div>
@@ -117,7 +122,6 @@
                 class="type"
                 @change="getPetById()"
                 @blur="$v.appointment.pet._id.$touch()"
-
               >
                 <vs-option
                   v-for="pet in pets"
@@ -127,8 +131,10 @@
                 >
                   {{ pet.name }}
                 </vs-option>
-                <template v-if="$v.appointment.pet._id.$error" #message-danger> 
-                  <p v-if="!$v.appointment.pet._id.required" >กรุณาเลือกสัตว์เลี้ยง</p>
+                <template v-if="$v.appointment.pet._id.$error" #message-danger>
+                  <p v-if="!$v.appointment.pet._id.required">
+                    กรุณาเลือกสัตว์เลี้ยง
+                  </p>
                 </template>
               </vs-select>
             </div>
@@ -189,11 +195,13 @@
                 v-model="appointment.date"
                 label="วันที่นัดหมาย"
                 class="Date"
-                 @change="getBookableTimes()"
+                @change="getBookableTimes()"
                 @blur="$v.appointment.date.$touch()"
               >
-                <template v-if="$v.appointment.date.$error" #message-danger> 
-                  <p v-if="!$v.appointment.date.required" >กรุณาเลือกวันที่นัดหมาย</p>
+                <template v-if="$v.appointment.date.$error" #message-danger>
+                  <p v-if="!$v.appointment.date.required">
+                    กรุณาเลือกวันที่นัดหมาย
+                  </p>
                 </template>
               </vs-input>
             </div>
@@ -208,8 +216,8 @@
                 v-model="appointment.time"
                 @blur="$v.appointment.time.$touch()"
               >
-                 <vs-option
-                  :key ="i"
+                <vs-option
+                  :key="i"
                   v-for="(data, i) in bookableTimes"
                   :value="data"
                   :label="data"
@@ -217,10 +225,11 @@
                   {{ data }}
                 </vs-option>
                 <!-- <vs-option label="11.00" value="11.00"> 11.00 </vs-option> -->
-                <template v-if="$v.appointment.time.$error" #message-danger> 
-                  <p v-if="!$v.appointment.time.required" >กรุณาเลือกเวลานัดหมาย</p>
+                <template v-if="$v.appointment.time.$error" #message-danger>
+                  <p v-if="!$v.appointment.time.required">
+                    กรุณาเลือกเวลานัดหมาย
+                  </p>
                 </template>
-               
               </vs-select>
             </div>
           </vs-col>
@@ -245,10 +254,13 @@
             <vs-button
               class="BT1"
               color="#71cf9d"
-              @click="(active1 = !active1), createAppointment(),AddNoti('bottom-right',1500,'#57c496')"
+              @click="
+                (active1 = !active1),
+                  createAppointment(),
+                  AddNoti('bottom-right', 1500, '#57c496')
+              "
               style="float: right; width: 80px"
-              :disabled="
-              $v.appointment.$invalid"
+              :disabled="$v.appointment.$invalid"
             >
               บันทึก </vs-button
             ><br /><br />
@@ -266,7 +278,6 @@
             <div class="InputSL">
               <vs-select
                 filter
-                state="success"
                 label="ชื่อเจ้าของสัตว์เลี้ยง"
                 :placeholder="currentAppointment.pet.owner.firstName"
                 v-model="value"
@@ -279,7 +290,6 @@
           <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="6">
             <div class="InputSL">
               <vs-select
-                state="success"
                 label="ชื่อสัตว์เลี้ยง"
                 :placeholder="currentAppointment.pet.name"
                 v-model="value"
@@ -298,7 +308,6 @@
             <div class="InputPop">
               <vs-input
                 disabled
-                state="success"
                 v-model="currentAppointment.pet.type"
                 label="ประเภทสัตว์"
                 placeholder="ประเภทสัตว์"
@@ -309,7 +318,6 @@
             <div class="InputPop">
               <vs-input
                 disabled
-                state="success"
                 v-model="currentAppointment.pet.gender"
                 label="เพศ"
                 placeholder="เพศ"
@@ -321,7 +329,6 @@
             <div class="InputPop">
               <vs-input
                 disabled
-                state="success"
                 v-model="currentAppointment.pet.weight"
                 label="น้ำหนัก"
                 placeholder="กิโลกรัม"
@@ -337,7 +344,6 @@
             <div class="InputPop">
               <vs-input
                 disabled
-                state="success"
                 v-model="currentAppointment.by"
                 label="ประเภทการนัดหมาย"
                 placeholder="ประเภทการนัดหมาย"
@@ -348,7 +354,6 @@
             <div class="InputPop">
               <vs-input
                 disabled
-                state="success"
                 type="text"
                 v-model="currentAppointment.date"
                 label="วันที่นัดหมาย"
@@ -360,7 +365,6 @@
             <div class="InputPop">
               <vs-input
                 disabled
-                state="success"
                 v-model="currentAppointment.time"
                 label="เวลานัดหมาย"
                 placeholder="เวลานัดหมาย"
@@ -375,7 +379,6 @@
           <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
             <div class="InputPop">
               <vs-input
-                state="success"
                 v-model="currentAppointment.detail"
                 label="รายละเอียด"
                 placeholder="รายละเอียด"
@@ -391,7 +394,9 @@
               class="BT1"
               color="#71cf9d"
               @click="
-                (active2 = !active2), confirmAppointment(currentAppointment._id),EditNoti('bottom-right',1500,'#8fc66a')
+                (active2 = !active2),
+                  confirmAppointment(currentAppointment._id),
+                  EditNoti('bottom-right', 1500, '#8fc66a')
               "
               style="float: right; width: 80px"
             >
@@ -409,7 +414,7 @@ import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import axios from "axios";
 import mixins from "../mixins";
-import { required } from 'vuelidate/lib/validators';
+import { required } from "vuelidate/lib/validators";
 
 export default {
   name: "Appointment",
@@ -424,82 +429,80 @@ export default {
     active: false,
     active1: false,
     active2: false,
-    value: '',
-    date: '',
+    value: "",
+    date: "",
     users: [],
     appointments: [],
     currentAppointment: {
       pet: {
-        name: '',
-        type: '',
-        age: '',
+        name: "",
+        type: "",
+        age: "",
         owner: {
-          firstName: '',
-          lastName: '',
-          email: '',
-          contact: '',
+          firstName: "",
+          lastName: "",
+          email: "",
+          contact: "",
         },
-        weight: '',
+        weight: "",
       },
-      date: '',
-      time: '',
+      date: "",
+      time: "",
       reservation: {
         package: [
           {
-            name: '',
-            vaccines: '',
-            treatments: '',
-            healthChecks: '',
+            name: "",
+            vaccines: "",
+            treatments: "",
+            healthChecks: "",
           },
         ],
       },
-      by: '',
+      by: "",
     },
     clients: [],
     client: {},
     appointment: {
       // name: '',
       owner: {
-        _id: '',
-        firstName: '',
-        lastName: '',
+        _id: "",
+        firstName: "",
+        lastName: "",
       },
-      petId: '',
+      petId: "",
       pet: {
-        _id: '',
-        name: '',
-        weight: '',
-        type: '',
-        getder: '',
+        _id: "",
+        name: "",
+        weight: "",
+        type: "",
+        getder: "",
       },
       by: "นัดโดยสัตวแพทย์",
-      date: '',
-      time: '',
-      detail: '',
+      date: "",
+      time: "",
+      detail: "",
     },
     pets: [],
     bookableTimes: [],
 
-    createAppointmentForm:{
-      petId: '',
-      date: '',
-      time: '',
-      detail: ''
-    }
-
-
+    createAppointmentForm: {
+      petId: "",
+      date: "",
+      time: "",
+      detail: "",
+    },
   }),
-   validations: {
+  validations: {
     appointment: {
       owner: {
-        _id: { required }
+        _id: { required },
       },
-      pet: { 
-        _id: { required }
+      pet: {
+        _id: { required },
       },
       date: { required },
       time: { required },
-    }
+    },
   },
   created() {
     this.load();
@@ -507,33 +510,33 @@ export default {
   },
 
   methods: {
-    AddNoti(position = null ,duration ,color) {
-          this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'เพิ่มข้อมูลสำเร็จ',
-            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    EditNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'บันทึกข้อมูลสำเร็จ',
-            text: `บันทึกรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    DeleteNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'ลบข้อมูลสำเร็จ',
-            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
+    AddNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "เพิ่มข้อมูลสำเร็จ",
+        text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    EditNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "บันทึกข้อมูลสำเร็จ",
+        text: `บันทึกรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    DeleteNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "ลบข้อมูลสำเร็จ",
+        text: `ลบรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
     load() {
       let baseURL = "http://localhost:4000/api/appointments/";
 
@@ -707,8 +710,8 @@ export default {
       let baseURL = "http://localhost:4000/api/timeslots/";
 
       axios
-        .post(baseURL,{
-          "date": this.appointment.date
+        .post(baseURL, {
+          date: this.appointment.date,
         })
         .then((res) => {
           this.bookableTimes = res.data.bookableTimes;
@@ -914,11 +917,11 @@ button.vs-select__option {
 ::v-deep .DtPg .vs-input {
   min-width: 700px;
 }
-::v-deep .vs-input__message p{
+::v-deep .vs-input__message p {
   margin: 0px;
   padding-left: 10px;
 }
-::v-deep .vs-select__message p{
+::v-deep .vs-select__message p {
   margin: 0px;
 }
 </style>

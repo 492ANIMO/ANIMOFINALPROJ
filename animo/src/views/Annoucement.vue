@@ -43,7 +43,7 @@
               <vs-td
                 ><vs-button
                   color="#6b9bce"
-                  @click="active1 = !active1, showAnnoucementDetail(data._id)"
+                  @click="(active1 = !active1), showAnnoucementDetail(data._id)"
                   class="BT"
                 >
                   ดูข้อมูล
@@ -80,8 +80,13 @@
                 placeholder="ชื่อหัวข้อ"
                 @blur="$v.addAnnoucementForm.title.$touch()"
               >
-                <template v-if="$v.addAnnoucementForm.title.$error" #message-danger> 
-                  <p v-if="!$v.addAnnoucementForm.title.required" >กรุณาระบุชื่อหัวข้อ</p>
+                <template
+                  v-if="$v.addAnnoucementForm.title.$error"
+                  #message-danger
+                >
+                  <p v-if="!$v.addAnnoucementForm.title.required">
+                    กรุณาระบุชื่อหัวข้อ
+                  </p>
                 </template>
               </vs-input>
             </div>
@@ -98,8 +103,13 @@
                 <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
                 <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
                 <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
-                <template v-if="$v.addAnnoucementForm.type.$error" #message-danger> 
-                  <p v-if="!$v.addAnnoucementForm.type.required" >กรุณาเลือกประเภทบทความ</p>
+                <template
+                  v-if="$v.addAnnoucementForm.type.$error"
+                  #message-danger
+                >
+                  <p v-if="!$v.addAnnoucementForm.type.required">
+                    กรุณาเลือกประเภทบทความ
+                  </p>
                 </template>
               </vs-select>
             </div>
@@ -118,22 +128,28 @@
                 </template>
               </textarea> -->
 
-              <vue-editor v-model="addAnnoucementForm.body"
-              @blur="$v.addAnnoucementForm.body.$touch()">
+              <vue-editor
+                v-model="addAnnoucementForm.body"
+                @blur="$v.addAnnoucementForm.body.$touch()"
+              >
               </vue-editor>
               <!-- validation message -->
-              <div v-if="$v.addAnnoucementForm.body.$error" > 
-                  <p v-if="!$v.addAnnoucementForm.body.required" ></p>
+              <div v-if="$v.addAnnoucementForm.body.$error">
+                <p v-if="!$v.addAnnoucementForm.body.required"></p>
               </div>
             </div>
           </vs-col>
-        </vs-row>        
+        </vs-row>
 
         <template #footer>
           <div class="footer-dialog">
             <vs-button
               primary
-              @click="active = !active,AddNoti('bottom-right',1500,'#57c496'), createAnnoucement()"
+              @click="
+                (active = !active),
+                  AddNoti('bottom-right', 1500, '#57c496'),
+                  createAnnoucement()
+              "
               class="BT1"
               style="float: right; width: 80px"
               :disabled="$v.addAnnoucementForm.$invalid"
@@ -153,14 +169,18 @@
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-              state="success"
                 v-model="showAnnoucementForm.title"
                 label="ชื่อหัวข้อ"
                 placeholder="ชื่อหัวข้อ"
-              @blur="$v.showAnnoucementForm.title.$touch()"
+                @blur="$v.showAnnoucementForm.title.$touch()"
               >
-                <template v-if="$v.showAnnoucementForm.title.$error" #message-danger> 
-                  <p v-if="!$v.showAnnoucementForm.title.required" >กรุณาระบุชื่อหัวข้อ</p>
+                <template
+                  v-if="$v.showAnnoucementForm.title.$error"
+                  #message-danger
+                >
+                  <p v-if="!$v.showAnnoucementForm.title.required">
+                    กรุณาระบุชื่อหัวข้อ
+                  </p>
                 </template>
               </vs-input>
             </div>
@@ -168,19 +188,22 @@
           <vs-col w="6">
             <div class="InputSL">
               <vs-select
-              state="success"
                 label="ประเภทบทความ"
                 placeholder="-"
                 v-model="showAnnoucementForm.type"
                 class="type"
                 @blur="$v.showAnnoucementForm.type.$touch()"
-
               >
                 <vs-option label="ข่าวสาร" value="ข่าวสาร"> ข่าวสาร </vs-option>
                 <vs-option label="ประกาศ" value="ประกาศ"> ประกาศ </vs-option>
                 <vs-option label="บทความ" value="บทความ"> บทความ </vs-option>
-                <template v-if="$v.showAnnoucementForm.type.$error" #message-danger> 
-                  <p v-if="!$v.showAnnoucementForm.type.required" >กรุณาเลือกประเภทบทความ</p>
+                <template
+                  v-if="$v.showAnnoucementForm.type.$error"
+                  #message-danger
+                >
+                  <p v-if="!$v.showAnnoucementForm.type.required">
+                    กรุณาเลือกประเภทบทความ
+                  </p>
                 </template>
               </vs-select>
             </div>
@@ -198,25 +221,32 @@
                   <p v-if="!$v.showAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
                 </template>
               </textarea> -->
-              <vue-editor v-model="showAnnoucementForm.body"
-              @blur="$v.showAnnoucementForm.body.$touch()">
+              <vue-editor
+                v-model="showAnnoucementForm.body"
+                @blur="$v.showAnnoucementForm.body.$touch()"
+              >
               </vue-editor>
-              <div v-if="$v.showAnnoucementForm.body.$error" > 
-                  <p v-if="!$v.showAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
+              <div v-if="$v.showAnnoucementForm.body.$error">
+                <p v-if="!$v.showAnnoucementForm.body.required">
+                  กรุณาระบุเนื้อความ
+                </p>
               </div>
               <!-- <template v-if="$v.showAnnoucementForm.body.$error" #message-danger> 
               <p v-if="!$v.showAnnoucementForm.body.required" >กรุณาระบุเนื้อความ</p>
               </template> -->
-              
             </div>
           </vs-col>
-        </vs-row>        
+        </vs-row>
 
         <template #footer>
           <div class="footer-dialog">
             <vs-button
               color="#d78461"
-              @click="active1 = !active1,EditNoti('bottom-right',1500,'#da9952'), updateAnnoucement(showAnnoucementForm._id)"
+              @click="
+                (active1 = !active1),
+                  EditNoti('bottom-right', 1500, '#da9952'),
+                  updateAnnoucement(showAnnoucementForm._id)
+              "
               class="BT2"
               style="float: right; width: 80px"
               :disabled="$v.showAnnoucementForm.$invalid"
@@ -226,7 +256,6 @@
           </div>
         </template>
       </vs-dialog>
-
     </div>
   </div>
 </template>
@@ -236,7 +265,7 @@ import Navbar from "@/components/NavbarAdmin.vue";
 import NavbarSide from "@/components/NavbarSideAdmin.vue";
 import axios from "axios";
 import mixins from "../mixins.js";
-import { required } from 'vuelidate/lib/validators';
+import { required } from "vuelidate/lib/validators";
 import { VueEditor } from "vue2-editor";
 
 export default {
@@ -244,7 +273,7 @@ export default {
   components: {
     Navbar,
     NavbarSide,
-    VueEditor
+    VueEditor,
   },
   mixins: [mixins],
   data: () => ({
@@ -252,53 +281,52 @@ export default {
     max: 5,
     active: false,
     active1: false,
-    value: '',
+    value: "",
     search: "",
-    type: ['ข่าวสาร', 'ประกาศ', 'บทความ'],
+    type: ["ข่าวสาร", "ประกาศ", "บทความ"],
     annoucements: [],
     showAnnoucementForm: {
-      id: '',
-      title: '',
-      body: '',
-      type: '',
+      id: "",
+      title: "",
+      body: "",
+      type: "",
     },
-    addAnnoucementForm:{
-      title: '',
-      body: '',
-      type: '',
-    }
-
+    addAnnoucementForm: {
+      title: "",
+      body: "",
+      type: "",
+    },
   }),
-    validations: {
-      addAnnoucementForm: {
-        title: { required },
-        body: { required },
-        type: { required },
-      },
-      showAnnoucementForm: {
-        title: { required },
-        body: { required },
-        type: { required },
-      },
+  validations: {
+    addAnnoucementForm: {
+      title: { required },
+      body: { required },
+      type: { required },
+    },
+    showAnnoucementForm: {
+      title: { required },
+      body: { required },
+      type: { required },
+    },
   },
   created() {
     this.load();
   },
   methods: {
-    clearForm(){
-       // clear data
-      this.showAnnoucementForm = {
-        id: '',
-        title: '',
-        body: '',
-        type: '',
-        img: ''
-      },
-      this.addAnnoucementForm = {
-        title: '',
-        body: '',
-        type: '',
-      }
+    clearForm() {
+      // clear data
+      (this.showAnnoucementForm = {
+        id: "",
+        title: "",
+        body: "",
+        type: "",
+        img: "",
+      }),
+        (this.addAnnoucementForm = {
+          title: "",
+          body: "",
+          type: "",
+        });
     },
 
     load() {
@@ -310,7 +338,7 @@ export default {
           this.clearForm();
           this.annoucements = res.data.annoucement;
           console.log(res.data);
-          console.log('load success');
+          console.log("load success");
           console.log(this.annoucements);
         })
         .catch((error) => {
@@ -323,7 +351,7 @@ export default {
       this.showAnnoucementForm._id = id;
       console.log(this.showAnnoucementForm._id);
       axios
-        .get(baseURL+id)
+        .get(baseURL + id)
         .then((res) => {
           this.showAnnoucementForm = res.data.annoucement;
           console.log(res.data);
@@ -332,74 +360,75 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    
     },
 
     updateAnnoucement(id) {
-      console.log('id : '+ id);
+      console.log("id : " + id);
       let baseURL = "http://localhost:4000/api/annoucements/";
-      axios.patch(baseURL+id, this.showAnnoucementForm).then((res) => {
-        console.log(res.data);
-         this.load();
-      }).catch((error) => {
+      axios
+        .patch(baseURL + id, this.showAnnoucementForm)
+        .then((res) => {
+          console.log(res.data);
+          this.load();
+        })
+        .catch((error) => {
           console.log(error);
-      });
-
+        });
     },
     createAnnoucement() {
       let baseURL = "http://localhost:4000/api/annoucements/";
-      axios.post(baseURL, this.addAnnoucementForm).then((res) => {
-        console.log(res.data);
-        this.load();
-      }).catch((error) => {
+      axios
+        .post(baseURL, this.addAnnoucementForm)
+        .then((res) => {
+          console.log(res.data);
+          this.load();
+        })
+        .catch((error) => {
           console.log(error);
-      });
-
+        });
     },
     deleteAnnoucement(id) {
       let baseURL = "http://localhost:4000/api/annoucements/";
-      axios.post(baseURL+id).then((res) => {
-        console.log(res.data.message);
-        this.load();
-      }).catch((error) => {
+      axios
+        .post(baseURL + id)
+        .then((res) => {
+          console.log(res.data.message);
+          this.load();
+        })
+        .catch((error) => {
           console.log(error);
-      });
-
+        });
     },
 
-    AddNoti(position = null ,duration ,color) {
-          this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'เพิ่มข้อมูลสำเร็จ',
-            text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    EditNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'แก้ไขข้อมูลสำเร็จ',
-            text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    DeleteNoti(position = null ,duration ,color) {
-         this.$vs.notification({
-            color,
-            duration,
-            position,
-            title: 'ลบข้อมูลสำเร็จ',
-            text: `ลบรายการข้อมูลที่เลือกสำเร็จ`
-          })
-        },
-    
+    AddNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "เพิ่มข้อมูลสำเร็จ",
+        text: `เพิ่มรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    EditNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "แก้ไขข้อมูลสำเร็จ",
+        text: `แก้ไขรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    DeleteNoti(position = null, duration, color) {
+      this.$vs.notification({
+        color,
+        duration,
+        position,
+        title: "ลบข้อมูลสำเร็จ",
+        text: `ลบรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
   },
-  
 };
-
-
 </script>
 <style scoped>
 h2 {
@@ -603,27 +632,7 @@ button.vs-select__option {
 ::v-deep .DtPg .vs-input {
   min-width: 700px;
 }
-.TArea {
-  margin-left: 10px;
-  width: 680px;
-  background: #f4f7f8;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  color: #696969;
-  font-family: kanit;
-  resize: none;
-  transition: 0.3s all;
-}
-.TArea:focus-visible {
-outline: none;
-padding-left: 17px;
-background: #f0f3f4;
-}
-.TArea::placeholder {
-  color: #afb7be;
-  font-size: 13px;
-}
+
 .HeadInput {
   font-size: 14.25px;
   color: #696969;
@@ -655,13 +664,13 @@ background: #f0f3f4;
   font-family: kanit;
 }
 ::v-deep .ql-container.ql-snow {
-    border: none;
+  border: none;
 }
-::v-deep .vs-input__message p{
+::v-deep .vs-input__message p {
   margin: 0px;
   padding-left: 10px;
 }
-::v-deep .vs-select__message p{
+::v-deep .vs-select__message p {
   margin: 0px;
 }
 </style>
