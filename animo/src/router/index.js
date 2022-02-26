@@ -86,13 +86,19 @@ const routes = [
     path: '/Admin/addvaccine',
     name: 'AddVaccine',
     beforeEnter: roleAdmin,
-    component: () => import('../views/AddVaccine.vue')
+    component: () => import('../views/AddVaccine.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/Admin/addtreatment',
     name: 'AddTreatment',
     beforeEnter: roleAdmin,
-    component: () => import('../views/AddTreatment.vue')
+    component: () => import('../views/AddTreatment.vue'),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/profile/:client_id',

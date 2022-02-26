@@ -49,7 +49,7 @@
             />
           </div>
 
-          <div class="content-input">
+          <div v-if="isGoogleAccount()"  class="content-input">
             <vs-input
               label="รหัสผ่าน"
               type="password"
@@ -58,14 +58,6 @@
             />
           </div>
 
-          <div class="content-input">
-            <vs-input
-              label="ยืนยันรหัสผ่าน"
-              v-model="currentUser.profile.confirmPassword"
-              placeholder="ยืนยันรหัสผ่าน"
-            />
-          </div>
-          <br />
 
           <div class="content-input">
             <vs-input
@@ -179,6 +171,14 @@ export default {
         loading.close();
       }, 3000);
     },
+    isGoogleAccount(){
+      console.log(`this.currentUser.googleId: ${this.currentUser.googleId}`)
+      if(this.currentUser.googleId == '' || this.currentUser.googleId == 'undefined'){
+        return true
+      }else{
+        return false
+      }
+    }
   },
 };
 </script>
