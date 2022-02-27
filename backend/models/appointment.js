@@ -29,7 +29,8 @@ const schema = new Schema({
     healthCheck: [{
       name: { type: String, trim: true },
       medDetail: { type: String }
-    }]
+    }],
+    detail: { type: String }
   },
   appId:{ type: String },
   petDetail: Pet.schema

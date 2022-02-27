@@ -53,35 +53,44 @@
             ><br />
             <font>ประเภทสัตว์ : <b>{{ historyDetail.pet.type }}</b></font
             ><br />
-            <font>การนัด : <b>{{ historyDetail.status }}</b></font
+            <font>การนัด : <b>{{ historyDetail.by }}</b></font
             ><br />
         </div>
 
         <h2 v-if="historyDetail.by==='การจอง'" class="Head-history">{{ historyDetail.reservation.package.name }}</h2>
-        <h2 v-else class="Head-history">{{ historyDetail.type }}</h2>
+        <div v-else>
+          <h2  class="Head-history">{{ historyDetail.type }}</h2>
+          <div class="box-package">
+            <h2>test</h2>
+            <div class="box-package-dt">
+              <font>รายละเอียด : <b>test</b></font
+              ><br />
+            </div>
+          </div>
+        </div>
 
-        <div class="box-package">
-          <h2>วัคซีนพิษสุนัขบ้า</h2>
+        <div v-for="(data, i) in historyDetail.medical.vaccine" :key="i" class="box-package">
+          <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
-            <font>เลขล็อตวัคซีน : <b>12345XAVC</b></font
+            <font>เลขล็อตวัคซีน : <b>{{ data.lot_number }}</b></font
             ><br />
-            <font>รายละเอียด : <b>อาการปกติดี</b></font
+            <font>รายละเอียด : <b>{{ data.medDetail }}</b></font
             ><br />
           </div>
         </div>
 
-        <div class="box-package">
-          <h2>ตรวจสุขภาพ</h2>
+        <div v-for="(data, i) in historyDetail.medical.treatment" :key="i" class="box-package">
+          <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
-            <font>รายละเอียด : <b>อาการปกติดี</b></font
+            <font>รายละเอียด : <b>{{ data.medDetail }}</b></font
             ><br />
           </div>
         </div>
 
-        <div class="box-package">
-          <h2>ทำหมัน</h2>
+        <div v-for="(data, i) in historyDetail.medical.healthCheck" :key="i"  class="box-package">
+          <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
-            <font>รายละเอียด : <b>อาการปกติดี</b></font
+            <font>รายละเอียด : <b>{{ data.medDetail }}</b></font
             ><br />
           </div>
         </div>
