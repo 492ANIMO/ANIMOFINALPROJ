@@ -460,18 +460,17 @@
                 </div>
               </div>
             </vs-row>
-            <div class="space"></div>
+
             <vs-row>
-              <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
-                <div class="InputPop">
-                  <vs-input
-                    v-model="newPet.detail"
-                    label="รายละเอียด"
-                    placeholder="รายละเอียด"
-                  ></vs-input>
-                </div>
+              <vs-col w="12">
+                <h4 class="HeadInput1">รายละเอียด</h4>
+                <textarea class="TArea" placeholder="รายละเอียด" v-model="newPet.detail">
+                  
+                </textarea>
               </vs-col>
             </vs-row>
+
+            
 
             <template #footer>
               <div class="footer-dialog">
@@ -685,16 +684,13 @@
                 </div>
               </div>
             </vs-row>
-            <div class="space"></div>
+          
             <vs-row>
-              <vs-col vs-type="flex" vs-justify="center" class="DtPg" w="12">
-                <div class="InputPop">
-                  <vs-input
-                    v-model="pet.detail"
-                    label="รายละเอียด"
-                    :placeholder="this.pet.detail"
-                  ></vs-input>
-                </div>
+              <vs-col w="12">
+                <h4 class="HeadInput1">รายละเอียด</h4>
+                <textarea class="TArea" :placeholder="this.pet.detail" v-model="pet.detail">
+                  
+                </textarea>
               </vs-col>
             </vs-row>
 
@@ -1079,6 +1075,35 @@ export default {
 
 <style scoped>
 @import url("../assets/css/style.css");
+.HeadInput1 {
+  font-size: 14.25px;
+  color: #696969;
+  font-weight: 400;
+  margin: 0px;
+  margin-top: 8px ;
+  margin-bottom: 2px;
+}
+.TArea {
+  margin-left: 10px;
+  width: 680px;
+  background: #f4f7f8;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: none;
+  color: #696969;
+  font-family: kanit;
+  resize: none;
+  transition: 0.3s all;
+}
+.TArea:focus-visible {
+  outline: none;
+  padding-left: 17px;
+  background: #f0f3f4;
+}
+.TArea::placeholder {
+  color: #afb7be;
+  font-size: 13px;
+}
 ::v-deep .vs-avatar {
   filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.1));
 }

@@ -54,7 +54,7 @@
           </div>
           <br />
           <div class="Content-1-1">
-            <h4>การจองแพ็คเกจ</h4>
+            <h4 class="over">การจองแพ็คเกจ</h4>
             <br>
            <div>
               <div class="g-box">
@@ -180,6 +180,9 @@ h4 {
   color: #696969;
   font-weight: 500;
   font-size: 20px;
+}
+.over {
+  width: 200%;
 }
 .head-type {
   position: absolute;

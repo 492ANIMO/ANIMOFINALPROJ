@@ -259,7 +259,7 @@
               style="float: right; width: 80px"
               :disabled="$v.appointment.$invalid"
             >
-              บันทึก </vs-button
+              เพิ่มข้อมูล </vs-button
             ><br /><br />
           </div>
         </template>
