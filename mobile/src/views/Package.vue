@@ -59,7 +59,7 @@
                 >
               </div>
               <div class="TextDT">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
+                <font>ราคา : <b>{{ pack.price }} บาท</b></font>
               </div>
               <div class="TextDT1">
                 <font>ข้อมูลเพิ่มเติม...</font>
