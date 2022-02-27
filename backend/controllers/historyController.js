@@ -87,7 +87,12 @@ exports.myHistory = async (req, res, next) =>{
 
     console.log(`history: ${history}`)
 
-    res.send(history)
+    res.status(200).json({
+      message: 'ดึงข้อมูลสำเร็จ',
+      history
+    });
+
+
   } catch (error) {
     next(error);
   }

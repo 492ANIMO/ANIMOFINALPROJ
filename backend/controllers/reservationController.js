@@ -181,7 +181,6 @@ exports.confirm = async (req, res, next) => {
     const {id} = req.params;
     const {doctor} = req.body;
   
-
     let reservation = await Reservation.findById(id);
     if(!reservation){ throw new Error('ไม่พบข้อมูลการจอง'); }
     
@@ -211,6 +210,7 @@ exports.confirm = async (req, res, next) => {
     });
     if(reservation.modifiedCount===0){ throw new Error('ยืนยันการจองไม่สำเร็จ'); }
     reservation = await Reservation.findById(id);
+    // const medical = reservation.package;
 
     // add appointment
     let appointment = new Appointment({

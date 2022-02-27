@@ -16,12 +16,15 @@ const schema = new Schema({
     lot_number: { type: String, trim: true},
     detail: { type: String, trim: true},
     petType: { type: String, trim: true},
+    medDetail: { type: String, trim: true}
+
   }],
   treatments: [{ 
     name: { type: String, required: true, trim: true },
     detail: { type: String, trim: true } ,
     type: { type: String, trim: true },
     petType: { type: String, trim: true},
+    medDetail: { type: String, trim: true}
 
   }],
   healthChecks: [{ 
@@ -29,6 +32,8 @@ const schema = new Schema({
     detail: { type: String, trim: true},
     type: { type: String, trim: true },
     petType: { type: String, trim: true},
+    medDetail: { type: String, trim: true}
+
    }],
     
   detail: { type: String, trim: true, default: '-'},

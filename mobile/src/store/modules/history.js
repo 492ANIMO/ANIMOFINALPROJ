@@ -4,7 +4,9 @@ const state = {
  histories: [],
  historyDetail: {
    pet: {},
-   reservation: {},
+   reservation: {
+     package:{}
+   },
    medical: {},
  },
  seletedHistory: ''

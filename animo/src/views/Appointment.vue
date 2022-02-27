@@ -366,32 +366,62 @@
           </vs-col>
         </vs-row>
 
-        <vs-row>
-          <vs-col w="12">
-            <h4 class="HeadInput">วัคซีนพิษสุนัขบ้า ( 1234567XAB )</h4>
-            <textarea class="TArea" label="รายละเอียดวัคซีน" placeholder="รายละเอียด">
-              ใส่ข้อมูลลลลลล
+        <div v-if="currentAppointment.by === 'การจอง'" class="">
+          <vs-row>
+          <vs-col v-for="(vaccine, i) in currentAppointment.reservation.package.vaccines" :key="i" w="12">
+            <h4 class="HeadInput">{{ vaccine.name }}</h4>
+            <textarea 
+              class="TArea" 
+              label="รายละเอียดวัคซีน" 
+              placeholder="รายละเอียด"
+              v-model="currentAppointment.reservation.package.vaccines[i].medDetail"
+            >
             </textarea>
           </vs-col>
         </vs-row>
 
         <vs-row>
-          <vs-col w="12">
-            <h4 class="HeadInput">ทำหมัน</h4>
-            <textarea class="TArea" label="รายละเอียดการรักษา" placeholder="รายละเอียด">
-              ใส่ข้อมูลลลลลล
+          <vs-col v-for="(treatment, i) in currentAppointment.reservation.package.treatments" :key="i" w="12">
+            <h4 class="HeadInput">{{ treatment.name }}</h4>
+            <textarea 
+              class="TArea" 
+              label="รายละเอียดการรักษา" 
+              placeholder="รายละเอียด"
+              v-model="currentAppointment.reservation.package.treatments[i].medDetail"
+            >
             </textarea>
           </vs-col>
         </vs-row>
 
         <vs-row>
-          <vs-col w="12">
-            <h4 class="HeadInput">ตรวจสุขภาพฟัน</h4>
-            <textarea class="TArea" label="รายละเอียดการตรวจสุขภาพ" placeholder="รายละเอียด">
-              ใส่ข้อมูลลลลลล
+          <vs-col v-for="(healthCheck, i) in currentAppointment.reservation.package.healthChecks" :key="i" w="12">
+            <h4 class="HeadInput">{{ healthCheck.name }}</h4>
+            <textarea 
+              class="TArea" 
+              label="รายละเอียดการตรวจสุขภาพ" 
+              placeholder="รายละเอียด"
+              v-model="currentAppointment.reservation.package.healthChecks[i].medDetail"
+            >
             </textarea>
           </vs-col>
         </vs-row>
+
+        </div>
+
+        <div v-else class="">
+          <vs-row>
+            <vs-col w="12">
+              <h4 class="HeadInput">รายละเอียดการรักษา</h4>
+              <textarea 
+                class="TArea" 
+                label="รายละเอียด" 
+                placeholder="รายละเอียด"
+                v-model="currentAppointment.medDetail"
+                >
+              </textarea>
+            </vs-col>
+          </vs-row>
+        </div>
 
         <template #footer>
           <div class="footer-dialog">
@@ -454,16 +484,10 @@ export default {
       date: "",
       time: "",
       reservation: {
-        package: [
-          {
-            name: "",
-            vaccines: "",
-            treatments: "",
-            healthChecks: "",
-          },
-        ],
+        package: {},
       },
       by: "",
+      detail: '',
     },
     clients: [],
     client: {},
@@ -486,6 +510,7 @@ export default {
       date: "",
       time: "",
       detail: "",
+
     },
     pets: [],
     bookableTimes: [],
@@ -668,10 +693,25 @@ export default {
     },
     confirmAppointment(id) {
       let baseURL = "http://localhost:4000/api/appointments/confirm/" + id;
-      axios
-        .patch(baseURL, {
-          detail: this.currentAppointment.detail,
-        })
+
+      console.log(`id: ${id}`);
+      // console.log(`package: ${JSON.stringify(this.currentAppointment.reservation.package)}`)
+      let updateObject = {}
+      if(this.currentAppointment.by === 'การจอง'){
+        console.log('การจอง')
+        // const petPackage = this.currentAppointment.reservation.package;
+        updateObject = {
+          // medDetail: this.currentAppointment.medDetail,
+          petPackage: this.currentAppointment.reservation.package
+        }
+      }else{
+        console.log('สตว')
+        updateObject = {
+          medDetail: this.currentAppointment.medDetail,
+        }
+      }
+      // const petPackage = this.currentAppointment.reservation.package;
+      axios.patch(baseURL, updateObject)
         .then((res) => {
           this.currentAppointment = {
             pet: {
@@ -689,20 +729,13 @@ export default {
             date: "",
             time: "",
             reservation: {
-              package: [
-                {
-                  name: "",
-                  vaccines: "",
-                  treatments: "",
-                  healthChecks: "",
-                },
-              ],
+              package: {},
             },
             by: "",
           };
 
           console.log(res.data.message);
-          console.log(res.data.data);
+          console.log(res.data.appointment);
 
           this.load();
         })
