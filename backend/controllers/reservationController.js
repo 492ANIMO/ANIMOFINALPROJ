@@ -242,4 +242,29 @@ exports.confirm = async (req, res, next) => {
   }
 }
 
+exports.filterTodayReservation = async (req, res, next) => {
+  try {
+ 
+    const d = new Date().toISOString()
+    console.log(d);
+    const formatDate = d.split('T')[0];
+    console.log(formatDate);
+
+    const reservation = await Reservation.find({
+      date: formatDate,
+      status: 'รอยืนยัน'
+
+    });
+    if(!reservation){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      reservation
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 
