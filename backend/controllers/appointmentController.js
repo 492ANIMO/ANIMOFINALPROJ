@@ -240,7 +240,7 @@ exports.showMyAppointment = async (req, res, next) => {
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { detail, medical, petPackage } = req.body;
+    const { detail, medical, petPackage, medDetail } = req.body;
 
     const query = await Appointment.findById(id).populate({ 
       path: 'pet',
@@ -262,10 +262,12 @@ exports.confirm = async (req, res, next) => {
       detail,
       medical,
       status: 'รักษาเสร็จสิ้น',
+      
       // petDetail,
       reservation:{
         package: petPackage
-      }
+      },
+      medDetail
       
     });
     console.log(`petPackage: ${JSON.stringify(petPackage)}`)

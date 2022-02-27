@@ -30,7 +30,8 @@ const schema = new Schema({
       name: { type: String, trim: true },
       medDetail: { type: String }
     }],
-    detail: { type: String }
+    detail: { type: String },
+    medDetail: { type: String },
   },
   appId:{ type: String },
   petDetail: Pet.schema

@@ -53,23 +53,25 @@
             ><br />
             <font>ประเภทสัตว์ : <b>{{ historyDetail.pet.type }}</b></font
             ><br />
-            <font>การนัด : <b>{{ historyDetail.by }}</b></font
+            <font>ประเภทการนัดหมาย : <b>{{ historyDetail.by }}</b></font
             ><br />
         </div>
 
         <h2 v-if="historyDetail.by==='การจอง'" class="Head-history">{{ historyDetail.reservation.package.name }}</h2>
         <div v-else>
-          <h2  class="Head-history">{{ historyDetail.type }}</h2>
+          <h2  class="Head-history">{{ historyDetail.by }}</h2>
           <div class="box-package">
-            <h2>test</h2>
+            <h2>{{ historyDetail.type }}</h2>
             <div class="box-package-dt">
-              <font>รายละเอียด : <b>test</b></font
-              ><br />
+              <font>วันที่ : <b>{{ format_date(historyDetail.date) }}</b></font><br />
+              <font>เวลา : <b>{{ historyDetail.time }}</b></font><br />
+              <font>สถานะ : <b>{{ historyDetail.status }}</b></font><br />
+              <font>รายละเอียดการรักษา : <b>{{ historyDetail.medDetail }}</b></font><br />
             </div>
           </div>
         </div>
 
-        <div v-for="(data, i) in historyDetail.medical.vaccine" :key="i" class="box-package">
+        <div v-for="(data, i) in historyDetail.reservation.package.vaccines" :key="i" class="box-package">
           <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
             <font>เลขล็อตวัคซีน : <b>{{ data.lot_number }}</b></font
@@ -79,7 +81,7 @@
           </div>
         </div>
 
-        <div v-for="(data, i) in historyDetail.medical.treatment" :key="i" class="box-package">
+        <div v-for="(data, i) in historyDetail.reservation.package.treatments" :key="i" class="box-package">
           <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
             <font>รายละเอียด : <b>{{ data.medDetail }}</b></font
@@ -87,7 +89,7 @@
           </div>
         </div>
 
-        <div v-for="(data, i) in historyDetail.medical.healthCheck" :key="i"  class="box-package">
+        <div v-for="(data, i) in historyDetail.reservation.package.healthChecks" :key="i"  class="box-package">
           <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
             <font>รายละเอียด : <b>{{ data.medDetail }}</b></font

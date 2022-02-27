@@ -412,7 +412,12 @@
           <vs-row>
             <vs-col w="12">
               <h4 class="HeadInput">รายละเอียดการรักษา</h4>
-              <textarea class="TArea" label="รายละเอียดวัคซีน" placeholder="รายละเอียด">
+              <textarea 
+                class="TArea" 
+                label="รายละเอียด" 
+                placeholder="รายละเอียด"
+                v-model="currentAppointment.medDetail"
+                >
               </textarea>
             </vs-col>
           </vs-row>
@@ -479,7 +484,7 @@ export default {
       date: "",
       time: "",
       reservation: {
-        package: [],
+        package: {},
       },
       by: "",
       detail: '',
@@ -690,12 +695,23 @@ export default {
       let baseURL = "http://localhost:4000/api/appointments/confirm/" + id;
 
       console.log(`id: ${id}`);
-      console.log(`package: ${JSON.stringify(this.currentAppointment.reservation.package)}`)
-      const petPackage = this.currentAppointment.reservation.package;
-      axios.patch(baseURL, {
-          detail: this.currentAppointment.detail,
-          petPackage
-        })
+      // console.log(`package: ${JSON.stringify(this.currentAppointment.reservation.package)}`)
+      let updateObject = {}
+      if(this.currentAppointment.by === 'การจอง'){
+        console.log('การจอง')
+        // const petPackage = this.currentAppointment.reservation.package;
+        updateObject = {
+          // medDetail: this.currentAppointment.medDetail,
+          petPackage: this.currentAppointment.reservation.package
+        }
+      }else{
+        console.log('สตว')
+        updateObject = {
+          medDetail: this.currentAppointment.medDetail,
+        }
+      }
+      // const petPackage = this.currentAppointment.reservation.package;
+      axios.patch(baseURL, updateObject)
         .then((res) => {
           this.currentAppointment = {
             pet: {
@@ -713,7 +729,7 @@ export default {
             date: "",
             time: "",
             reservation: {
-              package: [],
+              package: {},
             },
             by: "",
           };
