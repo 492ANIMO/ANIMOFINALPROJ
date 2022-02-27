@@ -102,7 +102,9 @@
               label="อำเภอ"
               placeholder="อำเภอ"
               v-model="registerForm.address.district"
-              @change="fetchSubDistrict()"
+              @change="fetchSubDistrict({
+                province:registerForm.address.province,
+                district:registerForm.address.district})"
             >
               <vs-option 
                 v-for="(data, i) in addressDropdown.districts" 

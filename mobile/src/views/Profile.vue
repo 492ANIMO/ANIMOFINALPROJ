@@ -12,14 +12,14 @@
 
           <img
             v-if="this.currentUser.profile.avatar"
-            src="../assets/muji.png"
+            src="@/assets/nopic.jpeg"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"
           />
           <img
             v-else
-            :src="this.baseurl+'uploads/nopic.jpeg'"
+            src="@/assets/nopic.jpeg"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"
