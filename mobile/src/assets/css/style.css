@@ -309,10 +309,11 @@ float: right;
 width: 90px;
 text-align: center;
 border-radius: 0px 10px 0px 10px;
+padding: 2px;
 }
 .status h4 {
-font-size: 13px;
-font-weight: 500;
+font-size: 12px;
+font-weight: 400;
 color: #ffffff;
 }
 .appointment {

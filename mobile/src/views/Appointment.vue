@@ -8,8 +8,9 @@
 
           <div
             class="Package-Card"
-            v-for="appointment in allAppointments"
-            :key="appointment._id"
+            :key="_id"
+            v-for="(appointment, _id) in $vs.getSearch(allAppointments, search)"
+            :data="appointment"
             @click="active = !active, getAppointmentDetail(appointment._id)"
           >
             <div class="bg-package">

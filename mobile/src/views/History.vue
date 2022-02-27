@@ -7,7 +7,9 @@
           <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
         
           <div class="Package-Card"
-            v-for="(history, i) in allHistories" :key="i"
+            :key="i"
+            v-for="(history, i) in $vs.getSearch(allHistories, search)"
+            :data="history"
             @click="getHistoryDetail(history._id),active = !active"  >
             <div class="bg-package package-green">
               <font-awesome-icon

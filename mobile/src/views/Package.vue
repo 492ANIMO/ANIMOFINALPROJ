@@ -35,9 +35,11 @@
           <div class="space-filter"></div>
           <div
             class="Package-Card"
-            v-for="pack in allPackage"
-            :key="pack._id"
-            @click="goToStep0(), getPackageDetail(pack._id)"
+            :key="_id"
+            v-for="(pack, _id) in $vs.getSearch(allPackage, search)"
+            :data="pack"
+            @click="active=!active, getPackageDetail(pack._id)"
+            
           >
             <div
               class="bg-package package-yellow"
@@ -66,6 +68,55 @@
           </div>
         </div>
       </div>
+
+      <vs-dialog v-model="active">
+        <template #header>
+          <h2 class="active-text">ชื่อแพ็คเกจ</h2>
+        </template>
+
+        <h2 class="Head-history">รายการรักษา</h2>
+        <div class="box-package">
+              <h2>วัคซีนพิษสุนัขบ้า</h2>
+              <div class="box-package-dt">
+                <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
+                ><br />
+                <font>อายุมากกว่า : <b>5 เดือน</b></font
+                ><br />
+                <font
+                  >รายละเอียด :
+                  <b
+                    >ฉีดปีละ 2 เข็ม โดยราคาที่จ่ายเป็นราคาสำหรับเข็มเดียว
+                    จะต้องกลับมาฉีดอีก 6 เดือนข้างหน้า</b
+                  ></font
+                ><br />
+              </div>
+            </div>
+
+        <div class="box-package">
+              <h2>ตรวจสุขภาพ</h2>
+              <div class="box-package-dt">
+                <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
+                ><br />
+                <font>อายุมากกว่า : <b>5 เดือน</b></font
+                ><br />
+                <font
+                  >รายละเอียด :
+                  <b
+                    >ไม่มี</b
+                  ></font
+                ><br />
+              </div>
+            </div>
+
+        <template #footer>
+          <div class="footer-button-none">
+            <div class="button-detail active-color" @click="goToStep1()">
+              จองแพ็คเกจ
+            </div>
+          </div>
+        </template>
+      </vs-dialog>
+
     </div>
   </div>
 </template>
@@ -88,8 +139,8 @@ export default {
   methods: {
     ...mapActions(["fetchPackage", "getPackageDetail"]),
 
-    goToStep0() {
-      this.$router.push('/mobile/step0'); 
+    goToStep1() {
+      this.$router.push('/mobile/step1'); 
     },
     BindPackageType: function (type) {
       if (type === "สุนัข") {
@@ -140,6 +191,11 @@ export default {
 
 <style scoped>
 @import url("../assets/css/style.css");
+.Head-history {
+  font-weight: 500;
+  font-size: 19px;
+  padding-top: 10px;
+}
 .fix-filter {
  background: #696969;
  padding-top: 15px;
@@ -207,10 +263,35 @@ export default {
   border-radius: 20px;
 }
 ::v-deep .vs-dialog {
-  width: 80%;
-  min-width: 80%;
+  width: 90%;
+  min-width: 90%;
 }
-::v-deep .vs-dialog__header {
-  font-size: 18px;
+::v-deep .vs-dialog__header h2 {
+  font-weight: 500;
+  color: #696969;
+}
+::v-deep .vs-dialog__content {
+  border-radius: 0px;
+  background: #e8ebf5;
+  padding-top: 0px !important;
+  padding-bottom: 20px !important;
+}
+::v-deep .box-package {
+  width: 100%;
+  margin-top: 5px;
+}
+::v-deep .box-package h2{
+  color: #696969;
+}
+::v-deep .button-detail {
+  width: 140px;
+  margin-right: 0px;
+}
+::v-deep .footer-button-none {
+  display: flex;
+  justify-content: center;
+  width: calc(100%);
+  padding: 10px;
+  margin-right: 0px;
 }
 </style>

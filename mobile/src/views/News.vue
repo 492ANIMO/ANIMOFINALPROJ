@@ -18,7 +18,11 @@
         <div class="content-news">
         <div class="Head-text-box">
           <img src="../assets/bento.png" alt="Animo" class="PicCatDT" />
-          <h2 class="Head-text-news">{{ annoucementDetail.title }}</h2>
+          <div class="Head-text-news">
+            <h2>{{ annoucementDetail.title }}</h2>
+            <h4>วันที่เขียน : 20/02/2022</h4>
+          </div>
+          
         </div>
 
         <div class="text-box-news">
@@ -87,11 +91,18 @@ export default {
   height: 100%;
   width: 100%;
   word-wrap: break-word;
-  padding: 20px;
+  padding: 20px 35px;
   text-align: left;
   font-size: 18px;
   color: #696969;
 }
+::v-deep .text-box-news img{
+  display: grid;
+  margin: auto;
+  max-width: calc(100vw - 70px);
+  border-radius: 10px;
+}
+
 .Head-text-box {
   width: 100%;
   height: 200px;
@@ -105,11 +116,25 @@ export default {
   background: rgb(105,105,105);
   background: linear-gradient(180deg, rgba(105,105,105,0) 0%, rgba(105,105,105,0.75) 100%);
   width: 100vw;
-  padding: 40px 20px 20px 20px;
+  padding: 40px 20px 10px 20px;
   color: #ffffff;
   font-size: 30px;
   word-wrap: break-word;
   font-weight: 500;
+  line-height: 1;
+}
+.Head-text-news h2 {
+  color: #ffffff;
+  font-size: 30px;
+  word-wrap: break-word;
+  font-weight: 500;
+  line-height: 1;
+}
+.Head-text-news h4 {
+  color: #ffffff;
+  font-size: 13px;
+  word-wrap: break-word;
+  font-weight: 400;
   line-height: 1;
 }
 .confirm-dt {

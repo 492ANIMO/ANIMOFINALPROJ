@@ -19,15 +19,15 @@
       <div class="BgNavSide">
         <ul>
           <div>
-            <router-link to="/mobile/mypet"><li><a><font-awesome-icon class="iconR" icon="paw"/>สัตว์เลี้ยง</a></li></router-link>
-            <router-link to="/mobile/package"><li><a><font-awesome-icon class="iconR" icon="syringe"/>แพ็คเกจ</a></li></router-link>
-            <router-link to="/mobile/history"><li><a><font-awesome-icon class="iconR" icon="clock"/>ประวัติการรักษา</a></li></router-link>
-            <router-link to="/mobile/appointment"><li><a><font-awesome-icon class="iconR" icon="clipboard-list"/>การนัดหมาย</a></li></router-link>
-            <router-link to="/mobile/annoucement"><li><a><font-awesome-icon class="iconR" icon="newspaper"/>ข่าวสาร</a></li></router-link>
+            <li @click="goTo1()"><font-awesome-icon icon="paw"/><a>สัตว์เลี้ยง</a></li>
+            <li @click="goTo2()"><font-awesome-icon icon="syringe"/><a>แพ็คเกจ</a></li>
+            <li @click="goTo3()"><font-awesome-icon icon="clock"/><a>ประวัติการรักษา</a></li>
+            <li @click="goTo4()"><font-awesome-icon icon="clipboard-list"/><a>การนัดหมาย</a></li>
+            <li @click="goTo5()"><font-awesome-icon icon="newspaper"/><a>ข่าวสาร</a></li>
           </div>
           
           <div>
-            <li @click="logout()"><font-awesome-icon class="iconR" icon="power-off"/>ออกจากระบบ</li>  
+            <li @click="logout()"><font-awesome-icon icon="power-off"/><a>ออกจากระบบ</a></li>  
           </div>
            
         </ul>
@@ -55,7 +55,22 @@ export default {
     },
   },
   methods: {
-    logout
+    logout,
+     goTo1() {
+      this.$router.push('/mobile/mypet'); 
+    },
+    goTo2() {
+      this.$router.push('/mobile/package'); 
+    },
+    goTo3() {
+      this.$router.push('/mobile/history'); 
+    },
+    goTo4() {
+      this.$router.push('/mobile/appointment'); 
+    },
+    goTo5() {
+      this.$router.push('/mobile/annoucement'); 
+    },
   }
 };
 </script>
@@ -94,6 +109,9 @@ li {
     color: #ffffff;
     padding: 15px 20px;
     text-decoration: none !important;
+    align-items: center;
+    display: grid;
+    grid: auto / 40px auto;
     align-items: center;
 }
 li:hover:not(.active) {

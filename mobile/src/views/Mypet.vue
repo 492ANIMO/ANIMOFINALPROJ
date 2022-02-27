@@ -7,8 +7,9 @@
         <div class="content2">
           <div
             class="PetCard"
-            v-for="pet in allPets"
-            :key="pet._id"
+            :key="_id"
+            v-for="(pet, _id) in $vs.getSearch(allPets, search)"
+            :data="pet"
             @click="(active = !active), fetchPetDetail(pet._id)"
           >
             <img src="../assets/bento.png" alt="Animo" class="PicCat" />

@@ -16,7 +16,10 @@
         <div class="content1">
             <h2 class="head-step">สัตว์เลี้ยงที่เข้าเงื่อนไข</h2>
 
-            <div v-for="pet in filterPet" :key="pet._id" class="Package-Card" @click="active = !active, setPet(pet)">
+            <div v-for="pet in filterPet" 
+            :key="pet._id" 
+            class="Package-Card" 
+            @click="active = !active, setPet(pet)">
             <div class="bg-package">
               <img
                 src="../assets/bento.png"
@@ -139,6 +142,10 @@ border-radius: 10px 0px 10px 0px;
 margin-top: -18px;
 background: #DDE4E5;
 }
+::v-deep .status-package:active{
+background: #808FDD !important;
+color: #ffffff;
+}
 ::v-deep .status-package h4{
 color: #ffffff;
 font-weight: 500;
@@ -156,6 +163,7 @@ padding: 3px;
 ::v-deep .Package-Card {
     border-radius: 10px;
 }
+
 ::v-deep .Package-Card h2{
     font-size: 20px !important;
     padding-top: 5px;
