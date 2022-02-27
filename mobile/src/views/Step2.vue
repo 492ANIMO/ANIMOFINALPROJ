@@ -27,6 +27,7 @@
                 />
               </div>
               <div class="content-input">
+                <span class="sp1">เวลาาาาา</span>
                 <vs-select
                   
                   class="select-grid"
@@ -105,6 +106,18 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+.sp1 {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(100vw - 80px);
+}
 .step-time-box {
   padding: 20px;
   margin-top: 20px;

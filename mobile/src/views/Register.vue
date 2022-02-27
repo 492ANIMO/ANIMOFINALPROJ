@@ -119,7 +119,7 @@
         </div>
       </div><br><br>
       <div class="footer-button">
-        <div class="button-addpet register-color" @click="createClientUser()">
+        <div class="button-addpet register-color" @click="goTomypet(),createClientUser()">
           <h4>ลงทะเบียน</h4>
         </div>
       </div>
@@ -161,6 +161,9 @@ export default {
   },
   methods: {
     ...mapActions(["createClientUser"]),
+    goTomypet() {
+      this.$router.push('/mobile/mypet'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",
