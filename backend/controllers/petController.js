@@ -241,9 +241,9 @@ exports.petCount = async (req, res, next) => {
         count: {$sum: 1}
       }
     }])
-
     console.log(result)
     res.send(result)
+
   } catch (error) {
     next(error)
   }
