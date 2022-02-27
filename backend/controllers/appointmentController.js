@@ -240,7 +240,7 @@ exports.showMyAppointment = async (req, res, next) => {
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { detail, medical } = req.body;
+    const { detail, medical, petPackage } = req.body;
 
     const query = await Appointment.findById(id).populate({ 
       path: 'pet',
@@ -253,17 +253,22 @@ exports.confirm = async (req, res, next) => {
      select: '-createdAt -updatedAt -__v', 
     })
 
-    const petDetail = await Pet.findById(query.pet);
+    // const petDetail = await Pet.findById(query.pet);
 
-    console.log('petDetail: '+ petDetail)
+    // console.log('petDetail: '+ petDetail)
 
     // update appointment detail and status
     const appointment = await Appointment.findByIdAndUpdate(id ,{
       detail,
       medical,
       status: 'รักษาเสร็จสิ้น',
-      petDetail
+      // petDetail,
+      reservation:{
+        package: petPackage
+      }
+      
     });
+    console.log(`petPackage: ${JSON.stringify(petPackage)}`)
     if (!appointment){
       console.log(appointment);
       throw new Error('ไม่สามารถยืนยันการรักษาได้')
@@ -285,21 +290,21 @@ exports.confirm = async (req, res, next) => {
     console.log(`confirmed: ${confirmedAppointment}`);
 
     // add to history
-    const history = new History({
-      pet: confirmedAppointment.pet,
-      package: confirmedAppointment.reservation.package,
-      appointment: confirmedAppointment
-    })
-    await history.save();
-    if(!history){
-      throw new Error('เพิ่มประวัติการรักษาไม่สำเร็จ');
-    }
+    // const history = new History({
+    //   pet: confirmedAppointment.pet,
+    //   package: confirmedAppointment.reservation.package,
+    //   appointment: confirmedAppointment
+    // })
+    // await history.save();
+    // if(!history){
+    //   throw new Error('เพิ่มประวัติการรักษาไม่สำเร็จ');
+    // }
 
     res.status(200).json({
       message: 'ยืนยันการรักษาและเพิ่มประวัติการรักษาสำเร็จ',
       data: {
         appointment,
-        history
+       
       }
     });
 

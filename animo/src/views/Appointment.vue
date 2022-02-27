@@ -370,7 +370,12 @@
           <vs-row>
           <vs-col v-for="(vaccine, i) in currentAppointment.reservation.package.vaccines" :key="i" w="12">
             <h4 class="HeadInput">{{ vaccine.name }}</h4>
-            <textarea class="TArea" label="รายละเอียดวัคซีน" placeholder="รายละเอียด">
+            <textarea 
+              class="TArea" 
+              label="รายละเอียดวัคซีน" 
+              placeholder="รายละเอียด"
+              v-model="currentAppointment.reservation.package.vaccines[i].medDetail"
+            >
             </textarea>
           </vs-col>
         </vs-row>
@@ -378,7 +383,11 @@
         <vs-row>
           <vs-col v-for="(treatment, i) in currentAppointment.reservation.package.treatments" :key="i" w="12">
             <h4 class="HeadInput">{{ treatment.name }}</h4>
-            <textarea class="TArea" label="รายละเอียดการรักษา" placeholder="รายละเอียด"
+            <textarea 
+              class="TArea" 
+              label="รายละเอียดการรักษา" 
+              placeholder="รายละเอียด"
+              v-model="currentAppointment.reservation.package.treatments[i].medDetail"
             >
             </textarea>
           </vs-col>
@@ -387,7 +396,11 @@
         <vs-row>
           <vs-col v-for="(healthCheck, i) in currentAppointment.reservation.package.healthChecks" :key="i" w="12">
             <h4 class="HeadInput">{{ healthCheck.name }}</h4>
-            <textarea class="TArea" label="รายละเอียดการตรวจสุขภาพ" placeholder="รายละเอียด"
+            <textarea 
+              class="TArea" 
+              label="รายละเอียดการตรวจสุขภาพ" 
+              placeholder="รายละเอียด"
+              v-model="currentAppointment.reservation.package.healthChecks[i].medDetail"
             >
             </textarea>
           </vs-col>
@@ -466,14 +479,7 @@ export default {
       date: "",
       time: "",
       reservation: {
-        package: [
-          {
-            name: "",
-            vaccines: "",
-            treatments: "",
-            healthChecks: "",
-          },
-        ],
+        package: [],
       },
       by: "",
       detail: '',
@@ -682,10 +688,13 @@ export default {
     },
     confirmAppointment(id) {
       let baseURL = "http://localhost:4000/api/appointments/confirm/" + id;
-      axios
-        .patch(baseURL, {
+
+      console.log(`id: ${id}`);
+      console.log(`package: ${JSON.stringify(this.currentAppointment.reservation.package)}`)
+      const petPackage = this.currentAppointment.reservation.package;
+      axios.patch(baseURL, {
           detail: this.currentAppointment.detail,
-          medical: this.currentAppointment.medical
+          petPackage
         })
         .then((res) => {
           this.currentAppointment = {
@@ -704,20 +713,13 @@ export default {
             date: "",
             time: "",
             reservation: {
-              package: [
-                {
-                  name: "",
-                  vaccines: "",
-                  treatments: "",
-                  healthChecks: "",
-                },
-              ],
+              package: [],
             },
             by: "",
           };
 
           console.log(res.data.message);
-          console.log(res.data.data);
+          console.log(res.data.appointment);
 
           this.load();
         })
