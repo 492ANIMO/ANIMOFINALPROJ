@@ -87,6 +87,8 @@
           </div>
 
           <div class="content-input grid">
+            <span class="sp1">ตำบล</span>
+            <span class="sp2">อำเภอ</span>
             <vs-select
               class="select-grid"
               label="อำเภอ"
@@ -95,6 +97,7 @@
             >
               <vs-option label="แมว" value="1"> แมว </vs-option>
             </vs-select>
+            
             <vs-select
               class="input-grid1"
               label="ตำบล"
@@ -174,6 +177,31 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+.sp1 {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(50vw - 80px);
+  left: calc(50vw + 2px);
+}
+.sp2 {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(50vw - 80px);
+}
 .register-color {
   background: rgb(123, 198, 204);
   background: linear-gradient(
@@ -302,5 +330,11 @@ export default {
 }
 ::v-deep .vs-select {
   z-index: 1;
+}
+::v-deep .vs-select__input:hover {
+  transform: translate(0, 0px) !important;
+}
+::v-deep .vs-select__input:focus {
+  transform: translate(0, 0px) !important;
 }
 </style>
