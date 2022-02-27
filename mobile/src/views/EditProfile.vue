@@ -68,32 +68,58 @@
           </div>
 
           <div class="content-input">
+            <span class="sp3">{{currentUser.profile.address.province}}</span>
             <vs-select
               class="select-grid"
               label="จังหวัด"
               placeholder="จังหวัด"
               v-model="currentUser.profile.address.province"
+              @change="fetchDistrict(currentUser.profile.address.province)"
             >
-              <vs-option label="แมว" value="1"> แมว </vs-option>
+              <vs-option
+                v-for="(data, i) in addressDropdown.provinces" 
+                :key="i"
+                :label="data.province" 
+                :value="data.province"> 
+                {{ data.province }} 
+              </vs-option>
             </vs-select>
           </div>
 
           <div class="content-input grid">
+             <span class="sp1">{{currentUser.profile.address.subdistrict}}</span>
+            <span class="sp2">{{currentUser.profile.address.district}}</span>
             <vs-select
               class="select-grid"
               label="อำเภอ"
               placeholder="อำเภอ"
               v-model="currentUser.profile.address.district"
+              @change="fetchSubDistrict({
+                province:currentUser.profile.address.province,district:currentUser.profile.address.district
+                })"
             >
-              <vs-option label="แมว" value="1"> แมว </vs-option>
+              <vs-option 
+                v-for="(data, i) in addressDropdown.districts" 
+                :key="i"
+                :label="data" 
+                :value="data"> 
+                {{ data }} 
+              </vs-option>
             </vs-select>
+
             <vs-select
               class="input-grid1"
               label="ตำบล"
               placeholder="ตำบล"
               v-model="currentUser.profile.address.subdistrict"
             >
-              <vs-option label="แมว" value="1"> แมว </vs-option>
+              <vs-option 
+                v-for="(data, i) in addressDropdown.subdistricts" 
+                :key="i"
+                :label="data" 
+                :value="data"> 
+                {{ data }} 
+              </vs-option>
             </vs-select>
           </div>
 
@@ -142,10 +168,11 @@ export default {
   },
   created() {
     //this.openLoading();
-    // this.fetchCurrentUser();
+    this.fetchCurrentUser();
+    this.fetchProvince();
   },
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGetters(["currentUser", 'addressDropdown']),
 
     validEmail() {
       return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
@@ -154,7 +181,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["createClientUser"]),
+    ...mapActions(["createClientUser", 'fetchCurrentUser', 'fetchProvince', 'fetchDistrict', 'fetchSubDistrict']),
     editProfile , //from clientService
 
     goToProfile() {
@@ -184,6 +211,44 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+.sp1 {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(50vw - 80px);
+  left: calc(50vw + 2px);
+}
+.sp2 {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(50vw - 80px);
+}
+.sp3 {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(50vw - 80px);
+  left: 30px;
+}
 .register-color {
   background: rgb(123, 198, 204);
   background: linear-gradient(

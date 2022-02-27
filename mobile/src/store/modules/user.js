@@ -3,7 +3,13 @@ import axios from "axios";
 const state = {
   currentUser: {
     profile:{
-      address:{}
+      address:{
+        province: '',
+        district: '',
+        subdistrict: '',
+        detail: '',
+        postalCode: '',
+      }
     }
   }
 }

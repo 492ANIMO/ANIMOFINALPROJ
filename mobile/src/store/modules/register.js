@@ -29,6 +29,7 @@ const state = {
 const getters = {
   // allAppointments: (state) => state.appointments,
   registerForm: (state) => state.form,
+  editProfileForm: (state) => state.editProfileForm,
   addressDropdown: (state) => state.addressDropdown,
 };
 
@@ -47,6 +48,7 @@ const actions = {
     }
   },
 
+
   async fetchProvince({commit}){
     try {
       const response = await axios.get(`${addressBaseUrl}/v1/thailand/provinces`);
@@ -64,6 +66,7 @@ const actions = {
 
   async fetchDistrict({commit}, province){
     try {
+      // if(!province) province = state.currentUser.profile.address.province;
       const response =  await axios.get(`${addressBaseUrl}/v1/thailand/provinces/${province}/district`)
       console.log(response.data.data);
       commit('setDistrictDropdown', response.data.data)
@@ -76,9 +79,9 @@ const actions = {
     }
   },
   
-  async fetchSubDistrict({commit}){
+  async fetchSubDistrict({commit}, {province, district}){
     try {
-      const response =  await axios.get(`${addressBaseUrl}/v1/thailand/provinces/${state.form.address.province}/district/${state.form.address.district}`)
+      const response =  await axios.get(`${addressBaseUrl}/v1/thailand/provinces/${province}/district/${district}`)
       console.log(response.data.data);
       commit('setSubDistrictDropdown', response.data.data)
 
