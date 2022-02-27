@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="bar-register">
-      <router-link to="/login"
+    <div class="bar-register" @click="goTologin()">
+      <router-link to=""
         ><h4><font-awesome-icon class="iconR" icon="chevron-left" /></h4
       ></router-link>
       <h4>ANIMO</h4>
@@ -187,6 +187,9 @@ export default {
     goTomypet() {
       this.$router.push('/mobile/mypet'); 
     },
+    goTologin() {
+      this.$router.push('/'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",
@@ -252,7 +255,7 @@ export default {
 }
 .bar-register {
   height: 80px;
-  width: 100%;
+  width: calc(100vw - 8px);
   display: grid;
   grid: auto / 10px auto 10px;
   text-align: center;
@@ -302,8 +305,9 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: calc(100% - 50px);
+  height: calc(100% - 70px);
   overflow: auto;
+  width: calc(100vw - 8px);
 }
 ::v-deep .content1 {
   padding: 30px;
