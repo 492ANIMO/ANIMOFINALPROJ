@@ -76,6 +76,7 @@
           </div>
 
           <div class="content-input">
+            <span class="sp3">{{registerForm.address.province}}</span>
             <vs-select
               class="select-grid"
               label="จังหวัด"
@@ -94,8 +95,8 @@
           </div>
 
           <div class="content-input grid">
-            <span class="sp1">ตำบล</span>
-            <span class="sp2">อำเภอ</span>
+            <span class="sp1">{{registerForm.address.subdistrict}}</span>
+            <span class="sp2">{{registerForm.address.district}}</span>
             <vs-select
               class="select-grid"
               label="อำเภอ"
@@ -227,6 +228,19 @@ export default {
   max-height: 25px;
   overflow: hidden;
   max-width: calc(50vw - 80px);
+}
+.sp3 {
+  color: #696969;
+  position: absolute;
+  z-index: 2;
+  margin-top: 9px;
+  margin-left: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  max-height: 25px;
+  overflow: hidden;
+  max-width: calc(50vw - 80px);
+  left: 30px;
 }
 .register-color {
   background: rgb(123, 198, 204);
