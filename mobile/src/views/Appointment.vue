@@ -28,7 +28,7 @@
                 <h4>{{ appointment.status }}</h4>
               </div>
               <h2 v-if="appointment.by==='การจอง'">{{appointment.reservation.package.name }}</h2>
-              <h2 v-else-if="appointment.status==='pending'">{{ appointment.package.name }}</h2>
+              <h2 v-else-if="appointment.status==='รอยืนยัน'">{{ appointment.package.name }}</h2>
               <h2 v-else>{{ appointment.type }}</h2>
               <div class="TextDT">
                 <font
@@ -70,15 +70,15 @@
             ><br />
             <font>รายละเอียด : <b>{{ appointmentDetail.detail }}</b></font
             ><br />
-            <font v-if="appointmentDetail.status==='pending'">ราคา : <b class="active-text">{{ appointmentDetail.package.price }} บาท</b></font>
+            <font v-if="appointmentDetail.status==='รอยืนยัน'">ราคา : <b class="active-text">{{ appointmentDetail.package.price }} บาท</b></font>
             <font v-else-if="appointmentDetail.by==='การจอง'">ราคา : <b class="active-text">{{ appointmentDetail.reservation.package.price }} บาท</b></font>
             <br/>
         </div>
 
-        <div v-if="appointmentDetail.by === 'การจอง' || appointmentDetail.status === 'pending'" class="">
+        <div v-if="appointmentDetail.by === 'การจอง' || appointmentDetail.status === 'รอยืนยัน'" class="">
           <h2 class="Head-history">รายการแพ็คเกจ</h2>
 
-          <div v-if="appointmentDetail.status === 'pending'" class="box-package">
+          <div v-if="appointmentDetail.status === 'รอยืนยัน'" class="box-package">
               <font v-for="(vaccine, i) in appointmentDetail.package.vaccines" :key="i">
                 <div class="dot-list"></div><b>{{ vaccine.name }}</b>
                 <br/>

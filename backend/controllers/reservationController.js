@@ -12,7 +12,7 @@ const timeslot = require('../models/timeslot');
 // get all reservations
 exports.index = async (req, res, next) => {
   try {
-    const reservation = await Reservation.find({ status: 'pending' })
+    const reservation = await Reservation.find({ status: 'รอยืนยัน' })
     .sort({date: 'asc'})
     .populate({ 
       path: 'package',
@@ -82,7 +82,7 @@ exports.show = async (req, res, next) => {
 // add new reservation
 exports.create = async (req, res, next) => {
   try {
-    const { petId, packageId, date, time, doctor, status } = req.body;
+    const { petId, packageId, date, time, doctor } = req.body;
 
      //validation
      const errors = validationResult(req);
@@ -139,7 +139,7 @@ exports.create = async (req, res, next) => {
       date,
       time,
       doctor,
-      status,
+      status: 'รอยืนยัน',
       owner,
       resId: new Date().getTime().toString()
     });

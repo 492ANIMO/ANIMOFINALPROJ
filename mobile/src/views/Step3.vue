@@ -45,7 +45,7 @@
 
 
 
-              <font>วันที่นัดหมาย : <b>{{ form.date }}</b></font
+              <font>วันที่นัดหมาย : <b>{{ format_date(form.date) }}</b></font
               ><br />
               <font>เวลา : <b>{{ form.time }}</b></font
               ><br />
@@ -87,10 +87,12 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import mixins from "../mixins";
 import Navbar from "../components/Navbar";
 
 export default {
   name: "Step3",
+  mixins: [mixins],
   data() {
     return {
       search: "",
