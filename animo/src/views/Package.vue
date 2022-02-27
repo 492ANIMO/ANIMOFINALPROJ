@@ -459,7 +459,7 @@
               class="BT2"
               style="float: right; width: 80px"
               :disabled="$v.currentPackage.$invalid"
-            >
+            ><font-awesome-icon class="iconBTr" icon="edit" />
               แก้ไข </vs-button
             ><br /><br />
           </div>
