@@ -658,7 +658,6 @@ h3 {
 }
 ::v-deep .vs-dialog__content {
   padding: 25px 30px;
-  overflow-x: hidden !important;
 }
 ::v-deep .vs-table__td {
   padding: 5px 12px;

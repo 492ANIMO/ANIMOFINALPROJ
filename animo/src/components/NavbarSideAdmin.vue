@@ -7,10 +7,10 @@
           <h6>Role : Admin</h6>
         </div>
       </li>
-      <li><router-link to="/Admin/addpet"><font-awesome-icon class="icon" icon="dog"/>ประเภทสัตว์</router-link></li>
-      <li><router-link to="/Admin/addvaccine"><font-awesome-icon class="icon" icon="syringe"/>รายการวัคซีน</router-link></li>
-      <li><router-link to="/Admin/addtreatment"><font-awesome-icon class="icon" icon="notes-medical"/>รายการรักษา</router-link></li>
-      <li><router-link to="/Admin/annoucement"><font-awesome-icon class="icon" icon="newspaper"/>บทความ</router-link></li>
+      <li><router-link class="Nav-box" to="/Admin/addpet"><font-awesome-icon class="icon" icon="dog"/>ประเภทสัตว์</router-link></li>
+      <li><router-link class="Nav-box" to="/Admin/addvaccine"><font-awesome-icon class="icon" icon="syringe"/>รายการวัคซีน</router-link></li>
+      <li><router-link class="Nav-box" to="/Admin/addtreatment"><font-awesome-icon class="icon" icon="notes-medical"/>รายการรักษา</router-link></li>
+      <li><router-link class="Nav-box" to="/Admin/annoucement"><font-awesome-icon class="icon" icon="newspaper"/>บทความ</router-link></li>
     </ul>
   </div>
 </template>
@@ -80,5 +80,10 @@ li a:hover:not(.active) {
   font-weight: 300;
   margin: -8px 0px 5px 0px;
   color: rgba(255, 255, 255, 0.7);
+}
+.Nav-box {
+    display: grid;
+    grid: auto / 30px 100px ;
+    align-items: center;
 }
 </style>

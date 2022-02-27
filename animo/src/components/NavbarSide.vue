@@ -9,11 +9,11 @@
                 Role : Doctor
             </h6>
             </div></li>
-        <li><router-link to="/dashboard"><font-awesome-icon class="icon" icon="chart-pie"/>แดชบอร์ด</router-link></li>
-        <li><router-link to="/clients"><font-awesome-icon class="icon" icon="paw"/>ข้อมูลผู้ใช้</router-link></li>
-        <li><router-link to="/package"><font-awesome-icon class="icon" icon="syringe"/>แพ็คเกจ</router-link></li>
-        <li><router-link to="/reservation"><font-awesome-icon class="icon" icon="file-medical"/>การจอง</router-link></li>
-        <li><router-link to="/appointment"><font-awesome-icon class="icon" icon="clipboard-list"/>การนัดหมาย</router-link></li>
+        <li><router-link class="Nav-box" to="/dashboard"><font-awesome-icon class="icon" icon="chart-pie"/><h4>แดชบอร์ด</h4></router-link></li>
+        <li><router-link class="Nav-box" to="/clients"><font-awesome-icon class="icon" icon="paw"/><h4>ข้อมูลผู้ใช้</h4></router-link></li>
+        <li><router-link class="Nav-box" to="/package"><font-awesome-icon class="icon" icon="syringe"/><h4>แพ็คเกจ</h4></router-link></li>
+        <li><router-link class="Nav-box" to="/reservation"><font-awesome-icon class="icon" icon="file-medical"/><h4>การจอง</h4></router-link></li>
+        <li><router-link class="Nav-box" to="/appointment"><font-awesome-icon class="icon" icon="clipboard-list"/><h4>การนัดหมาย</h4></router-link></li>
     </ul>
 </div>
 
@@ -33,6 +33,10 @@ h3 {
 }
 h6 {
     font-size: 1.25vw;
+}
+h4 {
+    margin: 0px;
+    font-weight: 400;
 }
 ul {
     list-style-type: none;
@@ -59,6 +63,11 @@ li a:hover:not(.active) {
     background: rgb(204,233,216);
     background: linear-gradient(60deg, rgba(204,233,216,0.1) 0%, rgba(173,228,228,0.1) 100%);
     color: white;
+}
+.Nav-box {
+    display: grid;
+    grid: auto / 30px 100px ;
+    align-items: center;
 }
 .NavProfile {
     background: rgb(167,218,187);
