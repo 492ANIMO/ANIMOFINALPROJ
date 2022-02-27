@@ -5,10 +5,12 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: "Chart",
   data() {
     return {
+      colors:['#f29c77','#f785b0','#b798e3','#64ced0',],
       chartOptions: {
         title: {
           text: "",
@@ -48,12 +50,12 @@ export default {
             data: [
               {
                 name: "สุนัข",
-                y: 10,
+                y: 2,
                 color: '#f29c77'
               },
               {
                 name: "แมว",
-                y: 15,
+                y: 3,
                 color: '#f785b0'
               },
               {
@@ -94,7 +96,30 @@ export default {
     myCallback() {
       console.log("this is callback function");
     },
+    countPetType(){
+      let baseURL = "http://localhost:4000/api/pets/petCount"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        console.log(res.data);
+        const response = res.data;
+        this.chartOptions.series[0].data = response.map( data => {
+          return{
+            name: data._id,
+            y: data.count,
+            color: this.colors[response.indexOf(data)]
+          }
+        })
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
   },
+  created(){
+    this.countPetType();
+  }
 };
 </script>
 

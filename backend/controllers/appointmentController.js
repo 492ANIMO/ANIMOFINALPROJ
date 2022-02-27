@@ -1,3 +1,5 @@
+
+
 const { validationResult } = require('express-validator');
 
 // import models
@@ -330,6 +332,51 @@ exports.succeedAppointment = async (req, res, next) => {
     const appointment = await Appointment.find({'status': 'รักษาเสร็จสิ้น'}).where('pet').in(pets).populate('pet').exec();
   
     // get appointment by pet id
+    res.status(200).json({
+      message: 'สำเร็จ',
+      appointment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.filterTodayAppointment = async (req, res, next) => {
+  try {
+    const type = req.query.type;
+    const date = req.query.date;
+    console.log('type: '+type)
+    console.log('date: '+date)
+
+    const condition = {}
+
+    if(!type && date){
+      console.log('!type && date')
+      condition.date = date
+    }else if(type && !date){
+      console.log('type && !date')
+      condition.type= type
+     
+    }else if(type && date){
+      console.log('type && date')
+      condition.date = date;
+      condition.type = type;
+       
+    }else{
+      condition = {}
+    }
+    
+    // const d = new Date().toISOString()
+    // console.log(d);
+    // const formatDate = d.split('T')[0];
+    // console.log(formatDate);
+
+    console.log('condition: '+JSON.stringify(condition))
+
+    const appointment = await Appointment.find(condition);
+    if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
+
     res.status(200).json({
       message: 'สำเร็จ',
       appointment
