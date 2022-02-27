@@ -1,4 +1,5 @@
 import axios from 'axios'
+const addressBaseUrl = 'https://thaiaddressapi-thaikub.herokuapp.com'
 
 const state = {
  appointments: [],
@@ -16,12 +17,19 @@ const state = {
      postalCode: '',
      detail: ''
    }
- }
+ },
+ addressDropdown:{
+    provinces: [],
+    districts: [],
+    subdistricts: [],
+ },
+ 
 };
 
 const getters = {
   // allAppointments: (state) => state.appointments,
   registerForm: (state) => state.form,
+  addressDropdown: (state) => state.addressDropdown,
 };
 
 const actions = {
@@ -38,9 +46,54 @@ const actions = {
       console.log(error)
     }
   },
+
+  async fetchProvince({commit}){
+    try {
+      const response = await axios.get(`${addressBaseUrl}/v1/thailand/provinces`);
+      console.log(response.data.data);
+      commit('setProvincesDropdown', response.data.data)
+      
+
+      if(response.error){
+        throw new Error(response.error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
+  async fetchDistrict({commit}, province){
+    try {
+      const response =  await axios.get(`${addressBaseUrl}/v1/thailand/provinces/${province}/district`)
+      console.log(response.data.data);
+      commit('setDistrictDropdown', response.data.data)
+
+      if(response.error){
+        throw new Error(response.error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  
+  async fetchSubDistrict({commit}){
+    try {
+      const response =  await axios.get(`${addressBaseUrl}/v1/thailand/provinces/${state.form.address.province}/district/${state.form.address.district}`)
+      console.log(response.data.data);
+      commit('setSubDistrictDropdown', response.data.data)
+
+      if(response.error){
+        throw new Error(response.error)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  },
 };
 const mutations = {
-
+  setProvincesDropdown: (state, provinces) => (state.addressDropdown.provinces = provinces ),
+  setDistrictDropdown: (state, districts) => (state.addressDropdown.districts = districts ),
+  setSubDistrictDropdown: (state, subdistricts) => (state.addressDropdown.subdistricts = subdistricts ),
 };
 
 export default{

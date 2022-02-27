@@ -81,8 +81,15 @@
               label="จังหวัด"
               placeholder="จังหวัด"
               v-model="registerForm.address.province"
+              @change="fetchDistrict(registerForm.address.province)"
             >
-              <vs-option label="แมว" value="1"> แมว </vs-option>
+              <vs-option
+                v-for="(data, i) in addressDropdown.provinces" 
+                :key="i"
+                :label="data.province" 
+                :value="data.province"> 
+                {{ data.province }} 
+              </vs-option>
             </vs-select>
           </div>
 
@@ -94,8 +101,15 @@
               label="อำเภอ"
               placeholder="อำเภอ"
               v-model="registerForm.address.district"
+              @change="fetchSubDistrict()"
             >
-              <vs-option label="แมว" value="1"> แมว </vs-option>
+              <vs-option 
+                v-for="(data, i) in addressDropdown.districts" 
+                :key="i"
+                :label="data" 
+                :value="data"> 
+                {{ data }} 
+              </vs-option>
             </vs-select>
             
             <vs-select
@@ -104,7 +118,13 @@
               placeholder="ตำบล"
               v-model="registerForm.address.subdistrict"
             >
-              <vs-option label="แมว" value="1"> แมว </vs-option>
+              <vs-option 
+                v-for="(data, i) in addressDropdown.subdistricts" 
+                :key="i"
+                :label="data" 
+                :value="data"> 
+                {{ data }} 
+              </vs-option>
             </vs-select>
           </div>
 
@@ -149,9 +169,11 @@ export default {
   },
   created() {
     //this.openLoading();
+    this.fetchProvince();
+
   },
   computed: {
-    ...mapGetters(["registerForm"]),
+    ...mapGetters(["registerForm", 'addressDropdown', ]),
 
     validEmail() {
       return /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
@@ -160,7 +182,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["createClientUser"]),
+    ...mapActions(["createClientUser", 'fetchProvince', 'fetchDistrict', 'fetchSubDistrict']),
     goTomypet() {
       this.$router.push('/mobile/mypet'); 
     },
@@ -176,6 +198,7 @@ export default {
       }, 3000);
     },
   },
+
 };
 </script>
 <style scoped>
