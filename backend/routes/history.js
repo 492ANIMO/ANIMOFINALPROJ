@@ -8,7 +8,7 @@ const historyController = require('../controllers/historyController');
 
 /* GET users listing. */
 router.get('/', historyController.index);
-router.get('/myHistory/', [passportJWT.isLogin], historyController.myHistory);
+router.get('/myHistory', [passportJWT.isLogin], historyController.myHistory);
 router.get('/:id', historyController.show);
 router.get('/pet/:petId', historyController.showByPetId);
 // router.get('/:id', clientController.show);
