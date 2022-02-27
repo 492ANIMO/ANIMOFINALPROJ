@@ -25,13 +25,13 @@
           </div>
           <br />
           <div class="Content-1-1">
-           <h4>เคสวัคซีน</h4>
+           <h4>การนัดหมาย</h4>
            <br>
            <div>
               <div class="g-box">
                 <h5>วันนี้</h5>
                 <div>
-                  <h3 style="color: #2fc0a7">20</h3>
+                  <h3 style="color: #2fc0a7">{{ todayAppointment }}</h3>
                 </div>
               </div>
             </div>
@@ -39,20 +39,20 @@
               <div class="g-box">
                 <h5>ทั้งหมด</h5>
                 <div>
-                  <h3 style="color: #32a0be">100</h3>
+                  <h3 style="color: #32a0be">{{ totalAppointment }}</h3>
                 </div>
               </div>
             </div>
           </div>
           <br />
           <div class="Content-1-1">
-            <h4>เคสการรักษา</h4>
+            <h4>การจองแพ็คเกจ</h4>
             <br>
            <div>
               <div class="g-box">
                 <h5>วันนี้</h5>
                 <div>
-                  <h3 style="color: #8d66b8">20</h3>
+                  <h3 style="color: #8d66b8">{{ todayReservation }}</h3>
                 </div>
               </div>
             </div>
@@ -60,7 +60,7 @@
               <div class="g-box">
                 <h5>ทั้งหมด</h5>
                 <div>
-                  <h3 style="color: #5a62c6">100</h3>
+                  <h3 style="color: #5a62c6">{{ totalReservation }}</h3>
                 </div>
               </div>
             </div>
@@ -76,6 +76,7 @@ import Navbar from "@/components/Navbar.vue";
 import NavbarSide from "@/components/NavbarSide.vue";
 import Chart from "@/components/Chart";
 import PieChart from "@/components/PieChart";
+import axios from 'axios';
 
 export default {
   name: "Dashboard",
@@ -85,7 +86,78 @@ export default {
     Chart,
     PieChart
   },
-  data: () => ({}),
+  data: () => ({
+    todayAppointment: '0',
+    totalAppointment: '0',
+    todayReservation: '0',
+    totalReservation: '0',
+  }),
+  methods: {
+    getTodayAppointment(type, date){
+      // DATE FORMAT : 'YYYY-MM-DD'
+      if(date==='today'){ //if date = null -> today
+        date = new Date().toISOString()
+        date = date.split('T')[0];
+      }
+      if(!type||type==='') type = null
+
+      const params = {
+        type: type,
+        date: date,
+      }
+
+      let baseURL = "http://localhost:4000/api/appointments/today/";
+      axios
+        .get(`${(baseURL)}`,{params})
+        .then((res) => {
+          this.todayAppointment = res.data.appointment.length
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getTotalAppointment(){
+      let baseURL = "http://localhost:4000/api/appointments/";
+      axios
+        .get(`${(baseURL)}`)
+        .then((res) => {
+          this.totalAppointment = res.data.appointment.length
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getTotalReservation(){
+      let baseURL = "http://localhost:4000/api/reservations/";
+      axios
+        .get(`${(baseURL)}`)
+        .then((res) => {
+          this.totalReservation = res.data.reservation.length
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getTodayReservation(){
+      let baseURL = "http://localhost:4000/api/reservations/today";
+      axios
+        .get(`${(baseURL)}`)
+        .then((res) => {
+          this.todayReservation = res.data.reservation.length
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+  created(){
+    this.getTodayAppointment(null ,'today');
+    this.getTotalAppointment();
+    this.getTodayReservation();
+    this.getTotalReservation();
+
+
+  }
 };
 </script>
 <style scoped>

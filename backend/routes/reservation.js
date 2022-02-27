@@ -5,6 +5,7 @@ const reservationController = require('../controllers/reservationController.js')
 
 /* GET users listing. */
 router.get('/', reservationController.index);
+router.get('/today', reservationController.filterTodayReservation);
 router.get('/:id', reservationController.show);
 
 router.post('/', reservationController.create);

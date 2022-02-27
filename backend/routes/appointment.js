@@ -11,6 +11,8 @@ router.get('/myAppointment', [passportJWT.isLogin], appointmentController.showMy
 
 router.get('/succeed', [passportJWT.isLogin], appointmentController.succeedAppointment);
 
+router.get('/today', appointmentController.filterTodayAppointment);
+
 router.get('/:id', appointmentController.show);
 router.get('/pet/:petId', appointmentController.showByPet);
 router.get('/client/:clientId', appointmentController.showByOwner);
