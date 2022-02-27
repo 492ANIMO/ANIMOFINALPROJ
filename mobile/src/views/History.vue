@@ -49,7 +49,7 @@
           <h2>รายละเอียด</h2>
         </template>
 
-        <h2 class="Head-history">ข้อมูลสัตว์</h2>
+        <h2 class="Head-history">ข้อมูลการนัด</h2>
         <div class="box-package">
             <font>ชื่อสัตว์เลี้ยง : <b>{{ historyDetail.pet.name }}</b></font
             ><br />
@@ -57,11 +57,12 @@
             ><br />
             <font>ประเภทการนัดหมาย : <b>{{ historyDetail.by }}</b></font
             ><br />
+            <font>วันที่ : <b>{{ format_date(historyDetail.date) }}</b></font><br />
+            <font>เวลา : <b>{{ historyDetail.time }}</b></font><br/>
+          
         </div>
 
        
-        
-
 
         <div v-if="historyDetail.by==='การจอง'">
            <h2 class="Head-history">{{ historyDetail.reservation.package.name }}</h2>
@@ -96,8 +97,6 @@
           <div class="box-package">
             <h2>{{ historyDetail.type }}</h2>
             <div class="box-package-dt">
-              <font>วันที่ : <b>{{ format_date(historyDetail.date) }}</b></font><br />
-              <font>เวลา : <b>{{ historyDetail.time }}</b></font><br />
               <font>สถานะ : <b>{{ historyDetail.status }}</b></font><br />
               <font>รายละเอียดการรักษา : <b>{{ historyDetail.medDetail }}</b></font><br />
             </div>
