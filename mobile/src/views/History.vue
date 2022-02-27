@@ -59,21 +59,13 @@
             ><br />
         </div>
 
-        <h2 v-if="historyDetail.by==='การจอง'" class="Head-history">{{ historyDetail.reservation.package.name }}</h2>
-        <div v-else>
-          <h2  class="Head-history">{{ historyDetail.by }}</h2>
-          <div class="box-package">
-            <h2>{{ historyDetail.type }}</h2>
-            <div class="box-package-dt">
-              <font>วันที่ : <b>{{ format_date(historyDetail.date) }}</b></font><br />
-              <font>เวลา : <b>{{ historyDetail.time }}</b></font><br />
-              <font>สถานะ : <b>{{ historyDetail.status }}</b></font><br />
-              <font>รายละเอียดการรักษา : <b>{{ historyDetail.medDetail }}</b></font><br />
-            </div>
-          </div>
-        </div>
+       
+        
 
-        <div v-for="(data, i) in historyDetail.reservation.package.vaccines" :key="i" class="box-package">
+
+        <div v-if="historyDetail.by==='การจอง'">
+           <h2 class="Head-history">{{ historyDetail.reservation.package.name }}</h2>
+           <div v-for="(data, i) in historyDetail.reservation.package.vaccines" :key="i" class="box-package">
           <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
             <font>เลขล็อตวัคซีน : <b>{{ data.lot_number }}</b></font
@@ -98,6 +90,21 @@
             ><br />
           </div>
         </div>
+      </div>
+      <div v-else>
+          <h2  class="Head-history">{{ historyDetail.by }}</h2>
+          <div class="box-package">
+            <h2>{{ historyDetail.type }}</h2>
+            <div class="box-package-dt">
+              <font>วันที่ : <b>{{ format_date(historyDetail.date) }}</b></font><br />
+              <font>เวลา : <b>{{ historyDetail.time }}</b></font><br />
+              <font>สถานะ : <b>{{ historyDetail.status }}</b></font><br />
+              <font>รายละเอียดการรักษา : <b>{{ historyDetail.medDetail }}</b></font><br />
+            </div>
+          </div>
+        </div>
+
+       
 
         <template #footer>
           <div class="footer-button-none">
