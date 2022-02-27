@@ -6,10 +6,10 @@
         <img class="intro" src="../assets/intro1.jpg" alt="">
       </div>
       <div class="ImBox">
-        <img class="intro" src="../assets/intro2.jpg" alt="">
+        <img class="intro" src="../assets/intro02.jpg" alt="">
       </div>
       <div class="ImBox">
-        <img class="intro" src="../assets/intro3.jpg" alt="">
+        <img class="intro" src="../assets/intro01.jpg" alt="">
       </div>
     </div>
 </div>
