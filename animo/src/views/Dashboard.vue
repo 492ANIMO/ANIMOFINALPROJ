@@ -7,27 +7,35 @@
     <div class="Content1">
       <div class="ContentGarph">
         <div class="Content-0">
-          <h2>จำนวนสัตว์ที่เข้ารับการรักษา</h2>
-          <template>
-            <div id="app">
-              <Chart />
-            </div>
-          </template>
+          <div class="Content-0-1">
+            <h2>จำนวนสัตว์ที่เข้ารับการรักษา</h2>
+            <template>
+              <div id="app">
+                <Chart />
+              </div>
+            </template>
+          </div><br>
+          <div class="Content-1-2">
+            <h2>ผู้ใช้ใหม่วันนี้</h2>
+            <h3 style="color: #2aa8cf">20</h3>
+            <h2>ผู้ใช้ทั้งหมด</h2>
+            <h3 style="color: #2f6dc2">200</h3>
+          </div>
         </div>
         <div class="Content-1-box">
           <div class="Content-1">
             <h4 class="head-type">ประเภทสัตว์</h4>
             <template>
-            <div id="app">
-              <PieChart class="p-chart"/>
-            </div>
-          </template>
+              <div id="app">
+                <PieChart class="p-chart" />
+              </div>
+            </template>
           </div>
           <br />
           <div class="Content-1-1">
-           <h4>เคสวัคซีน</h4>
-           <br>
-           <div>
+            <h4>เคสวัคซีน</h4>
+            <br />
+            <div>
               <div class="g-box">
                 <h5>วันนี้</h5>
                 <div>
@@ -47,8 +55,8 @@
           <br />
           <div class="Content-1-1">
             <h4>เคสการรักษา</h4>
-            <br>
-           <div>
+            <br />
+            <div>
               <div class="g-box">
                 <h5>วันนี้</h5>
                 <div>
@@ -65,10 +73,10 @@
               </div>
             </div>
           </div>
-          </div>
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -83,7 +91,7 @@ export default {
     Navbar,
     NavbarSide,
     Chart,
-    PieChart
+    PieChart,
   },
   data: () => ({}),
 };
@@ -107,18 +115,20 @@ h4 {
   margin-top: -10px;
 }
 .p-chart {
-  transform: translateY(-25%);
+  transform: translateY(-17%);
 }
-.g-box{
+.g-box {
   text-align: center;
   color: #696969;
 }
 .g-box h5 {
   margin: 0px;
   font-weight: 500;
+  font-size: 16px;
+  color: #949494;
 }
 .g-box h3 {
-  font-size: 35px;
+  font-size: 42px;
   margin: 5px;
 }
 .Content-1-box {
@@ -133,23 +143,44 @@ h4 {
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 20px;
-  height: 140px;
+  height: 170px;
   overflow: hidden;
+}
+.Content-0-1 {
+  background: #ffffff;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  height: 400px;
+  display: grid;
 }
 .Content-1-1 {
   background: #ffffff;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   padding: 15px;
-  height: 150px;
+  height: 180px;
   display: grid;
   grid: auto / 50% 50%;
 }
-.Content-0 {
+.Content-1-2 {
   background: #ffffff;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 20px;
+  padding: 15px;
+  height: 400px;
+  display: grid;
+  grid: 50px auto 50px auto / auto;
+  align-items: center;
+}
+.Content-1-2 h3 {
+  font-size: 50px;
+  margin: 0px;
+  text-align: center;
+}
+.Content-0 {
+  display: grid;
+  grid: auto / calc(70% - 20px) 20px auto;
 }
 .ContentGarph {
   position: absolute;

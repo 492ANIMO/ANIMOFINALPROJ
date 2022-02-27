@@ -24,7 +24,7 @@ export default {
          plotOptions: {
         pie: {
             dataLabels: {
-                distance: 10,
+                distance: 5,
                 style: {
                     color: '#696969',
                     fontSize: 18,

@@ -45,8 +45,7 @@ export default {
           style: {
             fontFamily: "Kanit",
             fontSize: 15,
-            height: 300,
-            
+            height: 350,            
           },
         },
         
