@@ -71,42 +71,51 @@
 
       <vs-dialog v-model="active">
         <template #header>
-          <h2 class="active-text">ชื่อแพ็คเกจ</h2>
+          <h2 class="active-text">{{ packageDetail.name }}</h2>
         </template>
 
         <h2 class="Head-history">รายการรักษา</h2>
-        <div class="box-package">
-              <h2>วัคซีนพิษสุนัขบ้า</h2>
+        <!-- vaccines -->
+        <div v-for="(data, i) in packageDetail.vaccines" :key="i" class="box-package">
+              <h2>{{ data.name }}</h2>
               <div class="box-package-dt">
                 <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
                 ><br />
                 <font>อายุมากกว่า : <b>5 เดือน</b></font
                 ><br />
-                <font
-                  >รายละเอียด :
-                  <b
-                    >ฉีดปีละ 2 เข็ม โดยราคาที่จ่ายเป็นราคาสำหรับเข็มเดียว
-                    จะต้องกลับมาฉีดอีก 6 เดือนข้างหน้า</b
-                  ></font
+                <font>รายละเอียด : <b>{{ data.detail }}</b></font
                 ><br />
               </div>
-            </div>
+          </div>
 
-        <div class="box-package">
-              <h2>ตรวจสุขภาพ</h2>
+        <!-- treatments -->
+        <div class="box-package"
+          v-for="(data, i) in packageDetail.treatments" :key="i"
+        >
+              <h2>{{ data.name }}</h2>
               <div class="box-package-dt">
                 <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
                 ><br />
                 <font>อายุมากกว่า : <b>5 เดือน</b></font
                 ><br />
-                <font
-                  >รายละเอียด :
-                  <b
-                    >ไม่มี</b
-                  ></font
+                <font>รายละเอียด : <b>{{ data.detail }}</b></font
                 ><br />
               </div>
-            </div>
+        </div>
+        <!-- healthCheck -->
+        <div class="box-package"
+          v-for="(data, i) in packageDetail.healthChecks" :key="i"
+        >
+              <h2>{{ data.name }}</h2>
+              <div class="box-package-dt">
+                <font>ประเภทสัตว์ : <b>ทุกประเภท</b></font
+                ><br />
+                <font>อายุมากกว่า : <b>5 เดือน</b></font
+                ><br />
+                <font>รายละเอียด : <b>{{ data.detail }}</b></font
+                ><br />
+              </div>
+        </div>
 
         <template #footer>
           <div class="footer-button-none">
@@ -180,7 +189,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allPackage"]),
+    ...mapGetters(["allPackage", 'packageDetail']),
   },
   created() {
     this.fetchPackage();
