@@ -6,7 +6,7 @@
     </div>
     <div class="Content1">
       <div class="Content2">
-        <vs-button color="#6b9bce" @click="active3 = !active3,createVaccine()" class="BTadd BT2">
+        <vs-button color="#6b9bce" @click="active3 = !active3" class="BTadd BT2">
           <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
         </vs-button>
         <h2><font-awesome-icon class="icon" icon="syringe" />รายการวัคซีน</h2>
@@ -58,16 +58,16 @@
 
       <vs-dialog width="80%" scroll v-model="active3">
         <template #header>
-          <h2>ข้อมูลสัตว์เลี้ยง</h2>
+          <h2>เพิ่มรายการวัคซีน</h2>
         </template>
 
         <vs-row>
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="value"
+                v-model="vaccine.name"
                 label="ชื่อวัคซีน"
-                placeholder="value"
+                placeholder="ชื่อวัคซีน"
               >
               </vs-input>
             </div>
@@ -75,9 +75,9 @@
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="value"
+                v-model="vaccine.lot_number"
                 label="เลขล็อตวัคซีน"
-                placeholder="value"
+                placeholder="เลขล็อตวัคซีน"
               >
               </vs-input>
             </div>
@@ -90,17 +90,24 @@
               <vs-select
                 filter
                 label="ประเภทสัตว์"
-                :placeholder="value"
-                v-model="value"
+                placeholder="ประเภทสัตว์"
+                v-model="vaccine.type"
                 class="type"
               >
+                <vs-option
+                  :key="i"
+                  v-for="(type, i) in petType"
+                  :value="type"
+                  :label="type"
+                >{{ type }}
+                </vs-option>
               </vs-select>
             </div>
           </vs-col>
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="value"
+                v-model="vaccine.age"
                 label="อายุขั้นต่ำ"
                 placeholder="value"
               >
@@ -112,8 +119,10 @@
         <vs-row>
           <vs-col w="12">
             <h4 class="HeadInput">รายละเอียดวัคซีน</h4>
-            <textarea class="TArea" placeholder="value">
-              ใส่ข้อมูลลลลลล
+            <textarea 
+              class="TArea" 
+              placeholder="value"
+              v-model="vaccine.detail">
             </textarea>
             
           </vs-col>
@@ -124,7 +133,7 @@
             <vs-button
               class="BT3"
               color="#71cf9d"
-              @click="(active3 = !active3)"
+              @click="(active3 = !active3), createVaccine()"
               style="float: right; width: 80px"
             >
               เพิ่มข้อมูล </vs-button
@@ -160,7 +169,11 @@ export default {
     vaccine: {
       name: "",
       lot_number: "",
+      type: "",
+      age: "",
+      detail: "",
     },
+    petType: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ']
   }),
   created() {
     this.showAllVaccines();
@@ -189,6 +202,9 @@ export default {
           this.vaccine = {
             name: "",
             lot_number: "",
+            type: "",
+            age: "",
+            detail: "",
           };
           console.log(res.data);
           this.showAllVaccines();
