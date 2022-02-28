@@ -81,7 +81,7 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" @click="addMyPet()">
+        <div class="button-addpet add" @click="goTomypet(),addMyPet()">
           <h4>เพิ่มสัตว์เลี้ยง</h4>
         </div>
       </div>
@@ -105,6 +105,9 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCurrentUser", "addMyPet"]),
+    goTomypet() {
+      this.$router.push('/mobile/mypet'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",

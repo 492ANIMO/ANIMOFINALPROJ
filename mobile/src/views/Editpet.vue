@@ -79,7 +79,7 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" @click="editMyPet()">
+        <div class="button-addpet add" @click="goTomypet(),editMyPet()">
           <h4>แก้ไขข้อมูลสัตว์เลี้ยง</h4>
         </div>
       </div>
@@ -102,6 +102,9 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCurrentUser", "addMyPet", 'editMyPet']),
+    goTomypet() {
+      this.$router.push('/mobile/mypet'); 
+    },
     openLoading() {
       const loading = this.$vs.loading({
         text: "กำลังโหลด...",

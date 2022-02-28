@@ -27,7 +27,7 @@
                 />
               </div>
               <div class="content-input">
-                <span class="sp1">เวลาาาาา</span>
+                <span class="sp1">{{form.time}}</span>
                 <vs-select
                   
                   class="select-grid"
