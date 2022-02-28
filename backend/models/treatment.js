@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 const schema = new Schema({
   name: { type: String, required: true, trim: true},
   detail: { type: String, trim: true},
-  type: { type: String, trim: true, enum: ['การรักษา', 'การตรวจสุขภาพ'], default: 'การรักษา'}
+  type: { type: String, trim: true, enum: ['การรักษา', 'การตรวจสุขภาพ'], default: 'การรักษา'},
+  petType: { type: String, trim: true },
+  age: { type: Number, trim: true },
 },{
   timestamps: true, 
   collection: 'treatments'

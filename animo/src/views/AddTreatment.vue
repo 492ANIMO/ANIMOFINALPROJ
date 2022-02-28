@@ -6,7 +6,7 @@
     </div>
     <div class="Content1">
       <div class="Content2">
-        <vs-button color="#6b9bce" @click="active3 = !active3, createTreatment()" class="BTadd BT2">
+        <vs-button color="#6b9bce" @click="active3 = !active3" class="BTadd BT2">
           <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
         </vs-button>
         <h2><font-awesome-icon class="icon" icon="notes-medical" />รายการรักษา</h2>
@@ -58,7 +58,7 @@
 
       <vs-dialog width="80%" scroll v-model="active3">
         <template #header>
-          <h2>ข้อมูลสัตว์เลี้ยง</h2>
+          <h2>ข้อมูลการรักษา</h2>
         </template>
 
         <vs-row>
@@ -92,19 +92,26 @@
               <vs-select
                 filter
                 label="ประเภทสัตว์"
-                :placeholder="value"
-                v-model="value"
+                placeholder="ประเภทสัตว์"
+                v-model="treatment.petType"
                 class="type"
               >
+                <vs-option
+                  :key="i"
+                  v-for="(type, i) in petType"
+                  :value="type"
+                  :label="type"
+                >{{ type }}
+                </vs-option>
               </vs-select>
             </div>
           </vs-col>
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="value"
+                v-model="treatment.age"
                 label="อายุขั้นต่ำ"
-                placeholder="value"
+                placeholder="อายุขั้นต่ำ"
               >
               </vs-input>
             </div>
@@ -113,9 +120,11 @@
 
         <vs-row>
           <vs-col w="12">
-            <h4 class="HeadInput">รายละเอียดวัคซีน</h4>
-            <textarea class="TArea" placeholder="value">
-              ใส่ข้อมูลลลลลล
+            <h4 class="HeadInput">รายละเอียดการรักษา</h4>
+            <textarea 
+              v-model="treatment.detail"
+              class="TArea"
+              placeholder="รายละเอียดการรักษา">
             </textarea>
             
           </vs-col>
@@ -126,7 +135,7 @@
             <vs-button
               class="BT3"
               color="#71cf9d"
-              @click="(active3 = !active3)"
+              @click="(active3 = !active3), createTreatment()"
               style="float: right; width: 80px"
             >
               เพิ่มข้อมูล </vs-button
@@ -162,8 +171,12 @@ export default {
     treatments: [],
     treatment: {
       name: '',
-      type: ''
+      type: '',
+      petType: '',
+      age: '',
+      detail: '',
     },
+    petType: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ'],
 
   }),
   created(){
