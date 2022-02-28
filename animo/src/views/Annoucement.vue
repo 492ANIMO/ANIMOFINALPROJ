@@ -36,7 +36,7 @@
               )"
               :data="data"
             >
-              <vs-td>{{ data.title }}</vs-td>
+              <vs-td style="text-align: left;">{{ data.title }}</vs-td>
               <vs-td>{{ format_date(data.createdAt) }}</vs-td>
               <!-- <vs-td>{{ data.createdAt }}</vs-td> -->
               <vs-td>{{ data.author }}</vs-td>
