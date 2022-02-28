@@ -2,7 +2,11 @@ import axios from "axios"
 
 const state = {
   packages: [],
-  packageDetail: {}
+  packageDetail: {
+    vaccines:[],
+    treatments:[],
+    healthChecks:[],
+  }
 }
 
 const getters = {

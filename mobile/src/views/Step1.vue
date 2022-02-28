@@ -46,27 +46,7 @@
             </div>
           </div>
 
-          <div class="Package-Card" @click="active = !active">
-            <div class="bg-package">
-              <img
-                src="../assets/muji.png"
-                alt="Animo"
-                class="Pic-appointment-dt"
-              />
-            </div>
-            <div class="PetDT">
-              <h2>Muji</h2>
-              <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>สุนัข</b></font>
-              </div>
-              <div class="TextDT">
-                <font>อายุ : <b>2 เดือน</b></font>
-              </div>
-                <div class="status-package active-color">
-                  <h4>เลือก</h4>
-                </div>
-            </div>
-          </div>
+      
         </div>
 
       </div>

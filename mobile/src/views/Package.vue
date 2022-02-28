@@ -81,7 +81,7 @@
               <div class="box-package-dt">
                 <font>ประเภทสัตว์ : <b>{{ data.petType }}</b></font
                 ><br />
-                <font>อายุมากกว่า : <b>5 เดือน</b></font
+                <font>อายุมากกว่า : <b>{{ data.age }} ปี</b></font
                 ><br />
                 <font>รายละเอียด : <b>{{ data.detail }}</b></font
                 ><br />

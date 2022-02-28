@@ -258,7 +258,6 @@
           <vs-col w="12">
             <h4 class="HeadInput1">รายละเอียด</h4>
             <textarea class="TArea" placeholder="รายละเอียด" v-model="newPackage.detail">
-              ใส่ข้อมูลลลลลล
             </textarea>
             
           </vs-col>
@@ -429,7 +428,7 @@
           <vs-col w="12">
             <h4 class="HeadInput1">รายละเอียด</h4>
             <textarea class="TArea" placeholder="รายละเอียด" v-model="currentPackage.detail">
-              ใส่ข้อมูลลลลลล
+
             </textarea>
             
           </vs-col>
@@ -518,7 +517,7 @@ export default {
     active: false,
     deleteCF: false,
     Detail1: false,
-    petType: ["สุนัข", "แมว", "นก", "อื่นๆ"],
+    petType: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
     packages: [],
 
     currentPackage: {
