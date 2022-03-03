@@ -43,14 +43,6 @@ exports.create = async (req, res, next) => {
   try {
     let { name, type, vaccines, treatments, healthChecks, detail, price } = req.body;
 
-    //validation
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const error = new Error('ข้อมูลที่รับมาไม่ถูกต้อง');
-        error.statusCode = 422;
-        error.validation = errors.array();
-        throw error;
-    }
     // check if input value is empty string
     if (req.body.detail === '') {
       detail = '-';
@@ -70,7 +62,7 @@ exports.create = async (req, res, next) => {
     res.status(200).json({
       message: 'บันทึกข้อมูลสำเร็จ',
       package,
-      test: detail
+      packageDetail: detail
     });
 
   } catch (error) {
