@@ -79,7 +79,7 @@
         <div v-for="(data, i) in packageDetail.vaccines" :key="i" class="box-package">
               <h2>{{ data.name }}</h2>
               <div class="box-package-dt">
-                <font>ประเภทสัตว์ : <b>{{ data.petType }}</b></font
+                <font>ประเภทสัตว์ : <b>{{ data.type }}</b></font
                 ><br />
                 <font>อายุมากกว่า : <b>{{ data.age }} ปี</b></font
                 ><br />
