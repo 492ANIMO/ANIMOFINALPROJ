@@ -414,6 +414,10 @@
           <vs-col w="12">
             <h4 class="HeadInput1">รายละเอียด</h4>
             <textarea class="TArea" placeholder="รายละเอียด" v-model="currentPackage.detail">
+<<<<<<< HEAD
+=======
+              
+>>>>>>> 7899285c2bb3515ef31965a3113f90e8c087fdb9
             </textarea>
             
           </vs-col>
