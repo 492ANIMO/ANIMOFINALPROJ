@@ -2,11 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const AutoIncrement = require('mongoose-sequence')(mongoose);
 
-// import models
-const Vaccine = require('../models/vaccine');
-const Treatment = require('../models/treatment');
-const HealthCheck = require('../models/healthCheck');
-
 const schema = new Schema({
   name: { type: String, required: true, trim: true},
   vaccines: [{
@@ -27,7 +22,7 @@ const schema = new Schema({
     medDetail: { type: String, trim: true}
 
   }],
-  healthChecks: [{ 
+  healthChecks: [{  //
     name: { type: String, required: true, trim: true},
     detail: { type: String, trim: true},
     type: { type: String, trim: true },
