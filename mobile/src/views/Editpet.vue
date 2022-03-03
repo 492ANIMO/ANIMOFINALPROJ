@@ -57,6 +57,8 @@
               v-model="petDetail.gender"
             >
               <vs-option label="ผู้" value="ผู้"> ผู้ </vs-option>
+               <vs-option label="เมีย" value="เมีย"> เมีย </vs-option>
+              <vs-option label="อื่นๆ" value="อื่นๆ"> อื่นๆ </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
@@ -73,7 +75,8 @@
               placeholder="ทำหมัน"
               v-model="petDetail.sterilization"
             >
-              <vs-option label="ทำหมันแล้ว" value="1"> ทำหมันแล้ว </vs-option>
+              <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว"> ทำหมันแล้ว </vs-option>
+              <vs-option label="ยังไม่ทำหมัน" value="ยังไม่ทำหมัน"> ยังไม่ทำหมัน </vs-option>
             </vs-select>
           </div>
         </div>

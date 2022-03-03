@@ -38,26 +38,6 @@
             </div>
           </div>
 
-          <!-- <div class="PetCard">
-            <img src="../assets/muji.png" alt="Animo" class="PicCat" />
-            <div class="PetDT">
-              <h2>Muji</h2>
-              <font-awesome-icon class="gander" icon="venus" />
-              <div class="TextDT">
-                <font>ประเภทสัตว์ : <b>สุนัข</b></font>
-              </div>
-              <div class="TextDT">
-                <font>อายุ : <b>2 ปี 3 เดือน</b></font>
-              </div>
-              <div class="TextDT">
-                <font>น้ำหนัก : <b>3 กิโลกรัม</b></font>
-              </div>
-              <div class="TextDT1">
-                <font>ข้อมูลเพิ่มเติม...</font>
-              </div>
-            </div>
-          </div> -->
-
           <div class="button-add">
             <router-link to="/mobile/addpet"
               ><font-awesome-icon class="icon" icon="plus"
@@ -113,7 +93,7 @@
       <template #footer>
         <div class="footer-button-none">
           <div class="button-detail edit" @click="goToEditpet()">แก้ไข</div>
-          <div class="button-detail delete" @click="deleteMyPet()">ลบ</div>
+          <div class="button-detail delete" @click="goToMyPet(),deleteMyPet()">ลบ</div>
         </div>
       </template>
     </vs-dialog>
@@ -135,6 +115,9 @@ export default {
     ]),
     goToEditpet() {
       this.$router.push('/mobile/editpet'); 
+    },
+    goToMyPet() {
+      this.$router.push('/mobile/mypet'); 
     },
     openLoading() {
       const loading = this.$vs.loading({

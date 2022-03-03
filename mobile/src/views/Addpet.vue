@@ -75,13 +75,14 @@
               placeholder="ทำหมัน"
               v-model="addPetForm.sterilization"
             >
-              <vs-option label="ทำหมันแล้ว" value="1"> ทำหมันแล้ว </vs-option>
+              <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว"> ทำหมันแล้ว </vs-option>
+              <vs-option label="ยังไม่ทำหมัน" value="ยังไม่ทำหมัน"> ยังไม่ทำหมัน </vs-option>
             </vs-select>
           </div>
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" @click="goTomypet(),addMyPet()">
+        <div class="button-addpet add" @click="goTomypet(), addMyPet()">
           <h4>เพิ่มสัตว์เลี้ยง</h4>
         </div>
       </div>
@@ -100,7 +101,7 @@ export default {
       search: "",
       value: "",
       active: false,
-      type: ['สุนัข', 'แมว', 'กระต่าย']
+      type: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ']
     };
   },
   methods: {

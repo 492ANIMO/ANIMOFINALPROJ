@@ -83,11 +83,25 @@ const actions = {
     try {
       const baseUrl = 'http://localhost:4000/api/pets/'
       const response = await axios.post(baseUrl, state.addPetForm)
+      console.log(response.data);
       state.petDetail = {
         _id: '',
         age:{},
       }
-      console.log(response.data);
+
+      state.addPetForm = {
+        age:{
+          year: '',
+          month: ''
+        },
+        type: '',
+        breed: '',
+        gender: '',
+        weight: '',
+        sterilization: '',
+        ownerId: ''
+      }
+      
     } catch (error) {
       console.log(error)
     }
@@ -112,6 +126,7 @@ const actions = {
           sterilization: '',
           ownerId: ''
         }
+
       }) .catch((error) => {
           console.log(error);
       });
