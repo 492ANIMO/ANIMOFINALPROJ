@@ -310,10 +310,11 @@
                     class="type"
                     @blur="$v.newPet.type.$touch()"
                   >
-                    <vs-option label="สุนัข" value="สุนัข"> สุนัข </vs-option>
-                    <vs-option label="แมว" value="แมว"> แมว </vs-option>
-                    <vs-option label="นก" value="นก"> นก </vs-option>
-                    <vs-option label="อื่นๆ" value="อื่นๆ"> อื่นๆ </vs-option>
+                    <vs-option 
+                      v-for="(type, i) in petType"
+                      :key="i"
+                      :label="type.petType" :value="type.petType"> {{ type.petType }} </vs-option>
+                    
                     <template v-if="$v.newPet.type.$error" #message-danger>
                       <p v-if="!$v.newPet.type.required">
                         กรุณาเลือกประเภทสัตว์เลี้ยง
@@ -535,10 +536,10 @@
                     <vs-option
                       :key="i"
                       v-for="(type, i) in petType"
-                      :value="type"
-                      :label="type"
+                      :value="type.petType"
+                      :label="type.petType"
                     >
-                      {{ type }}
+                      {{ type.petType }}
                     </vs-option>
                     <template v-if="$v.pet.type.$error" #message-danger>
                       <p v-if="!$v.pet.type.required">
@@ -899,6 +900,8 @@ export default {
   },
   created() {
     this.getClientById();
+    this.fetchPetType();
+  
   },
   methods: {
     AddNoti(position = null, duration, color) {
@@ -926,6 +929,18 @@ export default {
         position,
         title: "ลบข้อมูลสำเร็จ",
         text: `ลบรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    fetchPetType(){
+      let baseURL = "http://localhost:4000/api/pets/petType"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.petType = res.data.petTypes;
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
     },
     getClientById() {

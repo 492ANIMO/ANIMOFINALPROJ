@@ -99,9 +99,9 @@
                 <vs-option
                   :key="i"
                   v-for="(type, i) in petType"
-                  :value="type"
-                  :label="type"
-                >{{ type }}
+                  :value="type.petType"
+                  :label="type.petType"
+                >{{ type.petType }}
                 </vs-option>
               </vs-select>
             </div>
@@ -180,9 +180,22 @@ export default {
 
   }),
   created(){
-    this.showAllTreatments()
+    this.showAllTreatments();
+    this.fetchPetType();
   },
   methods: {
+    fetchPetType(){
+      let baseURL = "http://localhost:4000/api/pets/petType"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.petType = res.data.petTypes;
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
     showAllTreatments(){
       let baseURL = "http://localhost:4000/api/treatments/"
       axios

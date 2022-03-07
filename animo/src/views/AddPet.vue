@@ -11,12 +11,12 @@
           <h3>
             <font-awesome-icon class="icon" icon="plus" />เพิ่มประเภทสัตว์
           </h3>
-          <vs-input v-model="value" placeholder="ประเภทสัตว์..." />
-          <vs-button color="#6b9bce" @click="active = !active" class="BT2">
+          <vs-input v-model="petType" placeholder="ประเภทสัตว์..." />
+          <vs-button color="#6b9bce" @click="createPetType(),active = !active" class="BT2">
             <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
           </vs-button>
         </div>
-        <h4 class="list">รายการทั้งหมด {{ count.length }} รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ types.length }} รายการ</h4>
         <template>
     <div class="center examplex">
       <vs-table striped>
@@ -25,27 +25,27 @@
             <vs-th>
               ประเภทสัตว์
             </vs-th>
-            <vs-th>
+            <!-- <vs-th>
               จำนวน
-            </vs-th>
+            </vs-th> -->
             <vs-th>
               จัดการข้อมูล
             </vs-th>
           </vs-tr>
         </template>
         <template #tbody>
-          <vs-tr v-for="data in count" :key="data._id"
+          <vs-tr v-for="data in types" :key="data._id"
           >
             <vs-td>
-              {{ data._id }}
+              {{ data.petType }}
             </vs-td>
-            <vs-td>
+            <!-- <vs-td>
               {{ data.count }}
-            </vs-td>
+            </vs-td> -->
             <vs-td>
                 <vs-button
                   color="#ca7676"
-                  @click="active=!active"
+                  @click="active=!active, deletePetType(data._id)"
                   class="BT1"
                   style="width:70px"
                 >
@@ -84,22 +84,49 @@ export default {
     active1: false,
     value: "",
     search: "",
-    count: []
+    count: [],
+    petType: "",
+    types: []
   }),
   methods: {
     countPetType(){
-      let baseURL = "http://localhost:4000/api/pets/petCount"
+      let baseURL = "http://localhost:4000/api/pets/petType"
       axios
       .get(baseURL)
       .then((res) => {
-        this.count = res.data;
+        this.types = res.data.petTypes;
         console.log(res.data);
-        console.log(this.count);
+
       })
       .catch((error) => {
         console.log(error);
       });
-    }
+    },
+    createPetType(){
+      let baseURL = "http://localhost:4000/api/pets/petType"
+      axios
+      .post(baseURL, {petType: this.petType})
+      .then((res) => {
+        console.log(res.data);
+        this.petType = '';
+        this.countPetType();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
+    deletePetType(id){
+      let baseURL = "http://localhost:4000/api/pets/petType/"
+      axios
+      .delete(`${baseURL}${id}`)
+      .then((res) => {
+        console.log(res.data);
+        this.countPetType();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
   },
   created(){
     this.countPetType();

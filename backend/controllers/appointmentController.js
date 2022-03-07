@@ -1,17 +1,10 @@
-
-
 const { validationResult } = require('express-validator');
 
 // import models
 const Appointment = require('../models/appointment');
 const Reservation = require('../models/reservation');
-const Package = require('../models/package');
 const Pet = require('../models/pet');
-const Client = require('../models/client');
-const History = require('../models/history');
-
 const timeslot = require('../models/timeslot');
-
 
 // get all appointment
 exports.index = async (req, res, next) => {
@@ -28,12 +21,9 @@ exports.index = async (req, res, next) => {
     })
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
-    const count = await Appointment.countDocuments();
-
     res.status(200).json({
-      message: 'สำเร็จ',
-      appointment,
-      count
+      message: 'ดึงข้อมูลการนัดสำเร็จ',
+      appointment
     });
 
   } catch (error) {
@@ -59,7 +49,7 @@ exports.show = async (req, res, next) => {
     if(!appointment){ throw new Error('ไม่พบข้อมูลการนัดหมาย'); }
 
     res.status(200).json({
-      message: 'สำเร็จ',
+      message: 'แสดงข้อมูลการนัดเพิ่มเติมสำเร็จ',
       appointment
     });
 
@@ -83,8 +73,11 @@ exports.create = async (req, res, next) => {
       'date': date, 
       'time': time });
     console.log('booked: '+booked)
+    const reserved = await Reservation.find({
+      'date': date, 
+      'time': time });
       //  if found booked time -> reject
-    if(booked.length!==0){
+    if(booked.length!==0 || reserved.length!==0){
       throw new Error('ไม่สามารถเพิ่มการนัดหมายได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว');
     }
       //  if not found booked time -> add appointment
@@ -92,8 +85,8 @@ exports.create = async (req, res, next) => {
       pet: petId,
       date,
       time,
-      type,
       detail,
+      type,
       appId: new Date().getTime().toString()
     })
     await appointment.save();
@@ -103,7 +96,7 @@ exports.create = async (req, res, next) => {
 
     res.status(200).json({
       message: 'บันทึกข้อมูลสำเร็จ',
-      data: appointment
+      appointment
     });
 
   } catch (error) {
@@ -115,7 +108,7 @@ exports.create = async (req, res, next) => {
 exports.update = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { petId, date, time, detail, type, status, doctor, medical } = req.body;
+    const { petId, date, time, detail, type, status, doctor } = req.body;
 
     const pet = await Pet.find().where('_id').in(petId).exec();
 
@@ -135,8 +128,7 @@ exports.update = async (req, res, next) => {
       type,
       detail,
       status,
-      doctor,
-      medical
+      doctor
     });
 
     if(appointment.modifiedCount===0){ throw new Error('แก้ไขข้อมูลการนัดหมายไม่สำเร็จ'); }
@@ -157,7 +149,6 @@ exports.destroy = async (req, res, next) => {
     const {id} = req.params;
 
     const appointment = await Appointment.deleteOne({_id:id});
-
     if(appointment.deletedCount===0){ throw new Error('ลบข้อมูลการนัดหมายไม่สำเร็จ'); }
 
     res.status(200).json({
@@ -194,7 +185,7 @@ exports.showByOwner = async (req, res, next) => {
     const {clientId} = req.params;
 
     const pets = await Pet.find().where('owner').in(clientId).exec();
-    console.log(pet)
+    console.log(pets)
     const appointment = await Appointment.find().where('pet').in(pets).populate('pet').exec();
     // get appointment by pet id
     res.status(200).json({
@@ -242,34 +233,16 @@ exports.showMyAppointment = async (req, res, next) => {
 exports.confirm = async (req, res, next) => {
   try {
     const {id} = req.params;
-    const { detail, medical, petPackage, medDetail } = req.body;
-
-    const query = await Appointment.findById(id).populate({ 
-      path: 'pet',
-      model: 'Pet',
-      populate: {
-       path: 'owner',
-       model: 'Client',
-       select: '-createdAt -updatedAt -__v',
-     },
-     select: '-createdAt -updatedAt -__v', 
-    })
-
-    // const petDetail = await Pet.findById(query.pet);
-
-    // console.log('petDetail: '+ petDetail)
+    const { detail, petPackage, medDetail } = req.body;
 
     // update appointment detail and status
     const appointment = await Appointment.findByIdAndUpdate(id ,{
       detail,
-      medical,
       status: 'รักษาเสร็จสิ้น',
-      
-      // petDetail,
+      medDetail,
       reservation:{
         package: petPackage
       },
-      medDetail
       
     });
     console.log(`petPackage: ${JSON.stringify(petPackage)}`)
@@ -277,9 +250,7 @@ exports.confirm = async (req, res, next) => {
       console.log(appointment);
       throw new Error('ไม่สามารถยืนยันการรักษาได้')
     }
-
     console.log("Updated Appointment : ", appointment);
-
 
     const confirmedAppointment = await Appointment.findById(id).populate({ 
       path: 'pet',
@@ -307,8 +278,7 @@ exports.confirm = async (req, res, next) => {
     res.status(200).json({
       message: 'ยืนยันการรักษาและเพิ่มประวัติการรักษาสำเร็จ',
       data: {
-        appointment,
-       
+        appointment
       }
     });
 
@@ -317,7 +287,7 @@ exports.confirm = async (req, res, next) => {
   }
 }
 
-// get succeed appointment by logedin client
+// get succeed appointment by logedin client // history
 exports.succeedAppointment = async (req, res, next) => {
   try {
     const user = req.user;

@@ -4,6 +4,7 @@ const Client = require('../models/client');
 const Pet = require('../models/pet');
 const Appointment = require('../models/appointment');
 const Reservation = require('../models/reservation');
+const PetType = require('../models/petType');
 
 exports.index = async (req, res, next) => {
   try {
@@ -247,8 +248,57 @@ exports.petCount = async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-
-
 }
+
+exports.allPetType = async (req, res, next) => {
+  try {
+    const petTypes = await PetType.find();
+    console.log(petTypes)
+    res.status(200).json({
+      message: 'สำเร็จ', 
+      petTypes
+    });
+
+  } catch (error) {
+    next(error)
+  }
+}
+exports.createPetType = async (req, res, next) => {
+  try {
+    const { petType } = req.body;
+    console.log(req.body)
+    let type = new PetType({
+      petType
+    })
+    await type.save();
+    
+    res.status(201).json({
+      message: 'เพิ่มประเภทสัตว์เลี้ยงสำเร็จ', 
+      type
+    });
+
+
+  } catch (error) {
+    next(error)
+  }
+}
+exports.destroyPetType = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const deleteType = await PetType.deleteOne({'_id': id});
+   
+    
+    res.status(201).json({
+      message: 'ลบประเภทสัตว์เลี้ยงสำเร็จ', 
+      deleteType
+    });
+
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+
 
 

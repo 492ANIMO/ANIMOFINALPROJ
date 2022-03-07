@@ -12,6 +12,11 @@ router.get('/', petController.index);
 router.get('/mypet/', [passportJWT.isLogin], petController.showMyPet);
 router.get('/mypet/:type', [passportJWT.isLogin], petController.showMyPetFilter);
 router.get('/petCount', petController.petCount);
+
+router.get('/petType', petController.allPetType);
+router.post('/petType', petController.createPetType);
+router.delete('/petType/:id', petController.destroyPetType);
+
 router.get('/:id', petController.show);
 router.get('/client/:clientId', petController.showByClient);
 router.post('/', upload.single('avatar'), petController.create);

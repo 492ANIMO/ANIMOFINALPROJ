@@ -98,10 +98,10 @@
                 <vs-option
                   :key="i"
                   v-for="(type, i) in petType"
-                  :value="type"
-                  :label="type"
+                  :value="type.petType"
+                  :label="type.petType"
                 >
-                  {{ type }}
+                  {{ type.petType }}
                 </vs-option>
                 <template v-if="$v.newPackage.type.$error" #message-danger>
                   <p v-if="!$v.newPackage.type.required">
@@ -336,10 +336,10 @@
                 <vs-option
                   :key="i"
                   v-for="(type, i) in petType"
-                  :value="type"
-                  :label="type"
+                  :value="type.petType"
+                  :label="type.petType"
                 >
-                  {{ type }}
+                  {{ type.petType }}
                 </vs-option>
                 <template v-if="$v.currentPackage.type.$error" #message-danger>
                   <p v-if="!$v.currentPackage.type.required">
@@ -414,10 +414,6 @@
           <vs-col w="12">
             <h4 class="HeadInput1">รายละเอียด</h4>
             <textarea class="TArea" placeholder="รายละเอียด" v-model="currentPackage.detail">
-<<<<<<< HEAD
-=======
-              
->>>>>>> 7899285c2bb3515ef31965a3113f90e8c087fdb9
             </textarea>
             
           </vs-col>
@@ -554,9 +550,12 @@ export default {
     },
   },
   created() {
-    this.getPackage(), this.getAllVacines();
+    this.fetchPetType();
+    this.getPackage();
+    this.getAllVacines();
     this.getAllTreatments();
     this.getAllHealthChecks();
+
   },
   methods: {
     AddNoti(position = null, duration, color) {
@@ -584,6 +583,18 @@ export default {
         position,
         title: "ลบข้อมูลสำเร็จ",
         text: `ลบรายการข้อมูลที่เลือกสำเร็จ`,
+      });
+    },
+    fetchPetType(){
+      let baseURL = "http://localhost:4000/api/pets/petType"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        this.petType = res.data.petTypes;
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
     },
     getPackage() {

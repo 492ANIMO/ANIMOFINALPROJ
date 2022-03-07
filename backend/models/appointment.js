@@ -14,27 +14,8 @@ const schema = new Schema({
   status: { type: String, trim: true, required: true, default:'ไปตามเวลานัด'},
   by: {type: String, trim: true, enum: ['นัดโดยสัตวแพทย์', 'การจอง'], default: 'นัดโดยสัตวแพทย์'},
   doctor: { type: String, trim: true, required: false},
-
   reservation: Reservation.schema,
-  medical:{
-    vaccine: [{
-      name: { type: String, trim: true },
-      lot_number: { type: String, trim: true },
-      medDetail: { type: String }
-    }],
-    treatment: [{
-      name: { type: String, trim: true },
-      medDetail: { type: String }
-    }],
-    healthCheck: [{
-      name: { type: String, trim: true },
-      medDetail: { type: String }
-    }],
-    detail: { type: String },
-    medDetail: { type: String },
-  },
   appId:{ type: String },
-  petDetail: Pet.schema
   
 },{
   strict: false,
