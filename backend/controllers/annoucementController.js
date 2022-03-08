@@ -119,6 +119,24 @@ exports.destroy = async (req, res, next) => {
   }
 }
 
+exports.filterByType = async (req, res, next) => {
+  try {
+    const type = req.query.type;
+    console.log(`type: ${type}`)
+    const annoucement = await Annoucement.find({
+      type: type
+    })
+    if(!annoucement){ throw new Error('ไม่พบข้อมูลข่าวสาร'); }
+    res.status(200).json({
+      message: 'สำเร็จ',
+      annoucement
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 
 

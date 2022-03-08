@@ -11,6 +11,7 @@ const upload = require('../middleware/upload');
 /* GET users listing. */
 // router.get('/', [passportLocal.isLogin], annoucementController.index);
 router.get('/', annoucementController.index);
+router.get('/type/', annoucementController.filterByType);
 router.get('/:id', annoucementController.show);
 router.post('/', upload.single('img'), annoucementController.create);
 router.delete('/:id', annoucementController.destroy);

@@ -5,11 +5,11 @@
       <div>
         <div class="Head-text">
           <br />
-          <div class="button-news">ข่าวสาร</div>
+          <div class="button-news" @click="filterByAnnoucementType('ข่าวสาร')">ข่าวสาร</div>
           <br />
-          <div class="button-news">ประชาสัมพันธ์</div>
+          <div class="button-news" @click="filterByAnnoucementType('ประชาสัมพันธ์')">ประชาสัมพันธ์</div>
           <br />
-          <div class="button-news news-active">บทความ</div>
+          <div class="button-news news-active" @click="filterByAnnoucementType('บทความ')">บทความ</div>
           <br />
         </div>
         <div class="content1">
@@ -58,7 +58,7 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(['fetchAnnoucements', 'getAnnoucementDetail']),
+    ...mapActions(['fetchAnnoucements', 'getAnnoucementDetail', 'filterByAnnoucementType']),
     goTonews(id) {
       this.getAnnoucementDetail(id)
       this.$router.push('/mobile/news'); 

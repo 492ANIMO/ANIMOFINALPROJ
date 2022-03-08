@@ -30,6 +30,21 @@ const actions = {
       console.log(error)
     }
 
+  },
+
+  async filterByAnnoucementType({commit}, type){
+    console.log(`type: ${type}`)
+    const params = {
+      type: type
+    }
+    const baseUrl = 'http://localhost:4000/api/annoucements/type';
+    axios.get(`${(baseUrl)}`,{ params }).then((res) => {
+      console.log(res)
+      commit('setAnnoucements', res.data.annoucement);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
 };
