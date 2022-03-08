@@ -5,8 +5,8 @@
       <div class="content1">
         <div class="content2">
           <div class="fix-filter">
-          <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
-          <div class="filter-package" @click="filterByType('สุนัข')">
+            <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
+          <!-- <div class="filter-package" @click="filterByType('สุนัข')">
             <div class="bg-filter">
               <img src="../assets/pet1.png" alt="Animo" class="Pic-package" />
             </div>
@@ -29,7 +29,23 @@
               <img src="../assets/pet4.png" alt="Animo" class="Pic-package" />
             </div>
             <h4>อื่นๆ</h4>
-          </div>
+          </div> -->
+
+          <!-- test loop -->
+            <div 
+              v-for="(type, i) in types"
+              :key="i"
+              class="filter-package" 
+              @click="filterByType(type)"
+            >
+              <div class="bg-filter">
+                <img 
+                  :src="getImgUrl(type)" 
+                  alt="Animo" 
+                  class="Pic-package" />
+              </div>
+              <h4>{{ type }}</h4>
+            </div>
           </div>
 
           <div class="space-filter"></div>
@@ -139,6 +155,7 @@ export default {
     return {
       search: "",
       active: false,
+      types: ['สุนัข','แมว','สัตว์ฟันแทะ','อื่นๆ']
     };
   },
   components: {
