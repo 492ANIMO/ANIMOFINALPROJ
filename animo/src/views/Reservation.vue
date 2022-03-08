@@ -34,6 +34,9 @@
                         <vs-button color="#9ece6c" @click="active=!active, test(data._id)" class="BT">
                                ยืนยัน
                         </vs-button>
+                        <vs-button color="#ca7676" @click="cancelReservation(data._id)" class="BTdel">
+                               ยกเลิก
+                        </vs-button>
                       </vs-td>
                     </vs-tr>
                   </template>
@@ -150,6 +153,17 @@ export default {
       });
       
     },
+    cancelReservation(id) {
+      let baseURL = 'http://localhost:4000/api/reservations/';
+      console.log('id: '+id);
+      axios.delete(baseURL+id).then((res) => {
+        console.log(res)
+        this.load();
+      }).catch((error) => {
+          console.log(error);
+      });
+      
+    },
     test(id){
       this.reserved = id;
       console.log(this.reserved)
@@ -187,6 +201,20 @@ h3{
 .BT{
 background: rgb(157,209,103);
 background: linear-gradient(45deg, rgba(157,209,103,1) 0%, rgba(99,209,157,1) 100%);
+  display: inline-block;
+  color: #ffffff;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-top: 5px;
+  --vs-button-padding: 5px 10px;
+}
+.BTdel{
+background: rgb(197, 94, 94);
+  background: linear-gradient(
+    45deg,
+    rgba(197, 94, 94, 1) 0%,
+    rgba(248, 139, 109, 1) 100%
+  );
   display: inline-block;
   color: #ffffff;
   border-radius: 20px;
