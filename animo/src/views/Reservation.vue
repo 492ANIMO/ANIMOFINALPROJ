@@ -19,6 +19,7 @@
                       <vs-th>ชื่อเจ้าของสัตว์</vs-th>
                       <vs-th>วันที่</vs-th>
                       <vs-th>เวลา</vs-th>
+                      <vs-th>ชื่อแพ็คเกจ</vs-th>
                       <vs-th>ชื่อสัตว์เลี้ยง</vs-th>
                       <vs-th>จัดการข้อมูล</vs-th>
                     </vs-tr>
@@ -29,6 +30,7 @@
                       <vs-td>{{ data.pet.owner.firstName+" "+data.pet.owner.lastName }}</vs-td>
                       <vs-td>{{ format_date(data.date) }}</vs-td>
                       <vs-td>{{ data.time }}</vs-td>
+                      <vs-td>{{ data.package.name }}</vs-td>
                       <vs-td>{{ data.pet.name }}</vs-td>
                       <vs-td>
                         <vs-button color="#9ece6c" @click="active=!active, test(data._id)" class="BT">
