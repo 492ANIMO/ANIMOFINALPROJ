@@ -119,12 +119,13 @@ exports.destroy = async (req, res, next) => {
 
 exports.filterByType = async (req, res, next) => {
   try {
-    const {type} = req.params;
+    // const {type} = req.params;
+    const type = req.query.type;
     const package = await Package.find({
       type: type
     })
     if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
-
+    console.log(`type: ${type}`)
     res.status(200).json({
       message: 'สำเร็จ',
       package

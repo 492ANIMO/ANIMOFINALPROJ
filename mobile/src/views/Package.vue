@@ -6,25 +6,25 @@
         <div class="content2">
           <div class="fix-filter">
           <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
-          <div class="filter-package">
+          <div class="filter-package" @click="filterByType('สุนัข')">
             <div class="bg-filter">
               <img src="../assets/pet1.png" alt="Animo" class="Pic-package" />
             </div>
             <h4>สุนัข</h4>
           </div>
-          <div class="filter-package">
+          <div class="filter-package" @click="filterByType('แมว')">
             <div class="bg-filter">
               <img src="../assets/pet2.png" alt="Animo" class="Pic-package" />
             </div>
             <h4>แมว</h4>
           </div>
-          <div class="filter-package">
+          <div class="filter-package" @click="filterByType('สัตว์ฟันแทะ')">
             <div class="bg-filter">
               <img src="../assets/pet3.png" alt="Animo" class="Pic-package" />
             </div>
             <h4>สัตว์ฟันแทะ</h4>
           </div>
-          <div class="filter-package">
+          <div class="filter-package" @click="filterByType('อื่นๆ')">
             <div class="bg-filter">
               <img src="../assets/pet4.png" alt="Animo" class="Pic-package" />
             </div>
@@ -133,7 +133,6 @@
 <script>
 import Navbar from "../components/Navbar";
 import { mapActions, mapGetters } from "vuex";
-
 export default {
   name: "Package",
   data() {
@@ -146,7 +145,7 @@ export default {
     Navbar,
   },
   methods: {
-    ...mapActions(["fetchPackage", "getPackageDetail"]),
+    ...mapActions(["fetchPackage", "getPackageDetail", 'filterByType']),
 
     goToStep1() {
       this.$router.push('/mobile/step1'); 

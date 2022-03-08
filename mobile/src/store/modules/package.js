@@ -27,6 +27,21 @@ const actions = {
     console.log(response.data.package);
     commit('setPackageDetail', response.data.package)
   },
+
+  async filterByType({commit}, type){
+    console.log(`type: ${type}`)
+    const params = {
+      type: type
+    }
+    const baseURL = "http://localhost:4000/api/packages/type/";
+    axios.get(`${(baseURL)}`,{ params }).then((res) => {
+      console.log(res)
+      commit('setPackages', res.data.package)
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
   
 }
 
