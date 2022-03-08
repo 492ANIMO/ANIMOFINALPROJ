@@ -117,4 +117,22 @@ exports.destroy = async (req, res, next) => {
   }
 }
 
+exports.filterByType = async (req, res, next) => {
+  try {
+    const {type} = req.params;
+    const package = await Package.find({
+      type: type
+    })
+    if(!package){ throw new Error('ไม่พบข้อมูลแพ็คเกจ'); }
+
+    res.status(200).json({
+      message: 'สำเร็จ',
+      package
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
 
