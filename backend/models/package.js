@@ -9,28 +9,28 @@ const schema = new Schema({
     type: { type: String, required: true, trim: true},
     manufacturer: { type: String, trim: true},
     lot_number: { type: String, trim: true},
-    age: { type: Number, trim: true},
-    detail: { type: String, trim: true},
-    petType: { type: String, trim: true},
+    age: { type: String, trim: true, default: '-'},
+    detail: { type: String, trim: true, default: '-'},
+    petType: { type: String, trim: true, default: '-'},
     medDetail: { type: String, trim: true}
 
   }],
   treatments: [{ 
     name: { type: String, required: true, trim: true },
-    detail: { type: String, trim: true } ,
-    age: { type: Number, trim: true},
+    detail: { type: String, trim: true, default: '-' } ,
+    age: { type: String, trim: true, default: '-'},
     type: { type: String, trim: true },
-    petType: { type: String, trim: true},
+    petType: { type: String, trim: true, default: '-'},
     medDetail: { type: String, trim: true}
 
   }],
-  healthChecks: [{  //
+  healthChecks: [{  
     name: { type: String, required: true, trim: true},
-    detail: { type: String, trim: true},
+    detail: { type: String, trim: true, default: '-'},
     type: { type: String, trim: true },
-    petType: { type: String, trim: true},
+    petType: { type: String, trim: true, default: '-'},
     medDetail: { type: String, trim: true},
-    age: { type: Number, trim: true},
+    age: { type: String, trim: true, default: '-'},
 
    }],
     

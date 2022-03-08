@@ -109,7 +109,7 @@
               <vs-input
                 v-model="vaccine.age"
                 label="อายุขั้นต่ำ"
-                placeholder="value"
+                placeholder="อายุขั้นต่ำ"
               >
               </vs-input>
             </div>
@@ -121,7 +121,7 @@
             <h4 class="HeadInput">รายละเอียดวัคซีน</h4>
             <textarea 
               class="TArea" 
-              placeholder="value"
+              placeholder="รายละเอียดวัคซีน"
               v-model="vaccine.detail">
             </textarea>
             
@@ -245,6 +245,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 @import url("../assets/css/style.css");
 
