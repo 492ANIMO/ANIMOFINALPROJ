@@ -36,9 +36,11 @@
               v-for="(type, i) in types"
               :key="i"
               class="filter-package" 
-              @click="filterByType(type)"
+              @click="filterByType(type), selectType(i)"
             >
-              <div class="bg-filter">
+              <div 
+                class="bg-filter"
+                :class="{active: i === activeId}">
                 <img 
                   :src="getImgUrl(type)" 
                   alt="Animo" 
@@ -155,7 +157,8 @@ export default {
     return {
       search: "",
       active: false,
-      types: ['สุนัข','แมว','สัตว์ฟันแทะ','อื่นๆ']
+      types: ['สุนัข','แมว','สัตว์ฟันแทะ','อื่นๆ'],
+      activeId: -1
     };
   },
   components: {
@@ -163,6 +166,11 @@ export default {
   },
   methods: {
     ...mapActions(["fetchPackage", "getPackageDetail", 'filterByType']),
+    selectType(index){
+      console.log(`index: ${index}`)
+      this.activeId = index;
+      console.log(`activeId: ${this.activeId}`)
+    },
 
     goToStep1() {
       this.$router.push('/mobile/step1'); 
@@ -216,6 +224,12 @@ export default {
 
 <style scoped>
 @import url("../assets/css/style.css");
+.active {
+  /* border: solid; */
+  /* border-color: #696969; */
+  background: linear-gradient( 90deg,rgba(154, 221, 213, 1) 30%,rgba(144, 202, 221, 1) 100%);
+}
+
 .Head-history {
   font-weight: 500;
   font-size: 19px;
