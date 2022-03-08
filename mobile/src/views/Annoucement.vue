@@ -9,7 +9,9 @@
           <br />
           <div class="button-news" @click="filterByAnnoucementType('ประชาสัมพันธ์')">ประชาสัมพันธ์</div>
           <br />
-          <div class="button-news news-active" @click="filterByAnnoucementType('บทความ')">บทความ</div>
+          <div
+            class="button-news" 
+            @click="filterByAnnoucementType('บทความ'), $event.target.classList.toggle('news-active')">บทความ</div>
           <br />
         </div>
         <div class="content1">
@@ -52,6 +54,8 @@ export default {
       search: "",
       value: "",
       active: false,
+      activeItem: -1,
+      types: ['ข่าวสาร', 'ประชาสัมพันธ์', 'บทความ'],
     };
   },
   components: {
@@ -59,6 +63,9 @@ export default {
   },
   methods: {
     ...mapActions(['fetchAnnoucements', 'getAnnoucementDetail', 'filterByAnnoucementType']),
+    clickHandler(idx) {
+      this.activeItem = idx
+    },
     goTonews(id) {
       this.getAnnoucementDetail(id)
       this.$router.push('/mobile/news'); 
