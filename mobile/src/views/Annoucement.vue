@@ -3,7 +3,7 @@
     <Navbar namepage="ข่าวสาร" />
     <div class="content">
       <div>
-        <div class="Head-text">
+        <!-- <div class="Head-text">
           <br />
           <div class="button-news" @click="filterByAnnoucementType('ข่าวสาร')">ข่าวสาร</div>
           <br />
@@ -13,7 +13,26 @@
             class="button-news" 
             @click="filterByAnnoucementType('บทความ'), $event.target.classList.toggle('news-active')">บทความ</div>
           <br />
+        </div> -->
+        <div class="Head-text">
+           <template v-for="(type, i) in types" >
+            <br :key="type" />
+            <div 
+              class="button-news"
+              :class="{ 'news-active': i === activeItem }"
+              :key="i"
+              @click="filterByAnnoucementType(type), selectType(i)">{{ type }}</div>
+          </template>
+   
+          <!-- <br />
+          <div class="button-news" @click="filterByAnnoucementType('ประชาสัมพันธ์')">ประชาสัมพันธ์</div>
+          <br />
+          <div
+            class="button-news" 
+            @click="filterByAnnoucementType('บทความ'), $event.target.classList.toggle('news-active')">บทความ</div> -->
         </div>
+
+
         <div class="content1">
           <div class="content-scroll">
 
@@ -63,9 +82,13 @@ export default {
   },
   methods: {
     ...mapActions(['fetchAnnoucements', 'getAnnoucementDetail', 'filterByAnnoucementType']),
-    clickHandler(idx) {
-      this.activeItem = idx
+
+    selectType(index){
+      console.log(`index: ${index}`)
+      this.activeItem = index;
+      console.log(`activeId: ${this.activeItem}`)
     },
+
     goTonews(id) {
       this.getAnnoucementDetail(id)
       this.$router.push('/mobile/news'); 
