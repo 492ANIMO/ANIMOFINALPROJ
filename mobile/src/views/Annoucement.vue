@@ -3,17 +3,6 @@
     <Navbar namepage="ข่าวสาร" />
     <div class="content">
       <div>
-        <!-- <div class="Head-text">
-          <br />
-          <div class="button-news" @click="filterByAnnoucementType('ข่าวสาร')">ข่าวสาร</div>
-          <br />
-          <div class="button-news" @click="filterByAnnoucementType('ประชาสัมพันธ์')">ประชาสัมพันธ์</div>
-          <br />
-          <div
-            class="button-news" 
-            @click="filterByAnnoucementType('บทความ'), $event.target.classList.toggle('news-active')">บทความ</div>
-          <br />
-        </div> -->
         <div class="Head-text">
            <template v-for="(type, i) in types" >
             <br :key="type" />
@@ -23,13 +12,7 @@
               :key="i"
               @click="filterByAnnoucementType(type), selectType(i)">{{ type }}</div>
           </template>
-   
-          <!-- <br />
-          <div class="button-news" @click="filterByAnnoucementType('ประชาสัมพันธ์')">ประชาสัมพันธ์</div>
-          <br />
-          <div
-            class="button-news" 
-            @click="filterByAnnoucementType('บทความ'), $event.target.classList.toggle('news-active')">บทความ</div> -->
+
         </div>
 
 
