@@ -19,13 +19,13 @@
           </div>
 
           <div class="content-input grid">
-            <vs-select
+           <vs-select
               class="select-grid"
               label="ประเภทสัตว์"
               placeholder="ประเภทสัตว์"
               v-model="petDetail.type"
             >
-              <vs-option label="แมว" value="แมว"> แมว </vs-option>
+              <vs-option v-for="type in type" :key="type" :label="type" :value="type"> {{ type }} </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
@@ -101,6 +101,7 @@ export default {
       search: "",
       value: "",
       active: false,
+      type: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ'],
     };
   },
   methods: {
