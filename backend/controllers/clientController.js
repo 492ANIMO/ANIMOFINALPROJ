@@ -229,13 +229,6 @@ exports.upload = async (req, res, next) => {
         updatedClient
       })
     }
-
-    // res.status(200).json({
-    //   message: 'สำเร็จจ้า',
-    //   data: req.params.params
-    // })
-
-   
     
   } catch (error) {
     next(error)

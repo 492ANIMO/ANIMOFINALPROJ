@@ -299,6 +299,39 @@ exports.destroyPetType = async (req, res, next) => {
   }
 }
 
+exports.upload = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    let pet = await Pet.findById(id);
+    if(!pet){
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      error.statusCode = 400;
+      throw error;
+    }
+    console.log('req.file: '+JSON.stringify(req.file));
+
+    if(req.file){
+      console.log(`req.file: ${req.file}`)
+      pet.avatar = req.file.path
+
+      pet = await pet.save();
+      if(!updatedPet){
+        // if error
+        throw new Error('ไม่สามารถเปลี่ยนรูปภาพโปรไฟล์ได้');
+      }
+
+      res.status(201).json({
+        message: 'เปลี่ยนรูปภาพสำเร็จ',
+        pet
+      })
+    }
+    
+  } catch (error) {
+    next(error)
+  }
+}
+
 
 
 
