@@ -30,7 +30,7 @@ module.exports = (passport) => {
                     lastName: profile.name.familyName,
                     email: profile.emails[0].value,
                     role: 'client',
-                    avatar: profile.photos[0].value,
+               
                     uid: new Date().getTime().toString(),
                     address: {
                         province: '',
@@ -47,7 +47,7 @@ module.exports = (passport) => {
                     email: profile.emails[0].value,
                     role: 'client',
                     onModel: 'Client',
-                    avatar: profile.photos[0].value,
+               
                     profile: newProfile._id
                 }
                 user = await User.create(newUser)

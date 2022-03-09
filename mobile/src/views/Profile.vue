@@ -12,7 +12,7 @@
 
           <img
             v-if="this.currentUser.profile.avatar"
-            src="@/assets/nopic.jpeg"
+            :src="this.baseurl+currentUser.profile.avatar"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"
@@ -58,17 +58,18 @@
           @crop-success="cropSuccess"
           @crop-upload-success="cropUploadSuccess"
           @crop-upload-fail="cropUploadFail"
-          field="img"
+          field="avatar"
           v-model="show"
           :url="baseurl+'clients/'+currentUser.profile._id+'/avatar/upload/'"
+          :params="params" 
           :langExt="langExt"
           :noSquare="true"
           :noCircle="true"
           :noRotate="false"
-          :params="params"
           :headers="headers"
           img-format="png"
         ></my-upload>
+        <!-- <img :src="imgDataUrl"> -->
       </div>
 
       <div class="footer-button">
@@ -87,6 +88,7 @@
 import Navbar from "../components/Navbar";
 import myUpload from "vue-image-crop-upload/upload-2.vue";
 import { mapActions, mapGetters } from "vuex";
+// import axios from 'axios';
 
 
 export default {
@@ -124,6 +126,7 @@ export default {
       params: {
         token: "123456798",
         name: "avatar",
+        imgDataUrl: this.imgDataUrl
       },
       headers: {
         smail: "*_~",
@@ -149,9 +152,13 @@ export default {
      * [param] imgDataUrl
      * [param] field
      */
-    cropSuccess(imgDataUrl) {
+    cropSuccess(imgDataUrl, field) {
       console.log("-------- crop success --------");
       this.imgDataUrl = imgDataUrl;
+      console.log("field: " + field);
+      console.log("imgDataUrl: " + this.imgDataUrl);
+
+
     },
     /**
      * upload success
@@ -163,6 +170,9 @@ export default {
       console.log("-------- upload success --------");
       console.log(jsonData);
       console.log("field: " + field);
+      // console.log("imgDataUrl2: " + this.imgDataUrl);
+      this.fetchCurrentUser();
+
     },
     /**
      * upload fail

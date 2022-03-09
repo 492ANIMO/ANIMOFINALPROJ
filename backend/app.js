@@ -7,6 +7,7 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport') , 
 LocalStrategy = require('passport-local').Strategy;
+const bodyParser = require('body-parser')
 
 //config
 const config = require('./config/index');
@@ -44,7 +45,10 @@ app.use(logger('dev'));
 app.use(express.json({
   limit: '50mb'
 }));
-app.use(express.urlencoded({ extended: false }));
+
+
+// app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/uploads', express.static('uploads'));

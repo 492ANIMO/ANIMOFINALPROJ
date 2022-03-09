@@ -208,6 +208,9 @@ exports.upload = async (req, res, next) => {
 
     console.log(`req.body: ${JSON.stringify(req.body)}`);
     console.log(`req.headers: ${JSON.stringify(req.headers)}`);
+    console.log(`req.params: ${JSON.stringify(req.params)}`);
+    console.log('req.file: '+JSON.stringify(req.file));
+  
 
     console.log(`req: ${req}`);
 
@@ -227,9 +230,10 @@ exports.upload = async (req, res, next) => {
       })
     }
 
-    res.status(200).json({
-      message: 'สำเร็จ'
-    })
+    // res.status(200).json({
+    //   message: 'สำเร็จจ้า',
+    //   data: req.params.params
+    // })
 
    
     
