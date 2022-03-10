@@ -58,7 +58,7 @@ export default {
             color: '#f785b0'
           },
           {
-            name: "หมา",
+            name: "สุนัข",
             data: [30],
             color: '#f29c77'
           },
