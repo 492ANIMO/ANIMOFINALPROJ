@@ -102,6 +102,7 @@ export default {
     totalClient: 0,
     newClient: 0,
     clients: [],
+
   }),
   methods: {
     getTodayAppointment(type, date){
@@ -197,7 +198,8 @@ export default {
 
       this.newClient = filteredData.length;
 
-    }
+    },
+    
   },
   created(){
     this.getTodayAppointment(null ,'today');
@@ -205,6 +207,7 @@ export default {
     this.getTodayReservation();
     this.getTotalReservation();
     this.getAllClient();
+   
 
   }
 };

@@ -22,7 +22,8 @@ const schema = new Schema({
   owner: { type: Schema.Types.ObjectId, ref: 'Client' },
 
 },{
-  collection: 'pets'
+  collection: 'pets',
+  timestamps: true
 });
 
 
