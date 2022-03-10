@@ -5,10 +5,12 @@
 </template>
 
 <script>
+
 export default {
   name: "Chart",
   data() {
     return {
+      colors:['#f29c77','#f785b0','#b798e3','#64ced0',],
       chartOptions: {
         title: {
           text: "",
@@ -35,7 +37,7 @@ export default {
             label: {
               connectorAllowed: false,
             },
-            pointStart: 2010,
+            pointStart: 2022,
             borderRadius: 4
           },
         },
@@ -52,17 +54,17 @@ export default {
         series: [
           {
             name: "แมว",
-            data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175],
+            data: [20],
             color: '#f785b0'
           },
           {
             name: "หมา",
-            data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434],
+            data: [30],
             color: '#f29c77'
           },
           {
-            name: "หนู",
-            data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387],
+            name: "สัตว์ฟันแทะ",
+            data: [7],
             color: '#b798e3'
           },
         ],
@@ -91,7 +93,13 @@ export default {
     myCallback() {
       console.log("this is callback function");
     },
+
+    
   },
+  created(){
+
+
+  }
 };
 </script>
 

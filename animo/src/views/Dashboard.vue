@@ -17,9 +17,9 @@
           </div><br>
           <div class="Content-1-2">
             <h2>ผู้ใช้ใหม่วันนี้</h2>
-            <h3 style="color: #2aa8cf">20</h3>
+            <h3 style="color: #2aa8cf">{{ newClient }}</h3>
             <h2>ผู้ใช้ทั้งหมด</h2>
-            <h3 style="color: #2f6dc2">200</h3>
+            <h3 style="color: #2f6dc2">{{ totalClient }}</h3>
           </div>
         </div>
         <div class="Content-1-box">
@@ -99,6 +99,9 @@ export default {
     totalAppointment: '0',
     todayReservation: '0',
     totalReservation: '0',
+    totalClient: 0,
+    newClient: 0,
+    clients: [],
   }),
   methods: {
     getTodayAppointment(type, date){
@@ -157,13 +160,51 @@ export default {
           console.log(error);
         });
     },
+    getAllClient(){
+      const baseURL = "http://localhost:4000/api/clients/"
+      axios
+      .get(baseURL)
+      .then((res) => {
+        console.log(res.data);
+        const response = res.data.client;
+        console.log(response)
+        this.clients = response;
+        this.totalClient = response.length;
+        
+        // this.chartOptions.series[0].data = response.map( data => {
+        //   return{
+        //     name: data._id,
+        //     y: data.count,
+        //     color: this.colors[response.indexOf(data)]
+        //   }
+        // })
+
+        this.filterTodayClient();
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    },
+    filterTodayClient(){
+      let today = new Date().toISOString()
+      today = today.split('T')[0];
+      const clients = this.clients
+      const filteredData = clients.filter((data) => {
+        const d = data.createdAt.split('T')[0];
+        return d == today
+      })
+
+      this.newClient = filteredData.length;
+
+    }
   },
   created(){
     this.getTodayAppointment(null ,'today');
     this.getTotalAppointment();
     this.getTodayReservation();
     this.getTotalReservation();
-
+    this.getAllClient();
 
   }
 };

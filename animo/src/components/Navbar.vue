@@ -1,8 +1,10 @@
 <template>
     <div id="app">
         <ul>
+            <router-link to="/dashboard">
             <li><img src="../assets/ANIMO1.png" alt="Animo" class="Logo1"></li>
             <li><h1 class="LogoText">ANIMO</h1></li>
+            </router-link>
             <li><router-link to="/">เกี่ยวกับเรา</router-link></li>
             <li><router-link to="/contact">สมาชิกในทีม</router-link></li>
             <li v-if="isLogin()" class=login>
