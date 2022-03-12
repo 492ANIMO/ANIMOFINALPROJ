@@ -7,7 +7,7 @@ const User = require('./user');
 const Pet = require('./pet');
 
 const schema = new Schema({
-  firstName: { type: String, required: true, trim: true, index: true },
+  firstName: { type: String, required: true, trim: true },
   lastName: { type: String, required: true, trim: true },
   contact: { type: String, trim: true },
   email: { type: String, trim: true },
@@ -18,12 +18,12 @@ const schema = new Schema({
     postalCode: { type: String, trim: true },
     detail: { type: String, trim: true }
   },
-  role: { type: String, default: 'client' },
+  role: { type: String, default: 'client' }, //x
   avatar: { type: String, default: 'uploads/nopic.jpeg' },
   uid: { type: String, default: '0000000000' },
 
   // foreign key
-  user: { type: Schema.Types.ObjectId, ref: 'User' }
+  user: { type: Schema.Types.ObjectId, ref: 'User' } //x
 
 },{
   toJSON: { virtuals: true },

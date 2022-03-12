@@ -19,7 +19,7 @@ const schema = new Schema({
   avatar: { type: String,  trim: true, default: 'uploads/nopic.jpeg' },
   detail: { type: String,  trim: true },
   // foreign key
-  owner: { type: Schema.Types.ObjectId, ref: 'Client' },
+  owner: { type: Schema.Types.ObjectId, ref: 'Client' }, 
 
 },{
   collection: 'pets',

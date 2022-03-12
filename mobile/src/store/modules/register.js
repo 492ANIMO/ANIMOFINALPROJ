@@ -1,4 +1,6 @@
 import axios from 'axios'
+import Router from '../../router/index';
+
 const addressBaseUrl = 'https://thaiaddressapi-thaikub.herokuapp.com'
 
 const state = {
@@ -16,7 +18,8 @@ const state = {
      subdistrict: '',
      postalCode: '',
      detail: ''
-   }
+   },
+   role: 'client'
  },
  addressDropdown:{
     provinces: [],
@@ -37,17 +40,27 @@ const actions = {
 
   async createClientUser(){
     try {
-      const baseUrl = 'http://localhost:4000/api/users/client/register/';
+      const baseUrl = 'http://localhost:4000/api/users/';
       const response = await axios.post(baseUrl, state.form);
-      console.log(response.data);
+      console.log(response);
       if(response.error){
         throw new Error(response.error)
+      }else{
+        let token = response.data.access_token;
+        localStorage.setItem("jwt", token);
+        console.log('response.data: '+response.data.access_token);
+    
+        if(response.data.access_token){
+          Router.push({name:'Mypet'})
+        }
       }
     } catch (error) {
+      if(error.response){
+        console.log(error.response.data.error.message); // Message from server
+        }
       console.log(error)
     }
   },
-
 
   async fetchProvince({commit}){
     try {

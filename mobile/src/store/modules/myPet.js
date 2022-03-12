@@ -35,7 +35,7 @@ const actions = {
   // asynchronous
   async fetchMyPet({commit}){
     const token = localStorage.getItem('jwt');
-    console.log(`token: ${token}`);
+    // console.log(`token: ${token}`);
 
     const headers = {
       "Content-type": "application/json; charset=UTF-8",
@@ -46,7 +46,7 @@ const actions = {
     const response = await axios.get(baseUrl,{
       headers: headers
     });
-    console.log(response.data.pet);
+    // console.log(response.data.pet);
     commit('setMyPets', response.data.pet)
   },
 

@@ -7,7 +7,6 @@ export const login = (email, password) => {
       let token = res.data.access_token;
       localStorage.setItem("jwt", token);
       console.log('res.data: '+res.data.access_token);
-  
       if(res.data.access_token){
         Router.push({name:'Mypet'})
       }
