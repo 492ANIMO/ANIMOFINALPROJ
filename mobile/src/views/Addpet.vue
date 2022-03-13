@@ -140,7 +140,7 @@ export default {
       search: "",
       value: "",
       active: false,
-      show: true,
+      show: false,
       type: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
       langExt: {
         hint: "อัพโหลดภาพ",
