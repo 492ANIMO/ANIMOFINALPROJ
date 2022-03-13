@@ -20,21 +20,24 @@
             @click="toggleShow"
           />
           <img v-else src="../assets/bento.png" alt="Animo" class="profile-pic" />
-          <my-upload
-          @crop-success="cropSuccess"
-          @crop-upload-success="cropUploadSuccess"
-          @crop-upload-fail="cropUploadFail"
-          field="avatar"
-          v-model="show"
-          :url="baseurl+'pets/'+petDetail._id+'/avatar/upload/'"
-          :langExt="langExt"
-          :noSquare="true"
-          :noCircle="true"
-          :noRotate="false"
-          img-format="png"
-        ></my-upload>
-        
         </div>
+ 
+          <my-upload
+            @crop-success="cropSuccess"
+            @crop-upload-success="cropUploadSuccess"
+            @crop-upload-fail="cropUploadFail"
+            field="avatar"
+            v-model="show"
+            :width="300"
+            :height="300"
+            :url="baseurl+'pets/'+petDetail._id+'/avatar/upload/'"
+            :langExt="langExt"
+            :noSquare="true"
+            :noCircle="true"
+            :noRotate="false"
+            img-format="png"
+          ></my-upload>
+   
 
       
         <!-- <img :src="imgDataUrl" /> -->
@@ -56,7 +59,7 @@
               placeholder="ประเภทสัตว์"
               v-model="petDetail.type"
             >
-              <vs-option v-for="type in type" :key="type" :label="type" :value="type"> {{ type }} </vs-option>
+              <vs-option v-for="type in types" :key="type" :label="type" :value="type"> {{ type }} </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
@@ -138,7 +141,7 @@ export default {
       active: false,
       show: false,
 
-      type: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ'],
+      types: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ'],
        langExt: {
         hint: "อัพโหลดภาพ",
         loading: "กำลังอัพโหลด…",
@@ -313,5 +316,19 @@ export default {
 }
 ::v-deep .vs-select {
   z-index: 1;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap {
+  width: 80%;
+  max-width: 300px;
+  border-radius: 20px;
+  height: 300px;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap .vicp-step1 .vicp-drop-area {
+  border-radius: 10px;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap .vicp-operate a {
+  margin-bottom: -10px;
+  margin-right: -10px;
+  width: 70px;
 }
 </style>
