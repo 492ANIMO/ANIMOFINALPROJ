@@ -127,7 +127,9 @@ exports.create = async (req, res, next) => {
     console.log('booked:'+booked)
     const reserved = await Reservation.find({
       'date': date, 
-      'time': time });
+      'time': time,
+      'status': {$ne: 'ยกเลิก'}
+     });
 
     if(booked.length!==0 || reserved.length!==0){
       throw new Error('ไม่สามารถจองเวลานี้ได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว');
@@ -235,6 +237,34 @@ exports.confirm = async (req, res, next) => {
     res.status(200).json({
       message: 'ยืนยันการจองและเพิ่มข้อมูลการนัดสำเร็จ',
       appointment
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.cancel = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const { status, detail } = req.body;
+
+    let reservation = await Reservation.findById(id);
+    if(!reservation){ throw new Error('ไม่พบข้อมูลการจอง'); }
+
+
+    // change reservation status 
+    reservation = await Reservation.updateOne({_id:id},{
+      status: 'ยกเลิก',
+      detail
+    });
+    if(reservation.modifiedCount===0){ throw new Error('ยกเลิกการจองไม่สำเร็จ'); }
+    reservation = await Reservation.findById(id);
+
+
+    res.status(200).json({
+      message: 'ยกเลิกการจองสำเร็จ',
+      reservation
     });
 
   } catch (error) {

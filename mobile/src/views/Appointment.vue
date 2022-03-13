@@ -28,7 +28,7 @@
                 <h4>{{ appointment.status }}</h4>
               </div>
               <h2 v-if="appointment.by==='การจอง'">{{appointment.reservation.package.name }}</h2>
-              <h2 v-else-if="appointment.status==='รอยืนยัน'">{{ appointment.package.name }}</h2>
+              <h2 v-else-if="appointment.status==='รอยืนยัน' || appointment.status==='ยกเลิก'">{{ appointment.package.name }}</h2>
               <h2 v-else>{{ appointment.type }}</h2>
               <div class="TextDT">
                 <font
@@ -70,7 +70,7 @@
             ><br />
             <font>รายละเอียด : <b>{{ appointmentDetail.detail }}</b></font
             ><br />
-            <font v-if="appointmentDetail.status==='รอยืนยัน'">ราคา : <b class="active-text">{{ appointmentDetail.package.price }} บาท</b></font>
+            <font v-if="appointmentDetail.status==='รอยืนยัน'||appointmentDetail.status==='ยกเลิก'">ราคา : <b class="active-text">{{ appointmentDetail.package.price }} บาท</b></font>
             <font v-else-if="appointmentDetail.by==='การจอง'">ราคา : <b class="active-text">{{ appointmentDetail.reservation.package.price }} บาท</b></font>
             <br/>
         </div>
@@ -150,7 +150,10 @@ export default {
     bindAppointmentType: function (status) {
       if (status === "รอยืนยัน" || status === "pending") {
         return "status-1";
-      } else {
+      } else if(status === "ยกเลิก"){
+        return "status-3"
+      }
+      else {
         return "status-2";
       }
     },

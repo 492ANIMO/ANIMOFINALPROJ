@@ -55,8 +55,9 @@
 
                 <vs-button
                   color="#ca7676"
-                  @click="active1 = !active1"
+                  @click="active1 = !active1, selectItem(data._id)"
                   class="BTdel"
+                  
                 >
                   ยกเลิก
                 </vs-button>
@@ -110,11 +111,10 @@
             <h4 class="HeadInput">รายละเอียดยกเลิกการจอง</h4>
             <textarea
               class="TArea"
-              v-model="value"
+              v-model="cancelDetail"
               label="รายระเอียดการยกเลิก"
               placeholder="รายละเอียด"
             >
-              ใส่ข้อมูลลลลลล
             </textarea>
           </vs-col>
         </vs-row>
@@ -126,7 +126,7 @@
               color="#ca7676"
               @click="
                 (active1 = !active1), 
-                cancelReservation(data._id);
+                cancelReservation(selectedId);
                 AddNoti('bottom-right', 1500, '#57c496');
               "
               style="float: right; width: 80px"
@@ -162,7 +162,9 @@ export default {
     active1: false,
     users: [],
     reservations: [],
-    reserved: "",
+    reserved: '',
+    cancelDetail: '',
+    selectedId: ''
   }),
   created() {
     this.load();
@@ -195,6 +197,10 @@ export default {
         text: `ลบรายการข้อมูลที่เลือกสำเร็จ`,
       });
     },
+    selectItem(id){
+      this.selectedId = id;
+      console.log(this.selectedId)
+    },
     load() {
       let baseURL = "http://localhost:4000/api/reservations/";
 
@@ -226,10 +232,13 @@ export default {
         });
     },
     cancelReservation(id) {
-      let baseURL = "http://localhost:4000/api/reservations/";
+      let baseURL = "http://localhost:4000/api/reservations/cancel/";
       console.log("id: " + id);
       axios
-        .delete(baseURL + id)
+        .patch(baseURL + id, {
+          status: 'ยกเลิก',
+          detail: this.cancelDetail
+        })
         .then((res) => {
           console.log(res);
           this.load();

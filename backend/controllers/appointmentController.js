@@ -75,7 +75,9 @@ exports.create = async (req, res, next) => {
     console.log('booked: '+booked)
     const reserved = await Reservation.find({
       'date': date, 
-      'time': time });
+      'time': time,
+      'status' : { $ne: 'ยกเลิก' }
+     });
       //  if found booked time -> reject
     if(booked.length!==0 || reserved.length!==0){
       throw new Error('ไม่สามารถเพิ่มการนัดหมายได้ เนื่องจากเวลาดังกล่าวถูกจองไปแล้ว');
@@ -211,7 +213,9 @@ exports.showMyAppointment = async (req, res, next) => {
     const pet = await Pet.find().where('owner').in(clientId).exec();
     console.log('pet: '+pet)
     let appointment = await Appointment.find({status:'ไปตามเวลานัด'}).where('pet').in(pet).populate('pet').exec();
-    const reservation = await Reservation.find({status: 'รอยืนยัน'}).where('owner').in(clientId).populate('pet').exec();
+    const reservation = await Reservation.find({
+      $or:[{status: 'รอยืนยัน'},{ status: 'ยกเลิก' }]}).where('owner').in(clientId).populate('pet').exec();
+
     console.log(`reservation: ${reservation}`)
 
     appointment.push(...reservation); //spread operator
