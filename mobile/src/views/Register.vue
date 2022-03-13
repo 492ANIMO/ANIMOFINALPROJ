@@ -61,6 +61,7 @@
           <div class="content-input">
             <vs-input
               label="ยืนยันรหัสผ่าน"
+              type="password"
               v-model="registerForm.confirmPassword"
               placeholder="ยืนยันรหัสผ่าน"
             />
