@@ -6,7 +6,7 @@
         <div class="content2">
           <div class="fix-filter">
             <vs-input class="search" v-model="search" placeholder="ค้นหา..." />
-          <!-- <div class="filter-package" @click="filterByType('สุนัข')">
+            <!-- <div class="filter-package" @click="filterByType('สุนัข')">
             <div class="bg-filter">
               <img src="../assets/pet1.png" alt="Animo" class="Pic-package" />
             </div>
@@ -31,20 +31,20 @@
             <h4>อื่นๆ</h4>
           </div> -->
 
-          <!-- test loop -->
-            <div 
+            <!-- test loop -->
+            <div
               v-for="(type, i) in types"
               :key="i"
-              class="filter-package" 
+              class="filter-package"
               @click="filterByType(type), selectType(i)"
             >
-              <div 
-                class="bg-filter"
-                :class="{active: i === activeId}">
-                <img 
-                  :src="getImgUrl(type)" 
-                  alt="Animo" 
-                  class="Pic-package" />
+              <div class="bg-filter" :class="{ active: i === activeId }">
+                <img
+                  :src="getImgUrl(type)"
+                  alt="Animo"
+                  class="Pic-package"
+                  :class="{ active1: i === activeId }"
+                />
               </div>
               <h4>{{ type }}</h4>
             </div>
@@ -56,8 +56,7 @@
             :key="_id"
             v-for="(pack, _id) in $vs.getSearch(allPackage, search)"
             :data="pack"
-            @click="active=!active, getPackageDetail(pack._id)"
-            
+            @click="(active = !active), getPackageDetail(pack._id)"
           >
             <div
               class="bg-package package-yellow"
@@ -77,7 +76,9 @@
                 >
               </div>
               <div class="TextDT">
-                <font>ราคา : <b>{{ pack.price }} บาท</b></font>
+                <font
+                  >ราคา : <b>{{ pack.price }} บาท</b></font
+                >
               </div>
               <div class="TextDT1">
                 <font>ข้อมูลเพิ่มเติม...</font>
@@ -94,45 +95,62 @@
 
         <h2 class="Head-history">รายการรักษา</h2>
         <!-- vaccines -->
-        <div v-for="(data, i) in packageDetail.vaccines" :key="i" class="box-package">
-              <h2>{{ data.name }}</h2>
-              <div class="box-package-dt">
-                <font>ประเภทสัตว์ : <b>{{ data.type }}</b></font
-                ><br />
-                <font>อายุมากกว่า : <b>{{ data.age }} ปี</b></font
-                ><br />
-                <font>รายละเอียด : <b>{{ data.detail }}</b></font
-                ><br />
-              </div>
+        <div
+          v-for="(data, i) in packageDetail.vaccines"
+          :key="i"
+          class="box-package"
+        >
+          <h2>{{ data.name }}</h2>
+          <div class="box-package-dt">
+            <font
+              >ประเภทสัตว์ : <b>{{ data.type }}</b></font
+            ><br />
+            <font
+              >อายุมากกว่า : <b>{{ data.age }} ปี</b></font
+            ><br />
+            <font
+              >รายละเอียด : <b>{{ data.detail }}</b></font
+            ><br />
           </div>
+        </div>
 
         <!-- treatments -->
-        <div class="box-package"
-          v-for="(data, i) in packageDetail.treatments" :key="i"
+        <div
+          class="box-package"
+          v-for="(data, i) in packageDetail.treatments"
+          :key="i"
         >
-              <h2>{{ data.name }}</h2>
-              <div class="box-package-dt">
-                <font>ประเภทสัตว์ : <b>{{ data.petType }}</b></font
-                ><br />
-                <font>อายุมากกว่า : <b>{{ data.age }} ปี</b></font
-                ><br />
-                <font>รายละเอียด : <b>{{ data.detail }}</b></font
-                ><br />
-              </div>
+          <h2>{{ data.name }}</h2>
+          <div class="box-package-dt">
+            <font
+              >ประเภทสัตว์ : <b>{{ data.petType }}</b></font
+            ><br />
+            <font
+              >อายุมากกว่า : <b>{{ data.age }} ปี</b></font
+            ><br />
+            <font
+              >รายละเอียด : <b>{{ data.detail }}</b></font
+            ><br />
+          </div>
         </div>
         <!-- healthCheck -->
-        <div class="box-package"
-          v-for="(data, i) in packageDetail.healthChecks" :key="i"
+        <div
+          class="box-package"
+          v-for="(data, i) in packageDetail.healthChecks"
+          :key="i"
         >
-              <h2>{{ data.name }}</h2>
-              <div class="box-package-dt">
-                <font>ประเภทสัตว์ : <b>{{ data.petType }}</b></font
-                ><br />
-                <font>อายุมากกว่า : <b>{{ data.age }} ปี</b></font
-                ><br />
-                <font>รายละเอียด : <b>{{ data.detail }}</b></font
-                ><br />
-              </div>
+          <h2>{{ data.name }}</h2>
+          <div class="box-package-dt">
+            <font
+              >ประเภทสัตว์ : <b>{{ data.petType }}</b></font
+            ><br />
+            <font
+              >อายุมากกว่า : <b>{{ data.age }} ปี</b></font
+            ><br />
+            <font
+              >รายละเอียด : <b>{{ data.detail }}</b></font
+            ><br />
+          </div>
         </div>
 
         <template #footer>
@@ -143,7 +161,6 @@
           </div>
         </template>
       </vs-dialog>
-
     </div>
   </div>
 </template>
@@ -157,23 +174,23 @@ export default {
     return {
       search: "",
       active: false,
-      types: ['สุนัข','แมว','สัตว์ฟันแทะ','อื่นๆ'],
-      activeId: -1
+      types: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
+      activeId: -1,
     };
   },
   components: {
     Navbar,
   },
   methods: {
-    ...mapActions(["fetchPackage", "getPackageDetail", 'filterByType']),
-    selectType(index){
-      console.log(`index: ${index}`)
+    ...mapActions(["fetchPackage", "getPackageDetail", "filterByType"]),
+    selectType(index) {
+      console.log(`index: ${index}`);
       this.activeId = index;
-      console.log(`activeId: ${this.activeId}`)
+      console.log(`activeId: ${this.activeId}`);
     },
 
     goToStep1() {
-      this.$router.push('/mobile/step1'); 
+      this.$router.push("/mobile/step1");
     },
     BindPackageType: function (type) {
       if (type === "สุนัข") {
@@ -213,7 +230,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["allPackage", 'packageDetail']),
+    ...mapGetters(["allPackage", "packageDetail"]),
   },
   created() {
     this.fetchPackage();
@@ -225,25 +242,30 @@ export default {
 <style scoped>
 @import url("../assets/css/style.css");
 .active {
-  /* border: solid; */
-  /* border-color: #696969; */
-  background: linear-gradient( 90deg,rgba(154, 221, 213, 1) 30%,rgba(144, 202, 221, 1) 100%);
+  background: rgb(109, 185, 240);
+  background: linear-gradient(
+    135deg,
+    rgba(109, 185, 240, 1) 0%,
+    rgba(80, 150, 230, 1) 100%
+  );
 }
-
+.active1 {
+  filter: brightness(200%);
+}
 .Head-history {
   font-weight: 500;
   font-size: 19px;
   padding-top: 10px;
 }
 .fix-filter {
- background: #696969;
- padding-top: 15px;
- position: fixed;
- width: calc(100% - 34px);
- margin-left: -3px;
- background: rgb(154, 221, 213);
- z-index: 2;
- padding-bottom: 10px;
+  background: #696969;
+  padding-top: 15px;
+  position: fixed;
+  width: calc(100% - 34px);
+  margin-left: -3px;
+  background: rgb(154, 221, 213);
+  z-index: 2;
+  padding-bottom: 10px;
 }
 .space-filter {
   height: 160px;
@@ -280,6 +302,10 @@ export default {
   font-weight: 500;
   font-size: 18px;
   color: #696969;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 ::v-deep .PetDT font {
   font-size: 13px;
@@ -319,7 +345,7 @@ export default {
   width: 100%;
   margin-top: 5px;
 }
-::v-deep .box-package h2{
+::v-deep .box-package h2 {
   color: #696969;
 }
 ::v-deep .button-detail {

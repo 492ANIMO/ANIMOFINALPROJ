@@ -122,7 +122,7 @@ border-radius: 10px 0px 10px 0px;
 margin-top: -18px;
 background: #DDE4E5;
 }
-::v-deep .status-package:active{
+::v-deep .status-package:hover{
 background: #808FDD !important;
 color: #ffffff;
 }

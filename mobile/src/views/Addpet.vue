@@ -227,33 +227,7 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
-.icon-edit {
-  color: #ffffff;
-  align-self: center;
-  font-size: 13px;
-  z-index: 2;
-}
-.edit-pic-pet {
-  position: absolute;
-  left: calc(50% + 50px);
-  transform: translateX(-50%);
-  top: 171px;
-  width: 40px;
-  height: 25px;
-  border-radius: 18px 0px 18px 0px;
-  align-self: center;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-}
-.bg-blur {
-  background: #242b2e;
-  width: 40px;
-  height: 25px;
-  position: absolute;
-  filter: blur(8px);
-  -webkit-filter: blur(8px);
-}
+
 ::v-deep .bar {
   background: rgb(133, 209, 220);
   background: linear-gradient(

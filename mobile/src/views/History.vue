@@ -221,6 +221,10 @@ font-awesome-icon {
   font-weight: 500;
   font-size: 18px;
   color: #696969;
+    display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 ::v-deep .PetDT font {
   font-size: 13px;
