@@ -75,18 +75,26 @@ export default {
         height: 35px;
         font-size: 20px;
         margin: 10px;
+        transform: translateY(10px);
     }
-    h1,h3 {
+    h1 {
+        font-weight: 600;
+        font-size: 40px;
+        transform: translateX(-30px);
+        margin: 0px;
+        color: #494949;
+    }
+    h3 {
         font-weight: 400;
         transform: translateX(-30px);
         margin: 0px;
         color: #494949;
     }
     h3 {
-        margin-top: -10px;
+        margin-top: -16px;
     }
     h4 {
-        margin: 10px 0px 10px -10px;
+        margin: 10px 0px 5px -20px;
         padding-left: 5px;
         font-weight: 400;
         color: #696969;

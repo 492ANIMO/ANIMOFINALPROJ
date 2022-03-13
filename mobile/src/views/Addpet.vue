@@ -6,9 +6,26 @@
         <h2 class="Head-text">
           <font-awesome-icon class="iconR" icon="plus" />เพิ่มสัตว์เลี้ยง
         </h2>
-        <div>
-          <img src="../assets/bento.png" alt="Animo" class="profile-pic" />
+
+        <div class="edit-pic-pet" @click="toggleShow">
+          <font-awesome-icon class="icon-edit" icon="edit" />
+          <div class="bg-blur"></div>
         </div>
+        <img src="../assets/bento.png" alt="Animo" class="profile-pic" />
+
+        <my-upload
+          field="img"
+          v-model="show"
+          :width="300"
+          :height="300"
+          url="/upload"
+          :params="params"
+          :headers="headers"
+          img-format="png"
+        ></my-upload>
+        <img :src="imgDataUrl" />
+        
+
         <div class="content1">
           <div class="content-input">
             <vs-input
@@ -25,7 +42,14 @@
               placeholder="ประเภทสัตว์"
               v-model="addPetForm.type"
             >
-              <vs-option v-for="type in type" :key="type" :label="type" :value="type"> {{ type }} </vs-option>
+              <vs-option
+                v-for="type in type"
+                :key="type"
+                :label="type"
+                :value="type"
+              >
+                {{ type }}
+              </vs-option>
             </vs-select>
             <vs-input
               class="input-grid1"
@@ -75,8 +99,12 @@
               placeholder="ทำหมัน"
               v-model="addPetForm.sterilization"
             >
-              <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว"> ทำหมันแล้ว </vs-option>
-              <vs-option label="ยังไม่ทำหมัน" value="ยังไม่ทำหมัน"> ยังไม่ทำหมัน </vs-option>
+              <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว">
+                ทำหมันแล้ว
+              </vs-option>
+              <vs-option label="ยังไม่ทำหมัน" value="ยังไม่ทำหมัน">
+                ยังไม่ทำหมัน
+              </vs-option>
             </vs-select>
           </div>
         </div>
@@ -92,22 +120,78 @@
 
 <script>
 import Navbar from "../components/Navbar";
+import myUpload from "vue-image-crop-upload/upload-2.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Addpet",
+  "my-upload": myUpload,
   data() {
     return {
       search: "",
       value: "",
       active: false,
-      type: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ']
+      show: true,
+      type: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
+      langExt: {
+        hint: "อัพโหลดภาพ",
+        loading: "กำลังอัพโหลด…",
+        noSupported:
+          "เบราเซอร์ไม่รองรับ, กรุณาใช้ IE เวอร์ชั่น 10 ขึ้นไป หรือใช้เบราเซอร์ตัวอื่น",
+        success: "อัพโหลดสำเร็จ",
+        fail: "อัพโหลดล้มเหลว",
+        preview: "ตัวอย่าง",
+        btn: {
+          off: "ยกเลิก",
+          close: "ปิด",
+          back: "กลับ",
+          save: "บันทึก",
+        },
+        error: {
+          onlyImg: "ไฟล์ภาพเท่านั้น",
+          outOfSize: "ไฟล์ใหญ่เกินกำหนด: ",
+          lowestPx: "ไฟล์เล็กเกินไป. อย่างน้อยต้องมีขนาด: ",
+        },
+      },
     };
   },
   methods: {
     ...mapActions(["fetchCurrentUser", "addMyPet"]),
     goTomypet() {
-      this.$router.push('/mobile/mypet'); 
+      this.$router.push("/mobile/mypet");
+    },
+    toggleShow() {
+      this.show = !this.show;
+    },
+    cropSuccess(imgDataUrl, field) {
+      console.log("-------- crop success --------");
+      this.imgDataUrl = imgDataUrl;
+      console.log("field: " + field);
+      console.log("imgDataUrl: " + this.imgDataUrl);
+    },
+    /**
+     * upload success
+     *
+     * [param] jsonData  server api return data, already json encode
+     * [param] field
+     */
+    cropUploadSuccess(jsonData, field) {
+      console.log("-------- upload success --------");
+      console.log(jsonData);
+      console.log("field: " + field);
+      // console.log("imgDataUrl2: " + this.imgDataUrl);
+      this.fetchCurrentUser();
+    },
+    /**
+     * upload fail
+     *
+     * [param] status    server api return error status, like 500
+     * [param] field
+     */
+    cropUploadFail(status, field) {
+      console.log("-------- upload fail --------");
+      console.log(status);
+      console.log("field: " + field);
     },
     openLoading() {
       const loading = this.$vs.loading({
@@ -135,6 +219,33 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
+.icon-edit {
+  color: #ffffff;
+  align-self: center;
+  font-size: 13px;
+  z-index: 2;
+}
+.edit-pic-pet {
+  position: absolute;
+  left: calc(50% + 50px);
+  transform: translateX(-50%);
+  top: 171px;
+  width: 40px;
+  height: 25px;
+  border-radius: 18px 0px 18px 0px;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.bg-blur {
+  background: #242b2e;
+  width: 40px;
+  height: 25px;
+  position: absolute;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
 ::v-deep .bar {
   background: rgb(133, 209, 220);
   background: linear-gradient(
@@ -204,5 +315,19 @@ export default {
 }
 ::v-deep .vs-select {
   z-index: 1;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap {
+  width: 80%;
+  max-width: 300px;
+  border-radius: 20px;
+  height: 300px;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap .vicp-step1 .vicp-drop-area {
+  border-radius: 10px;
+}
+::v-deep .vue-image-crop-upload .vicp-wrap .vicp-operate a {
+  margin-bottom: -10px;
+  margin-right: -10px;
+  width: 70px;
 }
 </style>
