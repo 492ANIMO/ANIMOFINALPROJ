@@ -12,7 +12,9 @@
             :data="pet"
             @click="(active = !active), fetchPetDetail(pet._id)"
           >
-            <img src="../assets/bento.png" alt="Animo" class="PicCat" />
+
+            <img v-if="pet.avatar" :src="baseurl+pet.avatar" alt="Animo" class="PicCat" />
+            <img v-else src="../assets/bento.png" alt="Animo" class="PicCat" />
             <div class="PetDT">
               <h2>{{ pet.name }}</h2>
               <font-awesome-icon class="gander" icon="mars" />
@@ -49,7 +51,9 @@
     
     <vs-dialog v-model="active">
       <template #header>
-        <img src="../assets/bento.png" alt="Animo" class="PicCatDT" />
+        <img v-if="petDetail.avatar" :src="baseurl+petDetail.avatar" alt="Animo" class="PicCatDT" />
+        <img v-else src="../assets/bento.png" alt="Animo" class="PicCatDT" />
+        <!-- <img src="../assets/bento.png" alt="Animo" class="PicCatDT" /> -->
       </template>
 
       <div class="content-detail">
@@ -145,6 +149,7 @@ export default {
       ...mapState(["petDetailPopup"]),
       search: "",
       active: false,
+      baseurl: 'http://localhost:4000/api/',
     };
   },
   components: {

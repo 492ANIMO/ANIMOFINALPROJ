@@ -27,12 +27,10 @@
           field="avatar"
           v-model="show"
           :url="baseurl+'pets/'+petDetail._id+'/avatar/upload/'"
-          :params="params" 
           :langExt="langExt"
           :noSquare="true"
           :noCircle="true"
           :noRotate="false"
-          :headers="headers"
           img-format="png"
         ></my-upload>
         
@@ -138,7 +136,7 @@ export default {
       search: "",
       value: "",
       active: false,
-      show: true,
+      show: false,
 
       type: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ'],
        langExt: {
@@ -164,7 +162,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["fetchCurrentUser", "addMyPet", 'editMyPet']),
+    ...mapActions(["fetchCurrentUser", "addMyPet", 'editMyPet', 'fetchPetDetail']),
     goTomypet() {
       this.$router.push("/mobile/mypet");
     },
@@ -188,24 +186,15 @@ export default {
       console.log("field: " + field);
       console.log("imgDataUrl: " + this.imgDataUrl);
     },
-    /**
-     * upload success
-     *
-     * [param] jsonData  server api return data, already json encode
-     * [param] field
-     */
+  
     cropUploadSuccess(jsonData, field) {
       console.log("-------- upload success --------");
       console.log(jsonData);
       console.log("field: " + field);
+      this.fetchPetDetail(this.petDetail._id)
       // console.log("imgDataUrl2: " + this.imgDataUrl);
     },
-    /**
-     * upload fail
-     *
-     * [param] status    server api return error status, like 500
-     * [param] field
-     */
+ 
     cropUploadFail(status, field) {
       console.log("-------- upload fail --------");
       console.log(status);
