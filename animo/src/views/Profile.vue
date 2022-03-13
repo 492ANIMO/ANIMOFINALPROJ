@@ -866,7 +866,7 @@ export default {
       name: { required },
       type: { required },
       gender: { required },
-      bloodType: { required },
+      // bloodType: { required },
       weight: {
         required,
         minValue: minValue(0),
@@ -884,7 +884,7 @@ export default {
       type: { required },
       // breed: { required },
       gender: { required },
-      bloodType: { required },
+      // bloodType: { required },
       weight: {
         required,
         minValue: minValue(0),
