@@ -14,16 +14,21 @@
         <img src="../assets/bento.png" alt="Animo" class="profile-pic" />
 
         <my-upload
-          field="img"
+          @crop-success="cropSuccess"
+          @crop-upload-success="cropUploadSuccess"
+          @crop-upload-fail="cropUploadFail"
+          field="avatar"
           v-model="show"
           :width="300"
           :height="300"
-          url="/upload"
-          :params="params"
-          :headers="headers"
+      
+          :langExt="langExt"
+          :noSquare="true"
+          :noCircle="true"
+          :noRotate="false"
           img-format="png"
         ></my-upload>
-        <img :src="imgDataUrl" />
+        <!-- <img :src="imgDataUrl" /> -->
         
 
         <div class="content1">
@@ -125,7 +130,11 @@ import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Addpet",
-  "my-upload": myUpload,
+  components:{
+    Navbar,
+    "my-upload": myUpload,
+  },
+
   data() {
     return {
       search: "",
@@ -153,6 +162,8 @@ export default {
           lowestPx: "ไฟล์เล็กเกินไป. อย่างน้อยต้องมีขนาด: ",
         },
       },
+      imgDataUrl: ''
+
     };
   },
   methods: {
@@ -180,7 +191,6 @@ export default {
       console.log(jsonData);
       console.log("field: " + field);
       // console.log("imgDataUrl2: " + this.imgDataUrl);
-      this.fetchCurrentUser();
     },
     /**
      * upload fail
@@ -208,9 +218,7 @@ export default {
   computed: {
     ...mapGetters(["currentUser", "pet", "addPetForm"]),
   },
-  components: {
-    Navbar,
-  },
+ 
   created() {
     this.fetchCurrentUser();
     //this.openLoading();
