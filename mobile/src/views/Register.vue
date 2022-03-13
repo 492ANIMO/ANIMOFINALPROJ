@@ -174,6 +174,9 @@ export default {
   created() {
     //this.openLoading();
     this.fetchProvince();
+    if(localStorage.getItem("jwt")){
+        this.$router.push({name:'Mypet'})
+    }
 
   },
   computed: {

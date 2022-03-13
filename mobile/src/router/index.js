@@ -5,27 +5,31 @@ import jwt_decode from "jwt-decode";
 Vue.use(VueRouter)
 
 function guardMyRoute(to, from, next){
-  var isAuthenticated= false;
+
+  if(!localStorage.getItem('jwt')){
+    next({
+      name: 'Login'
+    });
+  }
 
   // decode jwt token 
   const token = localStorage.getItem('jwt'); //jwt
   const decoded = jwt_decode(token);
-  console.log('jwt decoded:'+JSON.stringify(decoded));
+  console.log('jwt decoded1:'+JSON.stringify(decoded));
 
   if(localStorage.getItem('jwt') && decoded.role==='client'){
-    isAuthenticated = true;
+    next(); // allow to enter route
   }
   else{
-    isAuthenticated= false;
-    localStorage.removeItem("jwt");
+    next('/'); // go to '/login';
   }
 
-  if(isAuthenticated){
-   next(); // allow to enter route
-  } 
-  else {
-   next('/'); // go to '/login';
-  }
+  // if(isAuthenticated){
+  //  next(); // allow to enter route
+  // } 
+  // else {
+  //  next('/'); // go to '/login';
+  // }
 }
 
 function setToken(to, from, next){
@@ -36,7 +40,7 @@ function setToken(to, from, next){
   console.log(`token: ${token}`)
 
   const decoded = jwt_decode(token);
-  console.log('jwt decoded:'+JSON.stringify(decoded));
+  console.log('jwt decoded2:'+JSON.stringify(decoded));
    
   var isAuthenticated = false;
   localStorage.setItem('jwt', token)
