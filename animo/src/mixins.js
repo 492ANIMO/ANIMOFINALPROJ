@@ -16,22 +16,13 @@ export default {
       return value.toISOString().split('T')[0]
     }
   },
+  getCurrentDate(){
+    const date = new Date();
+    // console.log(date)
+    const dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];
+    // console.log(dateString)
+    return dateString;
+  }
 
  }
 }
-
-// export default {
-//  methods: {
-//   format_date(value){
-//     if (value) {
-//       let date = value.split("T")[0]
-//       let d = new Date(date).toLocaleDateString("th", {year: 'numeric', month: 'long', day: 'numeric'});
-//       // console.log(typeof(date));
-//       // console.log(d);
-
-//       return d;
-
-//     }
-//   }
-//  }
-// }

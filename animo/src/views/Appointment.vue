@@ -198,6 +198,8 @@
                 class="Date"
                 @change="getBookableTimes()"
                 @blur="$v.appointment.date.$touch()"
+                :min="getCurrentDate()"
+                
               >
                 <template v-if="$v.appointment.date.$error" #message-danger>
                   <p v-if="!$v.appointment.date.required">
@@ -349,6 +351,7 @@
                 type="text"
                 v-model="currentAppointment.date"
                 label="วันที่นัดหมาย"
+                
               ></vs-input>
             </div>
           </vs-col>
