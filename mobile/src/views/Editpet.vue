@@ -4,11 +4,14 @@
     <div class="content">
       <div>
         <h2 class="Head-text">
-          <font-awesome-icon class="iconR" icon="edit" />แก้ไขข้อมูลสัตว์เลี้ยง
+          แก้ไขข้อมูลสัตว์เลี้ยง
         </h2>
-        <div>
-          <img src="../assets/bento.png" alt="Animo" class="profile-pic" />
+        <div class="edit-pic-pet" @click="toggleShow">
+          <font-awesome-icon class="icon-edit" icon="edit" />
+          <div class="bg-blur"></div>
         </div>
+        <img src="../assets/bento.png" alt="Animo" class="profile-pic" />
+
         <div class="content1">
           <div class="content-input">
             <vs-input
@@ -82,7 +85,7 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" @click="goTomypet(),editMyPet()">
+        <div class="button-addpet add" @click="goTomypet() ,editMyPet()">
           <h4>แก้ไขข้อมูลสัตว์เลี้ยง</h4>
         </div>
       </div>
@@ -107,7 +110,7 @@ export default {
   methods: {
     ...mapActions(["fetchCurrentUser", "addMyPet", 'editMyPet']),
     goTomypet() {
-      this.$router.push('/mobile/mypet'); 
+      this.$router.push("/mobile/mypet");
     },
     openLoading() {
       const loading = this.$vs.loading({
