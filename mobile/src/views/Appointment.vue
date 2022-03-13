@@ -15,7 +15,7 @@
           >
             <div class="bg-package">
               <img
-                src="../assets/bento.png"
+                :src="'http://localhost:4000/api/'+appointment.pet.avatar"
                 alt="Animo"
                 class="Pic-appointment-dt"
               />
