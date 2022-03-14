@@ -2,33 +2,20 @@ const mime =  require('mime-types');
 const {Storage} = require('@google-cloud/storage');
 const uuid = require('uuid');
 const path = require('path')
-const multer = require('multer')
 const config = require('../config/index')
 
 const serviceKey = path.join(__dirname, './keys.json')
 
-const storage = new Storage({
-  keyFilename: serviceKey,
-  // projectId: config.GOOGLE_PROJECT_ID, 
-  projectId: 'animo-344110', 
-})
-
-//file = req.file
 const uploadImage = (file) => new Promise((resolve, reject) => {
 
-  // const storage = new Storage({
-  //   keyFilename: serviceKey,
-  //   // projectId: config.GOOGLE_PROJECT_ID, 
-  //   projectId: 'animo-344110', 
-  // })
   const {originalname, buffer} = file;
   const type = mime.lookup(originalname);
   console.log(type);
 
   const storage = new Storage({
     keyFilename: serviceKey,
-    // projectId: config.GOOGLE_PROJECT_ID, 
-    projectId: 'animo-344110', 
+    projectId: config.GOOGLE_PROJECT_ID, 
+    // projectId: 'animo-344110', 
   })
 
   const bucket = storage.bucket(config.GOOGLE_BUCKET_NAME);
@@ -42,9 +29,8 @@ const uploadImage = (file) => new Promise((resolve, reject) => {
   })
 
   blobStream.on('finish', () => {
-    const publicUrl = format(
-      `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-    )
+    const publicUrl =  `https://storage.googleapis.com/${bucket.name}/${blob.name}`
+    
     resolve(publicUrl)
   }).on('error', () => {
     console.log('error')

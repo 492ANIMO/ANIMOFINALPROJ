@@ -6,7 +6,7 @@ const Pet = require('../models/pet');
 const Appointment = require('../models/appointment');
 const Reservation = require('../models/reservation');
 
-const uploadImage = require('../middleware/uploadImage');
+const uploadImage = require('../helpers/googleUpload');
 const uuid = require('uuid');
 const mime =  require('mime-types');
 const {Storage} = require('@google-cloud/storage');
@@ -215,68 +215,15 @@ exports.upload = async (req, res, next) => {
       throw error;
     }
 
-
     // console.log('req.file: '+JSON.stringify(req.file));
   
-    // console.log(`req: ${req}`);
-    console.log(serviceKey)
     if (req.file){
-      const type = mime.lookup(req.file.originalname);
-      console.log(type)
-
-      const myFile = req.file;
-      console.log('have req.file')
-      // console.log('req.file: '+JSON.stringify(myFile));
-
-      const storage = new Storage({
-        keyFilename: './keys.json',
-        // projectId: config.GOOGLE_PROJECT_ID, 
-        projectId: 'animo-344110', 
-      })
-
-      const bucket = storage.bucket(config.GOOGLE_BUCKET_NAME);
-      // console.log(storage)
-      // const blob = bucket.file(`${uuidv4()}.${mime.extensions[type][0]}`);
-      console.log(req.file.originalname)
-      const blob = bucket.file(`${uuid.v4()}.${mime.extensions[type][0]}`)
-      console.log('type')
-      console.log(type)
-      const blobStream = blob.createWriteStream({
-        resumable: false,
-        // public: true,
-        contentType: type,
-        // predefinedAcl: 'publicRead',
-      })
-
-      blobStream.on('finish', () => {
-        // const publicUrl = format(
-        //   `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-        // )
-        // resolve(publicUrl)
-
-        const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-        console.log(publicUrl)
-        res.status(201).json({
-          message: 'เปลี่ยนรูปภาพสำเร็จ',
-          url: `https://storage.googleapis.com/${bucket.name}/${blob.name}`
-          // updatedClient
-        })
-      })
-      blobStream.on('error', (error) => {
-        console.log('on error')
-
-        // console.log(error)
-        // reject(`Unable to upload image, something went wrong`)
-      })
-      blobStream.end(req.file.buffer)
-  
-
-      // const imageUrl = await uploadImage.uploadImage(myFile);
-      // console.log('imageUrl: ');
-      // console.log(imageUrl);
+      const imageUrl = await uploadImage(req.file);
+      console.log('imageUrl: ');
+      console.log(imageUrl);
 
       // client.avatar = req.file.path
-      // client.avatar = imageUrl
+      client.avatar = imageUrl
 
       // const updatedClient = await client.save();
       // if(!updatedClient){
@@ -284,10 +231,11 @@ exports.upload = async (req, res, next) => {
       //   throw new Error('ไม่สามารถเปลี่ยนรูปภาพโปรไฟล์ได้');
       // }
 
-      // res.status(201).json({
-      //   message: 'เปลี่ยนรูปภาพสำเร็จ',
-      //   // updatedClient
-      // })
+        res.status(201).json({
+          message: 'เปลี่ยนรูปภาพสำเร็จ',
+          updatedClient,
+          imageUrl
+        })
     }
     
   } catch (error) {
