@@ -53,6 +53,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/uploads', express.static('uploads'));
 
+
 // Sessions
 app.use(session({
   secret: 'secret',
