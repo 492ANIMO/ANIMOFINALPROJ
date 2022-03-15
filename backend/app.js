@@ -33,6 +33,7 @@ const appointmentRouter = require('./routes/appointment');
 const historyRouter = require('./routes/history');
 const annoucementRouter = require('./routes/annoucement');
 const timeslotRouter = require('./routes/timeslot');
+const uploadRouter = require('./routes/upload');
 
 const app = express();
 
@@ -52,6 +53,7 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/uploads', express.static('uploads'));
+
 
 // Sessions
 app.use(session({
@@ -96,6 +98,7 @@ app.use('/api/reservations', reservationRouter);
 app.use('/api/history', historyRouter);
 app.use('/api/annoucements', annoucementRouter);
 app.use('/api/timeslots', timeslotRouter);
+app.use('/api/uploads', uploadRouter);
 
 app.use(errorHandler);
 

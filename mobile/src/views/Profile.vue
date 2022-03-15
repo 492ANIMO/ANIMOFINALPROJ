@@ -11,8 +11,8 @@
           </div>
 
           <img
-            v-if="this.currentUser.profile.avatar"
-            :src="this.baseurl+currentUser.profile.avatar"
+            v-if="currentUser.profile.avatar!==''"
+            :src="currentUser.profile.avatar"
             alt="Animo"
             class="profile-client"
             @click="toggleShow"
@@ -60,7 +60,7 @@
           @crop-upload-fail="cropUploadFail"
           field="avatar"
           v-model="show"
-          :url="baseurl+'clients/'+currentUser.profile._id+'/avatar/upload/'"
+          :url="baseurl+'uploads/'"
           :params="params" 
           :langExt="langExt"
           :noSquare="true"
@@ -69,7 +69,7 @@
           :headers="headers"
           img-format="png"
         ></my-upload>
-        <!-- <img :src="imgDataUrl"> -->
+
       </div>
 
       <div class="footer-button">
@@ -88,9 +88,9 @@
 import Navbar from "../components/Navbar";
 import myUpload from "vue-image-crop-upload/upload-2.vue";
 import { mapActions, mapGetters } from "vuex";
+import { editProfile, editProfileImg } from '../services/clientService';
+
 // import axios from 'axios';
-
-
 export default {
   name: "Mypet",
   components: {
@@ -126,7 +126,7 @@ export default {
       params: {
         token: "123456798",
         name: "avatar",
-        imgDataUrl: this.imgDataUrl
+        // imgDataUrl: this.imgDataUrl
       },
       headers: {
         smail: "*_~",
@@ -137,6 +137,9 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCurrentUser"]),
+    editProfile,
+    editProfileImg,
+
     goToMypet() {
       this.$router.push('/mobile/mypet'); 
     },
@@ -157,8 +160,7 @@ export default {
       this.imgDataUrl = imgDataUrl;
       console.log("field: " + field);
       console.log("imgDataUrl: " + this.imgDataUrl);
-
-
+      
     },
     /**
      * upload success
@@ -166,13 +168,14 @@ export default {
      * [param] jsonData  server api return data, already json encode
      * [param] field
      */
-    cropUploadSuccess(jsonData, field) {
+   cropUploadSuccess(jsonData, field) {
       console.log("-------- upload success --------");
       console.log(jsonData);
       console.log("field: " + field);
-      // console.log("imgDataUrl2: " + this.imgDataUrl);
+      this.currentUser.profile.avatar = jsonData.imageUrl; //set avatar in profile
+      // this.editProfile(this.currentUser.profile) //send profile to axios
+      this.editProfileImg(this.currentUser.profile, jsonData.imageUrl)
       this.fetchCurrentUser();
-
     },
     /**
      * upload fail
@@ -198,7 +201,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGetters(["currentUser", 'imgUrl']),
   },
   created() {
     this.fetchCurrentUser();

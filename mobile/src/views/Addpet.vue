@@ -11,7 +11,8 @@
           <font-awesome-icon class="icon-edit" icon="edit" />
           <div class="bg-blur"></div>
         </div>
-        <img src="../assets/bento.png" alt="Animo" class="profile-pic" />
+
+        <img :src="imgDataUrl" @error="imageUrlAlt" alt="Animo" class="profile-pic" />
 
         <my-upload
           @crop-success="cropSuccess"
@@ -21,7 +22,7 @@
           v-model="show"
           :width="300"
           :height="300"
-      
+          :url="baseurl+'uploads/'"
           :langExt="langExt"
           :noSquare="true"
           :noCircle="true"
@@ -114,8 +115,8 @@
         </div>
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" @click="goToaddpic(), addMyPet()">
-          <h4>ขั้นตอนถัดไป</h4>
+        <div class="button-addpet add" @click="addMyPet()">
+          <h4>เพิ่มสัตว์เลี้ยง</h4>
         </div>
       </div>
     </div>
@@ -136,6 +137,7 @@ export default {
 
   data() {
     return {
+      baseurl: 'http://localhost:4000/api/',
       search: "",
       value: "",
       active: false,
@@ -162,12 +164,19 @@ export default {
         },
       },
       imgDataUrl: ''
+      
 
     };
   },
   methods: {
-    ...mapActions(["fetchCurrentUser", "addMyPet"]),
-    goTomaddpic() {
+    ...mapActions(["fetchCurrentUser", "addMyPet", 'setPetImage']),
+
+    imageUrlAlt(event){
+      console.log('ไม่มีรูป')
+       event.target.src = "https://storage.googleapis.com/animo492/nopic.jpeg"
+    },
+
+    goToaddpic() {
       this.$router.push("/mobile/addpic");
     },
     toggleShow() {
@@ -187,9 +196,11 @@ export default {
      */
     cropUploadSuccess(jsonData, field) {
       console.log("-------- upload success --------");
-      console.log(jsonData);
+      console.log(jsonData.imageUrl);
       console.log("field: " + field);
-      // console.log("imgDataUrl2: " + this.imgDataUrl);
+      this.setPetImage(jsonData.imageUrl);
+      
+     
     },
     /**
      * upload fail

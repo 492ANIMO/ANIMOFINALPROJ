@@ -13,11 +13,11 @@
             @click="(active = !active), fetchPetDetail(pet._id)"
           >
 
-            <img v-if="pet.avatar" :src="baseurl+pet.avatar" alt="Animo" class="PicCat" />
+            <img v-if="pet.avatar" :src="pet.avatar" alt="Animo" class="PicCat" />
             <img v-else src="../assets/bento.png" alt="Animo" class="PicCat" />
             <div class="PetDT">
               <h2>{{ pet.name }}</h2>
-              <font-awesome-icon class="gander" icon="mars" />
+              <!-- <font-awesome-icon class="gander" icon="mars" /> -->
               <div class="TextDT">
                 <font
                   >ประเภทสัตว์ : <b>{{ pet.type }}</b></font
@@ -51,14 +51,16 @@
     
     <vs-dialog v-model="active">
       <template #header>
-        <img v-if="petDetail.avatar" :src="baseurl+petDetail.avatar" alt="Animo" class="PicCatDT" />
+        <img v-if="petDetail.avatar" :src="petDetail.avatar" alt="Animo" class="PicCatDT" />
         <img v-else src="../assets/bento.png" alt="Animo" class="PicCatDT" />
         <!-- <img src="../assets/bento.png" alt="Animo" class="PicCatDT" /> -->
       </template>
 
       <div class="content-detail">
         <h2 style="font-size: 25px; color: #696969">{{ petDetail.name }}</h2>
-        <font-awesome-icon class="gander" icon="venus" />
+        <!-- <font-awesome-icon class="gander" icon="venus" />
+        <font-awesome-icon class="gander" icon="mars" /> -->
+
         <div class="TextDT" style="font-size: 18px">
           <font
             >ประเภทสัตว์ : <b>{{ petDetail.type }}</b></font
@@ -87,11 +89,11 @@
             >น้ำหนัก : <b>{{ petDetail.weight }} กิโลกรัม</b></font
           >
         </div>
-        <div class="TextDT" style="font-size: 18px">
+        <!-- <div class="TextDT" style="font-size: 18px">
           <font
             >กรุ๊ปเลือด : <b>{{ petDetail.bloodType }} </b></font
           >
-        </div>
+        </div> -->
       </div>
 
       <template #footer>

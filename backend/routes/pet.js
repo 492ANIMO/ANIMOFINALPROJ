@@ -23,6 +23,7 @@ router.post('/', upload.single('avatar'), petController.create);
 router.post('/:id/avatar/upload/',upload.single('avatar'), petController.upload);
 router.delete('/:id', petController.destroy);
 router.patch('/:id', petController.update);
+router.patch('/avatar/:id', petController.avatar);
 
 
 module.exports = router;

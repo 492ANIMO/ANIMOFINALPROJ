@@ -48,8 +48,8 @@ const actions = {
       }else{
         let token = response.data.access_token;
         localStorage.setItem("jwt", token);
-        console.log('response.data: '+response.data.access_token);
-    
+        // console.log('response.data: '+response.data.access_token);
+  
         if(response.data.access_token){
           Router.push({name:'Mypet'})
         }
@@ -58,7 +58,7 @@ const actions = {
       if(error.response){
         console.log(error.response.data.error.message); // Message from server
         }
-      console.log(error)
+      // console.log(error)
     }
   },
 
@@ -67,8 +67,6 @@ const actions = {
       const response = await axios.get(`${addressBaseUrl}/v1/thailand/provinces`);
       console.log(response.data.data);
       commit('setProvincesDropdown', response.data.data)
-      
-
       if(response.error){
         throw new Error(response.error)
       }

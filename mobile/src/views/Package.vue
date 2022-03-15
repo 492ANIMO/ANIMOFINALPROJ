@@ -117,8 +117,8 @@
         <!-- treatments -->
         <div
           class="box-package"
-          v-for="(data, i) in packageDetail.treatments"
-          :key="i"
+          v-for="(data, j) in packageDetail.treatments"
+          :key="j"
         >
           <h2>{{ data.name }}</h2>
           <div class="box-package-dt">
@@ -136,8 +136,8 @@
         <!-- healthCheck -->
         <div
           class="box-package"
-          v-for="(data, i) in packageDetail.healthChecks"
-          :key="i"
+          v-for="(data, k) in packageDetail.healthChecks"
+          :key="k"
         >
           <h2>{{ data.name }}</h2>
           <div class="box-package-dt">

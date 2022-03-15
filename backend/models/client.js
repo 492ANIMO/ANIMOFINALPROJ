@@ -19,7 +19,7 @@ const schema = new Schema({
     detail: { type: String, trim: true }
   },
   role: { type: String, default: 'client' }, //x
-  avatar: { type: String, default: 'uploads/nopic.jpeg' },
+  avatar: { type: String, default: 'https://storage.googleapis.com/animo492/nopic.jpeg' },
   uid: { type: String, default: '0000000000' },
 
   // foreign key

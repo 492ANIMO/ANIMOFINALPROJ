@@ -14,7 +14,7 @@
           </div>
            <img
             v-if="this.petDetail.avatar"
-            :src="this.baseurl+petDetail.avatar"
+            :src="petDetail.avatar"
             alt="Animo"
             class="profile-pic"
             @click="toggleShow"
@@ -30,7 +30,7 @@
             v-model="show"
             :width="300"
             :height="300"
-            :url="baseurl+'pets/'+petDetail._id+'/avatar/upload/'"
+            :url="baseurl+'uploads/'"
             :langExt="langExt"
             :noSquare="true"
             :noCircle="true"
@@ -162,10 +162,11 @@ export default {
           lowestPx: "ไฟล์เล็กเกินไป. อย่างน้อยต้องมีขนาด: ",
         },
       },
+      imageUrl : 'nopic.png',
     };
   },
   methods: {
-    ...mapActions(["fetchCurrentUser", "addMyPet", 'editMyPet', 'fetchPetDetail']),
+    ...mapActions(["fetchCurrentUser", "addMyPet", 'editMyPet', 'fetchPetDetail', 'editPetAvatar']),
     goTomypet() {
       this.$router.push("/mobile/mypet");
     },
@@ -190,12 +191,14 @@ export default {
       console.log("imgDataUrl: " + this.imgDataUrl);
     },
   
-    cropUploadSuccess(jsonData, field) {
+    async cropUploadSuccess(jsonData, field) {
       console.log("-------- upload success --------");
       console.log(jsonData);
       console.log("field: " + field);
+      this.imageUrl = jsonData.imageUrl;
+      await this.editPetAvatar(this.imageUrl); //database
       this.fetchPetDetail(this.petDetail._id)
-      // console.log("imgDataUrl2: " + this.imgDataUrl);
+
     },
  
     cropUploadFail(status, field) {

@@ -25,7 +25,7 @@ exports.index = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, type, breed, gender, bloodType, weight, dob, age,sterilization, detail, ownerId} = req.body;
+    const { name, type, breed, gender, bloodType, weight, dob, age,sterilization, detail, ownerId, avatar} = req.body;
 
     console.log(req.body)
 
@@ -40,13 +40,12 @@ exports.create = async (req, res, next) => {
       age,
       sterilization,
       detail,
+      avatar,
 
       owner: ownerId
     })
 
-    if(req.file){
-      pet.avatar = req.file.path
-    }
+
     await pet.save();
     
 
@@ -226,6 +225,29 @@ exports.update = async (req, res, next) => {
 
     res.status(201).json({
       message: 'แก้ไขข้อมูลสัตว์เลี้ยงสำเร็จ'
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+exports.avatar = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const { avatar } = req.body;
+    const pet = await Pet.findByIdAndUpdate({_id:id} ,{
+      avatar
+    })
+
+    if(!pet){
+      const error = new Error('แก้ไขข้อมูลสัตว์เลี้ยงไม่สำเร็จ');
+      error.statusCode = '400';
+      throw error;
+    }
+
+    res.status(201).json({
+      message: 'แก้ไขข้อมูลสัตว์เลี้ยงสำเร็จ',
+      pet
     });
 
   } catch (error) {

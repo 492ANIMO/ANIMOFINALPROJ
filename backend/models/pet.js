@@ -16,7 +16,7 @@ const schema = new Schema({
     month: { type: Number, trim: true }
   },
   sterilization: { type: String,  trim: true },
-  avatar: { type: String,  trim: true, default: 'uploads/nopic.jpeg' },
+  avatar: { type: String,  trim: true, default: 'https://storage.googleapis.com/animo492/nopic.jpeg' },
   detail: { type: String,  trim: true },
   // foreign key
   owner: { type: Schema.Types.ObjectId, ref: 'Client' }, 

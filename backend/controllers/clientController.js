@@ -6,6 +6,15 @@ const Pet = require('../models/pet');
 const Appointment = require('../models/appointment');
 const Reservation = require('../models/reservation');
 
+const uploadImage = require('../helpers/googleUpload');
+const uuid = require('uuid');
+const mime =  require('mime-types');
+const {Storage} = require('@google-cloud/storage');
+const path = require('path')
+const config = require('../config/index')
+const serviceKey = path.join(__dirname, './keys.json')
+
+
 
 exports.index = async (req, res, next) => {
   try {
@@ -161,6 +170,44 @@ exports.destroyAll = async (req, res, next) => {
   }
 }
 
+exports.avatar = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const { profile, avatar } = req.body;
+
+    // check email ซ้ำ
+    const existEmail = await Client.findOne({email: profile.email});
+    console.log(`existEmail: ${existEmail}`)
+    console.log(`=? ${existEmail._id != id}`)
+    
+    if (existEmail && existEmail._id != id){
+      const error = new Error('อีเมลล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    // A.findByIdAndUpdate(id, update, options, callback) // executes
+
+    console.log(`req.body:  ${req.body}`)
+    console.log('req.body: '+JSON.stringify(req.body));
+
+    let client = await Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' });
+
+
+    if(!client){
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      throw error;
+    }
+
+    res.status(200).json({
+      message: 'แก้ไขข้อมูลสำเร็จ',
+      client
+    })
+
+  } catch (error) {
+    next(error);
+  }
+}
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
@@ -178,6 +225,10 @@ exports.update = async (req, res, next) => {
     }
 
     // A.findByIdAndUpdate(id, update, options, callback) // executes
+
+    console.log(`req.body:  ${req.body}`)
+    console.log('req.body: '+JSON.stringify(req.body));
+
     let client = await Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' });
 
      if(!client){
@@ -206,28 +257,27 @@ exports.upload = async (req, res, next) => {
       throw error;
     }
 
-    console.log(`req.body: ${JSON.stringify(req.body)}`);
-    console.log(`req.headers: ${JSON.stringify(req.headers)}`);
-    console.log(`req.params: ${JSON.stringify(req.params)}`);
-    console.log('req.file: '+JSON.stringify(req.file));
+    // console.log('req.file: '+JSON.stringify(req.file));
   
+    if (req.file){
+      const imageUrl = await uploadImage(req.file);
+      console.log('imageUrl: ');
+      console.log(imageUrl);
 
-    console.log(`req: ${req}`);
+      // client.avatar = req.file.path
+      client.avatar = imageUrl
 
-    if(req.file){
-      console.log(`req.file: ${req.file}`)
-      client.avatar = req.file.path
+      // const updatedClient = await client.save();
+      // if(!updatedClient){
+      //   // if error
+      //   throw new Error('ไม่สามารถเปลี่ยนรูปภาพโปรไฟล์ได้');
+      // }
 
-      const updatedClient = await client.save();
-      if(!updatedClient){
-        // if error
-        throw new Error('ไม่สามารถเปลี่ยนรูปภาพโปรไฟล์ได้');
-      }
-
-      res.status(201).json({
-        message: 'เปลี่ยนรูปภาพสำเร็จ',
-        updatedClient
-      })
+        res.status(201).json({
+          message: 'เปลี่ยนรูปภาพสำเร็จ',
+          updatedClient,
+          imageUrl
+        })
     }
     
   } catch (error) {
