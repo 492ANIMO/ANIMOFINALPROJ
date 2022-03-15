@@ -12,8 +12,7 @@
           <div class="bg-blur"></div>
         </div>
 
-        <img v-if="imgDataUrl!=''" :src="imgDataUrl" alt="Animo" class="profile-pic" />
-        <img v-else src="../assets/bento.png" alt="Animo" class="profile-pic" />
+        <img :src="imgDataUrl" @error="imageUrlAlt" alt="Animo" class="profile-pic" />
 
         <my-upload
           @crop-success="cropSuccess"
@@ -171,6 +170,11 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCurrentUser", "addMyPet", 'setPetImage']),
+
+    imageUrlAlt(event){
+      console.log('ไม่มีรูป')
+       event.target.src = "https://storage.googleapis.com/animo492/nopic.jpeg"
+    },
 
     goToaddpic() {
       this.$router.push("/mobile/addpic");
