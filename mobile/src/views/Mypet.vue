@@ -89,11 +89,11 @@
             >น้ำหนัก : <b>{{ petDetail.weight }} กิโลกรัม</b></font
           >
         </div>
-        <div class="TextDT" style="font-size: 18px">
+        <!-- <div class="TextDT" style="font-size: 18px">
           <font
             >กรุ๊ปเลือด : <b>{{ petDetail.bloodType }} </b></font
           >
-        </div>
+        </div> -->
       </div>
 
       <template #footer>
