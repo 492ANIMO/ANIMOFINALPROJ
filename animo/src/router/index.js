@@ -101,6 +101,15 @@ const routes = [
     }
   },
   {
+    path: '/Admin/addaccount',
+    name: 'AddAccount',
+    beforeEnter: roleAdmin,
+    component: () => import('../views/AddAccount.vue'),
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/profile/:client_id',
     name: 'Profile',
     component: () => import('../views/Profile.vue'),

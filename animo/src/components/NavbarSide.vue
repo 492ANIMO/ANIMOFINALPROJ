@@ -14,6 +14,7 @@
         <li><router-link class="Nav-box" to="/package"><font-awesome-icon class="icon" icon="syringe"/><h4>แพ็คเกจ</h4></router-link></li>
         <li><router-link class="Nav-box" to="/reservation"><font-awesome-icon class="icon" icon="file-medical"/><h4>การจอง</h4></router-link></li>
         <li><router-link class="Nav-box" to="/appointment"><font-awesome-icon class="icon" icon="clipboard-list"/><h4>การนัดหมาย</h4></router-link></li>
+        <li><router-link class="Nav-box" to="/Admin/Addpet"><font-awesome-icon class="icon" icon="user"/><h4>แอดมิน</h4></router-link></li>
     </ul>
 </div>
 

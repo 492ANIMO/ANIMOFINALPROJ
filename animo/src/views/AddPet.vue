@@ -34,7 +34,7 @@
           </vs-tr>
         </template>
         <template #tbody>
-          <vs-tr v-for="data in types" :key="data._id"
+          <vs-tr v-for="data in $vs.getPage(types,page,max)" :key="data._id"
           >
             <vs-td>
               {{ data.petType }}
@@ -59,6 +59,13 @@
           </vs-tr>
         </template>
       </vs-table>
+      <div class="center">
+          <vs-pagination
+            infinite
+            v-model="page"
+            :length="$vs.getLength(types, max)"
+          />
+        </div>
     </div>
   </template>
       </div>
@@ -82,6 +89,8 @@ export default {
   data: () => ({
     active: false,
     active1: false,
+    page: 1,
+    max: 5,
     value: "",
     search: "",
     count: [],

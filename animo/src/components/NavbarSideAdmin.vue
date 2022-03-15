@@ -10,7 +10,9 @@
       <li><router-link class="Nav-box" to="/Admin/addpet"><font-awesome-icon class="icon" icon="dog"/>ประเภทสัตว์</router-link></li>
       <li><router-link class="Nav-box" to="/Admin/addvaccine"><font-awesome-icon class="icon" icon="syringe"/>รายการวัคซีน</router-link></li>
       <li><router-link class="Nav-box" to="/Admin/addtreatment"><font-awesome-icon class="icon" icon="notes-medical"/>รายการรักษา</router-link></li>
+      <li><router-link class="Nav-box" to="/Admin/addAccount"><font-awesome-icon class="icon" icon="user"/>บัญชีผู้ใช้</router-link></li>
       <li><router-link class="Nav-box" to="/Admin/annoucement"><font-awesome-icon class="icon" icon="newspaper"/>บทความ</router-link></li>
+      <li><router-link class="Nav-box" to="/clients"><font-awesome-icon class="icon" icon="edit"/>จัดการข้อมูล</router-link></li>
     </ul>
   </div>
 </template>
