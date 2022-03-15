@@ -232,6 +232,29 @@ exports.update = async (req, res, next) => {
     next(error);
   }
 }
+exports.avatar = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const { avatar } = req.body;
+    const pet = await Pet.findByIdAndUpdate({_id:id} ,{
+      avatar
+    })
+
+    if(!pet){
+      const error = new Error('แก้ไขข้อมูลสัตว์เลี้ยงไม่สำเร็จ');
+      error.statusCode = '400';
+      throw error;
+    }
+
+    res.status(201).json({
+      message: 'แก้ไขข้อมูลสัตว์เลี้ยงสำเร็จ',
+      pet
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
 
 exports.petCount = async (req, res, next) => {
   try {

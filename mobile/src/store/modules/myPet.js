@@ -147,7 +147,25 @@ const actions = {
     } catch (error) {
       console.log(error)
     }
-  }
+  },
+
+  async editPetAvatar({commit}, imgUrl){
+    try {
+      const baseUrl = 'http://localhost:4000/api/pets/avatar/';
+      console.log('kkk')
+      console.log(imgUrl)
+      const response = await axios.patch(baseUrl+state.petDetail._id, {
+        avatar: imgUrl,
+      });
+      console.log(`data : ${JSON.stringify(state.petDetail)}`)
+      console.log(`id: ${state.petDetail._id}`)
+      console.log(response.data.message);
+      commit('petDetail', response.data.pet)
+
+    } catch (error) {
+      console.log(error)
+    }
+  },
 };
 
 const mutations = { 
