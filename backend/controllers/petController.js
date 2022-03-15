@@ -25,7 +25,7 @@ exports.index = async (req, res, next) => {
 
 exports.create = async (req, res, next) => {
   try {
-    const { name, type, breed, gender, bloodType, weight, dob, age,sterilization, detail, ownerId} = req.body;
+    const { name, type, breed, gender, bloodType, weight, dob, age,sterilization, detail, ownerId, avatar} = req.body;
 
     console.log(req.body)
 
@@ -40,13 +40,12 @@ exports.create = async (req, res, next) => {
       age,
       sterilization,
       detail,
+      avatar,
 
       owner: ownerId
     })
 
-    if(req.file){
-      pet.avatar = req.file.path
-    }
+
     await pet.save();
     
 

@@ -72,6 +72,12 @@ exports.getCurrentProfile = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     const { email, password, role, firstName, lastName, contact, address } = req.body;
+    if (!email || !password ){
+      const error = new Error('กรุณากรอกข้อมูลให้ครบถ้วน');
+      error.statusCode = 409;
+      throw error;
+  }
+
     //validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -86,7 +92,7 @@ exports.create = async (req, res, next) => {
       const error = new Error('อีเมล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
       error.statusCode = 409;
       throw error;
-  }
+    }
 
     // encrypt password
     const encryptPassword = bcrypt.hashSync(password, 10);

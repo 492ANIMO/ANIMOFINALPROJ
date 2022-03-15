@@ -1,5 +1,7 @@
 import axios from "axios";
 import store from '../index';
+import Router from '../../router/index';
+
 
 const state = {
   mypets: [
@@ -18,9 +20,12 @@ const state = {
     gender: '',
     weight: '',
     sterilization: '',
-    ownerId: ''
+    ownerId: '',
+    avatar: '',
+
   },
   filterPet: [],
+
 };
 
 const getters = {
@@ -28,7 +33,9 @@ const getters = {
   pet: (state) => state.pet,
   petDetail: (state) => state.petDetail,
   addPetForm: (state) => state.addPetForm,
-  filterPet: (state) => state.filterPet
+  filterPet: (state) => state.filterPet,
+  petImageUrl: (state) => state.addPetForm.avatar,
+
 };
 
 const actions = {
@@ -82,6 +89,7 @@ const actions = {
   async addMyPet(){
     try {
       const baseUrl = 'http://localhost:4000/api/pets/'
+    
       const response = await axios.post(baseUrl, state.addPetForm)
       console.log(response.data);
       state.petDetail = {
@@ -99,8 +107,9 @@ const actions = {
         gender: '',
         weight: '',
         sterilization: '',
-        ownerId: ''
+        avatar: ''
       }
+      Router.push({name:'Mypet'})
       
     } catch (error) {
       console.log(error)
@@ -166,6 +175,16 @@ const actions = {
       console.log(error)
     }
   },
+
+  async setPetImage({commit}, imgUrl){
+    try {
+    
+      commit('setPetImageUrl', imgUrl)
+
+    } catch (error) {
+      console.log(error)
+    }
+  },
 };
 
 const mutations = { 
@@ -174,7 +193,8 @@ const mutations = {
   newPet: (state, addPetForm) => (state.pet = addPetForm),
   petDetail: (state, petDetail) => (state.petDetail = petDetail),
   setOwner: (state, owner) => (state.addPetForm.ownerId = owner),
-  setMyPetFilter: (state, pet) => (state.filterPet = pet)
+  setMyPetFilter: (state, pet) => (state.filterPet = pet),
+  setPetImageUrl: (state, imageUrl) => (state.addPetForm.avatar = imageUrl),
 };
 
 export default{

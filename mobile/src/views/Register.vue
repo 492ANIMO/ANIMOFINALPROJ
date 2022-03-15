@@ -66,7 +66,7 @@
               placeholder="ยืนยันรหัสผ่าน"
             />
           </div>
-          <br />
+   
 
           <div class="content-input">
             <vs-input
@@ -143,7 +143,7 @@
         </div>
       </div><br><br>
       <div class="footer-button">
-        <div class="button-addpet register-color" @click="goTomypet(),createClientUser()">
+        <div class="button-addpet register-color" @click="createClientUser()">
           <h4>ลงทะเบียน</h4>
         </div>
       </div>
