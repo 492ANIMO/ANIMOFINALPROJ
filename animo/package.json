@@ -22,6 +22,7 @@
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
+    "vue-image-crop-upload": "^3.0.3",
     "vue-router": "^3.5.3",
     "vue2-editor": "^2.10.3",
     "vuelidate": "^0.7.7",
