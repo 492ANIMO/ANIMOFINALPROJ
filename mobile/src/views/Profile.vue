@@ -172,8 +172,8 @@ export default {
       console.log("-------- upload success --------");
       console.log(jsonData);
       console.log("field: " + field);
-      // this.currentUser.profile.avatar = jsonData.imageUrl; //set avatar in profile
-      this.editProfile(this.currentUser.profile, jsonData.imageUrl) //send profile to axios
+      this.currentUser.profile.avatar = jsonData.imageUrl; //set avatar in profile
+      this.editProfile(this.currentUser.profile) //send profile to axios
       // this.editProfileImg(this.currentUser.profile, jsonData.imageUrl)
       this.fetchCurrentUser();
     },
