@@ -17,5 +17,12 @@ export default {
     }
   },
 
+  getCurrentDate(){
+    const date = new Date();
+    // console.log(date)
+    const dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 )).toISOString().split("T")[0];
+    // console.log(dateString)
+    return dateString
+  }
  }
 }

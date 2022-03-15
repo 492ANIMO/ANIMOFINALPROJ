@@ -12,6 +12,7 @@ router.post('/', reservationController.create);
 router.delete('/:id', reservationController.destroy);
 // router.patch('/:id', reservationController.update);
 router.patch('/confirm/:id', reservationController.confirm);
+router.patch('/cancel/:id', reservationController.cancel);
 
 
 module.exports = router;

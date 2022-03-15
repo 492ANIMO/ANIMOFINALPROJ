@@ -29,7 +29,6 @@ exports.create = async (req, res, next) => {
 
     console.log(req.body)
 
-
     let pet = new Pet({
       name,
       type,
@@ -305,7 +304,7 @@ exports.upload = async (req, res, next) => {
 
     let pet = await Pet.findById(id);
     if(!pet){
-      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      const error = new Error('ไม่พบข้อมูลสัตว์เลี้ยง')
       error.statusCode = 400;
       throw error;
     }
@@ -315,7 +314,7 @@ exports.upload = async (req, res, next) => {
       console.log(`req.file: ${req.file}`)
       pet.avatar = req.file.path
 
-      pet = await pet.save();
+      const updatedPet = await pet.save();
       if(!updatedPet){
         // if error
         throw new Error('ไม่สามารถเปลี่ยนรูปภาพโปรไฟล์ได้');

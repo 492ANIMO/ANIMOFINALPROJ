@@ -24,6 +24,7 @@
                   label="วันที่" 
                   v-model="form.date"
                   @change="getBookableTimes(form.date)"
+                  :min="getCurrentDate()"
                 />
               </div>
               <div class="content-input">
@@ -59,10 +60,13 @@
 import Navbar from "../components/Navbar";
 import { mapGetters } from 'vuex'
 import { getBookableTimes } from '../services/timeslotService'
+import mixins from "../mixins.js";
+
 
 
 export default {
   name: "Step2",
+  mixins: [mixins],
   data() {
     return {
       search: "",
@@ -100,6 +104,7 @@ export default {
   },
   created() {
     //this.openLoading();
+
   },
   
 };

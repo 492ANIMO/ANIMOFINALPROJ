@@ -143,6 +143,7 @@ const actions = {
       console.log(`data : ${JSON.stringify(state.petDetail)}`)
       console.log(`id: ${state.petDetail._id}`)
       console.log(response.data.message);
+
     } catch (error) {
       console.log(error)
     }

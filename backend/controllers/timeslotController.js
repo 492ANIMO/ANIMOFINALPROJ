@@ -13,7 +13,8 @@ exports.showBookableTime = async (req, res, next) => {
       date: date
     });
     const reservationTime = await Reservation.find({
-      date: date
+      date: date,
+      status: {$ne: 'ยกเลิก'}
     })
 
     const result = appointmentTime.concat(reservationTime)

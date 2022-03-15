@@ -61,6 +61,7 @@
           <div class="content-input">
             <vs-input
               label="ยืนยันรหัสผ่าน"
+              type="password"
               v-model="registerForm.confirmPassword"
               placeholder="ยืนยันรหัสผ่าน"
             />
@@ -173,6 +174,9 @@ export default {
   created() {
     //this.openLoading();
     this.fetchProvince();
+    if(localStorage.getItem("jwt")){
+        this.$router.push({name:'Mypet'})
+    }
 
   },
   computed: {
