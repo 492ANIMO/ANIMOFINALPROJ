@@ -15,7 +15,7 @@
           >
             <div class="bg-package">
               <img
-                :src="'http://localhost:4000/api/'+appointment.pet.avatar"
+                :src="appointment.pet.avatar"
                 alt="Animo"
                 class="Pic-appointment-dt"
               />
