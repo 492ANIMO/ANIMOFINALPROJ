@@ -36,8 +36,6 @@ const actions = {
 
   },
   
-
-
 }
 const mutations = {
   setCurrentUser: (state, currentUser) => (state.currentUser = currentUser),
