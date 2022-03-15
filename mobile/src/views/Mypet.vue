@@ -17,7 +17,7 @@
             <img v-else src="../assets/bento.png" alt="Animo" class="PicCat" />
             <div class="PetDT">
               <h2>{{ pet.name }}</h2>
-              <font-awesome-icon class="gander" icon="mars" />
+              <!-- <font-awesome-icon class="gander" icon="mars" /> -->
               <div class="TextDT">
                 <font
                   >ประเภทสัตว์ : <b>{{ pet.type }}</b></font
@@ -58,7 +58,9 @@
 
       <div class="content-detail">
         <h2 style="font-size: 25px; color: #696969">{{ petDetail.name }}</h2>
-        <font-awesome-icon class="gander" icon="venus" />
+        <!-- <font-awesome-icon class="gander" icon="venus" />
+        <font-awesome-icon class="gander" icon="mars" /> -->
+
         <div class="TextDT" style="font-size: 18px">
           <font
             >ประเภทสัตว์ : <b>{{ petDetail.type }}</b></font
