@@ -79,12 +79,12 @@
           <h2 class="Head-history">รายการแพ็คเกจ</h2>
 
           <div v-if="appointmentDetail.status === 'รอยืนยัน'" class="box-package">
-              <font v-for="(vaccine, i) in appointmentDetail.package.vaccines" :key="i">
+              <font v-for="(vaccine, j) in appointmentDetail.package.vaccines" :key="j">
                 <div class="dot-list"></div><b>{{ vaccine.name }}</b>
                 <br/>
               </font>
 
-              <font v-for="(treatment, i) in appointmentDetail.package.treatments" :key="i">
+              <font v-for="(treatment, k) in appointmentDetail.package.treatments" :key="k">
                 <div class="dot-list"></div><b>{{ treatment.name }}</b>
                 <br/>
               </font>
