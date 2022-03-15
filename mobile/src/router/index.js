@@ -76,6 +76,12 @@ const routes = [
     component: () => import('../views/Addpet.vue')
   },
   {
+    path: '/mobile/addpic',
+    name: 'Addpic',
+    beforeEnter : guardMyRoute,
+    component: () => import('../views/Addpic.vue')
+  },
+  {
     path: '/mobile/editpet',
     name: 'Editpet',
     component: () => import('../views/Editpet.vue')

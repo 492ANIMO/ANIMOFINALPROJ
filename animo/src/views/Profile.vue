@@ -10,8 +10,13 @@
           <font-awesome-icon class="iconBTr" icon="edit" />แก้ไขข้อมูล
         </vs-button>
         <div class="profile">
-          <vs-avatar class="ProfileDT" circle size="120">
-            <!-- <img src="../assets/pet1.jpeg" alt="" /> -->
+          <vs-avatar  class="ProfileDT" circle size="120" @click="toggleShow">
+            <div class="edit-pic">
+              <div class="bg-blur"></div>
+              <font style="color: #ffffff;z-index:2">
+                <font-awesome-icon class="icon-edit" icon="edit" />แก้ไข
+              </font>
+              </div>
             <img src="../assets/pet1.jpeg" alt="" />
           </vs-avatar>
           <div class="ProfileDT">
@@ -55,6 +60,15 @@
               <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
             </vs-button>
           </div>
+
+          <my-upload field="img"
+            v-model="show"
+            :width="300"
+            :height="300"
+            :headers="headers"
+            img-format="png"></my-upload>
+          <img :src="imgDataUrl">
+
           <h3 class="TextHead">สัตว์เลี้ยง</h3>
           <template>
             <vs-table striped>
@@ -775,6 +789,7 @@ import {
   minValue,
   maxValue,
 } from "vuelidate/lib/validators";
+import myUpload from 'vue-image-crop-upload';
 
 export default {
   name: "Profile",
@@ -793,6 +808,17 @@ export default {
     active2: false,
     active3: false,
     deleteCF: false,
+    show: true,
+    params: {
+				token: '123456798',
+				name: 'avatar'
+			},
+			headers: {
+				smail: '*_~'
+			},
+    components: {
+			'my-upload': myUpload
+		},
     value: "",
     baseurl: "http://localhost:4000/api/",
     user: [],
@@ -904,6 +930,9 @@ export default {
   
   },
   methods: {
+    toggleShow() {
+				this.show = !this.show;
+			},
     AddNoti(position = null, duration, color) {
       this.$vs.notification({
         color,
@@ -1090,6 +1119,42 @@ export default {
 
 <style scoped>
 @import url("../assets/css/style.css");
+.icon-edit {
+  font-size: 16px;
+  padding-right: 5px;
+}
+.edit-pic {
+  position: absolute;
+  height: 0px;
+  width: 0px;
+  color: #ffffff;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  opacity: 0;
+  z-index: 2;
+  margin: 0;
+}
+.edit-pic:hover {
+  opacity: 1;
+  height: 150px;
+  width: 150px;
+  z-index: 2;
+}
+.bg-blur {
+  position: absolute;
+  opacity: 0.5;
+  background: #696969;
+  color: #ffffff;
+  height: 150px;
+  width: 150px;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+::v-deep .vs-avatar img {
+  z-index: 0;
+}
 .HeadInput1 {
   font-size: 14.25px;
   color: #696969;
@@ -1121,6 +1186,7 @@ export default {
 }
 ::v-deep .vs-avatar {
   filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.1));
+  border-radius: 50%;
 }
 ::v-deep .vs-input__label--label {
   font-size: 14px;

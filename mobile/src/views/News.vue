@@ -128,7 +128,7 @@ export default {
   font-size: 30px;
   word-wrap: break-word;
   font-weight: 500;
-  line-height: 1;
+  line-height: 1.5;
 }
 .Head-text-news h4 {
   color: #ffffff;

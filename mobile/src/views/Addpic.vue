@@ -4,95 +4,30 @@
     <div class="content">
       <div>
         <h2 class="Head-text">
-          <font-awesome-icon class="iconR" icon="plus" />เพิ่มสัตว์เลี้ยง
+          <font-awesome-icon class="iconR" icon="plus" />เพิ่มรูปสัตว์เลี้ยง
         </h2>
 
-        <div class="content1">
-          <div class="content-input">
-            <vs-input
-              label="ชื่อสัตว์เลี้ยง"
-              v-model="addPetForm.name"
-              placeholder="ชื่อสัตว์เลี้ยง"
-            />
-          </div>
-
-          <div class="content-input grid">
-            <vs-select
-              class="select-grid"
-              label="ประเภทสัตว์"
-              placeholder="ประเภทสัตว์"
-              v-model="addPetForm.type"
-            >
-              <vs-option
-                v-for="type in type"
-                :key="type"
-                :label="type"
-                :value="type"
-              >
-                {{ type }}
-              </vs-option>
-            </vs-select>
-            <vs-input
-              class="input-grid1"
-              label="สายพันธุ์"
-              v-model="addPetForm.breed"
-              placeholder="สายพันธุ์"
-            />
-          </div>
-
-          <div class="content-input grid">
-            <vs-input
-              class="input-grid"
-              label="อายุ"
-              v-model="addPetForm.age.year"
-              placeholder="ปี"
-            />
-            <vs-input
-              label=""
-              v-model="addPetForm.age.month"
-              placeholder="เดือน"
-            />
-          </div>
-
-          <div class="content-input grid">
-            <vs-select
-              class="select-grid"
-              label="เพศ"
-              placeholder="เพศ"
-              v-model="addPetForm.gender"
-            >
-              <vs-option label="ผู้" value="ผู้"> ผู้ </vs-option>
-              <vs-option label="เมีย" value="เมีย"> เมีย </vs-option>
-              <vs-option label="อื่นๆ" value="อื่นๆ"> อื่นๆ </vs-option>
-            </vs-select>
-            <vs-input
-              class="input-grid1"
-              label="น้ำหนัก"
-              v-model="addPetForm.weight"
-              placeholder="น้ำหนัก"
-            />
-          </div>
-
-          <div class="content-input alone">
-            <vs-select
-              class="input-alone"
-              label="ทำหมัน"
-              placeholder="ทำหมัน"
-              v-model="addPetForm.sterilization"
-            >
-              <vs-option label="ทำหมันแล้ว" value="ทำหมันแล้ว">
-                ทำหมันแล้ว
-              </vs-option>
-              <vs-option label="ยังไม่ทำหมัน" value="ยังไม่ทำหมัน">
-                ยังไม่ทำหมัน
-              </vs-option>
-            </vs-select>
-          </div>
+        <div class="edit-pic-pet" @click="toggleShow">
+          <font-awesome-icon class="icon-edit" icon="edit" />
+          <div class="bg-blur"></div>
         </div>
+        <img src="../assets/bento.png" alt="Animo" class="profile-pic" />
+
+        <my-upload
+          field="img"
+          v-model="show"
+          :width="300"
+          :height="300"
+          url="/upload"
+          :params="params"
+          :headers="headers"
+          img-format="png"
+        ></my-upload>
+        <img :src="imgDataUrl" />
       </div>
       <div class="footer-button">
-        <div class="button-addpet add" @click="goToaddpic(), addMyPet()">
-          <h4>ขั้นตอนถัดไป</h4>
+        <div class="button-addpet add" @click="goTomypet(), addMyPet()">
+          <h4>เพิ่มสัตว์เลี้ยง</h4>
         </div>
       </div>
     </div>
@@ -105,7 +40,7 @@ import myUpload from "vue-image-crop-upload/upload-2.vue";
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  name: "Addpet",
+  name: "Addpic",
   "my-upload": myUpload,
   data() {
     return {
@@ -138,8 +73,8 @@ export default {
   },
   methods: {
     ...mapActions(["fetchCurrentUser", "addMyPet"]),
-    goTomaddpic() {
-      this.$router.push("/mobile/addpic");
+    goTomypet() {
+      this.$router.push("/mobile/mypet");
     },
     toggleShow() {
       this.show = !this.show;
@@ -200,7 +135,37 @@ export default {
 </script>
 <style scoped>
 @import url("../assets/css/style.css");
-
+.profile-pic {
+  width: 200px;
+  height: 200px;
+}
+.icon-edit {
+    color: #ffffff;
+    align-self: center;
+    font-size: 15px;
+    z-index: 2;
+  }
+  .edit-pic-pet {
+    position: absolute;
+    left: calc(50% + 70px);
+    transform: translateX(-50%);
+    top: 226px;
+    width: 60px;
+    height: 30px;
+    border-radius: 18px 0px 18px 0px;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .bg-blur {
+    background: #242b2e;
+    width: 80px;
+    height: 30px;
+    position: absolute;
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+  }
 ::v-deep .bar {
   background: rgb(133, 209, 220);
   background: linear-gradient(
