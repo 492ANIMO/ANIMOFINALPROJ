@@ -11,7 +11,7 @@
           </div>
 
           <img
-            v-if="currentUser.profile.avatar"
+            v-if="currentUser.profile.avatar!==''"
             :src="currentUser.profile.avatar"
             alt="Animo"
             class="profile-client"
@@ -88,11 +88,9 @@
 import Navbar from "../components/Navbar";
 import myUpload from "vue-image-crop-upload/upload-2.vue";
 import { mapActions, mapGetters } from "vuex";
-import { editProfile } from '../services/clientService';
+import { editProfile, editProfileImg } from '../services/clientService';
 
 // import axios from 'axios';
-
-
 export default {
   name: "Mypet",
   components: {
@@ -128,7 +126,7 @@ export default {
       params: {
         token: "123456798",
         name: "avatar",
-        imgDataUrl: this.imgDataUrl
+        // imgDataUrl: this.imgDataUrl
       },
       headers: {
         smail: "*_~",
@@ -140,6 +138,8 @@ export default {
   methods: {
     ...mapActions(["fetchCurrentUser"]),
     editProfile,
+    editProfileImg,
+
     goToMypet() {
       this.$router.push('/mobile/mypet'); 
     },
@@ -168,12 +168,13 @@ export default {
      * [param] jsonData  server api return data, already json encode
      * [param] field
      */
-    cropUploadSuccess(jsonData, field) {
+   cropUploadSuccess(jsonData, field) {
       console.log("-------- upload success --------");
       console.log(jsonData);
       console.log("field: " + field);
-      this.currentUser.profile.avatar = jsonData.imageUrl;
-      this.editProfile(this.currentUser.profile)
+      // this.currentUser.profile.avatar = jsonData.imageUrl; //set avatar in profile
+      this.editProfile(this.currentUser.profile, jsonData.imageUrl) //send profile to axios
+      // this.editProfileImg(this.currentUser.profile, jsonData.imageUrl)
       this.fetchCurrentUser();
     },
     /**
@@ -200,7 +201,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["currentUser"]),
+    ...mapGetters(["currentUser", 'imgUrl']),
   },
   created() {
     this.fetchCurrentUser();

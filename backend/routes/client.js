@@ -18,5 +18,6 @@ router.delete('/', clientController.destroyAll);
 router.post('/:id/avatar/upload/', uploadImage.single('avatar'), clientController.upload);
 
 router.patch('/:id', clientController.update);
+router.patch('/avatar/:id', clientController.avatar);
 
 module.exports = router;

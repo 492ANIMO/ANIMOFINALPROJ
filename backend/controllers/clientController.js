@@ -170,6 +170,44 @@ exports.destroyAll = async (req, res, next) => {
   }
 }
 
+exports.avatar = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const { profile, avatar } = req.body;
+
+    // check email ซ้ำ
+    const existEmail = await Client.findOne({email: profile.email});
+    console.log(`existEmail: ${existEmail}`)
+    console.log(`=? ${existEmail._id != id}`)
+    
+    if (existEmail && existEmail._id != id){
+      const error = new Error('อีเมลล์ซ้ำ มีผู้ใช้งานแล้ว ลองใหม่อีกครั้ง');
+      error.statusCode = 400;
+      throw error;
+    }
+
+    // A.findByIdAndUpdate(id, update, options, callback) // executes
+
+    console.log(`req.body:  ${req.body}`)
+    console.log('req.body: '+JSON.stringify(req.body));
+
+    let client = await Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' });
+
+
+    if(!client){
+      const error = new Error('ไม่พบข้อมูลเจ้าของสัตว์เลี้ยง')
+      throw error;
+    }
+
+    res.status(200).json({
+      message: 'แก้ไขข้อมูลสำเร็จ',
+      client
+    })
+
+  } catch (error) {
+    next(error);
+  }
+}
 exports.update = async (req, res, next) => {
   try {
     const {id} = req.params;
@@ -187,6 +225,10 @@ exports.update = async (req, res, next) => {
     }
 
     // A.findByIdAndUpdate(id, update, options, callback) // executes
+
+    console.log(`req.body:  ${req.body}`)
+    console.log('req.body: '+JSON.stringify(req.body));
+
     let client = await Client.findByIdAndUpdate({_id:id}, req.body, { returnDocument: 'after' });
 
      if(!client){

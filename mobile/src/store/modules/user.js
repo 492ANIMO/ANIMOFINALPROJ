@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const state = {
+  imgUrl: '',
   currentUser: {
     profile:{
       address:{
@@ -15,13 +16,13 @@ const state = {
 }
 
 const getters = {
-  currentUser: (state) => state.currentUser
+  currentUser: (state) => state.currentUser,
+  imgUrl: (state) => state.imgUrl,
 }
 
 const actions = {
   async fetchCurrentUser({commit}){
     const token = localStorage.getItem('jwt');
-    // console.log(`token: ${token}`);
     const headers = {
       "Content-type": "application/json; charset=UTF-8",
       "Authorization": 'Bearer ' + token
@@ -32,12 +33,15 @@ const actions = {
     // console.log(response.data.user);
     commit('setCurrentUser', response.data.user);
     commit('setOwner', response.data.user.profile._id, { root: true });
+
   },
+  
 
 
 }
 const mutations = {
-  setCurrentUser: (state, currentUser) => (state.currentUser = currentUser)
+  setCurrentUser: (state, currentUser) => (state.currentUser = currentUser),
+  setImgUrl: (state, imgUrl) => (state.currentUser = imgUrl),
 }
 
 export default{

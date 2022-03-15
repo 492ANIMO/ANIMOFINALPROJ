@@ -134,7 +134,7 @@
         </div>
       </div><br><br>
       <div class="footer-button">
-        <div class="button-addpet register-color" @click="editProfile(currentUser.profile)">
+        <div class="button-addpet register-color" @click="editProfile(currentUser.profile, null)">
           <h4>ยืนยันการแก้ไข</h4>
         </div>
       </div>
