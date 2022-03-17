@@ -8,12 +8,9 @@ exports.index = async (req, res, next) => {
     const staff = await Staff.find();
     if(!staff){ throw new Error('ไม่พบข้อมูลเจ้าหน้าที่'); }
 
-    const count = await Staff.countDocuments();
-
     res.status(200).json({
-      message: 'สำเร็จ',
+      message: 'ดีงข้อมูล Staff สำเร็จ',
       staff,
-      count
     });
 
   } catch (error) {
