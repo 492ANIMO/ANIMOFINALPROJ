@@ -39,7 +39,7 @@
                 <vs-tr :key="i" v-for="(data, i) in staffs" :data="data">
                   <vs-td> {{ data.profile.firstName + ' ' + data.profile.lastName }} </vs-td>
                   <vs-td> {{ data.email }} </vs-td>
-                  <vs-td> {{ data.profile.position }} </vs-td>
+                  <vs-td> {{ modifiedPosition(data.profile.position) }} </vs-td>
                   <vs-td>
                     <vs-button
                       color="#ca7676"
@@ -177,7 +177,6 @@ export default {
       age: "",
       detail: "",
     },
-    petType: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
     staffs: [],
     staff:{
       firstName: '',
@@ -186,24 +185,14 @@ export default {
       position: '',
       password: '',
       role: 'staff'
-    }
+    },
+    pos: ['เจ้าหน้าที่', 'สัตวแพทย์', 'แอดมิน']
   }),
   created() {
     this.fetchStaff();
   },
   methods: {
-    fetchPetType() {
-      let baseURL = "http://localhost:4000/api/pets/petType";
-      axios
-        .get(baseURL)
-        .then((res) => {
-          this.petType = res.data.petTypes;
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
+  
     fetchStaff() {
       let baseURL = "http://localhost:4000/api/users/staff";
       axios
@@ -216,7 +205,6 @@ export default {
           console.log(error);
         });
     },
- 
     createStaffUser() {
       let baseURL = "http://localhost:4000/api/users/";
 
@@ -253,6 +241,15 @@ export default {
           console.log(error);
         });
     },
+    modifiedPosition(en){
+      if(en === 'vet'){
+        return 'สัตวแพทย์'
+      }else if(en === 'admin') {
+        return 'แอดมิน'
+      } else {
+        return 'เจ้าหน้าที่'
+      }
+    }
   },
 };
 </script>
