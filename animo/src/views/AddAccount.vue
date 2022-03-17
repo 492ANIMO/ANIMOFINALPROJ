@@ -67,6 +67,28 @@
         </template>
 
         <vs-row>
+          <vs-row>
+          <vs-col w="6">
+            <div class="InputPop">
+              <vs-input
+                label="ชื่อ"
+                v-model="value"
+                placeholder="ชื่อ"
+              />
+            </div>
+          </vs-col>
+          <vs-col w="6">
+            <div class="InputPop">
+              <vs-input
+                label="นามสกุล"
+                placeholder="นามสกุล"
+                v-model="value"
+              >
+              </vs-input>
+            </div>
+          </vs-col>
+        </vs-row><br><br><br>
+        
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
@@ -89,8 +111,7 @@
               </vs-select>
             </div>
           </vs-col>
-        </vs-row>
-        <div class="space"></div>
+        </vs-row><div class="space"></div>
 
         <vs-row>
           <vs-col w="6">
