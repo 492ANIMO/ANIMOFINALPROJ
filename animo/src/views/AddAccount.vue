@@ -89,14 +89,7 @@
           </vs-col>
         </vs-row><br><br><br>
         
-          <vs-col w="6">
-            <div class="InputPop">
-              <vs-input
-                label="ชื่อผู้ใช้"
-                v-model="value"
-                placeholder="ชื่อผู้ใช้..."
-              />
-            </div>
+          <vs-col w="0">
           </vs-col>
           <vs-col w="6">
             <div class="InputSL">
@@ -145,7 +138,7 @@
               @click=" createStaffUser(),(active3 = !active3)"
               style="float: right; width: 80px"
             >
-              เพิ่มบัญญชี </vs-button
+              เพิ่มบัญชี </vs-button
             ><br /><br />
           </div>
         </template>
