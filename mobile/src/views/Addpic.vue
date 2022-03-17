@@ -164,7 +164,7 @@ export default {
     height: 30px;
     position: absolute;
     filter: blur(8px);
-    -webkit-filter: blur(8px);
+    
   }
 ::v-deep .bar {
   background: rgb(133, 209, 220);
