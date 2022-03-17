@@ -23,7 +23,7 @@
           <vs-input v-model="search" placeholder="ค้นหา..." />
         </div>
 
-        <h4 class="list">รายการทั้งหมด {{ staffs.length }} รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ $vs.getSearch(staffs, search).length }} รายการ</h4>
         <template>
           <div class="center examplex">
             <vs-table striped>
@@ -36,7 +36,7 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(data, i) in staffs" :data="data">
+                <vs-tr :key="i" v-for="(data, i) in $vs.getPage($vs.getSearch(staffs, search),page,max)" :data="data">
                   <vs-td> {{ data.profile.firstName + ' ' + data.profile.lastName }} </vs-td>
                   <vs-td> {{ data.email }} </vs-td>
                   <vs-td> {{ data.profile.position }} </vs-td>
@@ -57,6 +57,13 @@
                 </vs-tr>
               </template>
             </vs-table>
+            <div class="center">
+          <vs-pagination
+            infinite
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(staffs, search), max)"
+          />
+        </div>
           </div>
         </template>
       </div>
@@ -166,6 +173,8 @@ export default {
     active: false,
     active1: false,
     active3: false,
+    page: 1,
+    max: 5,
     value: "",
     search: "",
 
