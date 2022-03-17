@@ -29,7 +29,7 @@
               </template>
               <template #tbody>
                 <vs-tr :key="i"
-                v-for="(data, i) in treatments"
+                v-for="(data, i) in $vs.getPage(treatments,page,max)"
               :data="data">
                   <vs-td> {{ data.name }} </vs-td>
                   <vs-td> {{ data.type }} </vs-td>
@@ -52,6 +52,13 @@
                 </vs-tr>
               </template>
             </vs-table>
+            <div class="center">
+          <vs-pagination
+            infinite
+            v-model="page"
+            :length="$vs.getLength($vs.getSearch(treatments, search), max)"
+          />
+        </div>
           </div>
         </template>
       </div>
@@ -165,6 +172,8 @@ export default {
     active: false,
     active1: false,
     active3: false,
+    page: 1,
+    max: 5,
     value: "",
     search: "",
 

@@ -29,11 +29,7 @@
           <template #tbody>
             <vs-tr
               :key="i"
-              v-for="(data, i) in $vs.getPage(
-                $vs.getSearch(annoucements, search),
-                page,
-                max
-              )"
+              v-for="(data, i) in $vs.getPage($vs.getSearch(annoucements, search),page,max)"
               :data="data"
             >
               <vs-td style="text-align: left;">{{ data.title }}</vs-td>

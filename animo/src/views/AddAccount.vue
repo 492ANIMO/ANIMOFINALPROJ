@@ -6,39 +6,44 @@
     </div>
     <div class="Content1">
       <div class="Content2">
-        <vs-button color="#6b9bce" @click="active3 = !active3" class="BTadd BT2">
-          <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มข้อมูล
+        <vs-button
+          color="#6b9bce"
+          @click="active3 = !active3"
+          class="BTadd BT2"
+        >
+          <font-awesome-icon class="iconBTr" icon="plus" />เพิ่มบัญชี
         </vs-button>
-        <h2><font-awesome-icon class="icon" icon="syringe" />รายการวัคซีน</h2>
+
+        <h2>
+          <font-awesome-icon class="icon" icon="user" />บัญชีทั้งหมด
+        </h2>
+
         <div class="line">
-          <h3>
-            <font-awesome-icon class="icon" icon="plus" />เพิ่มรายการวัคซีน
-          </h3>
-         
+          <h3><font-awesome-icon class="icon" icon="search" />ค้นหา</h3>
+          <vs-input v-model="search" placeholder="ค้นหา..." />
         </div>
-        <h4 class="list">รายการทั้งหมด {{ this.vaccines.length }} รายการ</h4>
+
+        <h4 class="list">รายการทั้งหมด {{ this.treatments.length }} รายการ</h4>
         <template>
           <div class="center examplex">
             <vs-table striped>
               <template #thead>
                 <vs-tr>
-                  <vs-th> ชื่อวัคซีน </vs-th>
-                  <vs-th> เลขล็อตวัคซีน </vs-th>
+                  <vs-th> ชื่อบัญชี </vs-th>
+                  <vs-th> อีเมลล์ </vs-th>
+                  <vs-th> ตำแหน่ง </vs-th>
                   <vs-th> จัดการข้อมูล </vs-th>
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(data, i) in $vs.getPage(vaccines,page,max)" :data="data">
-                  <vs-td>
-                    {{ data.name }}
-                  </vs-td>
-                  <vs-td>
-                    {{ data.lot_number }}
-                  </vs-td>
+                <vs-tr :key="i" v-for="(data, i) in treatments" :data="data">
+                  <vs-td> {{ data.name }} </vs-td>
+                  <vs-td> {{ data.type }} </vs-td>
+                  <vs-td> {{ data.type }} </vs-td>
                   <vs-td>
                     <vs-button
                       color="#ca7676"
-                      @click="(active = !active), deleteVaccine(data._id)"
+                      @click="(active = !active)"
                       class="BT1"
                       style="width: 70px"
                     >
@@ -52,86 +57,60 @@
                 </vs-tr>
               </template>
             </vs-table>
-             <div class="center">
-          <vs-pagination
-            infinite
-            v-model="page"
-            :length="$vs.getLength(vaccines, max)"
-          />
-        </div>
           </div>
         </template>
       </div>
 
       <vs-dialog width="80%" scroll v-model="active3">
         <template #header>
-          <h2>เพิ่มรายการวัคซีน</h2>
+          <h2>เพิ่มบัญชี</h2>
         </template>
 
         <vs-row>
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="vaccine.name"
-                label="ชื่อวัคซีน"
-                placeholder="ชื่อวัคซีน"
-              >
-              </vs-input>
+                label="ชื่อผู้ใช้"
+                v-model="value"
+                placeholder="ชื่อผู้ใช้..."
+              />
             </div>
           </vs-col>
-          <vs-col w="6">
-            <div class="InputPop">
-              <vs-input
-                v-model="vaccine.lot_number"
-                label="เลขล็อตวัคซีน"
-                placeholder="เลขล็อตวัคซีน"
-              >
-              </vs-input>
-            </div>
-          </vs-col>
-        </vs-row><div class="space"></div>
-
-        <vs-row>
           <vs-col w="6">
             <div class="InputSL">
               <vs-select
-                filter
-                label="ประเภทสัตว์"
-                placeholder="ประเภทสัตว์"
-                v-model="vaccine.type"
+                label="ตำแหน่ง"
+                placeholder="ตำแหน่ง"
+                v-model="value"
                 class="type"
               >
-                <vs-option
-                  :key="i"
-                  v-for="(type, i) in petType"
-                  :value="type.petType"
-                  :label="type.petType"
-                >{{ type.petType }}
-                </vs-option>
+                <vs-option label="สตาฟ" value="สตาฟ"> สตาฟ </vs-option>
+                <vs-option label="แอดมิน" value="แอดมิน"> แอดมิน </vs-option>
               </vs-select>
+            </div>
+          </vs-col>
+        </vs-row>
+        <div class="space"></div>
+
+        <vs-row>
+          <vs-col w="6">
+            <div class="InputPop">
+              <vs-input
+                label="อีเมลล์"
+                v-model="value"
+                placeholder="อีเมลล์"
+              />
             </div>
           </vs-col>
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
-                v-model="vaccine.age"
-                label="อายุขั้นต่ำ"
-                placeholder="อายุขั้นต่ำ"
+                label="รหัสผ่าน"
+                placeholder="รหัสผ่าน"
+                v-model="value"
               >
               </vs-input>
             </div>
-          </vs-col>
-        </vs-row>
-
-        <vs-row>
-          <vs-col w="12">
-            <h4 class="HeadInput">รายละเอียดวัคซีน</h4>
-            <textarea 
-              class="TArea" 
-              placeholder="รายละเอียดวัคซีน"
-              v-model="vaccine.detail">
-            </textarea>
-            
           </vs-col>
         </vs-row>
 
@@ -140,10 +119,10 @@
             <vs-button
               class="BT3"
               color="#71cf9d"
-              @click="(active3 = !active3), createVaccine()"
+              @click="(active3 = !active3)"
               style="float: right; width: 80px"
             >
-              เพิ่มข้อมูล </vs-button
+              เพิ่มบัญญชี </vs-button
             ><br /><br />
           </div>
         </template>
@@ -168,76 +147,69 @@ export default {
   data: () => ({
     active: false,
     active1: false,
-    active2: false,
     active3: false,
-    page: 1,
-    max: 5,
     value: "",
     search: "",
-    vaccines: [],
-    vaccine: {
+
+    treatments: [],
+    treatment: {
       name: "",
-      lot_number: "",
       type: "",
+      petType: "",
       age: "",
       detail: "",
     },
-    petType: ['สุนัข', 'แมว', 'สัตว์ฟันแทะ', 'อื่นๆ']
+    petType: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
   }),
   created() {
+    this.showAllTreatments();
     this.fetchPetType();
-    this.showAllVaccines();
   },
   methods: {
-    fetchPetType(){
-      let baseURL = "http://localhost:4000/api/pets/petType"
-      axios
-      .get(baseURL)
-      .then((res) => {
-        this.petType = res.data.petTypes;
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    },
-    showAllVaccines() {
-      let baseURL = "http://localhost:4000/api/vaccines/";
+    fetchPetType() {
+      let baseURL = "http://localhost:4000/api/pets/petType";
       axios
         .get(baseURL)
         .then((res) => {
-          this.vaccines = res.data.vaccine;
+          this.petType = res.data.petTypes;
           console.log(res.data);
-          console.log(this.vaccines);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
-    createVaccine() {
-      let baseURL = "http://localhost:4000/api/vaccines/";
+    showAllTreatments() {
+      let baseURL = "http://localhost:4000/api/treatments/";
+      axios
+        .get(baseURL)
+        .then((res) => {
+          this.treatments = res.data.treatment;
+          console.log(res.data);
+          console.log(this.treatments);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    createTreatment() {
+      let baseURL = "http://localhost:4000/api/treatments/";
 
       axios
-        .post(baseURL, this.vaccine)
+        .post(baseURL, this.treatment)
         .then((res) => {
-          this.vaccine = {
+          this.treatment = {
             name: "",
-            lot_number: "",
             type: "",
-            age: "",
-            detail: "",
           };
           console.log(res.data);
-          this.showAllVaccines();
+          this.showAllTreatments();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-
-    deleteVaccine(id) {
-      let baseURL = "http://localhost:4000/api/vaccines/";
+    deleteTreatment(id) {
+      let baseURL = "http://localhost:4000/api/treatments/";
       console.log(`id: ${id}`);
 
       axios
@@ -245,7 +217,7 @@ export default {
         .then((res) => {
           console.log(res.data);
 
-          this.showAllVaccines();
+          this.showAllTreatments();
         })
         .catch((error) => {
           console.log(error);
@@ -254,10 +226,14 @@ export default {
   },
 };
 </script>
-
 <style scoped>
 @import url("../assets/css/style.css");
 
+.container-box {
+  display: grid;
+  grid: auto / 45% 43% 12%;
+  padding: 30px 0px 0px 40px;
+}
 .HeadInput {
   font-size: 14.25px;
   color: #696969;
