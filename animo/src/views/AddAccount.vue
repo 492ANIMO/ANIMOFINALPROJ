@@ -72,7 +72,7 @@
             <div class="InputPop">
               <vs-input
                 label="ชื่อ"
-                v-model="value"
+                v-model="staff.firstName"
                 placeholder="ชื่อ"
               />
             </div>
@@ -82,7 +82,7 @@
               <vs-input
                 label="นามสกุล"
                 placeholder="นามสกุล"
-                v-model="value"
+                v-model="staff.lastName"
               >
               </vs-input>
             </div>
@@ -93,7 +93,7 @@
             <div class="InputPop">
               <vs-input
                 label="ชื่อผู้ใช้"
-                v-model="staff.firstName"
+                v-model="value"
                 placeholder="ชื่อผู้ใช้..."
               />
             </div>
@@ -127,6 +127,7 @@
           <vs-col w="6">
             <div class="InputPop">
               <vs-input
+                type="password"
                 label="รหัสผ่าน"
                 placeholder="รหัสผ่าน"
                 v-model="staff.password"
@@ -141,7 +142,7 @@
             <vs-button
               class="BT3"
               color="#71cf9d"
-              @click="(active3 = !active3), createStaffUser()"
+              @click=" createStaffUser(),(active3 = !active3)"
               style="float: right; width: 80px"
             >
               เพิ่มบัญญชี </vs-button
@@ -185,7 +186,7 @@ export default {
     staffs: [],
     staff:{
       firstName: '',
-      lastName: 'animo',
+      lastName: '',
       email: '',
       position: '',
       password: '',
@@ -193,7 +194,6 @@ export default {
     }
   }),
   created() {
-    this.fetchPetType();
     this.fetchStaff();
   },
   methods: {
@@ -230,7 +230,7 @@ export default {
         .then((res) => {
           this.staff = {
             firstName: '',
-            lastName: 'animo',
+            lastName: '',
             email: '',
             position: '',
             password: '',
