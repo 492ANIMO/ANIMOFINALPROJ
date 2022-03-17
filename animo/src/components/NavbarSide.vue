@@ -2,11 +2,14 @@
 <div id="app">
     <ul>
         <li><div class="NavProfile">
-            <h3>
-                Doctor Name
+            <h3 v-if="isAdmin()">
+                Admin
+            </h3>
+            <h3 v-else>
+                {{ name }}
             </h3>
             <h6>
-                Role : Doctor
+                Role : {{ role }}
             </h6>
             </div></li>
         <li><router-link class="Nav-box" to="/dashboard"><font-awesome-icon class="icon" icon="chart-pie"/><h4>แดชบอร์ด</h4></router-link></li>
@@ -14,17 +17,47 @@
         <li><router-link class="Nav-box" to="/package"><font-awesome-icon class="icon" icon="syringe"/><h4>แพ็คเกจ</h4></router-link></li>
         <li><router-link class="Nav-box" to="/reservation"><font-awesome-icon class="icon" icon="file-medical"/><h4>การจอง</h4></router-link></li>
         <li><router-link class="Nav-box" to="/appointment"><font-awesome-icon class="icon" icon="clipboard-list"/><h4>การนัดหมาย</h4></router-link></li>
-        <li><router-link class="Nav-box" to="/Admin/Addpet"><font-awesome-icon class="icon" icon="user"/><h4>แอดมิน</h4></router-link></li>
+        <li v-if="isAdmin()"><router-link class="Nav-box" to="/Admin/Addpet"><font-awesome-icon class="icon" icon="user"/><h4>แอดมิน</h4></router-link></li>
     </ul>
 </div>
 
 </template>
 <script>
+    import jwt_decode from "jwt-decode";
+
     export default {
     name: 'NavbarSide',
     props: {
         msg: String
-    }
+    },
+    data: () => ({
+        role: '',
+        name: 'Staff'
+    }),
+    methods:{
+        isAdmin(){
+            const token = localStorage.getItem('jwt');
+            console.log(`token: ${token}`)
+            const decoded = jwt_decode(token);
+            console.log('jwt decoded:'+JSON.stringify(decoded));
+            console.log('jwt role:'+JSON.stringify(decoded.role));
+
+            if(localStorage.getItem('jwt') && decoded.role==='admin'){
+                console.log('ดีจ้า admin');
+                this.role = decoded.role
+                return true;
+            }
+            else{
+                console.log('แกไม่ใช่ admin แกคือ' + decoded.role);
+                this.role = decoded.role
+                return false;
+            }        
+        //   return (localStorage.getItem("jwt") ? true : false)
+        },
+    },
+        created(){
+            this.isAdmin()
+        }
     }
 </script>
 <style scoped>

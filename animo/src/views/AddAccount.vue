@@ -160,6 +160,8 @@ import NavbarSide from "@/components/NavbarSideAdmin.vue";
 import axios from "axios";
 import mixins from "../mixins.js";
 
+
+
 export default {
   name: "AddVaccine",
   components: {

@@ -14,7 +14,7 @@ const upload = require('../middleware/upload');
 router.get('/', [passportJWT.isLogin, checkRole.isAdmin], userController.index);
 router.get('/me', [passportJWT.isLogin], userController.getCurrentProfile);
 router.get('/staff', userController.getStaff);
-router.get('/:id',[passportJWT.isLogin], userController.show);
+router.get('/:id', userController.show);
 
 router.post('/', [upload.single('avatar')], userController.create);
 
