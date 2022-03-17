@@ -118,6 +118,7 @@ exports.update = async (req, res, next) => {
 exports.destroy = async (req, res, next) => {  
   try {
     const {id} = req.params;
+
     // check if client have user accout
     let staff = await Staff.findById(id).populate('user');
 
@@ -144,10 +145,13 @@ exports.destroy = async (req, res, next) => {
       });
     }
 
+    
+
   } catch (error) {
     next(error);
   }
 }
+
 
 exports.showVet = async (req, res, next) => {
   try {

@@ -13,14 +13,16 @@ const upload = require('../middleware/upload');
 /* GET users listing. */
 router.get('/', [passportJWT.isLogin, checkRole.isAdmin], userController.index);
 router.get('/me', [passportJWT.isLogin], userController.getCurrentProfile);
+router.get('/staff', userController.getStaff);
 router.get('/:id',[passportJWT.isLogin], userController.show);
 
 router.post('/', [upload.single('avatar')], userController.create);
 
 router.patch('/:id', [passportJWT.isLogin, upload.single('avatar')], userController.update);
 
+router.delete('/staff/:id', userController.deleteStaffWithProfile);
 router.delete('/:id',[passportJWT.isLogin], userController.destroy);
 
-// router.post('/client/register', userController.clientRegister)
+
 
 module.exports = router;

@@ -78,14 +78,6 @@ exports.create = async (req, res, next) => {
       throw error;
   }
 
-    //validation
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        const error = new Error('ข้อมูลที่รับมาไม่ถูกต้อง');
-        error.statusCode = 422;
-        error.validation = errors.array();
-        throw error;
-    }
     //check email ซ้ำ
     const existEmail = await User.findOne({email: email});
     if (existEmail){
@@ -125,8 +117,8 @@ exports.create = async (req, res, next) => {
         onModel: 'Client'
       })
 
-    }else if(role === 'staff' || role === 'admin' || role === 'vet'){
-      let position = role
+    }else if(role === 'staff'){
+      let { position } = req.body
       // create staff instance
       const staff = await Staff.create({
         firstName, 
@@ -140,9 +132,10 @@ exports.create = async (req, res, next) => {
           staff.avatar = req.file.path
         }
         // save staff to database
-        await staff.save((error) => {
+        const st = await staff.save((error) => {
           if(error) throw new Error(error);
         })
+        console.log(st)
         // create user instance
         user = new User({
         email: email,
@@ -186,6 +179,7 @@ exports.create = async (req, res, next) => {
     next(error);
   }
 }
+
 
 exports.update = async (req, res, next) => {
   try {
@@ -314,3 +308,74 @@ exports.destroy = async (req, res, next) => {
     next(error);
   }
 }
+
+exports.getStaff = async (req, res, next) => {
+  try {
+
+    const user = await User.find({
+
+      onModel: 'Staff'
+    }).select('-password ').populate({ 
+      path: 'profile',
+      select: '-email -role -createdAt -updatedAt -__v ',
+    })
+    if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
+
+    res.status(200).json({
+      message: 'ดึงข้อมูล Staff ำเร็จสำเร็จ',
+      user
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+exports.deleteStaffWithProfile = async (req, res, next) => {
+  try {
+    const {id} = req.params;
+    const user = await User.find({
+      onModel: 'Staff',
+      _id: id
+    }).select('-password ').populate({ 
+      path: 'profile',
+      model: 'Staff',
+      select: '-email -role -createdAt -updatedAt -__v ',
+    })
+    console.log(user)
+
+    if(!user){ throw new Error('ไม่พบข้อมูลผู้ใช้งาน'); }
+    else{
+
+      
+      const profile = await Staff.deleteOne({'_id': user[0].profile._id})
+      console.log(profile);
+      if(!profile){
+        throw new Error('ลบ Profile ของผู้ใช้ไม่สำเร็จ');
+      }
+      console.log(profile)
+
+      const deleteUser = await User.deleteOne({
+        _id: id
+      })
+      if(!deleteUser){
+        throw new Error('ลบ User ของผู้ใช้ไม่สำเร็จ');
+      }
+    }
+   
+ 
+
+   
+
+    res.status(200).json({
+      message: 'ลบข้อมูลผู้ใช้งานและข้อมูลส่วนตัวสำเร็จ',
+      user
+    });
+
+  } catch (error) {
+    next(error);
+  }
+}
+
+
+

@@ -37,13 +37,13 @@
               </template>
               <template #tbody>
                 <vs-tr :key="i" v-for="(data, i) in staffs" :data="data">
-                  <vs-td> {{ data.firstName + ' ' + data.lastName }} </vs-td>
+                  <vs-td> {{ data.profile.firstName + ' ' + data.profile.lastName }} </vs-td>
                   <vs-td> {{ data.email }} </vs-td>
-                  <vs-td> {{ data.position }} </vs-td>
+                  <vs-td> {{ data.profile.position }} </vs-td>
                   <vs-td>
                     <vs-button
                       color="#ca7676"
-                      @click="(active = !active)"
+                      @click=" deleteStaff(data._id), (active = !active)"
                       class="BT1"
                       style="width: 70px"
                     >
@@ -71,7 +71,7 @@
             <div class="InputPop">
               <vs-input
                 label="ชื่อผู้ใช้"
-                v-model="value"
+                v-model="staff.firstName"
                 placeholder="ชื่อผู้ใช้..."
               />
             </div>
@@ -81,11 +81,12 @@
               <vs-select
                 label="ตำแหน่ง"
                 placeholder="ตำแหน่ง"
-                v-model="value"
+                v-model="staff.position"
                 class="type"
               >
-                <vs-option label="สตาฟ" value="สตาฟ"> สตาฟ </vs-option>
-                <vs-option label="แอดมิน" value="แอดมิน"> แอดมิน </vs-option>
+                <vs-option label="สตาฟ" value="staff"> สตาฟ </vs-option>
+                <vs-option label="แอดมิน" value="admin"> แอดมิน </vs-option>
+                <vs-option label="สัตวแพทย์" value="vet"> สัตวแพทย์ </vs-option>
               </vs-select>
             </div>
           </vs-col>
@@ -97,7 +98,7 @@
             <div class="InputPop">
               <vs-input
                 label="อีเมลล์"
-                v-model="value"
+                v-model="staff.email"
                 placeholder="อีเมลล์"
               />
             </div>
@@ -107,7 +108,7 @@
               <vs-input
                 label="รหัสผ่าน"
                 placeholder="รหัสผ่าน"
-                v-model="value"
+                v-model="staff.password"
               >
               </vs-input>
             </div>
@@ -119,7 +120,7 @@
             <vs-button
               class="BT3"
               color="#71cf9d"
-              @click="(active3 = !active3)"
+              @click="(active3 = !active3), createStaffUser()"
               style="float: right; width: 80px"
             >
               เพิ่มบัญญชี </vs-button
@@ -161,12 +162,16 @@ export default {
     },
     petType: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
     staffs: [],
-    addStaffForm:{
-      
+    staff:{
+      firstName: '',
+      lastName: 'animo',
+      email: '',
+      position: '',
+      password: '',
+      role: 'staff'
     }
   }),
   created() {
-    this.showAllTreatments();
     this.fetchPetType();
     this.fetchStaff();
   },
@@ -184,49 +189,41 @@ export default {
         });
     },
     fetchStaff() {
-      let baseURL = "http://localhost:4000/api/staffs/";
+      let baseURL = "http://localhost:4000/api/users/staff";
       axios
         .get(baseURL)
         .then((res) => {
-          this.staffs = res.data.staff;
+          this.staffs = res.data.user;
           console.log(res.data);
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    showAllTreatments() {
-      let baseURL = "http://localhost:4000/api/treatments/";
-      axios
-        .get(baseURL)
-        .then((res) => {
-          this.treatments = res.data.treatment;
-          console.log(res.data);
-          console.log(this.treatments);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-    createTreatment() {
-      let baseURL = "http://localhost:4000/api/treatments/";
+ 
+    createStaffUser() {
+      let baseURL = "http://localhost:4000/api/users/";
 
       axios
-        .post(baseURL, this.treatment)
+        .post(baseURL, this.staff)
         .then((res) => {
-          this.treatment = {
-            name: "",
-            type: "",
-          };
+          this.staff = {
+            firstName: '',
+            lastName: 'animo',
+            email: '',
+            position: '',
+            password: '',
+            role: 'staff'
+          }
           console.log(res.data);
-          this.showAllTreatments();
+          this.fetchStaff();
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    deleteTreatment(id) {
-      let baseURL = "http://localhost:4000/api/treatments/";
+    deleteStaff(id) {
+      let baseURL = "http://localhost:4000/api/users/staff/";
       console.log(`id: ${id}`);
 
       axios
@@ -234,7 +231,7 @@ export default {
         .then((res) => {
           console.log(res.data);
 
-          this.showAllTreatments();
+          this.fetchStaff();
         })
         .catch((error) => {
           console.log(error);

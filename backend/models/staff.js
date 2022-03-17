@@ -6,7 +6,7 @@ const User = require('./user'); // import User models
 const schema = new Schema({
   firstName: { type: String, required: true, trim: true},
   lastName: { type: String, required: true, trim: true},
-  contact: { type: String, required: true, trim: true },
+  contact: { type: String, trim: true },
   email: { type: String, trim: true },
   address: {
     province: { type: String },
