@@ -26,6 +26,14 @@
             />
           </div>
 
+           <div class="content-input">
+            <vs-input
+              label="เบอร์โทร"
+              v-model="registerForm.contact"
+              placeholder="เบอร์โทร"
+            />
+          </div>
+
           <div class="content-input">
             <vs-input
               v-model="registerForm.email"
@@ -41,13 +49,7 @@
             </vs-input>
           </div>
 
-          <div class="content-input">
-            <vs-input
-              label="เบอร์โทร"
-              v-model="registerForm.contact"
-              placeholder="เบอร์โทร"
-            />
-          </div>
+         
 
           <div class="content-input">
             <vs-input
@@ -132,16 +134,16 @@
             </vs-select>
           </div>
 
-          <div class="content-input alone">
+          <!-- <div class="content-input alone">
             <vs-input
               class="input-alone"
               label="รหัสไปรษณีย์"
               v-model="registerForm.address.postalCode"
               placeholder="รหัสไปรษณีย์"
             />
-          </div>
+          </div> -->
         </div>
-      </div><br><br>
+      </div><br>
       <div class="footer-button">
         <div class="button-addpet register-color" @click="createClientUser()">
           <h4>ลงทะเบียน</h4>

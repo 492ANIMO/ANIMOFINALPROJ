@@ -23,7 +23,7 @@
           <vs-input v-model="search" placeholder="ค้นหา..." />
         </div>
 
-        <h4 class="list">รายการทั้งหมด {{ this.treatments.length }} รายการ</h4>
+        <h4 class="list">รายการทั้งหมด {{ staffs.length }} รายการ</h4>
         <template>
           <div class="center examplex">
             <vs-table striped>
@@ -36,10 +36,10 @@
                 </vs-tr>
               </template>
               <template #tbody>
-                <vs-tr :key="i" v-for="(data, i) in treatments" :data="data">
-                  <vs-td> {{ data.name }} </vs-td>
-                  <vs-td> {{ data.type }} </vs-td>
-                  <vs-td> {{ data.type }} </vs-td>
+                <vs-tr :key="i" v-for="(data, i) in staffs" :data="data">
+                  <vs-td> {{ data.firstName + ' ' + data.lastName }} </vs-td>
+                  <vs-td> {{ data.email }} </vs-td>
+                  <vs-td> {{ data.position }} </vs-td>
                   <vs-td>
                     <vs-button
                       color="#ca7676"
@@ -181,10 +181,15 @@ export default {
       detail: "",
     },
     petType: ["สุนัข", "แมว", "สัตว์ฟันแทะ", "อื่นๆ"],
+    staffs: [],
+    addStaffForm:{
+      
+    }
   }),
   created() {
     this.showAllTreatments();
     this.fetchPetType();
+    this.fetchStaff();
   },
   methods: {
     fetchPetType() {
@@ -193,6 +198,18 @@ export default {
         .get(baseURL)
         .then((res) => {
           this.petType = res.data.petTypes;
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    fetchStaff() {
+      let baseURL = "http://localhost:4000/api/staffs/";
+      axios
+        .get(baseURL)
+        .then((res) => {
+          this.staffs = res.data.staff;
           console.log(res.data);
         })
         .catch((error) => {
