@@ -21,8 +21,13 @@
             class="Package-Card" 
             @click="active = !active, setPet(pet)">
             <div class="bg-package">
-              <img
+              <img v-if="pet.avatar"
                 :src="pet.avatar"
+                alt="Animo"
+                class="Pic-appointment-dt"
+              />
+              <img v-else
+                src="../assets/bento.png"
                 alt="Animo"
                 class="Pic-appointment-dt"
               />
