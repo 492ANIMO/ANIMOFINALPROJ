@@ -22,7 +22,7 @@
             @click="active = !active, setPet(pet)">
             <div class="bg-package">
               <img
-                src="../assets/bento.png"
+                :src="pet.avatar"
                 alt="Animo"
                 class="Pic-appointment-dt"
               />
