@@ -313,9 +313,8 @@ exports.getStaff = async (req, res, next) => {
   try {
 
     const user = await User.find({
-
       onModel: 'Staff'
-    }).select('-password ').populate({ 
+    }).sort({updatedAt: -1}).select('-password ').populate({ 
       path: 'profile',
       select: '-email -role -createdAt -updatedAt -__v ',
     })

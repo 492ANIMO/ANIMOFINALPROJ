@@ -37,7 +37,7 @@ export default {
             label: {
               connectorAllowed: false,
             },
-            pointStart: 2021,
+            pointStart: 2022,
             borderRadius: 4
           },
         },
@@ -54,19 +54,19 @@ export default {
         series: [
           {
             name: "แมว",
-            data: [20, 23],
+            data: [6, 4],
             color: '#f785b0'
           },
           {
             name: "สุนัข",
-            data: [30, 32],
+            data: [2, 4],
             color: '#f29c77'
           },
-          {
-            name: "สัตว์ฟันแทะ",
-            data: [7, 10],
-            color: '#b798e3'
-          },
+          // {
+          //   name: "สัตว์ฟันแทะ",
+          //   data: [7, 10],
+          //   color: '#b798e3'
+          // },
         ],
 
         responsive: {
